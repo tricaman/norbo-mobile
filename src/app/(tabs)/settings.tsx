@@ -36,11 +36,6 @@ export default function SettingsScreen() {
 
         <SettingsCard title={t("settings.help")}>
           <SettingsRow
-            iconName="questionmark.circle"
-            label={t("settings.faq")}
-            onPress={() => router.push("/settings/faq")}
-          />
-          <SettingsRow
             iconName="hand.raised"
             label={t("settings.privacyPolicy")}
             onPress={() =>

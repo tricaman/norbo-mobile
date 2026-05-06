@@ -34,14 +34,13 @@ export const authApi = {
    * Record the user's acceptance of the Terms of Service (EULA).
    * Returns the updated own profile with termsAcceptedAt set.
    */
-  acceptTerms: () => api.post<AuthUser>("/users/me/accept-terms"),
+  acceptTerms: () => api.post<AuthUser>("/auth/accept-terms"),
 
   /**
    * Permanently delete the authenticated user's account.
    * The server verifies the provided email matches before deleting.
    */
-  deleteAccount: (email: string) =>
-    api.delete("/users/me", { data: { email } }),
+  deleteAccount: (email: string) => api.delete("/auth/me", { data: { email } }),
 
   /**
    * Build the GET redirect URL for mobile social OAuth.

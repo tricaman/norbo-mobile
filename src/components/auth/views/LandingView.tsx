@@ -43,7 +43,7 @@ export function LandingView({ onNavigate }: Props) {
         {/* Logo area */}
         <View style={styles.logoArea}>
           <DitDot size={28} />
-          <Text style={styles.wordmark}>dit</Text>
+          <Text style={styles.wordmark}>norbo</Text>
           <Text style={styles.tagline}>{t("auth.tagline")}</Text>
         </View>
 

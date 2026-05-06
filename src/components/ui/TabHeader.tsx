@@ -9,7 +9,7 @@ interface TabHeaderProps {
 }
 
 /**
- * TabHeader — canonical large title for tab-root screens (dits/contacts/settings).
+ * TabHeader — canonical large title for tab-root screens.
  * Uses title1 + letterSpacing 2 per the design system.
  */
 export function TabHeader({ title, right }: TabHeaderProps) {

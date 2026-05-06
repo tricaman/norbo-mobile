@@ -145,10 +145,6 @@ function AppInner() {
         name="settings/language"
         options={{ animation: "slide_from_right" }}
       />
-      <Stack.Screen
-        name="settings/faq"
-        options={{ animation: "slide_from_right" }}
-      />
     </Stack>
   );
 }

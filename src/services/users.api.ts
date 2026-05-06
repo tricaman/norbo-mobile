@@ -9,5 +9,5 @@ export interface UpdateProfilePayload {
 export const usersApi = {
   /** PATCH /users/me — update display name and/or avatar. */
   updateProfile: (payload: UpdateProfilePayload) =>
-    api.patch<AuthUser>("/users/me", payload),
+    api.patch<AuthUser>("/auth/me", payload),
 } as const;

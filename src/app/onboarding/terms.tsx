@@ -11,7 +11,8 @@ import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-const TERMS_URL = "https://tricaman.github.io/dit-policy/safety-standards.html";
+const TERMS_URL =
+  "https://tricaman.github.io/norbo-policy/safety-standards.html";
 
 /**
  * OnboardingTermsScreen — blocking EULA acceptance step shown after the
@@ -20,7 +21,7 @@ const TERMS_URL = "https://tricaman.github.io/dit-policy/safety-standards.html";
  * Behaviour:
  * - Shows a TOS link, a zero-tolerance statement, and an unchecked checkbox.
  * - The continue button is disabled until the checkbox is ticked.
- * - On submit, POST /users/me/accept-terms. On success, the store is
+ * - On submit, POST /auth/accept-terms. On success, the store is
  *   updated and the root layout redirects the user to the main tabs.
  * - This screen has no back button: the user cannot bypass it.
  */

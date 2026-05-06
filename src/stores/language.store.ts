@@ -2,7 +2,7 @@ import i18n from "@/i18n/i18n";
 import { create } from "zustand";
 import { createMMKV } from "react-native-mmkv";
 
-const storage = createMMKV({ id: "dit-language" });
+const storage = createMMKV({ id: "norbo-language" });
 
 export type Language = "en" | "it";
 
