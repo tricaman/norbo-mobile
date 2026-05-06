@@ -1,0 +1,28 @@
+# .easignore — usato da EAS Build cloud al posto di .gitignore quando presente.
+# Includiamo qui SOLO ciò che non deve finire nel build context.
+# La cartella firebase/ è gitignored ma DEVE finire nel build EAS.
+
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Ignoriamo le cartelle native auto-generate (rigenerate da prebuild EAS)
+/ios
+/android
+
+# Lock files non necessari
+.metro-health-check*
+
+# Editor / OS
+.DS_Store
+.vscode/
+
+# Env files (le var di build vengono da eas.json env profiles)
+.env
+.env*.local
+
+# Build artifacts
+*.tsbuildinfo
+app-example

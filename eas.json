@@ -1,0 +1,57 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "development"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "production",
+        "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
+        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "internal": {
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "production",
+        "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
+        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+      },
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "production": {
+      "env": {
+        "APP_VARIANT": "production",
+        "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
+        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
