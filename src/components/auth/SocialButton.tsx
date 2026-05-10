@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import type { SocialProvider } from "@/types/auth.types";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,7 @@ export function SocialButton({ provider, onPress }: Props) {
   const { t } = useTranslation();
   const Icon = SOCIAL_ICON[provider];
   return (
-    <DitPressable
+    <NorboPressable
       style={styles.btn}
       scale="cta"
       haptic="light"
@@ -23,7 +23,7 @@ export function SocialButton({ provider, onPress }: Props) {
     >
       <Icon size={20} />
       <Text style={styles.label}>{t("auth.continueWith", { provider })}</Text>
-    </DitPressable>
+    </NorboPressable>
   );
 }
 

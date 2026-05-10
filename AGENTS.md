@@ -53,6 +53,7 @@ NEVER reimplement these patterns inline. Use the primitive:
 - `Avatar` — circular themed avatar (`size: sm | md | lg | xl`).
 - `QueryBoundary` — wraps a `UseQueryResult` and handles pending/error/empty/success states declaratively. Children is a render function `(data) => ReactNode`. Override `LoadingComponent`, `ErrorComponent`, `EmptyComponent` or `isEmpty` as needed. Only for TanStack Query (`useQuery`) — not for Zustand-backed data.
 - `AvatarRow` — shared layout primitive for avatar + two-row content (title left, `titleRight?` slot, `subtitle?` ReactNode, `subtitleRight?` slot, optional `hint?` third line). Used by `ContactRow` and `ConversationRow`. `title` is always styled (subhead + textPrimary + lowercase); subtitle/hint are ReactNode so callers own their text style. `style?` overrides row padding/margin.
+- `DateField` — themed wrapper around `@react-native-community/datetimepicker`. Exposes a `Date | null` value + `onChange(Date)` API; uses iOS `display="compact"` (small chip with popover) and the imperative `DateTimePickerAndroid.open()` on Android behind a themed pressable. Never use the raw `DateTimePicker` component in screens — always go through `DateField`. Callers convert to/from ISO strings themselves (see `BirthDateStep`).
 
 Layout tokens: `theme.hairline` (0.5), `theme.avatarSize.{sm,md,lg,xl}`. Always prefer these over literals.
 
@@ -123,6 +124,61 @@ Search is debounced 400ms client-side. Minimum query length: 2 chars.
 `SCREEN_BOTTOM_PADDING` from `src/constants/layout.ts` on every FlatList `contentContainerStyle`.
 Contact store: `src/stores/contacts.store.ts`. API layer: `src/services/contacts.api.ts`.
 Types: `src/types/contacts.types.ts` (`PublicUser`, `OwnProfile`, `ContactWithUser`, etc.).
+
+## PETS
+
+`PetCategory` and `Sex` enums are mirrored from norbo-api in
+`src/types/pet.types.ts`. The pet creation flow is a **wizard** —
+not a single scrolling form — and has its own dedicated layer of
+primitives under `src/components/pets/`.
+
+Wizard architecture (`src/components/pets/wizard/`):
+
+- `wizard.types.ts` — `petWizardSchema` (zod), `PetWizardValues`
+  type, ordered `FORM_STEPS` and `TOTAL_FORM_STEPS` constant. Single
+  source of truth for the data accumulated through the flow.
+- `category-meta.ts` — per-`PetCategory` icon glyph (MaterialCommunity
+  Icons), warm tint hex, i18n tagline key, and curated quick-pick
+  `NAME_SUGGESTIONS`. Anything category-specific in the UI must read
+  from here — no per-category branches scattered across components.
+- `PetCategoryIcon.tsx` — single source of truth for the glyph that
+  represents a category. Backed by MaterialCommunityIcons (Ionicons
+  lacks animal glyphs).
+- `PetWizardLayout.tsx` — Screen + KeyboardAvoidingView + animated
+  content area + sticky footer. Every wizard step uses this; never
+  reimplement the chrome.
+- `PetWizardHeader.tsx` — leading button (close / back / none) +
+  progress dots (`TOTAL_FORM_STEPS`) + optional skip text.
+- `PetWizardButton.tsx` — primary pill CTA (`variant="primary"`) and
+  secondary text link (`variant="ghost"`). Supports `loading` and
+  `trailingChevron`.
+- `PetWizardHero.tsx` — colored hero card at the top of every form
+  step (large translucent category icon + counter pill).
+- `PetWizardChoiceRow.tsx` — segmented selector for binary / ternary
+  fields (sex, sterilized).
+- `PetCategoryCard.tsx` — selectable card on the category step.
+- `PetSuggestionChips.tsx` — quick-pick name chips.
+- `PetStepHeading.tsx` — the big question + subtitle pair.
+
+Each step lives in `src/components/pets/wizard/steps/` and is a pure
+presentational component: it owns no global state, receives the
+slice it needs plus `onNext`, `onBack`, `onSkip` callbacks. The
+orchestrator `src/app/pets/new.tsx` holds the wizard state machine
+(`step + Partial<PetWizardValues> + createdPet`) and routes between
+steps.
+
+Step order: `category → name → species → sex → birthDate →
+sterilized → confirm`. Only the five middle steps render progress
+dots. `name` is the only required field — every other step exposes
+a "Salta" button. The API submission happens at the end of the
+`sterilized` step (its primary CTA double-duty); the response then
+transitions to the celebratory `confirm` step.
+
+Pets list empty state uses `PetsEmptyHero` (3 stacked category
+squircles + copy + pill CTA), not the generic `EmptyState`. Empty
+state is rendered via `FlatList.ListEmptyComponent` (combined with
+`isEmpty={() => false}` on `QueryBoundary`) so pull-to-refresh
+keeps working when the list is empty.
 
 ## FORMS
 

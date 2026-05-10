@@ -1,15 +1,27 @@
+import type {
+  NotificationPreferences,
+  SupportedLanguage,
+  SupportedTheme,
+} from "./preferences.schema";
+
 export interface AuthUser {
   id: string;
   email: string;
   name: string | null;
   emailVerified: boolean;
   avatarUrl?: string | null;
+  photoUrl?: string | null;
   /**
    * ISO-8601 timestamp of the user's acceptance of the Terms of Service.
    * Null until the user accepts — the app forces the onboarding TOS
    * screen and blocks all other navigation while this is null.
    */
   termsAcceptedAt?: string | null;
+
+  // ── Identity & Access — preferences (mirrors backend OwnProfile) ─────
+  notificationPreferences: NotificationPreferences;
+  preferredLanguage: SupportedLanguage;
+  theme: SupportedTheme;
 }
 
 export interface OtpSendPayload {

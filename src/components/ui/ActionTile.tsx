@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import React from "react";
 import { Text } from "react-native";
@@ -25,7 +25,7 @@ export function ActionTile({
     variant === "primary" ? theme.colors.primary : theme.colors.textSecondary;
 
   return (
-    <DitPressable
+    <NorboPressable
       style={styles.container}
       scale="card"
       haptic="light"
@@ -37,7 +37,7 @@ export function ActionTile({
       >
         {label}
       </Text>
-    </DitPressable>
+    </NorboPressable>
   );
 }
 

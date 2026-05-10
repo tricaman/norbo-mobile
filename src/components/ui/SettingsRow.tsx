@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import React from "react";
 import { StyleProp, Text, TextStyle, View } from "react-native";
@@ -64,14 +64,14 @@ export function SettingsRow({
 
   if (onPress) {
     return (
-      <DitPressable
+      <NorboPressable
         style={styles.row}
         scale="row"
         haptic="light"
         onPress={onPress}
       >
         {content}
-      </DitPressable>
+      </NorboPressable>
     );
   }
 

@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useRouter } from "expo-router";
 import { StyleProp, ViewStyle } from "react-native";
@@ -14,7 +14,7 @@ export function GoBackButton({ style, onPress }: GoBackButtonProps) {
   const { theme } = useUnistyles();
 
   return (
-    <DitPressable
+    <NorboPressable
       style={[
         {
           width: 40,
@@ -33,6 +33,6 @@ export function GoBackButton({ style, onPress }: GoBackButtonProps) {
         size={20}
         tintColor={theme.colors.textPrimary}
       />
-    </DitPressable>
+    </NorboPressable>
   );
 }

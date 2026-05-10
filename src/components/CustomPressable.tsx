@@ -1,3 +1,4 @@
+import { BlurMask, Canvas, Circle } from "@shopify/react-native-skia";
 import React, { useCallback, useState } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -10,15 +11,14 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { BlurMask, Canvas, Circle } from "@shopify/react-native-skia";
 import { useUnistyles } from "react-native-unistyles";
-import { haptics, HapticWeight } from "../utils/haptics";
 import { springs } from "../hooks/useSpring";
 import { pressScale } from "../theme/tokens";
+import { haptics, HapticWeight } from "../utils/haptics";
 
 type ScalePreset = keyof typeof pressScale;
 
-interface DitPressableProps {
+interface NorboPressableProps {
   children: React.ReactNode;
   onPress?: () => void;
   onLongPress?: () => void;
@@ -33,7 +33,7 @@ interface DitPressableProps {
 
 const HALO_INSET = 44;
 
-export function DitPressable({
+export function NorboPressable({
   children,
   onPress,
   onLongPress,
@@ -44,7 +44,7 @@ export function DitPressable({
   deep = false,
   premium = false,
   haloColor,
-}: DitPressableProps) {
+}: NorboPressableProps) {
   const { theme } = useUnistyles();
   const sv = useSharedValue(1);
   const opSv = useSharedValue(1);

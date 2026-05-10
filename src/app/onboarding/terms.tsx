@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Screen } from "@/components/ui/Screen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
@@ -60,7 +60,7 @@ export default function OnboardingTermsScreen() {
         <Text style={styles.title}>{t("terms.title")}</Text>
         <Text style={styles.intro}>{t("terms.intro")}</Text>
 
-        <DitPressable
+        <NorboPressable
           style={styles.linkRow}
           scale="row"
           haptic="light"
@@ -72,13 +72,13 @@ export default function OnboardingTermsScreen() {
             tintColor={theme.colors.primary}
           />
           <Text style={styles.linkText}>{t("terms.readLink")}</Text>
-        </DitPressable>
+        </NorboPressable>
 
         <View style={styles.warningCard}>
           <Text style={styles.warningText}>{t("terms.zeroTolerance")}</Text>
         </View>
 
-        <DitPressable
+        <NorboPressable
           style={styles.checkboxRow}
           scale="row"
           haptic="light"
@@ -94,7 +94,7 @@ export default function OnboardingTermsScreen() {
             ) : null}
           </View>
           <Text style={styles.checkboxLabel}>{t("terms.checkbox")}</Text>
-        </DitPressable>
+        </NorboPressable>
       </ScrollView>
 
       {/* Bottom-anchored CTA — mirrors the login button placement so the
@@ -102,7 +102,7 @@ export default function OnboardingTermsScreen() {
       <View style={styles.footer}>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
-        <DitPressable
+        <NorboPressable
           style={[styles.primaryBtn, !canContinue && styles.btnDisabled]}
           scale="cta"
           haptic="medium"
@@ -115,7 +115,7 @@ export default function OnboardingTermsScreen() {
           <Text style={styles.primaryBtnText}>
             {isPending ? "..." : t("terms.continue")}
           </Text>
-        </DitPressable>
+        </NorboPressable>
       </View>
     </Screen>
   );

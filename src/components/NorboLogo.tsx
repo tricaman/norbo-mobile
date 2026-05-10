@@ -36,7 +36,7 @@ const ARC2_STROKE = 0.5; // outer arc stroke width
 const ARC2_RADIUS = 2.85; // outer arc mid-radius
 const ARC2_HALF_ANGLE_DEG = 90; // half angular span → full 180°
 
-export function DitDot({ size = 40 }: Props) {
+export function NorboLogo({ size = 40 }: Props) {
   const { theme } = useUnistyles();
 
   const discScale = useSharedValue(0);

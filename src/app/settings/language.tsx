@@ -7,15 +7,22 @@ import { useLanguageStore, type Language } from "@/stores/language.store";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
+/**
+ * Single-locale MVP: only Italian is selectable. Other languages will
+ * be unlocked once their translation files reach parity with `it.ts`.
+ * The list shape is kept generic so adding entries is a no-refactor
+ * change.
+ */
 const LANGUAGES: {
   code: Language;
   labelKey: "languageScreen.en" | "languageScreen.it";
+  enabled: boolean;
 }[] = [
-  { code: "en", labelKey: "languageScreen.en" },
-  { code: "it", labelKey: "languageScreen.it" },
+  { code: "it", labelKey: "languageScreen.it", enabled: true },
+  { code: "en", labelKey: "languageScreen.en", enabled: false },
 ];
 
 export default function LanguageScreen() {
@@ -47,19 +54,29 @@ export default function LanguageScreen() {
             <SettingsRow
               key={lang.code}
               label={t(lang.labelKey)}
-              onPress={() => setSelected(lang.code)}
+              onPress={lang.enabled ? () => setSelected(lang.code) : undefined}
+              labelStyle={
+                lang.enabled ? undefined : { color: theme.colors.textTertiary }
+              }
               right={
-                selected === lang.code ? (
+                lang.enabled && selected === lang.code ? (
                   <IconSymbol
                     name="checkmark"
                     size={16}
                     tintColor={theme.colors.primary}
                   />
+                ) : !lang.enabled ? (
+                  <Text style={styles.comingSoon}>
+                    {t("common.comingSoon")}
+                  </Text>
                 ) : null
               }
             />
           ))}
         </SettingsCard>
+        <Text style={styles.description}>
+          {t("languageScreen.description")}
+        </Text>
       </View>
     </Screen>
   );
@@ -70,6 +87,15 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     paddingHorizontal: theme.spacing["3xl"],
     paddingTop: theme.spacing["2xl"],
-    gap: theme.spacing.sm,
+    gap: theme.spacing.lg,
+  },
+  description: {
+    ...theme.typography.footnote,
+    color: theme.colors.textSecondary,
+    paddingHorizontal: theme.spacing.sm,
+  },
+  comingSoon: {
+    ...theme.typography.footnote,
+    color: theme.colors.textTertiary,
   },
 }));

@@ -13,7 +13,7 @@ interface LanguageState {
 }
 
 export const useLanguageStore = create<LanguageState>((set) => ({
-  language: "en",
+  language: "it",
 
   setLanguage: (language) => {
     storage.set("language", language);
@@ -23,7 +23,7 @@ export const useLanguageStore = create<LanguageState>((set) => ({
 
   hydrate: () => {
     const stored = storage.getString("language") as Language | undefined;
-    const language = stored ?? "en";
+    const language = stored ?? "it";
     i18n.changeLanguage(language);
     set({ language });
   },

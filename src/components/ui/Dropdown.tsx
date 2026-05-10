@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, Pressable, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { DitPressable } from "../DitPressable";
+import { NorboPressable } from "../CustomPressable";
 
 export interface DropdownItem {
   label: string;
@@ -32,7 +32,7 @@ export function Dropdown({ visible, onClose, items }: DropdownProps) {
         <Pressable style={styles.backdrop} onPress={onClose} />
         <View style={styles.card}>
           {items.map((item, index) => (
-            <DitPressable
+            <NorboPressable
               key={index}
               style={styles.item}
               haptic="medium"
@@ -62,7 +62,7 @@ export function Dropdown({ visible, onClose, items }: DropdownProps) {
               >
                 {item.label}
               </Text>
-            </DitPressable>
+            </NorboPressable>
           ))}
         </View>
       </GestureHandlerRootView>

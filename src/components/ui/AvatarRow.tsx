@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { Avatar } from "@/components/ui/Avatar";
 import type { ReactNode } from "react";
 import React from "react";
@@ -38,7 +38,7 @@ export function AvatarRow({
   const hasBottom = subtitle != null || subtitleRight != null;
 
   return (
-    <DitPressable
+    <NorboPressable
       style={[styles.row, style]}
       scale="row"
       haptic="light"
@@ -66,7 +66,7 @@ export function AvatarRow({
         )}
         {hint}
       </View>
-    </DitPressable>
+    </NorboPressable>
   );
 }
 

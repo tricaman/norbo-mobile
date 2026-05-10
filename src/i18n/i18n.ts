@@ -10,9 +10,12 @@ export const resources = {
   it: { translation: it },
 } as const;
 
+// Default locale is Italian (MVP single-locale per task spec). English
+// resources are kept as a future-proof fallback so adding new languages
+// is a no-refactor change.
 i18n.use(initReactI18next).init({
-  lng: "en",
-  fallbackLng: "en",
+  lng: "it",
+  fallbackLng: "it",
   defaultNS,
   resources,
   interpolation: { escapeValue: false },

@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import React from "react";
 import { useUnistyles } from "react-native-unistyles";
@@ -22,7 +22,7 @@ export function SaveHeaderAction({
   const { theme } = useUnistyles();
 
   return (
-    <DitPressable
+    <NorboPressable
       style={{
         width: 40,
         height: 40,
@@ -39,6 +39,6 @@ export function SaveHeaderAction({
         size={size}
         tintColor={disabled ? theme.colors.textTertiary : theme.colors.primary}
       />
-    </DitPressable>
+    </NorboPressable>
   );
 }

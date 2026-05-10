@@ -1,6 +1,7 @@
 import { springs } from "@/hooks/useSpring";
 import { haptics } from "@/utils/haptics";
-import React, { useEffect } from "react";
+import React from "react";
+import { Text } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
@@ -28,13 +29,6 @@ export function TabBarItem({
 }: TabBarItemProps) {
   const { theme } = useUnistyles();
   const scale = useSharedValue(1);
-  const dotScale = useSharedValue(isActive ? 1 : 0);
-  const labelOpacity = useSharedValue(isActive ? 1 : 0);
-
-  useEffect(() => {
-    dotScale.value = withSpring(isActive ? 1 : 0, springs.bouncy);
-    labelOpacity.value = withSpring(isActive ? 1 : 0, springs.snappy);
-  }, [isActive]);
 
   const triggerPress = () => {
     haptics.light();
@@ -48,7 +42,7 @@ export function TabBarItem({
 
   const gesture = Gesture.Tap()
     .onBegin(() => {
-      scale.value = withSpring(0.88, springs.snappy);
+      scale.value = withSpring(0.9, springs.snappy);
     })
     .onFinalize((_, success) => {
       scale.value = withSpring(1, springs.bouncy);
@@ -67,37 +61,27 @@ export function TabBarItem({
     transform: [{ scale: scale.value }],
   }));
 
-  const iconStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: withSpring(isActive ? 1.15 : 1, springs.default) }],
-  }));
-
-  const dotStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: dotScale.value }],
-    opacity: dotScale.value,
-  }));
-
-  const labelAnimStyle = useAnimatedStyle(() => ({
-    opacity: labelOpacity.value,
-    transform: [{ translateY: withSpring(isActive ? 0 : 4, springs.snappy) }],
-  }));
-
   return (
     <GestureDetector gesture={composed}>
       <Animated.View style={[styles.item, containerStyle]}>
-        <Animated.View style={iconStyle}>
-          <TabIcon
-            routeName={routeName}
-            isActive={isActive}
-            activeColor={theme.colors.primary}
-            inactiveColor={theme.colors.textTertiary}
-          />
-        </Animated.View>
-
-        <Animated.View style={[styles.dot, dotStyle]} />
-
-        <Animated.Text style={[styles.labelText, labelAnimStyle]}>
+        <TabIcon
+          routeName={routeName}
+          isActive={isActive}
+          activeColor={theme.colors.primary}
+          inactiveColor={theme.colors.textTertiary}
+        />
+        <Text
+          style={[
+            styles.labelText,
+            {
+              color: isActive
+                ? theme.colors.primary
+                : theme.colors.textTertiary,
+            },
+          ]}
+        >
           {label.toLowerCase()}
-        </Animated.Text>
+        </Text>
       </Animated.View>
     </GestureDetector>
   );
@@ -105,23 +89,14 @@ export function TabBarItem({
 
 const styles = StyleSheet.create((theme) => ({
   item: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.sm,
-    borderRadius: theme.radius.xl,
-    minWidth: 60,
-    gap: 3,
-  },
-  dot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: theme.colors.primary,
+    paddingVertical: theme.spacing.xs,
+    gap: 2,
   },
   labelText: {
     ...theme.typography.caption,
-    color: theme.colors.textTertiary,
     textTransform: "lowercase",
     textAlign: "center",
   },

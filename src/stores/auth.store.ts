@@ -1,6 +1,24 @@
 import { create } from "zustand";
 import { createMMKV } from "react-native-mmkv";
 import type { AuthUser } from "@/types/auth.types";
+import { DEFAULT_NOTIFICATION_PREFERENCES } from "@/types/preferences.schema";
+
+/**
+ * Backfill Identity preferences for users whose MMKV cache was written
+ * before the preferences fields were added to AuthUser. Without this,
+ * `user.theme` / `user.notificationPreferences` would be `undefined` on
+ * the first render after upgrade — long enough for the theme bridge to
+ * crash. Defaults mirror the backend's Prisma defaults.
+ */
+function withPreferenceDefaults(user: AuthUser): AuthUser {
+  return {
+    ...user,
+    notificationPreferences:
+      user.notificationPreferences ?? DEFAULT_NOTIFICATION_PREFERENCES,
+    preferredLanguage: user.preferredLanguage ?? "it",
+    theme: user.theme ?? "system",
+  };
+}
 
 const storage = createMMKV({ id: "norbo-auth" });
 
@@ -21,7 +39,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthed: false,
   isVerified: false,
 
-  setUser: (user) => {
+  setUser: (rawUser) => {
+    const user = rawUser ? withPreferenceDefaults(rawUser) : null;
     if (user) {
       storage.set("user", JSON.stringify(user));
     } else {
@@ -63,7 +82,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const sessionToken = storage.getString("sessionToken") ?? null;
     if (!raw) return;
     try {
-      const user = JSON.parse(raw) as AuthUser;
+      const user = withPreferenceDefaults(JSON.parse(raw) as AuthUser);
       set({
         user,
         sessionToken,

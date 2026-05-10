@@ -10,12 +10,16 @@ import Animated, {
 
 const ICONS: Record<string, { sf: string; filled: string }> = {
   index: {
-    sf: "house",
-    filled: "house.fill",
+    sf: "pawprint",
+    filled: "pawprint.fill",
   },
   settings: {
-    sf: "slider.horizontal.3",
-    filled: "slider.horizontal.3",
+    sf: "gearshape",
+    filled: "gearshape",
+  },
+  profile: {
+    sf: "person",
+    filled: "person.fill",
   },
 };
 

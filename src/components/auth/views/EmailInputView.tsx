@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { GoBackButton } from "@/components/GoBackButton";
 import { FormInput } from "@/components/ui/FormInput";
 import { useForm } from "@/hooks/useForm";
@@ -60,7 +60,7 @@ export function EmailInputView({ onNavigate }: Props) {
               autoFocus
             />
 
-            <DitPressable
+            <NorboPressable
               style={[styles.primaryBtn, isPending && styles.btnDisabled]}
               scale="cta"
               haptic="medium"
@@ -70,7 +70,7 @@ export function EmailInputView({ onNavigate }: Props) {
               <Text style={styles.primaryBtnText}>
                 {isPending ? "..." : t("common.continue")}
               </Text>
-            </DitPressable>
+            </NorboPressable>
           </View>
         </View>
       </SafeAreaView>

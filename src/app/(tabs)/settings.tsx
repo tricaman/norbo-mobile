@@ -5,13 +5,12 @@ import Constants from "expo-constants";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, Platform, ScrollView, Text, View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import { Platform, ScrollView, Text, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { theme } = useUnistyles();
 
   const appVersion = Constants.expoConfig?.version ?? "1.0.0";
   const platformName = Platform.OS === "ios" ? "ios" : "android";
@@ -19,28 +18,15 @@ export default function SettingsScreen() {
   return (
     <TabScreen title={t("settings.title")}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* The tab-level settings is now a thin entry point: the real
+            hub lives at /settings/account so that all Identity & Access
+            sub-screens share the same navigation root. */}
         <SettingsCard>
           <SettingsRow
             iconName="person.crop.circle"
             label={t("settings.account")}
             subtitle={t("settings.accountSubtitle")}
             onPress={() => router.push("/settings/account")}
-          />
-          <SettingsRow
-            iconName="globe"
-            label={t("settings.language")}
-            subtitle={t("settings.languageSubtitle")}
-            onPress={() => router.push("/settings/language")}
-          />
-        </SettingsCard>
-
-        <SettingsCard title={t("settings.help")}>
-          <SettingsRow
-            iconName="hand.raised"
-            label={t("settings.privacyPolicy")}
-            onPress={() =>
-              Linking.openURL("https://tricaman.github.io/norbo-policy/")
-            }
           />
         </SettingsCard>
 

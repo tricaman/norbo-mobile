@@ -1,4 +1,4 @@
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
 import { GoBackButton } from "@/components/GoBackButton";
 import { useAuth } from "@/hooks/useAuth";
 import { springs } from "@/hooks/useSpring";
@@ -292,7 +292,7 @@ export function OtpVerifyView({ email, onNavigate }: Props) {
 
             <ErrorMessage message={error} />
 
-            <DitPressable
+            <NorboPressable
               style={[
                 styles.primaryBtn,
                 (loading || otp.length !== OTP_LENGTH) && styles.btnDisabled,
@@ -305,9 +305,9 @@ export function OtpVerifyView({ email, onNavigate }: Props) {
               <Text style={styles.primaryBtnText}>
                 {loading ? "..." : t("auth.otpVerify")}
               </Text>
-            </DitPressable>
+            </NorboPressable>
 
-            <DitPressable
+            <NorboPressable
               scale="text"
               haptic="light"
               disabled={cooldown > 0}
@@ -320,7 +320,7 @@ export function OtpVerifyView({ email, onNavigate }: Props) {
                   ? t("auth.otpResendCooldown", { seconds: String(cooldown) })
                   : t("auth.otpResend")}
               </Text>
-            </DitPressable>
+            </NorboPressable>
           </View>
         </View>
       </SafeAreaView>

@@ -1,5 +1,5 @@
+import { NorboPressable } from "@/components/CustomPressable";
 import { Description } from "@/components/ui/Description";
-import { DitPressable } from "@/components/DitPressable";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { Screen } from "@/components/ui/Screen";
@@ -69,7 +69,7 @@ export default function DeleteAccountScreen() {
             />
           </FormCard>
 
-          <DitPressable
+          <NorboPressable
             style={[
               styles.deleteBtn,
               {
@@ -85,7 +85,7 @@ export default function DeleteAccountScreen() {
             <Text style={[styles.deleteBtnText, { color: theme.colors.error }]}>
               {t("deleteAccount.confirm")}
             </Text>
-          </DitPressable>
+          </NorboPressable>
         </KeyboardAvoidingView>
       </FormProvider>
     </Screen>

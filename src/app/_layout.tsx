@@ -3,6 +3,7 @@ import "@/i18n/i18n";
 import { handleInitialNotification } from "@/services/notifications";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLanguageStore } from "@/stores/language.store";
+import { useOnboardingStore } from "@/stores/onboarding.store";
 import {
   DMMono_400Regular,
   DMMono_500Medium,
@@ -24,8 +25,10 @@ export default function RootLayout() {
   const { theme } = useUnistyles();
   const hydrate = useAuthStore((s) => s.hydrate);
   const hydrateLanguage = useLanguageStore((s) => s.hydrate);
+  const hydrateOnboarding = useOnboardingStore((s) => s.hydrate);
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const termsAcceptedAt = useAuthStore((s) => s.user?.termsAcceptedAt);
+  const hasCompletedOnboarding = useOnboardingStore((s) => s.hasCompleted);
   const router = useRouter();
   const segments = useSegments();
 
@@ -43,7 +46,8 @@ export default function RootLayout() {
   useEffect(() => {
     hydrate();
     hydrateLanguage();
-  }, [hydrate, hydrateLanguage]);
+    hydrateOnboarding();
+  }, [hydrate, hydrateLanguage, hydrateOnboarding]);
 
   // 2. Nascondi lo splash nativo SOLO quando i font sono pronti.
   // Prima di questo momento, l'utente vedrà uno sfondo a tinta unita (grazie ad app.json)
@@ -79,18 +83,35 @@ export default function RootLayout() {
     // is allowed until termsAcceptedAt is set on the profile.
     // Required by Apple / Google store review for user-generated content.
     if (!termsAcceptedAt) {
-      if (!inOnboardingGroup) {
+      if (segments[1] !== "terms") {
         router.replace("/onboarding/terms");
       }
       return;
     }
 
-    // Authenticated + terms accepted → bounce off the auth/onboarding
-    // groups onto the main app.
+    // Authenticated + terms accepted but hasn't seen the post-signup
+    // onboarding (welcome → theme → notifications). Skippable, but the
+    // first time the user reaches this state we route them through it.
+    if (!hasCompletedOnboarding) {
+      if (segments[1] !== "welcome") {
+        router.replace("/onboarding/welcome");
+      }
+      return;
+    }
+
+    // Authenticated + terms accepted + onboarding seen → bounce off
+    // the auth/onboarding groups onto the main app.
     if (inAuthGroup || inOnboardingGroup) {
       router.replace("/(tabs)");
     }
-  }, [isAuthed, termsAcceptedAt, segments, router, isReady]);
+  }, [
+    isAuthed,
+    termsAcceptedAt,
+    hasCompletedOnboarding,
+    segments,
+    router,
+    isReady,
+  ]);
 
   // 4. Deep-link dalla notifica che ha lanciato l'app (stato killed):
   // appena l'utente è autenticato e lo splash è terminato, apri il dit
@@ -136,6 +157,10 @@ function AppInner() {
         name="onboarding/terms"
         options={{ animation: "fade", gestureEnabled: false }}
       />
+      <Stack.Screen
+        name="onboarding/welcome"
+        options={{ animation: "fade", gestureEnabled: false }}
+      />
       <Stack.Screen name="(tabs)" options={{ animation: "fade" }} />
       <Stack.Screen
         name="settings/account"
@@ -143,6 +168,26 @@ function AppInner() {
       />
       <Stack.Screen
         name="settings/language"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="settings/theme"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="settings/notifications"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/new"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/edit"
         options={{ animation: "slide_from_right" }}
       />
     </Stack>

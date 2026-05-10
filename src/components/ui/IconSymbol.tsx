@@ -32,6 +32,16 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     trash: "trash-outline",
     "person.badge.plus": "person-add-outline",
 
+    // Pets
+    pawprint: "paw-outline",
+    "pawprint.fill": "paw",
+    "plus.circle.fill": "add-circle",
+    plus: "add",
+    pencil: "pencil",
+    "ellipsis.circle": "ellipsis-horizontal-circle-outline",
+    "trash.fill": "trash",
+    "xmark.circle.fill": "close-circle",
+
     // Auth
     "arrow.right.circle": "log-out-outline",
 

@@ -15,8 +15,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("settings.title"),
-          tabBarLabel: t("settings.title"),
+          title: t("tabs.pets"),
+          tabBarLabel: t("tabs.pets"),
         }}
       />
       <Tabs.Screen
@@ -24,6 +24,13 @@ export default function TabsLayout() {
         options={{
           title: t("tabs.settings"),
           tabBarLabel: t("tabs.settings"),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: t("tabs.profile"),
+          tabBarLabel: t("tabs.profile"),
         }}
       />
     </Tabs>

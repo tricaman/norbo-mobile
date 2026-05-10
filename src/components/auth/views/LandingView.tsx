@@ -1,5 +1,5 @@
-import { DitDot } from "@/components/DitDot";
-import { DitPressable } from "@/components/DitPressable";
+import { NorboPressable } from "@/components/CustomPressable";
+import { NorboLogo } from "@/components/NorboLogo";
 import { useAuth } from "@/hooks/useAuth";
 import type {
   AuthScreen as AuthScreenType,
@@ -42,7 +42,7 @@ export function LandingView({ onNavigate }: Props) {
       <View style={styles.root}>
         {/* Logo area */}
         <View style={styles.logoArea}>
-          <DitDot size={28} />
+          <NorboLogo size={28} />
           <Text style={styles.wordmark}>norbo</Text>
           <Text style={styles.tagline}>{t("auth.tagline")}</Text>
         </View>
@@ -85,7 +85,7 @@ export function LandingView({ onNavigate }: Props) {
 
         {/* Email option */}
         <View style={styles.email}>
-          <DitPressable
+          <NorboPressable
             style={styles.primaryBtn}
             scale="cta"
             haptic="medium"
@@ -94,7 +94,7 @@ export function LandingView({ onNavigate }: Props) {
             <Text style={styles.primaryBtnText}>
               {t("auth.continueWithEmail")}
             </Text>
-          </DitPressable>
+          </NorboPressable>
         </View>
       </View>
     </SafeAreaView>
