@@ -5,13 +5,14 @@ import type { Pet } from "@/types/pet.types";
 import { differenceInMonths, differenceInYears, parseISO } from "date-fns";
 import { Image } from "expo-image";
 import React from "react";
-import { Text, View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
+import { Text, View, type ViewStyle } from "react-native";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface PetCardProps {
   pet: Pet;
   onPress: () => void;
+  style?: ViewStyle;
 }
 
 /**
@@ -25,7 +26,7 @@ interface PetCardProps {
  * renders correctly on iOS. An inner View clips the image to the
  * rounded corners.
  */
-export function PetCard({ pet, onPress }: PetCardProps) {
+export function PetCard({ pet, onPress, style }: PetCardProps) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const meta = CATEGORY_META[pet.category];
@@ -52,7 +53,7 @@ export function PetCard({ pet, onPress }: PetCardProps) {
       scale="card"
       haptic="light"
       onPress={onPress}
-      style={styles.shadow}
+      style={[style]}
     >
       {/* Inner view clips everything to rounded corners */}
       <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
@@ -100,19 +101,12 @@ export function PetCard({ pet, onPress }: PetCardProps) {
 }
 
 const styles = StyleSheet.create((theme) => ({
-  shadow: {
-    flex: 1,
-    borderRadius: theme.radius.xl,
-    shadowColor: theme.colors.textPrimary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
-  },
   card: {
     flex: 1,
     borderRadius: theme.radius.xl,
     overflow: "hidden",
+    borderColor: theme.colors.border,
+    borderWidth: 1,
   },
   imageArea: {
     aspectRatio: 1,

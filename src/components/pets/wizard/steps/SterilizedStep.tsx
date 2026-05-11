@@ -14,22 +14,22 @@ interface SterilizedStepProps {
   category: PetCategory;
   value: boolean | null | undefined;
   onChange: (value: boolean | null) => void;
-  onSubmit: () => void;
+  onNext: () => void;
   onBack: () => void;
   onSkip: () => void;
   saving?: boolean;
 }
 
 /**
- * SterilizedStep — yes / no / unknown selector. Last form step before
- * confirm: the primary CTA performs the actual API submit, so we
- * accept a `saving` flag to render the loading spinner.
+ * SterilizedStep — yes / no / unknown selector. Final form step: the
+ * primary CTA performs the API submission, hence the optional saving
+ * prop.
  */
 export function SterilizedStep({
   category,
   value,
   onChange,
-  onSubmit,
+  onNext,
   onBack,
   onSkip,
   saving,
@@ -60,7 +60,7 @@ export function SterilizedStep({
       footer={
         <PetWizardButton
           label={t("petWizard.continue")}
-          onPress={onSubmit}
+          onPress={onNext}
           loading={saving}
           trailingChevron
         />

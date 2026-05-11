@@ -179,6 +179,10 @@ function AppInner() {
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen
+        name="pets/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
         name="pets/new"
         options={{ animation: "slide_from_right" }}
       />
@@ -200,6 +204,14 @@ function AppInner() {
       />
       <Stack.Screen
         name="pets/[id]/events/[eventId]/edit"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/weights/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/weights/new"
         options={{ animation: "slide_from_right" }}
       />
     </Stack>

@@ -100,6 +100,7 @@ const en = {
     deleteConfirmOk: "delete",
     deleteConfirmCancel: "cancel",
     deleteSuccess: "pet deleted",
+    viewAll: "view all",
   },
 
   petWizard: {
@@ -131,6 +132,10 @@ const en = {
     sterilizedYes: "yes",
     sterilizedNo: "no",
     sterilizedUnknown: "unknown",
+    weightTitle: "how much do they weigh?",
+    weightSubtitle: "enter their current weight. you can update it later.",
+    weightPlaceholder: "e.g. 4.5",
+    weightInvalid: "enter a positive number",
     confirmTitleTemplate: "{{name}} is in their new home",
     confirmSubtitle:
       "start tracking their life right away. we suggest beginning here.",
@@ -170,6 +175,9 @@ const en = {
     sexFemale: "female",
     sexUnknown: "unknown",
     sterilizedLabel: "neutered / spayed",
+    weightLabel: "weight",
+    weightPlaceholder: "e.g. 4.5",
+    weightUnitLabel: "unit",
     birthDateLabel: "birth date",
     birthDatePlaceholder: "yyyy-mm-dd",
     notesLabel: "notes",
@@ -207,6 +215,33 @@ const en = {
     editTitle: "edit event",
   },
 
+  weightForm: {
+    dateLabel: "date",
+    weightLabel: "weight",
+    unitLabel: "unit",
+    notesLabel: "notes (optional)",
+    notesPlaceholder: "anything worth noting",
+    errorInvalid: "enter a positive number",
+    saveNew: "log weight",
+    saveEdit: "save changes",
+    newTitle: "log weight",
+    editTitle: "edit weight",
+  },
+
+  petWeights: {
+    title: "weights",
+    sectionLatest: "latest",
+    sectionHistory: "history",
+    empty: "no weights logged yet",
+    addCta: "log first weight",
+    addAnother: "add weight",
+    statLatest: "latest weight",
+    deleteConfirmTitle: "delete record?",
+    deleteConfirmMessage: "this action cannot be undone.",
+    deleteConfirmOk: "delete",
+    deleteConfirmCancel: "cancel",
+  },
+
   petDetail: {
     ageYear: "year",
     ageYears: "years",
@@ -242,6 +277,8 @@ const en = {
       deleteConfirmOk: "Delete",
       deleteConfirmCancel: "Cancel",
       loadMore: "Load more",
+      pillToday: "Today",
+      pillTomorrow: "Tomorrow",
       types: {
         VACCINATION: "Vaccination",
         VET_VISIT: "Vet visit",

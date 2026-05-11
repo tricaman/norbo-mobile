@@ -197,7 +197,7 @@ export default function NewPetScreen() {
         category={data.category}
         value={data.sterilized}
         onChange={(sterilized) => update({ sterilized })}
-        onSubmit={submit}
+        onNext={submit}
         onBack={() => goTo("birthDate")}
         onSkip={() => {
           update({ sterilized: null });

@@ -4,12 +4,15 @@ import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
 import { Dropdown } from "@/components/ui/Dropdown";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
+
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
 import { queryClient } from "@/app/_layout";
 import { PetTimeline } from "@/components/health-timeline/PetTimeline";
 import { Sex, type Pet } from "@/types/pet.types";
+import { useWeightHistory } from "@/hooks/useWeightHistory";
+import { formatWeight } from "@/utils/weight";
 import { useQuery } from "@tanstack/react-query";
 import { differenceInMonths, differenceInYears, parseISO } from "date-fns";
 import { Image } from "expo-image";
@@ -19,6 +22,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
+import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
 
 type PetDetailTab = "timeline" | "photos" | "expenses" | "care";
 
@@ -85,8 +89,9 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
   if (pet.sterilized) subtitleParts.push(t("petDetail.sterilized"));
   const subtitle = subtitleParts.join(" · ");
 
-  const weightLabel = pet.currentWeight
-    ? `${pet.currentWeight} ${pet.weightUnit}`
+  const { latest: latestWeight } = useWeightHistory(petId);
+  const weightLabel = latestWeight
+    ? formatWeight(latestWeight.weightMg, { category: pet.category })
     : "—";
 
   const { mutate: deletePet } = useMutation({
@@ -142,11 +147,17 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
     care: { icon: "heart", message: t("petDetail.care.empty") },
   };
 
-  const STATS = [
+  const STATS: {
+    icon: string;
+    value: string;
+    label: string;
+    onPress?: () => void;
+  }[] = [
     {
       icon: "scalemass",
       value: weightLabel,
       label: t("petDetail.stats.weight"),
+      onPress: () => router.push(`/pets/${petId}/weights` as never),
     },
     { icon: "bell", value: "—", label: t("petDetail.stats.next") },
     { icon: "photo", value: "0", label: t("petDetail.stats.photos") },
@@ -192,7 +203,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
           haptic="light"
           onPress={() => setMenuVisible(true)}
         >
-          <IconSymbol name="ellipsis" size={20} tintColor="#fff" />
+          <IconSymbol name="ellipsis.horizontal" size={20} tintColor="#fff" />
         </NorboPressable>
 
         <View style={styles.heroOverlay}>
@@ -208,100 +219,70 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
         </View>
       </View>
 
-      {/* ── Stats ──────────────────────────────────── */}
-      <View
-        style={[
-          styles.statsRow,
-          {
-            backgroundColor: theme.colors.surface,
-            borderBottomColor: theme.colors.border,
-          },
-        ]}
-      >
-        {STATS.map((stat, i) => (
-          <React.Fragment key={stat.label}>
-            {i > 0 && (
-              <View
-                style={[
-                  styles.statDivider,
-                  { backgroundColor: theme.colors.border },
-                ]}
-              />
-            )}
-            <View style={styles.statCell}>
-              <IconSymbol
-                name={stat.icon}
-                size={16}
-                tintColor={theme.colors.textSecondary}
-              />
-              <Text
-                style={[styles.statValue, { color: theme.colors.textPrimary }]}
-              >
-                {stat.value}
-              </Text>
-              <Text
-                style={[styles.statLabel, { color: theme.colors.textTertiary }]}
-              >
-                {stat.label}
-              </Text>
-            </View>
-          </React.Fragment>
-        ))}
-      </View>
-
-      {/* ── Tab bar ────────────────────────────────── */}
-      <View
-        style={[
-          styles.tabBar,
-          {
-            backgroundColor: theme.colors.surface,
-            borderBottomColor: theme.colors.border,
-          },
-        ]}
-      >
-        {TABS.map((tab) => {
-          const isActive = activeTab === tab.key;
-          return (
-            <NorboPressable
-              key={tab.key}
-              style={styles.tabBtn}
-              scale="row"
-              haptic="light"
-              onPress={() => setActiveTab(tab.key)}
-            >
-              <View style={styles.tabBtnInner}>
+      {/* ── Floating stats + tabs ───────────────── */}
+      <View style={styles.floatingGroup}>
+        <View
+          style={[styles.statsCard, { backgroundColor: theme.colors.surface }]}
+        >
+          {STATS.map((stat, i) => {
+            const inner = (
+              <>
                 <IconSymbol
-                  name={tab.icon}
-                  size={13}
-                  tintColor={
-                    isActive ? theme.colors.primary : theme.colors.textTertiary
-                  }
+                  name={stat.icon}
+                  size={16}
+                  tintColor={theme.colors.textSecondary}
                 />
                 <Text
                   style={[
-                    styles.tabLabel,
-                    {
-                      color: isActive
-                        ? theme.colors.primary
-                        : theme.colors.textSecondary,
-                    },
-                    isActive && styles.tabLabelActive,
+                    styles.statValue,
+                    { color: theme.colors.textPrimary },
                   ]}
                 >
-                  {tab.label}
+                  {stat.value}
                 </Text>
-              </View>
-              {isActive && (
-                <View
+                <Text
                   style={[
-                    styles.tabIndicator,
-                    { backgroundColor: theme.colors.primary },
+                    styles.statLabel,
+                    { color: theme.colors.textTertiary },
                   ]}
-                />
-              )}
-            </NorboPressable>
-          );
-        })}
+                >
+                  {stat.label}
+                </Text>
+              </>
+            );
+            return (
+              <React.Fragment key={stat.label}>
+                {i > 0 && (
+                  <View
+                    style={[
+                      styles.statDivider,
+                      { backgroundColor: theme.colors.border },
+                    ]}
+                  />
+                )}
+                {stat.onPress ? (
+                  <NorboPressable
+                    style={styles.statCell}
+                    scale="row"
+                    haptic="light"
+                    onPress={stat.onPress}
+                  >
+                    {inner}
+                  </NorboPressable>
+                ) : (
+                  <View style={styles.statCell}>{inner}</View>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </View>
+
+        <SegmentedTabs<PetDetailTab>
+          tabs={TABS}
+          value={activeTab}
+          onChange={setActiveTab}
+          style={styles.tabs}
+        />
       </View>
 
       {/* ── Tab content ────────────────────────────── */}
@@ -425,12 +406,22 @@ const styles = StyleSheet.create((theme) => ({
     color: theme.colors.textOnPrimary,
     opacity: 0.8,
   },
-  // Stats
-  statsRow: {
+  // Floating stats + tabs
+  floatingGroup: {
+    paddingHorizontal: theme.spacing.lg,
+    paddingTop: theme.spacing.md,
+    gap: theme.spacing.sm,
+  },
+  statsCard: {
     flexDirection: "row",
     alignItems: "stretch",
     height: 72,
-    borderBottomWidth: theme.hairline,
+    borderRadius: theme.radius.lg,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
   },
   statCell: {
     flex: 1,
@@ -443,43 +434,15 @@ const styles = StyleSheet.create((theme) => ({
     width: theme.hairline,
     marginVertical: theme.spacing.md,
   },
+  tabs: {
+    marginTop: theme.spacing.xs,
+  },
   statValue: {
     ...theme.typography.subhead,
     fontWeight: "600",
   },
   statLabel: {
     ...theme.typography.caption,
-  },
-  // Tab bar
-  tabBar: {
-    flexDirection: "row",
-    borderBottomWidth: theme.hairline,
-    height: 44,
-  },
-  tabBtn: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-  },
-  tabBtnInner: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
-  tabLabel: {
-    ...theme.typography.caption,
-  },
-  tabLabelActive: {
-    fontWeight: "600",
-  },
-  tabIndicator: {
-    position: "absolute",
-    bottom: 0,
-    left: 12,
-    right: 12,
-    height: 2,
-    borderRadius: 1,
   },
   // Content
   tabContent: {

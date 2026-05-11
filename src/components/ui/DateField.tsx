@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
+  Modal,
   Platform,
   Text,
   View,
@@ -20,6 +21,7 @@ import DateTimePicker, {
 import { format } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
 import { NorboPressable } from "@/components/CustomPressable";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 interface DateFieldProps {
   /** Currently selected date (or `null` for unset). */
@@ -37,13 +39,12 @@ interface DateFieldProps {
 }
 
 /**
- * DateField — compact, themed date input.
+ * DateField — full-width, themed date input.
  *
- * iOS uses the native `display="compact"` picker (a small chip that
- * pops a wheel/calendar on tap, never expanding the full calendar
- * inline). Android uses the imperative `DateTimePickerAndroid.open()`
- * API behind a themed pressable, since the declarative component
- * lacks an inline form factor on Android.
+ * Both platforms render the same pressable trigger row (formatted date
+ * text + calendar icon). On iOS, tapping opens a bottom-sheet modal
+ * with a spinner DateTimePicker and Done/Cancel actions. On Android,
+ * the imperative `DateTimePickerAndroid.open()` API is used.
  *
  * The component owns no value persistence — callers store the `Date`
  * (or convert to ISO string) themselves.
@@ -56,84 +57,178 @@ export function DateField({
   placeholder,
   style,
 }: DateFieldProps) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { theme } = useUnistyles();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [draft, setDraft] = useState<Date | null>(null);
 
   const locale = i18n.language?.startsWith("it") ? itLocale : enUS;
   const fallback = useMemo(() => maximumDate ?? new Date(), [maximumDate]);
 
-  function handleNativeChange(event: DateTimePickerEvent, date?: Date) {
-    if (event.type !== "set" || !date) return;
-    onChange(date);
+  const displayText = value
+    ? format(value, "PPP", { locale })
+    : (placeholder ?? "");
+
+  function handleNativeChange(_event: DateTimePickerEvent, date?: Date) {
+    if (date) setDraft(date);
   }
 
-  if (Platform.OS === "ios") {
-    return (
-      <View style={[styles.row, style]}>
-        <DateTimePicker
-          mode="date"
-          display="compact"
-          value={value ?? fallback}
-          maximumDate={maximumDate}
-          minimumDate={minimumDate}
-          onChange={handleNativeChange}
-          locale={i18n.language}
-          accentColor={theme.colors.primary}
-          themeVariant={
-            UnistylesRuntime.themeName === "dark" ? "dark" : "light"
-          }
-        />
-      </View>
-    );
+  function handleDone() {
+    if (draft) onChange(draft);
+    setModalVisible(false);
+    setDraft(null);
   }
 
-  function openAndroid() {
+  function handleCancel() {
+    setModalVisible(false);
+    setDraft(null);
+  }
+
+  function openPicker() {
+    if (Platform.OS === "ios") {
+      setDraft(value ?? fallback);
+      setModalVisible(true);
+      return;
+    }
     const params: AndroidNativeProps = {
       mode: "date",
       value: value ?? fallback,
       maximumDate,
       minimumDate,
-      onChange: handleNativeChange,
+      onChange: (_event, date) => {
+        if (date) onChange(date);
+      },
     };
     DateTimePickerAndroid.open(params);
   }
 
   return (
-    <NorboPressable
-      scale="card"
-      haptic="light"
-      onPress={openAndroid}
-      style={[styles.androidTrigger, style]}
-    >
-      <Text
-        style={[
-          styles.androidTriggerText,
-          !value && { color: theme.colors.textTertiary },
-        ]}
+    <>
+      <NorboPressable
+        scale="card"
+        haptic="light"
+        onPress={openPicker}
+        style={[styles.trigger, style]}
       >
-        {value ? format(value, "PPP", { locale }) : (placeholder ?? "")}
-      </Text>
-    </NorboPressable>
+        <Text
+          style={[
+            styles.triggerText,
+            !value && { color: theme.colors.textTertiary },
+          ]}
+        >
+          {displayText}
+        </Text>
+        <IconSymbol
+          name="calendar"
+          size={18}
+          tintColor={value ? theme.colors.primary : theme.colors.textTertiary}
+        />
+      </NorboPressable>
+
+      {Platform.OS === "ios" && (
+        <Modal
+          visible={modalVisible}
+          transparent
+          animationType="slide"
+          onRequestClose={handleCancel}
+        >
+          <View style={styles.backdrop}>
+            <View style={styles.sheet}>
+              <View style={styles.sheetHeader}>
+                <NorboPressable
+                  scale="row"
+                  haptic="light"
+                  onPress={handleCancel}
+                  style={styles.sheetAction}
+                >
+                  <Text style={[styles.sheetActionText, styles.cancelText]}>
+                    {t("common.cancel")}
+                  </Text>
+                </NorboPressable>
+                <NorboPressable
+                  scale="row"
+                  haptic="medium"
+                  onPress={handleDone}
+                  style={styles.sheetAction}
+                >
+                  <Text style={[styles.sheetActionText, styles.doneText]}>
+                    {t("common.done")}
+                  </Text>
+                </NorboPressable>
+              </View>
+              <DateTimePicker
+                mode="date"
+                display="spinner"
+                value={draft ?? fallback}
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
+                onChange={handleNativeChange}
+                locale={i18n.language}
+                accentColor={theme.colors.primary}
+                themeVariant={
+                  UnistylesRuntime.themeName === "dark" ? "dark" : "light"
+                }
+                style={styles.spinner}
+              />
+            </View>
+          </View>
+        </Modal>
+      )}
+    </>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
-  row: {
+  trigger: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-  },
-  androidTrigger: {
+    justifyContent: "space-between",
     backgroundColor: theme.colors.surface,
-    paddingVertical: theme.spacing.lg,
-    paddingHorizontal: theme.spacing.xl,
-    borderRadius: theme.radius.lg,
-    borderWidth: 1.5,
-    borderColor: theme.colors.primary,
-    alignItems: "center",
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+    borderRadius: theme.radius.md,
+    borderWidth: theme.hairline,
+    borderColor: theme.colors.border,
   },
-  androidTriggerText: {
-    ...theme.typography.title2,
+  triggerText: {
+    ...theme.typography.body,
     color: theme.colors.textPrimary,
+    flex: 1,
+  },
+  backdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.35)",
+    justifyContent: "flex-end",
+  },
+  sheet: {
+    backgroundColor: theme.colors.surface,
+    borderTopLeftRadius: theme.radius.xl,
+    borderTopRightRadius: theme.radius.xl,
+    paddingBottom: theme.spacing["3xl"],
+  },
+  sheetHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.md,
+    borderBottomWidth: theme.hairline,
+    borderBottomColor: theme.colors.border,
+  },
+  sheetAction: {
+    paddingVertical: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.sm,
+  },
+  sheetActionText: {
+    ...theme.typography.subhead,
+  },
+  cancelText: {
+    color: theme.colors.textSecondary,
+  },
+  doneText: {
+    color: theme.colors.primary,
+  },
+  spinner: {
+    width: "100%",
   },
 }));

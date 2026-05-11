@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { type PetCategory, Sex } from "@/types/pet.types";
+import { ChipSelector, type ChipOption } from "@/components/ui/ChipSelector";
 import { PetStepHeading } from "../PetStepHeading";
 import { PetWizardButton } from "../PetWizardButton";
-import { PetWizardChoiceRow } from "../PetWizardChoiceRow";
 import { PetWizardHero } from "../PetWizardHero";
 import { PetWizardLayout } from "../PetWizardLayout";
 import { TOTAL_FORM_STEPS } from "../wizard.types";
@@ -32,11 +32,14 @@ export function SexStep({
 }: SexStepProps) {
   const { t } = useTranslation();
 
-  const options = [
-    { value: Sex.FEMALE, label: t("petForm.sexFemale") },
-    { value: Sex.MALE, label: t("petForm.sexMale") },
-    { value: Sex.UNKNOWN, label: t("petForm.sexUnknown") },
-  ] as const;
+  const options = useMemo<ChipOption<Sex>[]>(
+    () => [
+      { value: Sex.FEMALE, label: t("petForm.sexFemale") },
+      { value: Sex.MALE, label: t("petForm.sexMale") },
+      { value: Sex.UNKNOWN, label: t("petForm.sexUnknown") },
+    ],
+    [t],
+  );
 
   return (
     <PetWizardLayout
@@ -68,9 +71,9 @@ export function SexStep({
         subtitle={t("petWizard.sexSubtitle")}
       />
 
-      <PetWizardChoiceRow<Sex>
+      <ChipSelector
         options={options}
-        value={value}
+        value={value ?? Sex.UNKNOWN}
         onChange={onChange}
       />
     </PetWizardLayout>

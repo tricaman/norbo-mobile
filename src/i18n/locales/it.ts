@@ -180,6 +180,7 @@ const it = {
     deleteConfirmOk: "elimina",
     deleteConfirmCancel: "annulla",
     deleteSuccess: "animale eliminato",
+    viewAll: "vedi tutti",
   },
 
   petWizard: {
@@ -212,6 +213,11 @@ const it = {
     sterilizedYes: "sì",
     sterilizedNo: "no",
     sterilizedUnknown: "non so",
+    weightTitle: "quanto pesa?",
+    weightSubtitle:
+      "inserisci il peso attuale. potrai aggiornarlo in qualsiasi momento.",
+    weightPlaceholder: "es. 4.5",
+    weightInvalid: "inserisci un numero positivo",
     confirmTitleTemplate: "{{name}} è nel suo nuovo posto",
     confirmSubtitle:
       "inizia subito a tenerne traccia. ti suggeriamo di partire da qui.",
@@ -251,6 +257,9 @@ const it = {
     sexFemale: "femmina",
     sexUnknown: "non so",
     sterilizedLabel: "sterilizzato/castrato",
+    weightLabel: "peso",
+    weightPlaceholder: "es. 4.5",
+    weightUnitLabel: "unità",
     birthDateLabel: "data di nascita",
     birthDatePlaceholder: "aaaa-mm-gg",
     notesLabel: "note",
@@ -288,6 +297,33 @@ const it = {
     editTitle: "modifica evento",
   },
 
+  weightForm: {
+    dateLabel: "data",
+    weightLabel: "peso",
+    unitLabel: "unità",
+    notesLabel: "note (opzionale)",
+    notesPlaceholder: "qualcosa da annotare",
+    errorInvalid: "inserisci un numero positivo",
+    saveNew: "registra peso",
+    saveEdit: "salva modifiche",
+    newTitle: "registra peso",
+    editTitle: "modifica peso",
+  },
+
+  petWeights: {
+    title: "pesate",
+    sectionLatest: "ultima",
+    sectionHistory: "cronologia",
+    empty: "nessuna pesata registrata",
+    addCta: "registra prima pesata",
+    addAnother: "aggiungi pesata",
+    statLatest: "ultima pesata",
+    deleteConfirmTitle: "elimina pesata?",
+    deleteConfirmMessage: "questa azione non può essere annullata.",
+    deleteConfirmOk: "elimina",
+    deleteConfirmCancel: "annulla",
+  },
+
   petDetail: {
     ageYear: "anno",
     ageYears: "anni",
@@ -323,6 +359,8 @@ const it = {
       deleteConfirmOk: "Elimina",
       deleteConfirmCancel: "Annulla",
       loadMore: "Carica altri",
+      pillToday: "Oggi",
+      pillTomorrow: "Domani",
       types: {
         VACCINATION: "Vaccinazione",
         VET_VISIT: "Visita veterinaria",

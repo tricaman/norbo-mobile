@@ -1,6 +1,8 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { AvatarUploader } from "@/components/media/AvatarUploader";
 import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
+import { ChipSelector, type ChipOption } from "@/components/ui/ChipSelector";
+import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -12,21 +14,17 @@ import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useForm } from "@/hooks/useForm";
 import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
-import {
-  PetCategory,
-  Sex,
-  type Pet,
-  type SpeciesResult,
-} from "@/types/pet.types";
+import { Sex, type Pet, type SpeciesResult } from "@/types/pet.types";
 import { queryClient } from "@/app/_layout";
 import type { MediaAsset } from "@/types/media.types";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Controller, FormProvider } from "react-hook-form";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { useTranslation } from "react-i18next";
+import { format, parseISO } from "date-fns";
 import { z } from "zod";
 
 const petEditSchema = z.object({
@@ -39,14 +37,6 @@ const petEditSchema = z.object({
 });
 
 type PetEditValues = z.infer<typeof petEditSchema>;
-
-const SEXES = [Sex.MALE, Sex.FEMALE, Sex.UNKNOWN] as const;
-
-const SEX_LABEL_KEYS = {
-  [Sex.MALE]: "petForm.sexMale",
-  [Sex.FEMALE]: "petForm.sexFemale",
-  [Sex.UNKNOWN]: "petForm.sexUnknown",
-} as const satisfies Record<Sex, string>;
 
 export default function EditPetScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -71,6 +61,15 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
   const router = useRouter();
   const { theme } = useUnistyles();
   const meta = CATEGORY_META[pet.category];
+
+  const sexOptions = useMemo<ChipOption<Sex>[]>(
+    () => [
+      { value: Sex.MALE, label: t("petForm.sexMale") },
+      { value: Sex.FEMALE, label: t("petForm.sexFemale") },
+      { value: Sex.UNKNOWN, label: t("petForm.sexUnknown") },
+    ],
+    [t],
+  );
 
   const { mutate: updatePhoto } = useMutation({
     mutationFn: (asset: MediaAsset) => petsApi.updatePhoto(petId, asset.id),
@@ -242,43 +241,30 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
               name="sex"
               control={form.control}
               render={({ field }) => (
-                <View style={styles.chips}>
-                  {SEXES.map((s) => (
-                    <NorboPressable
-                      key={s}
-                      style={[
-                        styles.chip,
-                        field.value === s && {
-                          backgroundColor: theme.colors.primary,
-                        },
-                      ]}
-                      scale="card"
-                      haptic="light"
-                      onPress={() => field.onChange(s)}
-                    >
-                      <Text
-                        style={[
-                          styles.chipText,
-                          {
-                            color:
-                              field.value === s
-                                ? theme.colors.textOnPrimary
-                                : theme.colors.textSecondary,
-                          },
-                        ]}
-                      >
-                        {t(SEX_LABEL_KEYS[s])}
-                      </Text>
-                    </NorboPressable>
-                  ))}
-                </View>
+                <ChipSelector
+                  options={sexOptions}
+                  value={field.value ?? Sex.UNKNOWN}
+                  onChange={field.onChange}
+                />
               )}
             />
-            <FormInput<PetEditValues>
+            <Text style={styles.fieldLabel}>{t("petForm.birthDateLabel")}</Text>
+            <Controller
               name="birthDate"
-              label={t("petForm.birthDateLabel")}
-              placeholder={t("petForm.birthDatePlaceholder")}
-              keyboardType="numbers-and-punctuation"
+              control={form.control}
+              render={({ field }) => {
+                const parsed = field.value ? parseISO(field.value) : null;
+                const selected =
+                  parsed && !Number.isNaN(parsed.getTime()) ? parsed : null;
+                return (
+                  <DateField
+                    value={selected}
+                    onChange={(d) => field.onChange(format(d, "yyyy-MM-dd"))}
+                    maximumDate={new Date()}
+                    placeholder={t("petForm.birthDatePlaceholder")}
+                  />
+                );
+              }}
             />
             <FormInput<PetEditValues>
               name="notes"
@@ -305,21 +291,6 @@ const styles = StyleSheet.create((theme) => ({
     padding: theme.spacing["3xl"],
     paddingBottom: SCREEN_BOTTOM_PADDING,
     gap: theme.spacing.md,
-  },
-  chips: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: theme.spacing.sm,
-    paddingVertical: theme.spacing.sm,
-  },
-  chip: {
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.xs,
-    borderRadius: theme.radius.pill,
-    backgroundColor: theme.colors.surface2,
-  },
-  chipText: {
-    ...theme.typography.footnote,
   },
   fieldLabel: {
     ...theme.typography.footnote,

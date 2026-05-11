@@ -2,7 +2,8 @@ import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import type { PetEvent } from "@/types/pet-event.types";
 import { PetEventStatus, PetEventType } from "@/types/pet-event.types";
-import { format, parseISO } from "date-fns";
+import { format, isToday, isTomorrow, parseISO } from "date-fns";
+import { enUS, it as itLocale } from "date-fns/locale";
 import React from "react";
 import { Alert, Text, View } from "react-native";
 import Animated, {
@@ -17,6 +18,27 @@ import { springs } from "@/hooks/useSpring";
 
 const SWIPE_THRESHOLD = -60;
 const ACTION_WIDTH = 64;
+
+interface SwipeActionProps {
+  icon: string;
+  label: string;
+  tint: string;
+  haptic: "light" | "medium" | "error";
+  onPress: () => void;
+}
+
+function SwipeAction({ icon, label, tint, haptic, onPress }: SwipeActionProps) {
+  return (
+    <NorboPressable style={styles.actionBtn} haptic={haptic} onPress={onPress}>
+      <View style={[styles.actionCircle, { backgroundColor: `${tint}22` }]}>
+        <IconSymbol name={icon} size={18} tintColor={tint} />
+      </View>
+      <Text style={[styles.actionLabel, { color: tint }]} numberOfLines={1}>
+        {label}
+      </Text>
+    </NorboPressable>
+  );
+}
 
 const EVENT_ICONS: Record<PetEventType, string> = {
   [PetEventType.VACCINATION]: "syringe",
@@ -50,9 +72,10 @@ export function EventItem({
   onEdit,
   onDelete,
 }: EventItemProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { theme } = useUnistyles();
   const translateX = useSharedValue(0);
+  const dateLocale = i18n.language.startsWith("it") ? itLocale : enUS;
 
   const isScheduled = event.status === PetEventStatus.SCHEDULED;
   const isCancelled = event.status === PetEventStatus.CANCELLED;
@@ -103,105 +126,73 @@ export function EventItem({
   }
 
   const dateStr = event.occurredAt ?? event.scheduledFor;
-  const dateLabel = dateStr ? format(parseISO(dateStr), "d MMM yyyy") : "";
+  const date = dateStr ? parseISO(dateStr) : null;
+  const dateLabel = date
+    ? format(date, "d MMM yyyy", { locale: dateLocale })
+    : "";
 
   const typeLabel = t(
     `petDetail.timeline.types.${event.type}` as "petDetail.timeline.types.VACCINATION",
   );
+
+  const subtitle = event.description?.trim()
+    ? `${event.description.trim()} · ${dateLabel}`
+    : `${typeLabel} · ${dateLabel}`;
+
+  const scheduledPill =
+    isScheduled && date
+      ? isToday(date)
+        ? t("petDetail.timeline.pillToday")
+        : isTomorrow(date)
+          ? t("petDetail.timeline.pillTomorrow")
+          : dateLabel
+      : null;
 
   return (
     <View style={styles.container}>
       {/* Action buttons revealed on swipe */}
       <View style={[styles.actions, { width: totalActionWidth }]}>
         {isScheduled && onComplete ? (
-          <NorboPressable
-            style={[
-              styles.actionBtn,
-              { backgroundColor: theme.colors.success },
-            ]}
+          <SwipeAction
+            icon="checkmark"
+            label={t("petDetail.timeline.actionComplete")}
+            tint={theme.colors.success}
             haptic="medium"
             onPress={() => {
               close();
               onComplete(event);
             }}
-          >
-            <IconSymbol
-              name="checkmark"
-              size={18}
-              tintColor={theme.colors.textOnPrimary}
-            />
-            <Text
-              style={[
-                styles.actionLabel,
-                { color: theme.colors.textOnPrimary },
-              ]}
-            >
-              {t("petDetail.timeline.actionComplete")}
-            </Text>
-          </NorboPressable>
+          />
         ) : null}
         {isScheduled && onCancel ? (
-          <NorboPressable
-            style={[
-              styles.actionBtn,
-              { backgroundColor: theme.colors.warning },
-            ]}
+          <SwipeAction
+            icon="xmark"
+            label={t("petDetail.timeline.actionCancel")}
+            tint={theme.colors.warning}
             haptic="light"
             onPress={() => {
               close();
               onCancel(event);
             }}
-          >
-            <IconSymbol
-              name="xmark"
-              size={18}
-              tintColor={theme.colors.textOnPrimary}
-            />
-            <Text
-              style={[
-                styles.actionLabel,
-                { color: theme.colors.textOnPrimary },
-              ]}
-            >
-              {t("petDetail.timeline.actionCancel")}
-            </Text>
-          </NorboPressable>
+          />
         ) : null}
-        <NorboPressable
-          style={[styles.actionBtn, { backgroundColor: theme.colors.info }]}
+        <SwipeAction
+          icon="pencil"
+          label={t("petDetail.timeline.actionEdit")}
+          tint={theme.colors.info}
           haptic="light"
           onPress={() => {
             close();
             onEdit(event);
           }}
-        >
-          <IconSymbol
-            name="pencil"
-            size={18}
-            tintColor={theme.colors.textOnPrimary}
-          />
-          <Text
-            style={[styles.actionLabel, { color: theme.colors.textOnPrimary }]}
-          >
-            {t("petDetail.timeline.actionEdit")}
-          </Text>
-        </NorboPressable>
-        <NorboPressable
-          style={[styles.actionBtn, { backgroundColor: theme.colors.error }]}
+        />
+        <SwipeAction
+          icon="trash.fill"
+          label={t("petDetail.timeline.actionDelete")}
+          tint={theme.colors.error}
           haptic="error"
           onPress={handleDelete}
-        >
-          <IconSymbol
-            name="trash.fill"
-            size={18}
-            tintColor={theme.colors.textOnPrimary}
-          />
-          <Text
-            style={[styles.actionLabel, { color: theme.colors.textOnPrimary }]}
-          >
-            {t("petDetail.timeline.actionDelete")}
-          </Text>
-        </NorboPressable>
+        />
       </View>
 
       {/* Swipeable row */}
@@ -210,7 +201,10 @@ export function EventItem({
           style={[
             animatedRow,
             styles.row,
-            { backgroundColor: theme.colors.surface },
+            {
+              backgroundColor: theme.colors.surface,
+              borderColor: theme.colors.border,
+            },
           ]}
         >
           <NorboPressable
@@ -232,7 +226,7 @@ export function EventItem({
             >
               <IconSymbol
                 name={EVENT_ICONS[event.type] ?? "calendar"}
-                size={18}
+                size={20}
                 tintColor={
                   isCancelled ? theme.colors.textTertiary : theme.colors.primary
                 }
@@ -258,32 +252,33 @@ export function EventItem({
                 style={[styles.meta, { color: theme.colors.textSecondary }]}
                 numberOfLines={1}
               >
-                {typeLabel}
-                {dateLabel ? ` · ${dateLabel}` : ""}
+                {subtitle}
               </Text>
             </View>
 
-            {/* Status badge */}
-            {isScheduled ? (
+            {/* Trailing badge: pill for scheduled, cost for past */}
+            {scheduledPill ? (
               <View
                 style={[
-                  styles.statusBadge,
-                  { backgroundColor: `${theme.colors.warning}22` },
+                  styles.pill,
+                  { backgroundColor: `${theme.colors.primary}22` },
                 ]}
               >
                 <Text
-                  style={[styles.statusLabel, { color: theme.colors.warning }]}
+                  style={[styles.pillLabel, { color: theme.colors.primary }]}
+                  numberOfLines={1}
                 >
-                  {t("petDetail.timeline.sectionUpcoming").toUpperCase()}
+                  {scheduledPill}
                 </Text>
               </View>
+            ) : event.cost != null ? (
+              <Text
+                style={[styles.cost, { color: theme.colors.textSecondary }]}
+                numberOfLines={1}
+              >
+                {`€${event.cost}`}
+              </Text>
             ) : null}
-
-            <IconSymbol
-              name="chevron.right"
-              size={13}
-              tintColor={theme.colors.textTertiary}
-            />
           </NorboPressable>
         </Animated.View>
       </GestureDetector>
@@ -301,32 +296,49 @@ const styles = StyleSheet.create((theme) => ({
     top: 0,
     bottom: 0,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingRight: theme.spacing.md,
   },
   actionBtn: {
     width: ACTION_WIDTH,
     alignItems: "center",
     justifyContent: "center",
-    gap: 3,
+    gap: 4,
+  },
+  actionCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: "center",
+    justifyContent: "center",
   },
   actionLabel: {
-    fontSize: 10,
+    ...theme.typography.caption,
     fontWeight: "600",
   },
   row: {
-    borderBottomWidth: theme.hairline,
-    borderBottomColor: theme.colors.border,
+    marginHorizontal: theme.spacing.lg,
+    marginBottom: theme.spacing.sm,
+    borderRadius: theme.radius.lg,
+    borderWidth: theme.hairline,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 1,
   },
   rowPressable: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.md,
     gap: theme.spacing.md,
   },
   iconBadge: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
@@ -337,19 +349,24 @@ const styles = StyleSheet.create((theme) => ({
   },
   title: {
     ...theme.typography.subhead,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   meta: {
     ...theme.typography.caption,
   },
-  statusBadge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+  pill: {
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: 4,
     borderRadius: theme.radius.pill,
+    flexShrink: 0,
   },
-  statusLabel: {
-    fontSize: 9,
-    fontWeight: "700",
-    letterSpacing: 0.4,
+  pillLabel: {
+    ...theme.typography.caption,
+    fontWeight: "600",
+  },
+  cost: {
+    ...theme.typography.caption,
+    fontWeight: "600",
+    flexShrink: 0,
   },
 }));

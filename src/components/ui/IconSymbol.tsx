@@ -11,6 +11,13 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     checkmark: "checkmark",
     magnifyingglass: "search",
     "square.and.pencil": "create-outline",
+    calendar: "calendar-outline",
+    "photo.on.rectangle": "image-outline",
+    creditcard: "card-outline",
+    heart: "heart-outline",
+    bell: "notifications-outline",
+    photo: "image-outline",
+    scalemass: "barbell-outline",
 
     // People
     person: "person-outline",
@@ -38,6 +45,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     "plus.circle.fill": "add-circle",
     plus: "add",
     pencil: "pencil",
+    "ellipsis.horizontal": "ellipsis-horizontal",
     "ellipsis.circle": "ellipsis-horizontal-circle-outline",
     "trash.fill": "trash",
     "xmark.circle.fill": "close-circle",
@@ -49,6 +57,19 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     "questionmark.circle": "help-circle-outline",
     "hand.raised": "shield-checkmark-outline",
     key: "key-outline",
+
+    // Pet events
+    syringe: "bandage-outline",
+    stethoscope: "medkit-outline",
+    "shield.checkerboard": "shield-checkmark-outline",
+    scissors: "cut-outline",
+    "drop.fill": "water",
+    "arrow.triangle.2.circlepath": "refresh",
+    "leaf.fill": "leaf",
+    "fork.knife": "restaurant-outline",
+    "pill.fill": "flask-outline",
+    "camera.fill": "camera",
+    "note.text": "document-text-outline",
   };
 
 export type IconSymbolName = keyof typeof ICON_MAP;

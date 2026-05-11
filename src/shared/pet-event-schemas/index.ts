@@ -9,30 +9,30 @@
  * Usage on the backend  : ZodValidationPipe(PetEventExtraSchemaByType[type])
  * Usage on the mobile   : zodResolver(buildEventFormSchema(type))
  */
-import { z } from 'zod';
-import type { ZodType } from 'zod';
+import { z } from "zod";
+import type { ZodType } from "zod";
 
 // ── Enums ─────────────────────────────────────────────────────────────────────
 
 export enum PetEventType {
-  VACCINATION = 'VACCINATION',
-  VET_VISIT = 'VET_VISIT',
-  PARASITE_TREATMENT = 'PARASITE_TREATMENT',
-  GROOMING = 'GROOMING',
-  WEIGHT_RECORD = 'WEIGHT_RECORD',
-  WATER_PARAMETERS = 'WATER_PARAMETERS',
-  WATER_CHANGE = 'WATER_CHANGE',
-  MOLT = 'MOLT',
-  FEEDING_LOG = 'FEEDING_LOG',
-  MEDICATION = 'MEDICATION',
-  PHOTO = 'PHOTO',
-  NOTE = 'NOTE',
+  VACCINATION = "VACCINATION",
+  VET_VISIT = "VET_VISIT",
+  PARASITE_TREATMENT = "PARASITE_TREATMENT",
+  GROOMING = "GROOMING",
+  WEIGHT_RECORD = "WEIGHT_RECORD",
+  WATER_PARAMETERS = "WATER_PARAMETERS",
+  WATER_CHANGE = "WATER_CHANGE",
+  MOLT = "MOLT",
+  FEEDING_LOG = "FEEDING_LOG",
+  MEDICATION = "MEDICATION",
+  PHOTO = "PHOTO",
+  NOTE = "NOTE",
 }
 
 export enum PetEventStatus {
-  SCHEDULED = 'SCHEDULED',
-  OCCURRED = 'OCCURRED',
-  CANCELLED = 'CANCELLED',
+  SCHEDULED = "SCHEDULED",
+  OCCURRED = "OCCURRED",
+  CANCELLED = "CANCELLED",
 }
 
 /**
@@ -40,17 +40,17 @@ export enum PetEventStatus {
  * Must be kept in sync with `PetCategory` in `pet.entity.ts`.
  */
 export enum PetCategory {
-  MAMMAL_DOG = 'MAMMAL_DOG',
-  MAMMAL_CAT = 'MAMMAL_CAT',
-  MAMMAL_SMALL = 'MAMMAL_SMALL',
-  BIRD = 'BIRD',
-  FISH_FRESHWATER = 'FISH_FRESHWATER',
-  FISH_SALTWATER = 'FISH_SALTWATER',
-  REPTILE = 'REPTILE',
-  AMPHIBIAN = 'AMPHIBIAN',
-  INVERTEBRATE = 'INVERTEBRATE',
-  EQUINE = 'EQUINE',
-  FARM = 'FARM',
+  MAMMAL_DOG = "MAMMAL_DOG",
+  MAMMAL_CAT = "MAMMAL_CAT",
+  MAMMAL_SMALL = "MAMMAL_SMALL",
+  BIRD = "BIRD",
+  FISH_FRESHWATER = "FISH_FRESHWATER",
+  FISH_SALTWATER = "FISH_SALTWATER",
+  REPTILE = "REPTILE",
+  AMPHIBIAN = "AMPHIBIAN",
+  INVERTEBRATE = "INVERTEBRATE",
+  EQUINE = "EQUINE",
+  FARM = "FARM",
 }
 
 // ── Type-specific extra schemas ───────────────────────────────────────────────
@@ -74,7 +74,7 @@ export type VetVisitExtra = z.infer<typeof VetVisitExtraSchema>;
 
 export const ParasiteTreatmentExtraSchema = z.object({
   productName: z.string().min(1).max(120),
-  treatmentType: z.enum(['INTERNAL', 'EXTERNAL', 'BOTH']),
+  treatmentType: z.enum(["INTERNAL", "EXTERNAL", "BOTH"]),
   nextDueDate: z.coerce.date().optional(),
   vetName: z.string().max(120).optional(),
 });
@@ -90,8 +90,13 @@ export const GroomingExtraSchema = z.object({
 export type GroomingExtra = z.infer<typeof GroomingExtraSchema>;
 
 export const WeightRecordExtraSchema = z.object({
-  weight: z.number().positive(),
-  unit: z.enum(['kg', 'lb']),
+  /**
+   * Canonical weight in integer milligrams.
+   * Range covers from a few mg (baby invertebrates) up to ~5 t.
+   * Clients MUST convert from their preferred display unit before submit.
+   */
+  weightMg: z.number().int().positive().max(5_000_000_000),
+  notes: z.string().max(500).optional(),
 });
 export type WeightRecordExtra = z.infer<typeof WeightRecordExtraSchema>;
 

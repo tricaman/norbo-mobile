@@ -1,26 +1,21 @@
 export enum PetCategory {
-  MAMMAL_DOG = 'MAMMAL_DOG',
-  MAMMAL_CAT = 'MAMMAL_CAT',
-  MAMMAL_SMALL = 'MAMMAL_SMALL',
-  BIRD = 'BIRD',
-  FISH_FRESHWATER = 'FISH_FRESHWATER',
-  FISH_SALTWATER = 'FISH_SALTWATER',
-  REPTILE = 'REPTILE',
-  AMPHIBIAN = 'AMPHIBIAN',
-  INVERTEBRATE = 'INVERTEBRATE',
-  EQUINE = 'EQUINE',
-  FARM = 'FARM',
+  MAMMAL_DOG = "MAMMAL_DOG",
+  MAMMAL_CAT = "MAMMAL_CAT",
+  MAMMAL_SMALL = "MAMMAL_SMALL",
+  BIRD = "BIRD",
+  FISH_FRESHWATER = "FISH_FRESHWATER",
+  FISH_SALTWATER = "FISH_SALTWATER",
+  REPTILE = "REPTILE",
+  AMPHIBIAN = "AMPHIBIAN",
+  INVERTEBRATE = "INVERTEBRATE",
+  EQUINE = "EQUINE",
+  FARM = "FARM",
 }
 
 export enum Sex {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  UNKNOWN = 'UNKNOWN',
-}
-
-export enum WeightUnit {
-  kg = 'kg',
-  lb = 'lb',
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  UNKNOWN = "UNKNOWN",
 }
 
 export interface SpeciesResult {
@@ -45,8 +40,6 @@ export interface Pet {
   acquiredAt: string | null;
   sex: Sex;
   sterilized: boolean | null;
-  currentWeight: number | null;
-  weightUnit: WeightUnit;
   notes: string | null;
   deletedAt: string | null;
   createdAt: string;
@@ -64,8 +57,6 @@ export interface CreatePetInput {
   acquiredAt?: string | null;
   sex?: Sex;
   sterilized?: boolean | null;
-  currentWeight?: number | null;
-  weightUnit?: WeightUnit;
   notes?: string | null;
 }
 
@@ -78,8 +69,6 @@ export interface UpdatePetInput {
   acquiredAt?: string | null;
   sex?: Sex;
   sterilized?: boolean | null;
-  currentWeight?: number | null;
-  weightUnit?: WeightUnit;
   notes?: string | null;
 }
 
