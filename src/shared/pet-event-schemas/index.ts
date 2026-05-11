@@ -1,0 +1,291 @@
+/**
+ * pet-event-schemas — shared Zod schemas for PetEvent polymorphic payload.
+ *
+ * Single source of truth for all 12 PetEventType-specific `extra` schemas.
+ * Kept in sync between norbo-api and norbo-mobile: both copies must be
+ * identical. When a future monorepo workspace is set up this file becomes
+ * a proper internal package and the duplication disappears.
+ *
+ * Usage on the backend  : ZodValidationPipe(PetEventExtraSchemaByType[type])
+ * Usage on the mobile   : zodResolver(buildEventFormSchema(type))
+ */
+import { z } from 'zod';
+import type { ZodType } from 'zod';
+
+// ── Enums ─────────────────────────────────────────────────────────────────────
+
+export enum PetEventType {
+  VACCINATION = 'VACCINATION',
+  VET_VISIT = 'VET_VISIT',
+  PARASITE_TREATMENT = 'PARASITE_TREATMENT',
+  GROOMING = 'GROOMING',
+  WEIGHT_RECORD = 'WEIGHT_RECORD',
+  WATER_PARAMETERS = 'WATER_PARAMETERS',
+  WATER_CHANGE = 'WATER_CHANGE',
+  MOLT = 'MOLT',
+  FEEDING_LOG = 'FEEDING_LOG',
+  MEDICATION = 'MEDICATION',
+  PHOTO = 'PHOTO',
+  NOTE = 'NOTE',
+}
+
+export enum PetEventStatus {
+  SCHEDULED = 'SCHEDULED',
+  OCCURRED = 'OCCURRED',
+  CANCELLED = 'CANCELLED',
+}
+
+/**
+ * PetCategory mirrored from pet-management domain entity.
+ * Must be kept in sync with `PetCategory` in `pet.entity.ts`.
+ */
+export enum PetCategory {
+  MAMMAL_DOG = 'MAMMAL_DOG',
+  MAMMAL_CAT = 'MAMMAL_CAT',
+  MAMMAL_SMALL = 'MAMMAL_SMALL',
+  BIRD = 'BIRD',
+  FISH_FRESHWATER = 'FISH_FRESHWATER',
+  FISH_SALTWATER = 'FISH_SALTWATER',
+  REPTILE = 'REPTILE',
+  AMPHIBIAN = 'AMPHIBIAN',
+  INVERTEBRATE = 'INVERTEBRATE',
+  EQUINE = 'EQUINE',
+  FARM = 'FARM',
+}
+
+// ── Type-specific extra schemas ───────────────────────────────────────────────
+
+export const VaccinationExtraSchema = z.object({
+  vaccineName: z.string().min(1).max(120),
+  batchNumber: z.string().max(60).optional(),
+  nextDueDate: z.coerce.date().optional(),
+  vetName: z.string().max(120).optional(),
+});
+export type VaccinationExtra = z.infer<typeof VaccinationExtraSchema>;
+
+export const VetVisitExtraSchema = z.object({
+  vetName: z.string().max(120).optional(),
+  clinic: z.string().max(120).optional(),
+  reason: z.string().min(1).max(500),
+  diagnosis: z.string().max(2000).optional(),
+  prescription: z.string().max(2000).optional(),
+});
+export type VetVisitExtra = z.infer<typeof VetVisitExtraSchema>;
+
+export const ParasiteTreatmentExtraSchema = z.object({
+  productName: z.string().min(1).max(120),
+  treatmentType: z.enum(['INTERNAL', 'EXTERNAL', 'BOTH']),
+  nextDueDate: z.coerce.date().optional(),
+  vetName: z.string().max(120).optional(),
+});
+export type ParasiteTreatmentExtra = z.infer<
+  typeof ParasiteTreatmentExtraSchema
+>;
+
+export const GroomingExtraSchema = z.object({
+  groomerName: z.string().max(120).optional(),
+  services: z.array(z.string().max(80)).optional(),
+  notes: z.string().max(1000).optional(),
+});
+export type GroomingExtra = z.infer<typeof GroomingExtraSchema>;
+
+export const WeightRecordExtraSchema = z.object({
+  weight: z.number().positive(),
+  unit: z.enum(['kg', 'lb']),
+});
+export type WeightRecordExtra = z.infer<typeof WeightRecordExtraSchema>;
+
+export const WaterParametersExtraSchema = z.object({
+  ph: z.number().min(0).max(14).optional(),
+  ammonia: z.number().min(0).optional(),
+  nitrite: z.number().min(0).optional(),
+  nitrate: z.number().min(0).optional(),
+  temp: z.number().optional(),
+  gh: z.number().min(0).optional(),
+  kh: z.number().min(0).optional(),
+  salinity: z.number().min(0).optional(),
+});
+export type WaterParametersExtra = z.infer<typeof WaterParametersExtraSchema>;
+
+export const WaterChangeExtraSchema = z.object({
+  volumeChangedPercent: z.number().min(0).max(100).optional(),
+  productsUsed: z.array(z.string().max(80)).optional(),
+  notes: z.string().max(1000).optional(),
+});
+export type WaterChangeExtra = z.infer<typeof WaterChangeExtraSchema>;
+
+export const MoltExtraSchema = z.object({
+  notes: z.string().max(1000).optional(),
+});
+export type MoltExtra = z.infer<typeof MoltExtraSchema>;
+
+export const FeedingLogExtraSchema = z.object({
+  foodType: z.string().max(120).optional(),
+  amount: z.number().positive().optional(),
+  unit: z.string().max(30).optional(),
+  notes: z.string().max(1000).optional(),
+});
+export type FeedingLogExtra = z.infer<typeof FeedingLogExtraSchema>;
+
+export const MedicationExtraSchema = z.object({
+  medicineName: z.string().min(1).max(120),
+  dosage: z.string().max(120).optional(),
+  frequency: z.string().max(120).optional(),
+  durationDays: z.number().int().positive().optional(),
+  vetName: z.string().max(120).optional(),
+});
+export type MedicationExtra = z.infer<typeof MedicationExtraSchema>;
+
+export const PhotoExtraSchema = z.object({
+  caption: z.string().max(500).optional(),
+});
+export type PhotoExtra = z.infer<typeof PhotoExtraSchema>;
+
+export const NoteExtraSchema = z.object({
+  content: z.string().min(1).max(5000),
+});
+export type NoteExtra = z.infer<typeof NoteExtraSchema>;
+
+// ── Discriminator map ─────────────────────────────────────────────────────────
+
+export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
+  [PetEventType.VACCINATION]: VaccinationExtraSchema,
+  [PetEventType.VET_VISIT]: VetVisitExtraSchema,
+  [PetEventType.PARASITE_TREATMENT]: ParasiteTreatmentExtraSchema,
+  [PetEventType.GROOMING]: GroomingExtraSchema,
+  [PetEventType.WEIGHT_RECORD]: WeightRecordExtraSchema,
+  [PetEventType.WATER_PARAMETERS]: WaterParametersExtraSchema,
+  [PetEventType.WATER_CHANGE]: WaterChangeExtraSchema,
+  [PetEventType.MOLT]: MoltExtraSchema,
+  [PetEventType.FEEDING_LOG]: FeedingLogExtraSchema,
+  [PetEventType.MEDICATION]: MedicationExtraSchema,
+  [PetEventType.PHOTO]: PhotoExtraSchema,
+  [PetEventType.NOTE]: NoteExtraSchema,
+};
+
+/**
+ * Validates and parses the `extra` payload for a given event type.
+ * Throws a ZodError if the payload does not match the schema.
+ */
+export function validatePetEventExtra(
+  type: PetEventType,
+  extra: unknown,
+): Record<string, unknown> {
+  return PetEventExtraSchemaByType[type].parse(extra) as Record<
+    string,
+    unknown
+  >;
+}
+
+// ── Category → available event types ─────────────────────────────────────────
+
+export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
+  [PetCategory.MAMMAL_DOG]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.GROOMING,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.MAMMAL_CAT]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.GROOMING,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.MAMMAL_SMALL]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.BIRD]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.FISH_FRESHWATER]: [
+    PetEventType.VET_VISIT,
+    PetEventType.WATER_PARAMETERS,
+    PetEventType.WATER_CHANGE,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.FISH_SALTWATER]: [
+    PetEventType.VET_VISIT,
+    PetEventType.WATER_PARAMETERS,
+    PetEventType.WATER_CHANGE,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.REPTILE]: [
+    PetEventType.VET_VISIT,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.MOLT,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.AMPHIBIAN]: [
+    PetEventType.VET_VISIT,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.WATER_PARAMETERS,
+    PetEventType.WATER_CHANGE,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.INVERTEBRATE]: [
+    PetEventType.VET_VISIT,
+    PetEventType.MOLT,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.EQUINE]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.GROOMING,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+  [PetCategory.FARM]: [
+    PetEventType.VACCINATION,
+    PetEventType.VET_VISIT,
+    PetEventType.PARASITE_TREATMENT,
+    PetEventType.WEIGHT_RECORD,
+    PetEventType.FEEDING_LOG,
+    PetEventType.MEDICATION,
+    PetEventType.PHOTO,
+    PetEventType.NOTE,
+  ],
+};

@@ -1,17 +1,22 @@
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+} from "react-native-reanimated";
 import { NorboPressable } from "@/components/CustomPressable";
 import { Avatar } from "@/components/ui/Avatar";
 import { useMediaUpload } from "@/hooks/useMediaUpload";
-import type { MediaAsset } from "@/types/media.types";
+import type { MediaAsset, MediaContextType } from "@/types/media.types";
 
 interface AvatarUploaderProps {
   name: string | null | undefined;
   currentUrl: string | null | undefined;
   onUploaded: (asset: MediaAsset) => void;
   size?: "md" | "lg" | "xl";
+  context?: MediaContextType;
+  contextRef?: string;
 }
 
 /**
@@ -26,17 +31,20 @@ export function AvatarUploader({
   currentUrl,
   onUploaded,
   size = "xl",
+  context = "USER_AVATAR",
+  contextRef,
 }: AvatarUploaderProps) {
   const { theme } = useUnistyles();
   const { state, progress, asset, pickAndUpload } = useMediaUpload();
 
-  const isUploading = state === "uploading" || state === "confirming" || state === "picking";
+  const isUploading =
+    state === "uploading" || state === "confirming" || state === "picking";
 
   const displayUrl = asset?.thumbMdUrl ?? asset?.originalUrl ?? currentUrl;
 
   const handlePress = async () => {
     if (isUploading) return;
-    const uploaded = await pickAndUpload("USER_AVATAR");
+    const uploaded = await pickAndUpload(context, contextRef);
     if (uploaded) {
       onUploaded(uploaded);
     }

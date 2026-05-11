@@ -190,6 +190,18 @@ function AppInner() {
         name="pets/[id]/edit"
         options={{ animation: "slide_from_right" }}
       />
+      <Stack.Screen
+        name="pets/[id]/events/new"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/events/[eventId]/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="pets/[id]/events/[eventId]/edit"
+        options={{ animation: "slide_from_right" }}
+      />
     </Stack>
   );
 }

@@ -16,7 +16,10 @@ export interface UseMediaUploadReturn {
   progress: number;
   asset: MediaAsset | null;
   error: string | null;
-  pickAndUpload: (context: MediaContextType) => Promise<MediaAsset | null>;
+  pickAndUpload: (
+    context: MediaContextType,
+    contextRef?: string,
+  ) => Promise<MediaAsset | null>;
   reset: () => void;
 }
 
@@ -48,7 +51,10 @@ export function useMediaUpload(): UseMediaUploadReturn {
   }, []);
 
   const pickAndUpload = useCallback(
-    async (context: MediaContextType): Promise<MediaAsset | null> => {
+    async (
+      context: MediaContextType,
+      contextRef?: string,
+    ): Promise<MediaAsset | null> => {
       aborted.current = false;
       setError(null);
       setProgress(0);
@@ -83,6 +89,7 @@ export function useMediaUpload(): UseMediaUploadReturn {
 
         const { data: urlData } = await mediaApi.requestUploadUrl({
           context,
+          contextRef,
           mimeType,
           sizeBytes,
         });
@@ -92,14 +99,9 @@ export function useMediaUpload(): UseMediaUploadReturn {
           return null;
         }
 
-        await uploadFileToR2(
-          urlData.uploadUrl,
-          picked.uri,
-          mimeType,
-          (p) => {
-            if (!aborted.current) setProgress(p);
-          },
-        );
+        await uploadFileToR2(urlData.uploadUrl, picked.uri, mimeType, (p) => {
+          if (!aborted.current) setProgress(p);
+        });
 
         if (aborted.current) {
           setState("idle");
@@ -116,8 +118,7 @@ export function useMediaUpload(): UseMediaUploadReturn {
         return confirmedAsset;
       } catch (err) {
         if (!aborted.current) {
-          const message =
-            err instanceof Error ? err.message : "Upload failed";
+          const message = err instanceof Error ? err.message : "Upload failed";
           setError(message);
           setState("error");
         }

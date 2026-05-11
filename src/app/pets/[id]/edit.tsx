@@ -1,4 +1,6 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import { AvatarUploader } from "@/components/media/AvatarUploader";
+import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -10,8 +12,14 @@ import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useForm } from "@/hooks/useForm";
 import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
-import { PetCategory, Sex, type Pet, type SpeciesResult } from "@/types/pet.types";
+import {
+  PetCategory,
+  Sex,
+  type Pet,
+  type SpeciesResult,
+} from "@/types/pet.types";
 import { queryClient } from "@/app/_layout";
+import type { MediaAsset } from "@/types/media.types";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -62,6 +70,16 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
   const { t } = useTranslation();
   const router = useRouter();
   const { theme } = useUnistyles();
+  const meta = CATEGORY_META[pet.category];
+
+  const { mutate: updatePhoto } = useMutation({
+    mutationFn: (asset: MediaAsset) => petsApi.updatePhoto(petId, asset.id),
+    showSuccessToast: true,
+    successMessage: t("petDetail.editPhoto"),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["pets", petId] });
+    },
+  });
 
   const form = useForm<PetEditValues>({
     schema: petEditSchema,
@@ -79,7 +97,8 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
   const [speciesInput, setSpeciesInput] = useState("");
   const [debouncedInput, setDebouncedInput] = useState("");
   const [speciesLabel, setSpeciesLabel] = useState(
-    pet.speciesLabelFreetext ?? (pet.speciesId ? t("petForm.speciesLabel") : ""),
+    pet.speciesLabelFreetext ??
+      (pet.speciesId ? t("petForm.speciesLabel") : ""),
   );
 
   useEffect(() => {
@@ -147,6 +166,17 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
           contentContainerStyle={styles.scroll}
           keyboardShouldPersistTaps="handled"
         >
+          <View style={[styles.avatarWrapper, { backgroundColor: meta.tint }]}>
+            <AvatarUploader
+              name={pet.name}
+              currentUrl={pet.photoUrl ?? null}
+              context="PET_AVATAR"
+              contextRef={`pet:${petId}`}
+              onUploaded={updatePhoto}
+              size="xl"
+            />
+          </View>
+
           <FormCard label={t("petForm.nameLabel")}>
             <FormInput<PetEditValues>
               name="name"
@@ -159,7 +189,11 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
             {speciesId ? (
               <View style={styles.speciesSelected}>
                 <Text style={styles.speciesSelectedText}>{speciesLabel}</Text>
-                <NorboPressable scale="row" haptic="light" onPress={clearSpecies}>
+                <NorboPressable
+                  scale="row"
+                  haptic="light"
+                  onPress={clearSpecies}
+                >
                   <IconSymbol
                     name="xmark.circle.fill"
                     size={18}
@@ -192,7 +226,9 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
                   >
                     <Text style={styles.suggestionText}>{s.commonName}</Text>
                     {s.scientificName ? (
-                      <Text style={styles.suggestionSci}>{s.scientificName}</Text>
+                      <Text style={styles.suggestionSci}>
+                        {s.scientificName}
+                      </Text>
                     ) : null}
                   </NorboPressable>
                 ))}
@@ -259,6 +295,12 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
 }
 
 const styles = StyleSheet.create((theme) => ({
+  avatarWrapper: {
+    alignItems: "center",
+    paddingVertical: theme.spacing["2xl"],
+    borderRadius: theme.radius.xl,
+    marginBottom: theme.spacing.sm,
+  },
   scroll: {
     padding: theme.spacing["3xl"],
     paddingBottom: SCREEN_BOTTOM_PADDING,

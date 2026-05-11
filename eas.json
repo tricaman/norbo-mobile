@@ -19,8 +19,8 @@
       "env": {
         "APP_VARIANT": "production",
         "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
-        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
-        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+        "EXPO_PUBLIC_WS_URL": "wss://norbo-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "norbo"
       },
       "android": {
         "buildType": "apk"
@@ -31,8 +31,8 @@
       "env": {
         "APP_VARIANT": "production",
         "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
-        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
-        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+        "EXPO_PUBLIC_WS_URL": "wss://norbo-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "norbo"
       },
       "android": {
         "buildType": "apk",
@@ -43,8 +43,8 @@
       "env": {
         "APP_VARIANT": "production",
         "EXPO_PUBLIC_API_URL": "https://norbo-api.mariustrica.com",
-        "EXPO_PUBLIC_WS_URL": "wss://dit-ws.mariustrica.com/ws",
-        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "dit"
+        "EXPO_PUBLIC_WS_URL": "wss://norbo-ws.mariustrica.com/ws",
+        "EXPO_PUBLIC_AUTH_CALLBACK_SCHEME": "norbo"
       },
       "android": {
         "buildType": "app-bundle"

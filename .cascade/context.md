@@ -2,7 +2,7 @@
 
 ## Overview
 
-norbo-mobile is the mobile client for the Dit application. Built with React Native (Expo), it handles authentication, real-time ping/dah signaling via WebSocket, contact management, and push notifications. Uses Zustand for state management and axios for REST API calls.
+norbo-mobile is the mobile client for the norbo application. Built with React Native (Expo), it handles authentication, real-time ping/dah signaling via WebSocket, contact management, and push notifications. Uses Zustand for state management and axios for REST API calls.
 
 ## Architecture
 
@@ -22,7 +22,7 @@ norbo-mobile is the mobile client for the Dit application. Built with React Nati
 
 - **Email OTP**: `sendOtp()`, `verifyOtp()`
 - **Social OAuth**: `getSocialRedirectUrl()` — Opens system browser with state cookie
-- **WebSocket JWT**: `getWsToken()` — Fetches short-lived JWT for dit-ping auth
+- **WebSocket JWT**: `getWsToken()` — Fetches short-lived JWT for norbo-ping auth
 - **Session management**: Session token stored in MMKV, injected as Cookie header
 
 #### PingsService (`services/pings.api.ts`)
@@ -34,7 +34,7 @@ norbo-mobile is the mobile client for the Dit application. Built with React Nati
 
 #### WebSocketService (`services/websocket.service.ts`)
 
-- Singleton service managing persistent connection to dit-ping (:8080)
+- Singleton service managing persistent connection to norbo-ping (:8080)
 - **Connection flow**:
   1. Fetch `wsToken` from norbo-api (`POST /auth/ws-token`)
   2. Connect to `ws://localhost:8080/ws`
@@ -122,11 +122,11 @@ norbo-mobile is the mobile client for the Dit application. Built with React Nati
 
 ```
 1. User taps "Sign in with Google"
-2. Mobile opens GET /auth/social-redirect?provider=google&callbackURL=dit://auth/callback
+2. Mobile opens GET /auth/social-redirect?provider=google&callbackURL=norbo://auth/callback
    in system browser (expo-web-browser)
 3. norbo-api sets state cookie, redirects to Google
 4. Google callback → norbo-api → creates/finds user, sets session cookie
-5. norbo-api redirects to dit://auth/callback?session_token=...
+5. norbo-api redirects to norbo://auth/callback?session_token=...
 6. Mobile intercepts deep link, extracts session_token, stores in MMKV
 7. Fetch wsToken → POST /auth/ws-token
 8. Connect WebSocket with wsToken
@@ -145,13 +145,13 @@ User taps "Send Dit" → useSendPing()
                          ↓
                     norbo-api → INSERT + PUBLISH ping:pubsub:{recipientId}
                          ↓
-                    dit-ping → WebSocket → recipient mobile
+                    norbo-ping → WebSocket → recipient mobile
 ```
 
 **Receive ping** (online):
 
 ```
-dit-ping → {type:"ping_in", pingId, senderId, ttlSeconds, ...}
+norbo-ping → {type:"ping_in", pingId, senderId, ttlSeconds, ...}
             ↓
        WebSocketService.emit("ping_in")
             ↓
@@ -163,7 +163,7 @@ dit-ping → {type:"ping_in", pingId, senderId, ttlSeconds, ...}
 **Receive ping** (offline):
 
 ```
-norbo-api → BullMQ → dit-worker → FCM/APNs
+norbo-api → BullMQ → norbo-notifications-worker → FCM/APNs
                                    ↓
                               Mobile receives push
                                    ↓
@@ -181,15 +181,15 @@ User taps "Dah" → useDahPing()
                     ↓
                markDahed() (optimistic update)
                     ↓
-               dit-ping → UPDATE status=DAHED
+               norbo-ping → UPDATE status=DAHED
                     ↓
-               dit-ping → {type:"dahed", pingId, dahedAt} → sender mobile
+               norbo-ping → {type:"dahed", pingId, dahedAt} → sender mobile
 ```
 
 **TTL expiry**:
 
 ```
-dit-ping → time.AfterFunc fires → UPDATE status=EXPIRED
+norbo-ping → time.AfterFunc fires → UPDATE status=EXPIRED
                                      ↓
                                 {type:"expired", pingId}
                                      ↓
@@ -244,5 +244,5 @@ npx expo start
 ### Related Services
 
 - **norbo-api** (NestJS :3000) — REST API, authentication, ping creation
-- **dit-ping** (Go :8080) — WebSocket server for real-time signaling
-- **dit-worker** (Node) — BullMQ consumer for push notifications
+- **norbo-ping** (Go :8080) — WebSocket server for real-time signaling
+- **norbo-notifications-worker** (Node) — BullMQ consumer for push notifications

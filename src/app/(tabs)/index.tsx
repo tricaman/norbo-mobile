@@ -1,12 +1,13 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
+import { Avatar } from "@/components/ui/Avatar";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { ListSeparator } from "@/components/ui/ListSeparator";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { TabScreen } from "@/components/ui/TabScreen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { petsApi } from "@/services/pets.api";
-import type { Pet } from "@/types/pet.types";
+import { useAuthStore } from "@/stores/auth.store";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -18,41 +19,65 @@ export default function PetsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { theme } = useUnistyles();
+  const user = useAuthStore((s) => s.user);
+  const firstName = user?.name?.split(" ")[0] ?? null;
 
   const query = useQuery({
     queryKey: ["pets"],
     queryFn: () => petsApi.list().then((r) => r.data),
   });
 
-  return (
-    <TabScreen
-      title={t("pets.title")}
-      right={
+  const listHeader = (
+    <View style={styles.header}>
+      <View style={styles.headerRow}>
+        <Avatar name={user?.name} source={user?.photoUrl} size="sm" />
         <NorboPressable
-          style={styles.addBtn}
+          style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
           scale="row"
           haptic="medium"
           onPress={() => router.push("/pets/new")}
         >
           <IconSymbol
-            name="plus.circle.fill"
-            size={26}
-            tintColor={theme.colors.primary}
+            name="plus"
+            size={16}
+            tintColor={theme.colors.textOnPrimary}
           />
         </NorboPressable>
-      }
-    >
+      </View>
+
+      {firstName ? (
+        <Text style={[styles.greeting, { color: theme.colors.textPrimary }]}>
+          {`Ciao, ${firstName}`}
+        </Text>
+      ) : null}
+
+      <Text
+        style={[styles.sectionLabel, { color: theme.colors.textSecondary }]}
+      >
+        {t("pets.title")}
+      </Text>
+    </View>
+  );
+
+  return (
+    // TabScreen without title: TabHeader is suppressed, but tab slide
+    // animation from TabScreen is preserved. The greeting section
+    // replaces the standard TabHeader for this screen.
+    <TabScreen>
       <QueryBoundary query={query} isEmpty={() => false}>
         {(pets, { refetch, isFetching }) => (
           <FlatList
             data={pets}
             keyExtractor={(p) => p.id}
+            numColumns={2}
+            columnWrapperStyle={styles.columnWrapper}
             renderItem={({ item }) => (
-              <PetRow
+              <PetCard
                 pet={item}
                 onPress={() => router.push(`/pets/${item.id}`)}
               />
             )}
+            ListHeaderComponent={listHeader}
             ListEmptyComponent={
               <PetsEmptyHero
                 title={t("pets.emptyTitle")}
@@ -61,7 +86,6 @@ export default function PetsScreen() {
                 onPressCta={() => router.push("/pets/new")}
               />
             }
-            ItemSeparatorComponent={ListSeparator}
             contentContainerStyle={styles.list}
             onRefresh={refetch}
             refreshing={isFetching}
@@ -72,76 +96,41 @@ export default function PetsScreen() {
   );
 }
 
-function PetRow({ pet, onPress }: { pet: Pet; onPress: () => void }) {
-  const { t } = useTranslation();
-  const { theme } = useUnistyles();
-
-  return (
-    <NorboPressable
-      style={styles.row}
-      scale="row"
-      haptic="light"
-      onPress={onPress}
-    >
-      <View style={[styles.rowIcon, { backgroundColor: theme.colors.surface }]}>
-        <IconSymbol
-          name="pawprint.fill"
-          size={20}
-          tintColor={theme.colors.primary}
-        />
-      </View>
-      <View style={styles.rowContent}>
-        <Text style={styles.rowName}>{pet.name}</Text>
-        <Text style={styles.rowMeta}>
-          {t(`petForm.categories.${pet.category}`)}
-          {pet.speciesLabelFreetext ? ` · ${pet.speciesLabelFreetext}` : ""}
-        </Text>
-      </View>
-      <IconSymbol
-        name="chevron.right"
-        size={16}
-        tintColor={theme.colors.textTertiary}
-      />
-    </NorboPressable>
-  );
-}
-
 const styles = StyleSheet.create((theme) => ({
+  header: {
+    paddingHorizontal: theme.spacing.lg,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.lg,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: theme.spacing.lg,
+  },
   addBtn: {
-    width: 40,
-    height: 40,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     alignItems: "center",
     justifyContent: "center",
+  },
+  greeting: {
+    ...theme.typography.title1,
+    fontWeight: "700",
+    marginBottom: theme.spacing.xs,
+  },
+  sectionLabel: {
+    ...theme.typography.subhead,
+    marginTop: theme.spacing.lg,
   },
   list: {
     flexGrow: 1,
-    paddingTop: theme.spacing.md,
     paddingBottom: SCREEN_BOTTOM_PADDING,
   },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: theme.spacing["3xl"],
-    paddingVertical: theme.spacing.md,
-    gap: theme.spacing.md,
-  },
-  rowIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  rowContent: {
-    flex: 1,
-    gap: 2,
-  },
-  rowName: {
-    ...theme.typography.subhead,
-    color: theme.colors.textPrimary,
-  },
-  rowMeta: {
-    ...theme.typography.footnote,
-    color: theme.colors.textSecondary,
+  columnWrapper: {
+    paddingHorizontal: theme.spacing.lg,
+    gap: theme.spacing.sm,
+    marginBottom: theme.spacing.sm,
   },
 }));

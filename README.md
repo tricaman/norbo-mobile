@@ -19,7 +19,7 @@ Two people. One signal. A dit (ping sent) or a dah (ping acknowledged). Nothing 
 | Animations   | react-native-reanimated v3                                |
 | Gestures     | react-native-gesture-handler                              |
 | Real-time    | Native WebSocket → dit-ping (Go)                          |
-| Auth         | BetterAuth (session cookie) via norbo-api                   |
+| Auth         | BetterAuth (session cookie) via norbo-api                 |
 | Push         | FCM/APNs → Notifee                                        |
 | Canvas       | @shopify/react-native-skia (PingTimeline only)            |
 
@@ -58,24 +58,24 @@ firebase/
 
 Bundle ID / package usati (da `app.config.ts`):
 
-| Variant       | iOS bundle id                 | Android package               | Firebase project |
-| ------------- | ----------------------------- | ----------------------------- | ---------------- |
-| `development` | `com.mariustrica.dit.dev`     | `com.mariustrica.dit.dev`     | `firebase/dev`   |
-| `preview`     | `com.mariustrica.dit.preview` | `com.mariustrica.dit.preview` | `firebase/prod`  |
-| `production`  | `com.mariustrica.dit`         | `com.mariustrica.dit`         | `firebase/prod`  |
+| Variant       | iOS bundle id              | Android package            | Firebase project |
+| ------------- | -------------------------- | -------------------------- | ---------------- |
+| `development` | `app.norbo.mobile.dev`     | `app.norbo.mobile.dev`     | `firebase/dev`   |
+| `preview`     | `app.norbo.mobile.preview` | `app.norbo.mobile.preview` | `firebase/prod`  |
+| `production`  | `app.norbo.mobile`         | `app.norbo.mobile`         | `firebase/prod`  |
 
 Nei progetti Firebase (Console → Project settings → Your apps) registra app per ognuno dei bundle id che vuoi supportare. Se cambi un bundle id, **scarica nuovi** `google-services.json` / `GoogleService-Info.plist`.
 
-Per la **service account** del backend (Firebase Admin SDK in norbo-api/dit-worker), vedi `dit-infra/README.md` § Variabili `.env.prod`.
+Per la **service account** del backend (Firebase Admin SDK in norbo-api/norbo-notifications-worker), vedi `norbo-infra/README.md` § Variabili `.env.prod`.
 
 ### Backend services
 
 The app talks to two backends. Both must be running locally for full functionality:
 
-| Service  | Default URL              | Purpose                               |
-| -------- | ------------------------ | ------------------------------------- |
+| Service    | Default URL              | Purpose                               |
+| ---------- | ------------------------ | ------------------------------------- |
 | norbo-api  | `http://localhost:3000`  | REST — auth, contacts, push tokens    |
-| dit-ping | `ws://localhost:8080/ws` | WebSocket — real-time ping/dah events |
+| norbo-ping | `ws://localhost:8080/ws` | WebSocket — real-time ping/dah events |
 
 Configure in `.env` (copy from `.env.example`):
 
@@ -90,7 +90,7 @@ EXPO_PUBLIC_API_URL=http://localhost:3000
 EXPO_PUBLIC_WS_URL=ws://localhost:8080/ws
 ```
 
-**Important:** dit-ping uses plain `ws://`, not `wss://`. The wrong scheme silently fails to connect.
+**Important:** norbo-ping uses plain `ws://`, not `wss://`. The wrong scheme silently fails to connect.
 
 ---
 
@@ -130,7 +130,7 @@ In dev locale Metro legge le URL backend da `.env`. Per testare l'app contro la 
 
 ```bash
 EXPO_PUBLIC_API_URL=https://norbo-api.mariustrica.com \
-EXPO_PUBLIC_WS_URL=wss://dit-ws.mariustrica.com/ws \
+EXPO_PUBLIC_WS_URL=wss://norbo-ws.mariustrica.com/ws \
 APP_VARIANT=preview \
 pnpm start
 ```
@@ -143,19 +143,19 @@ La config Expo è in `app.config.ts` ed è **dinamica** rispetto a `APP_VARIANT`
 
 ### Profili EAS e bundle id
 
-| Profile EAS   | `APP_VARIANT` | Bundle ID                 | App name    | Firebase        | URL backend           |
-| ------------- | ------------- | ------------------------- | ----------- | --------------- | --------------------- |
-| `development` | `development` | `com.mariustrica.dit.dev` | `dit (Dev)` | `firebase/dev`  | `.env` locale         |
-| `preview`     | `production`  | `com.mariustrica.dit`     | `dit`       | `firebase/prod` | hardcoded in eas.json |
-| `internal`    | `production`  | `com.mariustrica.dit`     | `dit`       | `firebase/prod` | hardcoded in eas.json |
-| `production`  | `production`  | `com.mariustrica.dit`     | `dit`       | `firebase/prod` | hardcoded in eas.json |
+| Profile EAS   | `APP_VARIANT` | Bundle ID                  | App name          | Firebase        | URL backend           |
+| ------------- | ------------- | -------------------------- | ----------------- | --------------- | --------------------- |
+| `development` | `development` | `app.norbo.mobile.dev`     | `norbo (Dev)`     | `firebase/dev`  | `.env` locale         |
+| `preview`     | `production`  | `app.norbo.mobile.preview` | `norbo (Preview)` | `firebase/prod` | hardcoded in eas.json |
+| `internal`    | `production`  | `app.norbo.mobile`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
+| `production`  | `production`  | `app.norbo.mobile`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
 
 - `preview` e `internal` = stesso binario della prod, solo con `distribution: internal` (APK installabile via QR/link senza passare dagli store).
 - `production` = `.aab` per Play Store, `.ipa` per App Store.
 
-Il bundle id `com.mariustrica.dit.dev` (diverso da quello prod) permette di **avere l'app di sviluppo E quella di produzione installate in parallelo** sullo stesso device.
+Il bundle id `app.norbo.mobile.dev` (diverso da quello prod) permette di **avere l'app di sviluppo E quella di produzione installate in parallelo** sullo stesso device.
 
-> Se in futuro vuoi un bundle id `com.mariustrica.dit.preview` separato, devi prima registrarlo come app nel progetto Firebase `dit-prod` e ri-scaricare `google-services.json`/`GoogleService-Info.plist`, poi in `eas.json` cambi `APP_VARIANT=preview`. Il supporto è già presente in `app.config.ts`.
+> Se in futuro vuoi un bundle id `app.norbo.mobile.preview` separato, devi prima registrarlo come app nel progetto Firebase `norbo-prod` e ri-scaricare `google-services.json`/`GoogleService-Info.plist`, poi in `eas.json` cambi `APP_VARIANT=preview`. Il supporto è già presente in `app.config.ts`.
 
 ### Setup iniziale EAS (una volta sola)
 
@@ -198,7 +198,7 @@ eas submit --profile production --platform android
 L'API e il WebSocket di prod sono già live:
 
 - `https://norbo-api.mariustrica.com/docs` — REST (Swagger UI)
-- `wss://dit-ws.mariustrica.com/ws` — WebSocket
+- `wss://norbo-ws.mariustrica.com/ws` — WebSocket
 
 Per dettagli operativi infra: `dit-infra/README.md`.
 
