@@ -3,9 +3,7 @@ import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
-import { Screen } from "@/components/ui/Screen";
-import { ScreenHeader } from "@/components/ui/ScreenHeader";
-import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
+import { TabScreen } from "@/components/ui/TabScreen";
 import { petsApi } from "@/services/pets.api";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
@@ -14,12 +12,9 @@ import { useTranslation } from "react-i18next";
 import { FlatList, useWindowDimensions } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-/**
- * Breakpoints for grid layout based on screen width.
- */
 const BREAKPOINTS = {
-  PORTRAIT: 768, // 2 columns
-  LANDSCAPE: 1024, // 4 columns
+  PORTRAIT: 768,
+  LANDSCAPE: 1024,
 };
 
 function getNumColumns(width: number): number {
@@ -28,7 +23,7 @@ function getNumColumns(width: number): number {
   return 2;
 }
 
-export default function PetsListScreen() {
+export default function PetsTabScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { theme } = useUnistyles();
@@ -60,8 +55,7 @@ export default function PetsListScreen() {
   );
 
   return (
-    <Screen>
-      <ScreenHeader title={t("pets.title")} right={addButton} />
+    <TabScreen title={t("pets.title")} right={addButton} edges={["top"]}>
       <QueryBoundary query={query} isEmpty={() => false}>
         {(pets, { refetch, isFetching }) => (
           <FlatList
@@ -91,7 +85,7 @@ export default function PetsListScreen() {
           />
         )}
       </QueryBoundary>
-    </Screen>
+    </TabScreen>
   );
 }
 
@@ -106,7 +100,7 @@ const styles = StyleSheet.create((theme) => ({
   list: {
     flexGrow: 1,
     paddingTop: theme.spacing.md,
-    paddingBottom: SCREEN_BOTTOM_PADDING,
+    paddingBottom: theme.spacing.md,
   },
   columnWrapper: {
     paddingHorizontal: theme.spacing.lg,

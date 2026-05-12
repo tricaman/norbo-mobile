@@ -68,6 +68,9 @@ export const darkTheme = {
     info: "#9CAEBA",
     infoSoft: "#252E33",
     infoBorder: "#4A5E6D",
+
+    scrim: "rgba(255,255,255,0.20)",
+    scrimInverse: "rgba(0,0,0,0.22)",
   },
 } as const;
 
@@ -111,6 +114,9 @@ export const lightTheme = {
     info: "#6B8595",
     infoSoft: "#E6EBEF",
     infoBorder: "#9CAEBA",
+
+    scrim: "rgba(0,0,0,0.38)",
+    scrimInverse: "rgba(255,255,255,0.22)",
   },
 } as const;
 

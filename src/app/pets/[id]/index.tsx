@@ -5,24 +5,24 @@ import { Dropdown } from "@/components/ui/Dropdown";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 
-import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
-import { useMutation } from "@/hooks/useMutation";
-import { petsApi } from "@/services/pets.api";
 import { queryClient } from "@/app/_layout";
 import { PetTimeline } from "@/components/health-timeline/PetTimeline";
-import { Sex, type Pet } from "@/types/pet.types";
+import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
+import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
+import { useMutation } from "@/hooks/useMutation";
 import { useWeightHistory } from "@/hooks/useWeightHistory";
+import { petsApi } from "@/services/pets.api";
+import { Sex, type Pet } from "@/types/pet.types";
+import { formatPetAge } from "@/utils/age";
 import { formatWeight } from "@/utils/weight";
 import { useQuery } from "@tanstack/react-query";
-import { differenceInMonths, differenceInYears, parseISO } from "date-fns";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { useTranslation } from "react-i18next";
-import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
 
 type PetDetailTab = "timeline" | "photos" | "expenses" | "care";
 
@@ -61,20 +61,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
   const meta = CATEGORY_META[pet.category];
   const speciesLabel = pet.speciesLabelFreetext ?? null;
 
-  function ageLabel(): string {
-    if (!pet.birthDate) return "";
-    const birth = parseISO(pet.birthDate);
-    const now = new Date();
-    const years = differenceInYears(now, birth);
-    if (years >= 1) {
-      return `${years} ${t(years === 1 ? "petDetail.ageYear" : "petDetail.ageYears")}`;
-    }
-    const months = differenceInMonths(now, birth);
-    if (months < 1) return "";
-    return `${months} ${t(months === 1 ? "petDetail.ageMonth" : "petDetail.ageMonths")}`;
-  }
-
-  const age = ageLabel();
+  const age = formatPetAge(pet.birthDate, t) ?? "";
   const pillText = [
     t(`petForm.categories.${pet.category}`).toUpperCase(),
     speciesLabel ? speciesLabel.toUpperCase() : null,
@@ -225,8 +212,41 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
           style={[styles.statsCard, { backgroundColor: theme.colors.surface }]}
         >
           {STATS.map((stat, i) => {
-            const inner = (
-              <>
+            const inner = stat.onPress ? (
+              <View style={styles.statCellRow}>
+                <View style={styles.statContent}>
+                  <IconSymbol
+                    name={stat.icon}
+                    size={16}
+                    tintColor={theme.colors.textSecondary}
+                  />
+                  <Text
+                    style={[
+                      styles.statValue,
+                      { color: theme.colors.textPrimary },
+                    ]}
+                  >
+                    {stat.value}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.statLabel,
+                      { color: theme.colors.textTertiary },
+                    ]}
+                  >
+                    {stat.label}
+                  </Text>
+                </View>
+                <View style={styles.statChevron}>
+                  <IconSymbol
+                    name="chevron.right"
+                    size={12}
+                    tintColor={theme.colors.textTertiary}
+                  />
+                </View>
+              </View>
+            ) : (
+              <View style={styles.statContent}>
                 <IconSymbol
                   name={stat.icon}
                   size={16}
@@ -248,7 +268,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
                 >
                   {stat.label}
                 </Text>
-              </>
+              </View>
             );
             return (
               <React.Fragment key={stat.label}>
@@ -367,7 +387,7 @@ const styles = StyleSheet.create((theme) => ({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: "rgba(0,0,0,0.30)",
+    backgroundColor: theme.colors.scrim,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -379,12 +399,12 @@ const styles = StyleSheet.create((theme) => ({
     paddingHorizontal: theme.spacing["3xl"],
     paddingBottom: theme.spacing.lg,
     paddingTop: theme.spacing["2xl"],
-    backgroundColor: "rgba(0,0,0,0.28)",
+    backgroundColor: theme.colors.scrim,
     gap: 3,
   },
   pillTag: {
     alignSelf: "flex-start",
-    backgroundColor: "rgba(255,255,255,0.22)",
+    backgroundColor: theme.colors.scrimInverse,
     paddingHorizontal: theme.spacing.sm,
     paddingVertical: 3,
     borderRadius: theme.radius.pill,
@@ -427,8 +447,23 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 2,
     paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.xs,
+  },
+  statCellRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+  },
+  statContent: {
+    flex: 1,
+    alignItems: "center",
+    gap: 2,
+  },
+  statChevron: {
+    width: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
   statDivider: {
     width: theme.hairline,

@@ -1,7 +1,7 @@
+import type { PetCategory } from "@/types/pet.types";
 import React from "react";
 import { Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import type { PetCategory } from "@/types/pet.types";
 import { CATEGORY_META } from "./category-meta";
 import { PetCategoryIcon } from "./PetCategoryIcon";
 
@@ -60,8 +60,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   iconWrap: {
     position: "absolute",
-    right: -16,
-    bottom: -16,
+    right: 10,
+    bottom: -8,
     opacity: 0.85,
   },
 }));

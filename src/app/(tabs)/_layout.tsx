@@ -15,15 +15,15 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t("tabs.pets"),
-          tabBarLabel: t("tabs.pets"),
+          title: t("tabs.home"),
+          tabBarLabel: t("tabs.home"),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="pets"
         options={{
-          title: t("tabs.settings"),
-          tabBarLabel: t("tabs.settings"),
+          title: t("tabs.pets"),
+          tabBarLabel: t("tabs.pets"),
         }}
       />
       <Tabs.Screen

@@ -21,9 +21,9 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
 
     // People
     person: "person-outline",
-    "person.fill": "person",
+    "person.fill": "person-sharp",
     "person.circle": "person-circle-outline",
-    "person.circle.fill": "person-circle",
+    "person.circle.fill": "person-circle-sharp",
     "person.crop.circle": "person-circle-outline",
 
     // Shapes & misc
@@ -41,7 +41,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
 
     // Pets
     pawprint: "paw-outline",
-    "pawprint.fill": "paw",
+    "pawprint.fill": "paw-sharp",
     "plus.circle.fill": "add-circle",
     plus: "add",
     pencil: "pencil",
@@ -70,6 +70,10 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     "pill.fill": "flask-outline",
     "camera.fill": "camera",
     "note.text": "document-text-outline",
+    home: "home-outline",
+    "house.fill": "home-sharp",
+    cog: "cog-outline",
+    "cog.fill": "cog-sharp",
   };
 
 export type IconSymbolName = keyof typeof ICON_MAP;

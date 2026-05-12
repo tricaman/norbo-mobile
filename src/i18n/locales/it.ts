@@ -13,6 +13,7 @@ const it = {
   },
 
   tabs: {
+    home: "home",
     profile: "profilo",
     pets: "animali",
     settings: "impostazioni",
@@ -38,14 +39,29 @@ const it = {
     or: "oppure",
   },
 
+  profile: {
+    profileSection: "profilo",
+    editNameSubtitle: "nome visualizzato",
+    settings: "impostazioni",
+    settingsSubtitle: "notifiche, tema, lingua",
+  },
+
   settings: {
     title: "impostazioni",
-    account: "account",
-    accountSubtitle: "nome, email",
+    preferencesSection: "preferenze",
+    notifications: "notifiche",
+    notificationsSubtitle: "promemoria, orari silenzio",
+    theme: "tema",
+    themeSubtitle: "chiaro, scuro, sistema",
     language: "lingua",
     languageSubtitle: "lingua dell'app",
-    help: "aiuto",
+    accountSection: "account",
+    deleteAccount: "elimina account",
+    legalSection: "legale e supporto",
+    termsOfService: "termini di servizio",
     privacyPolicy: "informativa privacy",
+    support: "supporto",
+    supportSubtitle: "scrivici una mail",
     appInfoIos: "norbo per ios",
     appInfoAndroid: "norbo per android",
     version: "versione {{version}}",
@@ -325,10 +341,14 @@ const it = {
   },
 
   petDetail: {
-    ageYear: "anno",
-    ageYears: "anni",
+    ageDay: "giorno",
+    ageDays: "giorni",
+    ageWeek: "settimana",
+    ageWeeks: "settimane",
     ageMonth: "mese",
     ageMonths: "mesi",
+    ageYear: "anno",
+    ageYears: "anni",
     sterilized: "sterilizzato/a",
     editPhoto: "modifica foto",
     tabs: {

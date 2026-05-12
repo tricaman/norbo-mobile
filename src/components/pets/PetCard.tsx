@@ -2,7 +2,7 @@ import { NorboPressable } from "@/components/CustomPressable";
 import { PetCategoryIcon } from "@/components/pets/wizard/PetCategoryIcon";
 import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
 import type { Pet } from "@/types/pet.types";
-import { differenceInMonths, differenceInYears, parseISO } from "date-fns";
+import { formatPetAge } from "@/utils/age";
 import { Image } from "expo-image";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -31,20 +31,7 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
   const { theme } = useUnistyles();
   const meta = CATEGORY_META[pet.category];
 
-  function ageLabel(): string | null {
-    if (!pet.birthDate) return null;
-    const birth = parseISO(pet.birthDate);
-    const now = new Date();
-    const years = differenceInYears(now, birth);
-    if (years >= 1) {
-      return `${years} ${t(years === 1 ? "petDetail.ageYear" : "petDetail.ageYears")}`;
-    }
-    const months = differenceInMonths(now, birth);
-    if (months < 1) return null;
-    return `${months} ${t(months === 1 ? "petDetail.ageMonth" : "petDetail.ageMonths")}`;
-  }
-
-  const age = ageLabel();
+  const age = formatPetAge(pet.birthDate, t);
   const speciesLabel =
     pet.speciesLabelFreetext ?? t(`petForm.categories.${pet.category}`);
 
@@ -102,14 +89,13 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
 
 const styles = StyleSheet.create((theme) => ({
   card: {
-    flex: 1,
     borderRadius: theme.radius.xl,
     overflow: "hidden",
     borderColor: theme.colors.border,
     borderWidth: 1,
   },
   imageArea: {
-    aspectRatio: 1,
+    aspectRatio: 4 / 3,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -124,7 +110,7 @@ const styles = StyleSheet.create((theme) => ({
     position: "absolute",
     bottom: theme.spacing.sm,
     left: theme.spacing.sm,
-    backgroundColor: "rgba(0,0,0,0.38)",
+    backgroundColor: theme.colors.scrim,
     paddingHorizontal: theme.spacing.sm,
     paddingVertical: 3,
     borderRadius: theme.radius.pill,

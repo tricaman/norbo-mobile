@@ -6,6 +6,7 @@ const en = {
   },
 
   tabs: {
+    home: "home",
     profile: "profile",
     pets: "pets",
     settings: "settings",
@@ -243,10 +244,14 @@ const en = {
   },
 
   petDetail: {
-    ageYear: "year",
-    ageYears: "years",
+    ageDay: "day",
+    ageDays: "days",
+    ageWeek: "week",
+    ageWeeks: "weeks",
     ageMonth: "month",
     ageMonths: "months",
+    ageYear: "year",
+    ageYears: "years",
     sterilized: "neutered",
     editPhoto: "edit photo",
     tabs: {
