@@ -7,6 +7,9 @@ import { QueryBoundary } from "@/components/ui/QueryBoundary";
 
 import { queryClient } from "@/app/_layout";
 import { PetTimeline } from "@/components/health-timeline/PetTimeline";
+import { PetExpensesTab } from "@/components/pets/expenses/PetExpensesTab";
+import { PetPhotosTab } from "@/components/pets/photos/PetPhotosTab";
+import { PetWeightTab } from "@/components/pets/weights/PetWeightTab";
 import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
@@ -24,7 +27,7 @@ import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-type PetDetailTab = "timeline" | "photos" | "expenses" | "care";
+type PetDetailTab = "timeline" | "photos" | "expenses" | "weight" | "care";
 
 const HERO_HEIGHT = 280;
 
@@ -118,6 +121,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       label: t("petDetail.tabs.expenses"),
       icon: "creditcard",
     },
+    { key: "weight", label: t("petDetail.tabs.weight"), icon: "scalemass" },
     { key: "care", label: t("petDetail.tabs.care"), icon: "heart" },
   ];
 
@@ -131,6 +135,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       icon: "creditcard",
       message: t("petDetail.expenses.empty"),
     },
+    weight: { icon: "scalemass", message: t("petDetail.weight.empty") },
     care: { icon: "heart", message: t("petDetail.care.empty") },
   };
 
@@ -144,7 +149,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       icon: "scalemass",
       value: weightLabel,
       label: t("petDetail.stats.weight"),
-      onPress: () => router.push(`/pets/${petId}/weights` as never),
+      onPress: () => setActiveTab("weight"),
     },
     { icon: "bell", value: "—", label: t("petDetail.stats.next") },
     { icon: "photo", value: "0", label: t("petDetail.stats.photos") },
@@ -309,6 +314,18 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       {activeTab === "timeline" ? (
         <View style={styles.tabContent}>
           <PetTimeline petId={petId} />
+        </View>
+      ) : activeTab === "weight" ? (
+        <View style={styles.tabContent}>
+          <PetWeightTab petId={petId} />
+        </View>
+      ) : activeTab === "photos" ? (
+        <View style={styles.tabContent}>
+          <PetPhotosTab petId={petId} />
+        </View>
+      ) : activeTab === "expenses" ? (
+        <View style={styles.tabContent}>
+          <PetExpensesTab petId={petId} />
         </View>
       ) : (
         <ScrollView

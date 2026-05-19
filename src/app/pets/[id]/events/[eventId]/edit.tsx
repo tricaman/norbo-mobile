@@ -54,6 +54,7 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
       scheduledFor: event.scheduledFor
         ? new Date(event.scheduledFor)
         : undefined,
+      mediaAssetIds: event.mediaAssetIds,
     },
   });
 
@@ -63,6 +64,7 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         title: values.title,
         description: values.description ?? undefined,
         cost: values.cost ? parseFloat(values.cost) : undefined,
+        mediaAssetIds: values.mediaAssetIds ?? [],
         occurredAt:
           values.mode === "past" && values.occurredAt
             ? values.occurredAt.toISOString()

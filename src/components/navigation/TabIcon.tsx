@@ -17,6 +17,14 @@ const ICONS: Record<string, { sf: string; filled: string }> = {
     sf: "pawprint",
     filled: "pawprint.fill",
   },
+  reminders: {
+    sf: "bell",
+    filled: "bell.fill",
+  },
+  expenses: {
+    sf: "creditcard",
+    filled: "creditcard.fill",
+  },
   settings: {
     sf: "cog",
     filled: "cog.fill",

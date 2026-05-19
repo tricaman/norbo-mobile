@@ -27,6 +27,7 @@ export default function NewEventScreen() {
       title: "",
       description: null,
       cost: "",
+      mediaAssetIds: [],
     },
   });
 
@@ -38,6 +39,10 @@ export default function NewEventScreen() {
         title: values.title,
         description: values.description ?? undefined,
         cost: values.cost ? parseFloat(values.cost) : undefined,
+        mediaAssetIds:
+          values.mediaAssetIds && values.mediaAssetIds.length > 0
+            ? values.mediaAssetIds
+            : undefined,
         occurredAt:
           values.mode === "past" && values.occurredAt
             ? values.occurredAt.toISOString()

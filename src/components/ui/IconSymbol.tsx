@@ -6,6 +6,8 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     // Navigation
     "chevron.left": "chevron-back",
     "chevron.right": "chevron-forward",
+    "chevron.up": "chevron-up",
+    "chevron.down": "chevron-down",
 
     // Actions
     checkmark: "checkmark",
@@ -14,8 +16,12 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     calendar: "calendar-outline",
     "photo.on.rectangle": "image-outline",
     creditcard: "card-outline",
+    "creditcard.fill": "card",
+    wallet: "wallet-outline",
+    "wallet.fill": "wallet",
     heart: "heart-outline",
     bell: "notifications-outline",
+    "bell.fill": "notifications-sharp",
     photo: "image-outline",
     scalemass: "barbell-outline",
 
@@ -48,10 +54,12 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     "ellipsis.horizontal": "ellipsis-horizontal",
     "ellipsis.circle": "ellipsis-horizontal-circle-outline",
     "trash.fill": "trash",
+    xmark: "close",
     "xmark.circle.fill": "close-circle",
 
     // Auth
     "arrow.right.circle": "log-out-outline",
+    "arrow.right.square": "exit-outline",
 
     // Settings
     "questionmark.circle": "help-circle-outline",
@@ -62,6 +70,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     syringe: "bandage-outline",
     stethoscope: "medkit-outline",
     "shield.checkerboard": "shield-checkmark-outline",
+    "shield.fill": "shield",
     scissors: "cut-outline",
     "drop.fill": "water",
     "arrow.triangle.2.circlepath": "refresh",

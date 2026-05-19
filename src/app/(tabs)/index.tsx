@@ -1,15 +1,16 @@
-import { NorboPressable } from "@/components/CustomPressable";
+import { HomeGreeting } from "@/components/home/HomeGreeting";
+import { UpcomingEventsSection } from "@/components/home/UpcomingEventsSection";
 import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
-import { TabScreen } from "@/components/ui/TabScreen";
+import { Screen } from "@/components/ui/Screen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { petsApi } from "@/services/pets.api";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
+
 import {
   FlatList,
   RefreshControl,
@@ -51,32 +52,22 @@ export default function HomeScreen() {
     queryFn: () => petsApi.list().then((r) => r.data),
   });
 
-  const addButton = (
-    <NorboPressable
-      style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
-      scale="row"
-      haptic="medium"
-      onPress={() => router.push("/pets/new")}
-    >
-      <IconSymbol
-        name="plus"
-        size={16}
-        tintColor={theme.colors.textOnPrimary}
-      />
-    </NorboPressable>
-  );
-
   return (
-    <TabScreen title={t("tabs.home")} right={addButton} edges={["top"]}>
+    <Screen edges={["top"]}>
       <QueryBoundary query={query} isEmpty={() => false}>
         {(pets, { refetch, isFetching }) => (
           <ScrollView
             refreshControl={
               <RefreshControl refreshing={isFetching} onRefresh={refetch} />
             }
-            contentContainerStyle={styles.scrollContent}
+            contentContainerStyle={[
+              styles.scrollContent,
+              pets.length === 0 && styles.scrollContentEmpty,
+            ]}
             showsVerticalScrollIndicator={false}
           >
+            <HomeGreeting onPressAdd={() => router.push("/pets/new")} />
+
             {pets.length === 0 ? (
               <PetsEmptyHero
                 title={t("pets.emptyTitle")}
@@ -85,45 +76,45 @@ export default function HomeScreen() {
                 onPressCta={() => router.push("/pets/new")}
               />
             ) : (
-              <FlatList
-                horizontal
-                data={pets.slice(0, PET_CAROUSEL_LIMIT)}
-                keyExtractor={(p) => p.id}
-                contentContainerStyle={styles.grid}
-                ItemSeparatorComponent={() => (
-                  <View style={{ width: theme.spacing.sm }} />
-                )}
-                renderItem={({ item }) => (
-                  <PetCard
-                    pet={item}
-                    onPress={() => router.push(`/pets/${item.id}`)}
-                    style={{ width: cardWidth }}
-                  />
-                )}
-                showsHorizontalScrollIndicator={false}
-                snapToInterval={cardWidth + theme.spacing.sm}
-                decelerationRate="fast"
-              />
+              <>
+                <FlatList
+                  horizontal
+                  data={pets.slice(0, PET_CAROUSEL_LIMIT)}
+                  keyExtractor={(p) => p.id}
+                  contentContainerStyle={styles.grid}
+                  ItemSeparatorComponent={() => (
+                    <View style={{ width: theme.spacing.sm }} />
+                  )}
+                  renderItem={({ item }) => (
+                    <PetCard
+                      pet={item}
+                      onPress={() => router.push(`/pets/${item.id}`)}
+                      style={{ width: cardWidth }}
+                    />
+                  )}
+                  showsHorizontalScrollIndicator={false}
+                  snapToInterval={cardWidth + theme.spacing.sm}
+                  decelerationRate="fast"
+                />
+                <UpcomingEventsSection
+                  pets={pets}
+                  onPressEvent={(event) => router.push(`/pets/${event.petId}`)}
+                />
+              </>
             )}
           </ScrollView>
         )}
       </QueryBoundary>
-    </TabScreen>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
   scrollContent: {
-    flexGrow: 1,
-    paddingTop: theme.spacing.md,
     paddingBottom: SCREEN_BOTTOM_PADDING,
   },
-  addBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: "center",
-    justifyContent: "center",
+  scrollContentEmpty: {
+    flexGrow: 1,
   },
   grid: {
     paddingHorizontal: theme.spacing.lg,

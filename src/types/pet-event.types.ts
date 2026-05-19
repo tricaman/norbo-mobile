@@ -1,22 +1,23 @@
 export enum PetEventType {
-  VACCINATION = 'VACCINATION',
-  VET_VISIT = 'VET_VISIT',
-  PARASITE_TREATMENT = 'PARASITE_TREATMENT',
-  GROOMING = 'GROOMING',
-  WEIGHT_RECORD = 'WEIGHT_RECORD',
-  WATER_PARAMETERS = 'WATER_PARAMETERS',
-  WATER_CHANGE = 'WATER_CHANGE',
-  MOLT = 'MOLT',
-  FEEDING_LOG = 'FEEDING_LOG',
-  MEDICATION = 'MEDICATION',
-  PHOTO = 'PHOTO',
-  NOTE = 'NOTE',
+  VACCINATION = "VACCINATION",
+  VET_VISIT = "VET_VISIT",
+  PARASITE_TREATMENT = "PARASITE_TREATMENT",
+  GROOMING = "GROOMING",
+  WEIGHT_RECORD = "WEIGHT_RECORD",
+  WATER_PARAMETERS = "WATER_PARAMETERS",
+  WATER_CHANGE = "WATER_CHANGE",
+  MOLT = "MOLT",
+  FEEDING_LOG = "FEEDING_LOG",
+  MEDICATION = "MEDICATION",
+  PHOTO = "PHOTO",
+  NOTE = "NOTE",
+  INSURANCE = "INSURANCE",
 }
 
 export enum PetEventStatus {
-  SCHEDULED = 'SCHEDULED',
-  OCCURRED = 'OCCURRED',
-  CANCELLED = 'CANCELLED',
+  SCHEDULED = "SCHEDULED",
+  OCCURRED = "OCCURRED",
+  CANCELLED = "CANCELLED",
 }
 
 export interface PetEvent {
@@ -47,7 +48,7 @@ export interface PetEventTimeline {
 }
 
 export interface CreatePetEventInput {
-  mode: 'past' | 'future';
+  mode: "past" | "future";
   type: PetEventType;
   occurredAt?: string;
   scheduledFor?: string;
@@ -67,6 +68,7 @@ export interface UpdatePetEventInput {
   scheduledFor?: string;
   cost?: number | null;
   currency?: string;
+  mediaAssetIds?: string[];
   extra?: Record<string, unknown>;
   createReminder?: boolean;
 }

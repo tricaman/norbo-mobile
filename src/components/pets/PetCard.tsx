@@ -57,7 +57,7 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
           <PetCategoryIcon
             category={pet.category}
             size={88}
-            color="rgba(255,255,255,0.30)"
+            color="rgba(255,255,255,0.50)"
           />
 
           {age ? (

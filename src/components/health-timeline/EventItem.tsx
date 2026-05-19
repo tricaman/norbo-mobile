@@ -53,6 +53,7 @@ const EVENT_ICONS: Record<PetEventType, string> = {
   [PetEventType.MEDICATION]: "pill.fill",
   [PetEventType.PHOTO]: "camera.fill",
   [PetEventType.NOTE]: "note.text",
+  [PetEventType.INSURANCE]: "checkmark.shield.fill",
 };
 
 interface EventItemProps {
@@ -248,12 +249,31 @@ export function EventItem({
               >
                 {event.title}
               </Text>
-              <Text
-                style={[styles.meta, { color: theme.colors.textSecondary }]}
-                numberOfLines={1}
-              >
-                {subtitle}
-              </Text>
+              <View style={styles.metaRow}>
+                <Text
+                  style={[styles.meta, { color: theme.colors.textSecondary }]}
+                  numberOfLines={1}
+                >
+                  {subtitle}
+                </Text>
+                {event.mediaAssetIds.length > 0 ? (
+                  <View style={styles.attachmentBadge}>
+                    <IconSymbol
+                      name="paperclip"
+                      size={11}
+                      tintColor={theme.colors.textSecondary}
+                    />
+                    <Text
+                      style={[
+                        styles.attachmentCount,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {event.mediaAssetIds.length}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
             </View>
 
             {/* Trailing badge: pill for scheduled, cost for past */}
@@ -353,6 +373,21 @@ const styles = StyleSheet.create((theme) => ({
   },
   meta: {
     ...theme.typography.caption,
+    flexShrink: 1,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.xs,
+  },
+  attachmentBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+  },
+  attachmentCount: {
+    ...theme.typography.caption,
+    fontWeight: "600",
   },
   pill: {
     paddingHorizontal: theme.spacing.sm,

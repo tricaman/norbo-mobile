@@ -1,5 +1,5 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import { NorboLogo } from "@/components/NorboLogo";
+
 import { useAuth } from "@/hooks/useAuth";
 import type {
   AuthScreen as AuthScreenType,
@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { ErrorMessage } from "../ErrorMessage";
 import { SocialButton } from "../SocialButton";
+import { NorboLogo } from "@/components/NorboLogo";
 
 interface Props {
   onNavigate: (screen: AuthScreenType) => void;
@@ -42,7 +43,7 @@ export function LandingView({ onNavigate }: Props) {
       <View style={styles.root}>
         {/* Logo area */}
         <View style={styles.logoArea}>
-          <NorboLogo size={28} />
+          <NorboLogo size={140} />
           <Text style={styles.wordmark}>norbo</Text>
           <Text style={styles.tagline}>{t("auth.tagline")}</Text>
         </View>

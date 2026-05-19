@@ -1,4 +1,8 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import {
+  AttachmentSection,
+  MAX_ATTACHMENTS,
+} from "@/components/media/AttachmentSection";
 import { ChipSelector, type ChipOption } from "@/components/ui/ChipSelector";
 import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
@@ -28,6 +32,7 @@ export const eventFormSchema = z
     title: z.string().min(1, "required").max(120),
     description: z.string().max(2000).nullable().optional(),
     cost: z.string().optional(),
+    mediaAssetIds: z.array(z.string()).max(MAX_ATTACHMENTS).optional(),
   })
   .superRefine((v, ctx) => {
     if (v.mode === "past" && !v.occurredAt) {
@@ -130,6 +135,11 @@ export function EventForm({
         label: t("petDetail.timeline.types.NOTE"),
         icon: "note.text",
       },
+      {
+        value: PetEventType.INSURANCE,
+        label: t("petDetail.timeline.types.INSURANCE"),
+        icon: "shield.fill",
+      },
     ],
     [t],
   );
@@ -214,6 +224,25 @@ export function EventForm({
           />
         </FormCard>
 
+        {/* Attachments — prominent for PHOTO, secondary otherwise */}
+        {selectedType === PetEventType.PHOTO ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.attachments")}
+            </SectionLabel>
+            <Controller
+              control={form.control}
+              name="mediaAssetIds"
+              render={({ field }) => (
+                <AttachmentSection
+                  value={field.value ?? []}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </>
+        ) : null}
+
         {/* Title + description */}
         <SectionLabel style={styles.sectionLabel}>
           {t("eventForm.details")}
@@ -245,6 +274,25 @@ export function EventForm({
             returnKeyType="done"
           />
         </FormCard>
+
+        {/* Attachments — secondary position for non-PHOTO event types */}
+        {selectedType !== PetEventType.PHOTO ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.attachments")}
+            </SectionLabel>
+            <Controller
+              control={form.control}
+              name="mediaAssetIds"
+              render={({ field }) => (
+                <AttachmentSection
+                  value={field.value ?? []}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </>
+        ) : null}
 
         {/* Submit */}
         <NorboPressable

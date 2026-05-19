@@ -1,6 +1,14 @@
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import React from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import React, { useMemo, useState } from "react";
+import {
+  LayoutChangeEvent,
+  Modal,
+  Pressable,
+  Text,
+  useWindowDimensions,
+  View,
+  ViewStyle,
+} from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { NorboPressable } from "../CustomPressable";
@@ -12,14 +20,70 @@ export interface DropdownItem {
   destructive?: boolean;
 }
 
+export interface DropdownAnchor {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 interface DropdownProps {
   visible: boolean;
   onClose: () => void;
   items: DropdownItem[];
+  /**
+   * Optional anchor rect in window coords (e.g. from `measureInWindow`).
+   * When provided, the menu opens just below the anchor's bottom-left,
+   * clamped to the viewport. When omitted, the menu falls back to the
+   * top-right header overflow position.
+   */
+  anchor?: DropdownAnchor | null;
 }
 
-export function Dropdown({ visible, onClose, items }: DropdownProps) {
+const EDGE_MARGIN = 12;
+const ANCHOR_GAP = 6;
+
+export function Dropdown({ visible, onClose, items, anchor }: DropdownProps) {
   const { theme } = useUnistyles();
+  const { width: winWidth, height: winHeight } = useWindowDimensions();
+  const [cardSize, setCardSize] = useState<{ w: number; h: number } | null>(
+    null,
+  );
+
+  const onCardLayout = (e: LayoutChangeEvent) => {
+    const { width, height } = e.nativeEvent.layout;
+    if (
+      !cardSize ||
+      Math.abs(cardSize.w - width) > 0.5 ||
+      Math.abs(cardSize.h - height) > 0.5
+    ) {
+      setCardSize({ w: width, h: height });
+    }
+  };
+
+  const anchoredStyle: ViewStyle | null = useMemo(() => {
+    if (!anchor) return null;
+    const w = cardSize?.w ?? 0;
+    const h = cardSize?.h ?? 0;
+    let left = anchor.x;
+    if (w > 0) {
+      left = Math.min(
+        Math.max(EDGE_MARGIN, anchor.x),
+        winWidth - w - EDGE_MARGIN,
+      );
+    }
+    let top = anchor.y + anchor.height + ANCHOR_GAP;
+    if (h > 0 && top + h > winHeight - EDGE_MARGIN) {
+      // Flip above the anchor when there is no room below.
+      top = Math.max(EDGE_MARGIN, anchor.y - h - ANCHOR_GAP);
+    }
+    return {
+      position: "absolute",
+      left,
+      top,
+      opacity: cardSize ? 1 : 0,
+    };
+  }, [anchor, cardSize, winWidth, winHeight]);
 
   return (
     <Modal
@@ -28,9 +92,14 @@ export function Dropdown({ visible, onClose, items }: DropdownProps) {
       animationType="none"
       onRequestClose={onClose}
     >
-      <GestureHandlerRootView style={styles.overlay}>
+      <GestureHandlerRootView
+        style={anchor ? styles.overlayAnchored : styles.overlay}
+      >
         <Pressable style={styles.backdrop} onPress={onClose} />
-        <View style={styles.card}>
+        <View
+          style={[styles.card, anchoredStyle]}
+          onLayout={anchor ? onCardLayout : undefined}
+        >
           {items.map((item, index) => (
             <NorboPressable
               key={index}
@@ -77,6 +146,9 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "flex-end",
     paddingTop: 90,
     paddingRight: theme.spacing.lg,
+  },
+  overlayAnchored: {
+    flex: 1,
   },
   backdrop: {
     position: "absolute",

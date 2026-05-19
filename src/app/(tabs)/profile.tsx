@@ -1,3 +1,4 @@
+import { PageTitle } from "@/components/ui/PageTitle";
 import { SettingsCard, SettingsRow } from "@/components/ui/SettingsRow";
 import { TabScreen } from "@/components/ui/TabScreen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";

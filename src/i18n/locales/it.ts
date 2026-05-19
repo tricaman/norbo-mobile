@@ -16,7 +16,48 @@ const it = {
     home: "home",
     profile: "profilo",
     pets: "animali",
+    reminders: "reminder",
+    expenses: "spese",
     settings: "impostazioni",
+  },
+
+  expenses: {
+    title: "Spese",
+    subtitle: "Totale di tutti i tuoi pet",
+    periodMonth: "Questo mese",
+    periodYear: "Quest'anno",
+    periodAll: "Sempre",
+    petAll: "Tutti i pet",
+    heroLabelMonth: "QUESTO MESE",
+    heroLabelYear: "QUEST'ANNO",
+    heroLabelAll: "SEMPRE",
+    trendVsPrevMonth: "{{value}} vs mese prec.",
+    trendVsPrevYear: "{{value}} vs {{previous}}",
+    averagePerMonth: "{{value}}/mese in media",
+    byCategory: "Per categoria",
+    history: "Cronologia",
+    total: "Totale",
+    empty: "nessuna spesa nel periodo selezionato",
+    loadMore: "Carica altri",
+  },
+
+  reminders: {
+    title: "Reminder",
+    countSummaryToday: "{{count}} oggi",
+    countSummaryOverdue: "{{count}} in ritardo",
+    summarySeparator: " · ",
+    summaryEmpty: "tutto sotto controllo",
+    filterAll: "Tutti",
+    filterToday: "Oggi",
+    filterNext7: "Prossimi 7 giorni",
+    filterOverdue: "In ritardo",
+    sectionOverdue: "in ritardo",
+    sectionToday: "oggi · {{date}}",
+    sectionThisWeek: "questa settimana",
+    sectionLater: "più avanti",
+    emptyTitle: "nessun reminder",
+    emptySubtitle:
+      "non hai eventi programmati in questa categoria. quando ne aggiungerai uno comparirà qui.",
   },
 
   auth: {
@@ -183,8 +224,23 @@ const it = {
     stepProgress: "{{current}} di {{total}}",
   },
 
+  upcomingEvents: {
+    title: "cosa devo fare",
+    emptyTitle: "tutto in ordine",
+    emptySubtitle:
+      "non ci sono eventi programmati. quando aggiungerai vaccini, visite o altri promemoria li vedrai qui.",
+  },
+
+  homeGreeting: {
+    helloWithName: "Ciao, {{name}}",
+    helloFallback: "Ciao",
+    todayOne: "1 cosa oggi",
+    todayMany: "{{count}} cose oggi",
+    allClear: "tutto sotto controllo",
+  },
+
   pets: {
-    title: "i miei pet",
+    title: "I miei pet",
     emptyTitle: "iniziamo dal primo amico",
     emptySubtitle:
       "aggiungi il tuo animale per tenere insieme tutta la sua storia: vaccini, visite, foto, spese.",
@@ -307,6 +363,7 @@ const it = {
     titlePlaceholder: "titolo",
     descriptionPlaceholder: "note (opzionale)",
     cost: "costo (opzionale)",
+    attachments: "allegati (opzionale)",
     saveNew: "aggiungi evento",
     saveEdit: "salva modifiche",
     newTitle: "nuovo evento",
@@ -340,6 +397,17 @@ const it = {
     deleteConfirmCancel: "annulla",
   },
 
+  attachments: {
+    add: "aggiungi",
+    addTitle: "aggiungi allegato",
+    pickImage: "foto dalla galleria",
+    pickPdf: "documento PDF",
+    removeTitle: "rimuovi allegato?",
+    removeMessage: "verrà rimosso da questo evento.",
+    removeConfirm: "rimuovi",
+    errorTitle: "upload fallito",
+  },
+
   petDetail: {
     ageDay: "giorno",
     ageDays: "giorni",
@@ -355,6 +423,7 @@ const it = {
       timeline: "Timeline",
       photos: "Foto",
       expenses: "Spese",
+      weight: "Peso",
       care: "Cura",
     },
     stats: {
@@ -394,6 +463,7 @@ const it = {
         MEDICATION: "Farmaco",
         PHOTO: "Foto",
         NOTE: "Nota",
+        INSURANCE: "Assicurazione",
       },
     },
     photos: {
@@ -402,6 +472,13 @@ const it = {
     },
     expenses: {
       empty: "le spese compariranno qui",
+      spentIn: "Speso nel {{year}}",
+      currentYear: "Anno corrente",
+      byCategory: "Per categoria",
+    },
+    weight: {
+      empty: "il grafico del peso comparirà qui",
+      addCta: "registra pesata",
     },
     care: {
       empty: "i consigli di cura arriveranno presto",

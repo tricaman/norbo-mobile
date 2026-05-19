@@ -1,7 +1,7 @@
 /**
  * pet-event-schemas — shared Zod schemas for PetEvent polymorphic payload.
  *
- * Single source of truth for all 12 PetEventType-specific `extra` schemas.
+ * Single source of truth for all 13 PetEventType-specific `extra` schemas.
  * Kept in sync between norbo-api and norbo-mobile: both copies must be
  * identical. When a future monorepo workspace is set up this file becomes
  * a proper internal package and the duplication disappears.
@@ -27,6 +27,7 @@ export enum PetEventType {
   MEDICATION = "MEDICATION",
   PHOTO = "PHOTO",
   NOTE = "NOTE",
+  INSURANCE = "INSURANCE",
 }
 
 export enum PetEventStatus {
@@ -151,6 +152,14 @@ export const NoteExtraSchema = z.object({
 });
 export type NoteExtra = z.infer<typeof NoteExtraSchema>;
 
+// Insurance policies: provider, policy number, validity dates etc. are
+// captured via the generic event fields (title / description / cost /
+// occurredAt) for now. The dedicated `extra` schema is intentionally
+// empty so the type exists end-to-end without prescribing a UI shape.
+// Add fields here when the insurance form gains its own widgets.
+export const InsuranceExtraSchema = z.object({});
+export type InsuranceExtra = z.infer<typeof InsuranceExtraSchema>;
+
 // ── Discriminator map ─────────────────────────────────────────────────────────
 
 export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
@@ -166,6 +175,7 @@ export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
   [PetEventType.MEDICATION]: MedicationExtraSchema,
   [PetEventType.PHOTO]: PhotoExtraSchema,
   [PetEventType.NOTE]: NoteExtraSchema,
+  [PetEventType.INSURANCE]: InsuranceExtraSchema,
 };
 
 /**
@@ -195,6 +205,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.MAMMAL_CAT]: [
     PetEventType.VACCINATION,
@@ -206,6 +217,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.MAMMAL_SMALL]: [
     PetEventType.VACCINATION,
@@ -216,6 +228,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.BIRD]: [
     PetEventType.VACCINATION,
@@ -226,6 +239,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.FISH_FRESHWATER]: [
     PetEventType.VET_VISIT,
@@ -235,6 +249,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.FISH_SALTWATER]: [
     PetEventType.VET_VISIT,
@@ -244,6 +259,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.REPTILE]: [
     PetEventType.VET_VISIT,
@@ -253,6 +269,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.AMPHIBIAN]: [
     PetEventType.VET_VISIT,
@@ -263,6 +280,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.INVERTEBRATE]: [
     PetEventType.VET_VISIT,
@@ -271,6 +289,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.EQUINE]: [
     PetEventType.VACCINATION,
@@ -282,6 +301,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
   [PetCategory.FARM]: [
     PetEventType.VACCINATION,
@@ -292,5 +312,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MEDICATION,
     PetEventType.PHOTO,
     PetEventType.NOTE,
+    PetEventType.INSURANCE,
   ],
 };

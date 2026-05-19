@@ -27,6 +27,20 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="reminders"
+        options={{
+          title: t("tabs.reminders"),
+          tabBarLabel: t("tabs.reminders"),
+        }}
+      />
+      <Tabs.Screen
+        name="expenses"
+        options={{
+          title: t("tabs.expenses"),
+          tabBarLabel: t("tabs.expenses"),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: t("tabs.profile"),

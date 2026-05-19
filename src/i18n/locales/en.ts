@@ -9,7 +9,48 @@ const en = {
     home: "home",
     profile: "profile",
     pets: "pets",
+    reminders: "reminders",
+    expenses: "expenses",
     settings: "settings",
+  },
+
+  expenses: {
+    title: "Expenses",
+    subtitle: "Total across all your pets",
+    periodMonth: "This month",
+    periodYear: "This year",
+    periodAll: "All time",
+    petAll: "All pets",
+    heroLabelMonth: "THIS MONTH",
+    heroLabelYear: "THIS YEAR",
+    heroLabelAll: "ALL TIME",
+    trendVsPrevMonth: "{{value}} vs prev. month",
+    trendVsPrevYear: "{{value}} vs {{previous}}",
+    averagePerMonth: "{{value}}/mo on average",
+    byCategory: "By category",
+    history: "History",
+    total: "Total",
+    empty: "no expenses in the selected period",
+    loadMore: "Load more",
+  },
+
+  reminders: {
+    title: "Reminders",
+    countSummaryToday: "{{count}} today",
+    countSummaryOverdue: "{{count}} overdue",
+    summarySeparator: " · ",
+    summaryEmpty: "all under control",
+    filterAll: "All",
+    filterToday: "Today",
+    filterNext7: "Next 7 days",
+    filterOverdue: "Overdue",
+    sectionOverdue: "overdue",
+    sectionToday: "today · {{date}}",
+    sectionThisWeek: "this week",
+    sectionLater: "later",
+    emptyTitle: "no reminders",
+    emptySubtitle:
+      "you have no scheduled events in this filter. once you add one it will appear here.",
   },
 
   auth: {
@@ -87,6 +128,21 @@ const en = {
       "i accept the terms of service and commit to not publish offensive content.",
     continue: "continue",
     error: "couldn't save your acceptance. please try again.",
+  },
+
+  upcomingEvents: {
+    title: "what to do",
+    emptyTitle: "all caught up",
+    emptySubtitle:
+      "no events scheduled. once you add vaccines, vet visits or other reminders they'll show up here.",
+  },
+
+  homeGreeting: {
+    helloWithName: "Hi, {{name}}",
+    helloFallback: "Hi",
+    todayOne: "1 thing today",
+    todayMany: "{{count}} things today",
+    allClear: "all under control",
   },
 
   pets: {
@@ -210,6 +266,7 @@ const en = {
     titlePlaceholder: "title",
     descriptionPlaceholder: "notes (optional)",
     cost: "cost (optional)",
+    attachments: "attachments (optional)",
     saveNew: "add event",
     saveEdit: "save changes",
     newTitle: "new event",
@@ -243,6 +300,17 @@ const en = {
     deleteConfirmCancel: "cancel",
   },
 
+  attachments: {
+    add: "add",
+    addTitle: "add attachment",
+    pickImage: "photo from gallery",
+    pickPdf: "PDF document",
+    removeTitle: "remove attachment?",
+    removeMessage: "it will be detached from this event.",
+    removeConfirm: "remove",
+    errorTitle: "upload failed",
+  },
+
   petDetail: {
     ageDay: "day",
     ageDays: "days",
@@ -258,6 +326,7 @@ const en = {
       timeline: "Timeline",
       photos: "Photos",
       expenses: "Expenses",
+      weight: "Weight",
       care: "Care",
     },
     stats: {
@@ -297,6 +366,7 @@ const en = {
         MEDICATION: "Medication",
         PHOTO: "Photo",
         NOTE: "Note",
+        INSURANCE: "Insurance",
       },
     },
     photos: {
@@ -305,6 +375,13 @@ const en = {
     },
     expenses: {
       empty: "expenses will appear here",
+      spentIn: "Spent in {{year}}",
+      currentYear: "Current year",
+      byCategory: "By category",
+    },
+    weight: {
+      empty: "weight chart will appear here",
+      addCta: "log weight",
     },
     care: {
       empty: "care tips coming soon",

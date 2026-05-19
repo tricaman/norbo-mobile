@@ -2,9 +2,9 @@ import { NorboPressable } from "@/components/CustomPressable";
 import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { Screen } from "@/components/ui/Screen";
-import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { petsApi } from "@/services/pets.api";
 import { useQuery } from "@tanstack/react-query";
@@ -61,7 +61,7 @@ export default function PetsListScreen() {
 
   return (
     <Screen>
-      <ScreenHeader title={t("pets.title")} right={addButton} />
+      <PageTitle title={t("pets.title")} right={addButton} />
       <QueryBoundary query={query} isEmpty={() => false}>
         {(pets, { refetch, isFetching }) => (
           <FlatList
