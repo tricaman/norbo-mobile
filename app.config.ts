@@ -26,7 +26,7 @@ const IS_DEV = APP_VARIANT === "development";
 const IS_PREVIEW = APP_VARIANT === "preview";
 const IS_PROD = APP_VARIANT === "production";
 
-const BASE_BUNDLE_ID = "app.norbo.mobile";
+const BASE_BUNDLE_ID = "app.mariustrica.norbo";
 
 const bundleIdentifier = IS_DEV
   ? `${BASE_BUNDLE_ID}.dev`

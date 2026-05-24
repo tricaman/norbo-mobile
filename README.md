@@ -58,11 +58,11 @@ firebase/
 
 Bundle ID / package usati (da `app.config.ts`):
 
-| Variant       | iOS bundle id              | Android package            | Firebase project |
-| ------------- | -------------------------- | -------------------------- | ---------------- |
-| `development` | `app.norbo.mobile.dev`     | `app.norbo.mobile.dev`     | `firebase/dev`   |
-| `preview`     | `app.norbo.mobile.preview` | `app.norbo.mobile.preview` | `firebase/prod`  |
-| `production`  | `app.norbo.mobile`         | `app.norbo.mobile`         | `firebase/prod`  |
+| Variant       | iOS bundle id                   | Android package                 | Firebase project |
+| ------------- | ------------------------------- | ------------------------------- | ---------------- |
+| `development` | `app.mariustrica.norbo.dev`     | `app.mariustrica.norbo.dev`     | `firebase/dev`   |
+| `preview`     | `app.mariustrica.norbo.preview` | `app.mariustrica.norbo.preview` | `firebase/prod`  |
+| `production`  | `app.mariustrica.norbo`         | `app.mariustrica.norbo`         | `firebase/prod`  |
 
 Nei progetti Firebase (Console → Project settings → Your apps) registra app per ognuno dei bundle id che vuoi supportare. Se cambi un bundle id, **scarica nuovi** `google-services.json` / `GoogleService-Info.plist`.
 
@@ -143,19 +143,19 @@ La config Expo è in `app.config.ts` ed è **dinamica** rispetto a `APP_VARIANT`
 
 ### Profili EAS e bundle id
 
-| Profile EAS   | `APP_VARIANT` | Bundle ID                  | App name          | Firebase        | URL backend           |
-| ------------- | ------------- | -------------------------- | ----------------- | --------------- | --------------------- |
-| `development` | `development` | `app.norbo.mobile.dev`     | `norbo (Dev)`     | `firebase/dev`  | `.env` locale         |
-| `preview`     | `production`  | `app.norbo.mobile.preview` | `norbo (Preview)` | `firebase/prod` | hardcoded in eas.json |
-| `internal`    | `production`  | `app.norbo.mobile`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
-| `production`  | `production`  | `app.norbo.mobile`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
+| Profile EAS   | `APP_VARIANT` | Bundle ID                       | App name          | Firebase        | URL backend           |
+| ------------- | ------------- | ------------------------------- | ----------------- | --------------- | --------------------- |
+| `development` | `development` | `app.mariustrica.norbo.dev`     | `norbo (Dev)`     | `firebase/dev`  | `.env` locale         |
+| `preview`     | `production`  | `app.mariustrica.norbo.preview` | `norbo (Preview)` | `firebase/prod` | hardcoded in eas.json |
+| `internal`    | `production`  | `app.mariustrica.norbo`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
+| `production`  | `production`  | `app.mariustrica.norbo`         | `norbo`           | `firebase/prod` | hardcoded in eas.json |
 
 - `preview` e `internal` = stesso binario della prod, solo con `distribution: internal` (APK installabile via QR/link senza passare dagli store).
 - `production` = `.aab` per Play Store, `.ipa` per App Store.
 
-Il bundle id `app.norbo.mobile.dev` (diverso da quello prod) permette di **avere l'app di sviluppo E quella di produzione installate in parallelo** sullo stesso device.
+Il bundle id `app.mariustrica.norbo.dev` (diverso da quello prod) permette di **avere l'app di sviluppo E quella di produzione installate in parallelo** sullo stesso device.
 
-> Se in futuro vuoi un bundle id `app.norbo.mobile.preview` separato, devi prima registrarlo come app nel progetto Firebase `norbo-prod` e ri-scaricare `google-services.json`/`GoogleService-Info.plist`, poi in `eas.json` cambi `APP_VARIANT=preview`. Il supporto è già presente in `app.config.ts`.
+> Se in futuro vuoi un bundle id `app.mariustrica.norbo.preview` separato, devi prima registrarlo come app nel progetto Firebase `norbo-prod` e ri-scaricare `google-services.json`/`GoogleService-Info.plist`, poi in `eas.json` cambi `APP_VARIANT=preview`. Il supporto è già presente in `app.config.ts`.
 
 ### Setup iniziale EAS (una volta sola)
 

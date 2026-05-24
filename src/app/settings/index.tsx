@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native-unistyles";
 const TERMS_URL =
   "https://tricaman.github.io/norbo-policy/safety-standards.html";
 const PRIVACY_URL = "https://tricaman.github.io/norbo-policy/";
-const SUPPORT_EMAIL = "support@norbo.app";
+const SUPPORT_EMAIL = "support@norbo.mariustrica.com";
 
 /**
  * Settings hub — raggruppa tutte le impostazioni dell'app.
@@ -83,6 +83,12 @@ export default function SettingsScreen() {
             iconName="hand.raised"
             label={t("settings.privacyPolicy")}
             onPress={() => void Linking.openURL(PRIVACY_URL)}
+          />
+          <SettingsRow
+            iconName="exclamationmark.bubble"
+            label={t("settings.report")}
+            subtitle={t("settings.reportSubtitle")}
+            onPress={() => router.push("/settings/report")}
           />
           <SettingsRow
             iconName="questionmark.circle"
