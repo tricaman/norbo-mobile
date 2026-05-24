@@ -67,7 +67,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 3,
+    versionCode: 1,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
   },
   web: {
@@ -85,6 +85,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "./plugins/withAndroidNotificationIcon.js",
     "./plugins/withAdiRegistration.js",
     "./plugins/withGradleMemory.js",
+    "./plugins/withAndroidReleaseSigning.js",
     "expo-font",
     "@react-native-community/datetimepicker",
     [

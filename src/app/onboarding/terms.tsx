@@ -12,7 +12,7 @@ import { Linking, ScrollView, Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const TERMS_URL =
-  "https://tricaman.github.io/norbo-policy/safety-standards.html";
+  "https://tricaman.github.io/norbo-policy/terms-of-service.html";
 
 /**
  * OnboardingTermsScreen — blocking EULA acceptance step shown after the

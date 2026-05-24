@@ -239,7 +239,6 @@ export default function ExpensesTab(): React.JSX.Element {
         }
         contentContainerStyle={[
           styles.listContent,
-          allExpenses.length === 0 && styles.centeredContent,
           { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom },
         ]}
         showsVerticalScrollIndicator={false}
@@ -285,7 +284,6 @@ const styles = StyleSheet.create((theme) => ({
     paddingTop: theme.spacing.sm,
   },
   listContent: { flexGrow: 1 },
-  centeredContent: { flex: 1, justifyContent: "center" },
   centered: {
     flex: 1,
     alignItems: "center",

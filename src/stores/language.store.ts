@@ -4,7 +4,23 @@ import { createMMKV } from "react-native-mmkv";
 
 const storage = createMMKV({ id: "norbo-language" });
 
-export type Language = "en" | "it";
+export type Language =
+  | "en"
+  | "it"
+  | "ar"
+  | "de-DE"
+  | "es-ES"
+  | "fr-FR"
+  | "hi-IN"
+  | "id"
+  | "ja-JP"
+  | "pt-BR"
+  | "ro"
+  | "ru-RU"
+  | "tr-TR"
+  | "ur"
+  | "bn-BD"
+  | "zh-CN";
 
 interface LanguageState {
   language: Language;
@@ -17,14 +33,14 @@ export const useLanguageStore = create<LanguageState>((set) => ({
 
   setLanguage: (language) => {
     storage.set("language", language);
-    i18n.changeLanguage(language);
     set({ language });
+    void i18n.changeLanguage(language);
   },
 
   hydrate: () => {
     const stored = storage.getString("language") as Language | undefined;
     const language = stored ?? "it";
-    i18n.changeLanguage(language);
     set({ language });
+    void i18n.changeLanguage(language);
   },
 }));

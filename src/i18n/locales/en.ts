@@ -3,8 +3,14 @@ const en = {
     tapToSet: "tap to set",
     failedToSave: "failed to save, try again",
     continue: "continue",
+    save: "save",
+    skip: "skip",
+    next: "next",
+    done: "done",
+    comingSoon: "coming soon",
+    back: "back",
+    cancel: "cancel",
   },
-
   tabs: {
     home: "home",
     profile: "profile",
@@ -13,7 +19,6 @@ const en = {
     expenses: "expenses",
     settings: "settings",
   },
-
   expenses: {
     title: "expenses",
     subtitle: "total across all your pets",
@@ -62,7 +67,6 @@ const en = {
       OTHER: "other",
     },
   },
-
   reminders: {
     title: "reminders",
     filters: {
@@ -119,7 +123,6 @@ const en = {
     deleteConfirmOk: "delete",
     deleteConfirmCancel: "cancel",
   },
-
   auth: {
     signOut: "sign out",
     otpTitle: "enter code",
@@ -138,35 +141,104 @@ const en = {
     signingIn: "signing in...",
     or: "or",
   },
-
+  profile: {
+    profileSection: "profile",
+    editNameSubtitle: "display name",
+    settings: "settings",
+    settingsSubtitle: "notifications, theme, language",
+  },
   settings: {
     title: "settings",
-    account: "account",
-    accountSubtitle: "name, email",
+    preferencesSection: "preferences",
+    notifications: "notifications",
+    notificationsSubtitle: "reminders, quiet hours",
+    theme: "theme",
+    themeSubtitle: "light, dark, system",
     language: "language",
     languageSubtitle: "app language",
-    help: "help",
+    accountSection: "account",
+    deleteAccount: "delete account",
+    legalSection: "legal & support",
+    termsOfService: "terms of service",
     privacyPolicy: "privacy policy",
+    support: "support",
+    supportSubtitle: "drop us an email",
     report: "make a report",
     reportSubtitle: "bugs, content, pet health",
     appInfoIos: "norbo for ios",
     appInfoAndroid: "norbo for android",
     version: "version {{version}}",
   },
-
   languageScreen: {
     title: "language",
     en: "english",
     it: "italiano",
+    ar: "arabic",
+    "de-DE": "deutsch",
+    "es-ES": "español",
+    "fr-FR": "français",
+    "hi-IN": "हिन्दी",
+    id: "bahasa indonesia",
+    "ja-JP": "日本語",
+    "pt-BR": "português",
+    ro: "română",
+    "ru-RU": "русский",
+    "tr-TR": "türkçe",
+    ur: "اردو",
+    "bn-BD": "বাংলা",
+    "zh-CN": "中文",
   },
-
+  accountHub: {
+    title: "account",
+    profileSection: "profile",
+    editProfile: "edit profile",
+    editProfileSubtitle: "name, photo",
+    preferencesSection: "preferences",
+    notifications: "notifications",
+    notificationsSubtitle: "reminders, quiet hours",
+    theme: "theme",
+    themeSubtitle: "light, dark, system",
+    language: "language",
+    languageSubtitle: "english",
+    dataSection: "your data",
+    exportData: "export my data",
+    exportDataSubtitle: "coming soon",
+    deleteAccount: "delete account",
+    legalSection: "legal & support",
+    termsOfService: "terms of service",
+    privacyPolicy: "privacy policy",
+    support: "support",
+    supportSubtitle: "drop us an email",
+    signOut: "sign out",
+  },
+  themeScreen: {
+    title: "theme",
+    sectionLabel: "appearance",
+    light: "light",
+    dark: "dark",
+    system: "system",
+    description: "choose how you want to see norbo. \"system\" follows your device settings.",
+  },
+  notifications: {
+    title: "notifications",
+    sectionLabel: "reminders",
+    healthReminders: "health reminders",
+    healthRemindersSubtitle: "vaccines, parasites, vet visits",
+    maintenanceReminders: "care reminders",
+    maintenanceRemindersSubtitle: "food, grooming, routine",
+    quietHoursSection: "quiet hours",
+    quietHoursEnable: "enable quiet hours",
+    quietHoursStart: "from",
+    quietHoursEnd: "to",
+    disclaimer: "actual notifications will arrive in upcoming releases. for now we are just saving your preferences.",
+    saveError: "couldn't save, try again",
+  },
   editInfo: {
     title: "account",
     yourInfo: "your info",
     email: "email",
     name: "name",
   },
-
   nameScreen: {
     title: "name",
     label: "your name",
@@ -175,37 +247,42 @@ const en = {
     minLength: "at least 1 character",
     maxLength: "max 50 characters",
   },
-
   deleteAccount: {
     title: "delete account",
-    warning:
-      "this will permanently delete your account and all related data. this cannot be undone.",
+    warning: "this will permanently delete your account and all related data. this cannot be undone.",
     label: "type your email to confirm",
     placeholder: "your email",
     confirm: "delete account",
     mismatch: "email does not match",
   },
-
   terms: {
     title: "terms of service",
-    intro:
-      "before you start using norbo, please read and accept our terms of service.",
+    intro: "before you start using norbo, please read and accept our terms of service.",
     readLink: "read the full terms of service",
-    zeroTolerance:
-      "norbo has a zero-tolerance policy toward abusive behavior and inappropriate content. any user who posts offensive material or harasses others will be removed and may be reported to the competent authorities.",
-    checkbox:
-      "i accept the terms of service and commit to not publish offensive content.",
+    zeroTolerance: "norbo has a zero-tolerance policy toward abusive behavior and inappropriate content. any user who posts offensive material or harasses others will be removed and may be reported to the competent authorities.",
+    checkbox: "i accept the terms of service and commit to not publish offensive content.",
     continue: "continue",
     error: "couldn't save your acceptance. please try again.",
   },
-
+  onboarding: {
+    welcomeTitle: "welcome to norbo",
+    welcomeBody: "norbo helps you care for your pets: health reminders, due dates, everything in one place.",
+    themeStepTitle: "pick a theme",
+    themeStepBody: "you can change it later from settings.",
+    notificationsStepTitle: "enable notifications",
+    notificationsStepBody: "we'll alert you about important due dates like vaccines and parasite treatments. you can disable them anytime.",
+    notificationsEnable: "enable notifications",
+    notificationsDenied: "you didn't grant permission. you can always enable it from system settings.",
+    skip: "skip",
+    next: "next",
+    finish: "done",
+    stepProgress: "{{current}} of {{total}}",
+  },
   upcomingEvents: {
     title: "what to do",
     emptyTitle: "all caught up",
-    emptySubtitle:
-      "no events scheduled. once you add vaccines, vet visits or other reminders they'll show up here.",
+    emptySubtitle: "no events scheduled. once you add vaccines, vet visits or other reminders they'll show up here.",
   },
-
   homeGreeting: {
     helloWithName: "hi, {{name}}",
     helloFallback: "hi",
@@ -213,12 +290,10 @@ const en = {
     todayMany: "{{count}} things today",
     allClear: "all under control",
   },
-
   pets: {
     title: "my pets",
     emptyTitle: "let's start with the first one",
-    emptySubtitle:
-      "add your pet to keep their whole story together: vaccines, visits, photos, expenses.",
+    emptySubtitle: "add your pet to keep their whole story together: vaccines, visits, photos, expenses.",
     emptyCta: "add a pet",
     addButton: "add",
     deleteConfirmTitle: "delete pet",
@@ -228,12 +303,10 @@ const en = {
     deleteSuccess: "pet deleted",
     viewAll: "view all",
   },
-
   petWizard: {
     closeAria: "close",
     categoryTitle: "what kind of pet?",
-    categorySubtitle:
-      "pick a category, then we'll narrow down the breed or species.",
+    categorySubtitle: "pick a category, then we'll narrow down the breed or species.",
     continue: "continue",
     continueWith: "continue with {{category}}",
     skip: "skip",
@@ -249,7 +322,7 @@ const en = {
     speciesSelected: "selected",
     speciesChange: "change",
     sexTitle: "male or female?",
-    sexSubtitle: 'you can also pick "unknown" if you\'d rather.',
+    sexSubtitle: "you can also pick \"unknown\" if you'd rather.",
     birthDateTitle: "when were they born?",
     birthDateSubtitle: "a rough date is fine. we'll use it for reminders only.",
     birthDatePick: "pick a date",
@@ -263,8 +336,7 @@ const en = {
     weightPlaceholder: "e.g. 4.5",
     weightInvalid: "enter a positive number",
     confirmTitleTemplate: "{{name}} is in their new home",
-    confirmSubtitle:
-      "start tracking their life right away. we suggest beginning here.",
+    confirmSubtitle: "start tracking their life right away. we suggest beginning here.",
     confirmGoToProfile: "go to {{name}}'s profile",
     confirmAddAnother: "add another pet",
     suggestionsLabel: "quick picks",
@@ -282,7 +354,6 @@ const en = {
       FARM: "farm",
     },
   },
-
   petForm: {
     newTitle: "new pet",
     editTitle: "edit",
@@ -323,7 +394,6 @@ const en = {
       FARM: "farm animal",
     },
   },
-
   eventForm: {
     mode: "type",
     mode_past: "happened",
@@ -347,7 +417,6 @@ const en = {
     vaccineDetails: "vaccine details",
     vaccineNamePlaceholder: "vaccine name",
   },
-
   weightForm: {
     dateLabel: "date",
     weightLabel: "weight",
@@ -360,7 +429,6 @@ const en = {
     newTitle: "log weight",
     editTitle: "edit weight",
   },
-
   petWeights: {
     title: "weights",
     sectionLatest: "latest",
@@ -374,7 +442,6 @@ const en = {
     deleteConfirmOk: "delete",
     deleteConfirmCancel: "cancel",
   },
-
   attachments: {
     add: "add",
     addTitle: "add attachment",
@@ -385,7 +452,6 @@ const en = {
     removeConfirm: "remove",
     errorTitle: "upload failed",
   },
-
   reminderForm: {
     newTitle: "new reminder",
     editTitle: "edit reminder",
@@ -397,7 +463,6 @@ const en = {
     saveNew: "create reminder",
     saveEdit: "save changes",
   },
-
   reminderDetail: {
     due: "due",
     statusLabel: "status",
@@ -422,7 +487,6 @@ const en = {
     snoozedUntil: "snoozed until {{date}}",
     completedAt: "completed on {{date}}",
   },
-
   report: {
     title: "make a report",
     typeLabel: "what do you want to report?",
@@ -446,7 +510,6 @@ const en = {
     subjectRequired: "enter a subject",
     bodyRequired: "enter a description",
   },
-
   petDetail: {
     ageDay: "day",
     ageDays: "days",

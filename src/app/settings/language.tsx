@@ -1,51 +1,47 @@
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { SaveHeaderAction } from "@/components/ui/SaveHeaderAction";
 import { Screen } from "@/components/ui/Screen";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { SettingsCard, SettingsRow } from "@/components/ui/SettingsRow";
+import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useLanguageStore, type Language } from "@/stores/language.store";
-import { useRouter } from "expo-router";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-/**
- * Single-locale MVP: only Italian is selectable. Other languages will
- * be unlocked once their translation files reach parity with `it.ts`.
- * The list shape is kept generic so adding entries is a no-refactor
- * change.
- */
-const LANGUAGES: {
+const LANGUAGES = [
+  { code: "it", labelKey: "languageScreen.it", flag: "🇮🇹" },
+  { code: "en", labelKey: "languageScreen.en", flag: "🇬🇧" },
+  { code: "ar", labelKey: "languageScreen.ar", flag: "🇸🇦" },
+  { code: "de-DE", labelKey: "languageScreen.de-DE", flag: "🇩🇪" },
+  { code: "es-ES", labelKey: "languageScreen.es-ES", flag: "🇪🇸" },
+  { code: "fr-FR", labelKey: "languageScreen.fr-FR", flag: "🇫🇷" },
+  { code: "hi-IN", labelKey: "languageScreen.hi-IN", flag: "🇮🇳" },
+  { code: "id", labelKey: "languageScreen.id", flag: "🇮🇩" },
+  { code: "ja-JP", labelKey: "languageScreen.ja-JP", flag: "🇯🇵" },
+  { code: "pt-BR", labelKey: "languageScreen.pt-BR", flag: "🇧🇷" },
+  { code: "ro", labelKey: "languageScreen.ro", flag: "🇷🇴" },
+  { code: "ru-RU", labelKey: "languageScreen.ru-RU", flag: "🇷🇺" },
+  { code: "tr-TR", labelKey: "languageScreen.tr-TR", flag: "🇹🇷" },
+  { code: "ur", labelKey: "languageScreen.ur", flag: "🇵🇰" },
+  { code: "bn-BD", labelKey: "languageScreen.bn-BD", flag: "🇧🇩" },
+  { code: "zh-CN", labelKey: "languageScreen.zh-CN", flag: "🇨🇳" },
+] as const satisfies readonly {
   code: Language;
-  labelKey: "languageScreen.en" | "languageScreen.it";
-  enabled: boolean;
-}[] = [
-  { code: "it", labelKey: "languageScreen.it", enabled: true },
-  { code: "en", labelKey: "languageScreen.en", enabled: false },
-];
+  labelKey: string;
+  flag: string;
+}[];
 
 export default function LanguageScreen() {
   const { theme } = useUnistyles();
   const { t } = useTranslation();
-  const router = useRouter();
   const currentLanguage = useLanguageStore((s) => s.language);
   const setLanguage = useLanguageStore((s) => s.setLanguage);
-  const [selected, setSelected] = useState<Language>(currentLanguage);
-
-  const handleSave = () => {
-    setLanguage(selected);
-    router.back();
-  };
 
   return (
     <Screen>
-      <ScreenHeader
-        title={t("languageScreen.title")}
-        right={<SaveHeaderAction onPress={handleSave} />}
-      />
+      <ScreenHeader title={t("languageScreen.title")} />
 
-      <View style={styles.body}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <SettingsCard
           dividerInset={theme.spacing.xl}
           title={t("languageScreen.title")}
@@ -53,49 +49,31 @@ export default function LanguageScreen() {
           {LANGUAGES.map((lang) => (
             <SettingsRow
               key={lang.code}
-              label={t(lang.labelKey)}
-              onPress={lang.enabled ? () => setSelected(lang.code) : undefined}
-              labelStyle={
-                lang.enabled ? undefined : { color: theme.colors.textTertiary }
-              }
+              label={`${lang.flag}  ${t(lang.labelKey)}`}
+              onPress={() => setLanguage(lang.code as Language)}
               right={
-                lang.enabled && selected === lang.code ? (
+                currentLanguage === lang.code ? (
                   <IconSymbol
                     name="checkmark"
                     size={16}
                     tintColor={theme.colors.primary}
                   />
-                ) : !lang.enabled ? (
-                  <Text style={styles.comingSoon}>
-                    {t("common.comingSoon")}
-                  </Text>
                 ) : null
               }
             />
           ))}
         </SettingsCard>
-        <Text style={styles.description}>
-          {t("languageScreen.description")}
-        </Text>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
-  body: {
-    flex: 1,
+  scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: theme.spacing["3xl"],
     paddingTop: theme.spacing["2xl"],
+    paddingBottom: SCREEN_BOTTOM_PADDING,
     gap: theme.spacing.lg,
-  },
-  description: {
-    ...theme.typography.footnote,
-    color: theme.colors.textSecondary,
-    paddingHorizontal: theme.spacing.sm,
-  },
-  comingSoon: {
-    ...theme.typography.footnote,
-    color: theme.colors.textTertiary,
   },
 }));

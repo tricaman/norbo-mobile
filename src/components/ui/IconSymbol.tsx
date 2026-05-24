@@ -63,6 +63,8 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
 
     // Settings
     "questionmark.circle": "help-circle-outline",
+    "exclamationmark.bubble": "chatbubble-ellipses-outline",
+    paintpalette: "color-palette-outline",
     "hand.raised": "shield-checkmark-outline",
     key: "key-outline",
 
