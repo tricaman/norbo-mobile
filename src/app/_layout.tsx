@@ -1,6 +1,11 @@
 import { ToastProvider } from "@/components/ui/ToastProvider";
 import "@/i18n/i18n";
-import { handleInitialNotification } from "@/services/notifications";
+import {
+  handleInitialNotification,
+  initNotifications,
+  setupMessageHandlers,
+} from "@/services/notifications";
+import { registerPushToken } from "@/services/push-registration";
 import { useAuthStore } from "@/stores/auth.store";
 import { useLanguageStore } from "@/stores/language.store";
 import { useOnboardingStore } from "@/stores/onboarding.store";
@@ -12,7 +17,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { AppState, type AppStateStatus } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useUnistyles } from "react-native-unistyles";
 
@@ -114,11 +120,38 @@ export default function RootLayout() {
   ]);
 
   // 4. Deep-link dalla notifica che ha lanciato l'app (stato killed):
-  // appena l'utente è autenticato e lo splash è terminato, apri il dit
-  // corrispondente.
+  // appena l'utente è autenticato e lo splash è terminato, naviga alla
+  // schermata corrispondente se la notifica contiene un target.
   useEffect(() => {
     if (!isReady || !isAuthed) return;
-    void handleInitialNotification();
+    void handleInitialNotification().then((route) => {
+      if (route) router.push(route as never);
+    });
+  }, [isReady, isAuthed, router]);
+
+  // 5. Initialise notifications after login: request permission, create
+  //    Android channels, register iOS categories, wire foreground handlers,
+  //    register the FCM token, and keep it fresh on every foreground.
+  const appStateRef = useRef<AppStateStatus>(AppState.currentState);
+  useEffect(() => {
+    if (!isReady || !isAuthed) return;
+
+    // Full bootstrap (permission + channels + categories + token + onTokenRefresh).
+    void initNotifications();
+    // Foreground FCM/Notifee event handlers (idempotent).
+    setupMessageHandlers();
+
+    // Re-register the token whenever the app comes back to the foreground
+    // so lastSeenAt stays fresh and server-side invalidation is recovered.
+    const sub = AppState.addEventListener("change", (next) => {
+      if (appStateRef.current !== "active" && next === "active") {
+        void registerPushToken();
+      }
+      appStateRef.current = next;
+    });
+    return () => {
+      sub.remove();
+    };
   }, [isReady, isAuthed]);
 
   // While JS isn't ready the native splash (a single themed disc) stays on
@@ -212,6 +245,30 @@ function AppInner() {
       />
       <Stack.Screen
         name="pets/[id]/weights/new"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="reminder/new"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="reminder/[id]/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="reminder/[id]/edit"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="expense/new"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="expense/[id]/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
+        name="expense/[id]/edit"
         options={{ animation: "slide_from_right" }}
       />
     </Stack>

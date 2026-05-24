@@ -1,7 +1,6 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import type { OwnerExpenseHistoryItem } from "@/types/owner-expense.types";
-import type { Pet } from "@/types/pet.types";
+import type { Expense } from "@/types/expense.types";
 import { format } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
 import React from "react";
@@ -15,26 +14,20 @@ import {
 } from "./expense-format";
 
 interface ExpenseHistoryRowProps {
-  item: OwnerExpenseHistoryItem;
-  pet: Pet | undefined;
+  item: Expense;
+  petName?: string;
   onPress: () => void;
 }
 
-/**
- * ExpenseHistoryRow — a single entry in the global expense feed.
- *
- * Layout matches the design: square type icon (tinted by category) →
- * title + (pet · category · date) subtitle → cost on the trailing edge.
- */
 export function ExpenseHistoryRow({
   item,
-  pet,
+  petName,
   onPress,
-}: ExpenseHistoryRowProps): React.ReactElement {
+}: ExpenseHistoryRowProps): React.JSX.Element {
   const { t, i18n } = useTranslation();
   const { theme } = useUnistyles();
-  const color = EXPENSE_CATEGORY_COLORS[item.type] ?? theme.colors.primary;
-  const icon = EXPENSE_CATEGORY_ICON[item.type] ?? "creditcard";
+  const color = EXPENSE_CATEGORY_COLORS[item.category] ?? theme.colors.primary;
+  const icon = EXPENSE_CATEGORY_ICON[item.category] ?? "creditcard";
 
   const dateLocale = i18n.language?.startsWith("it") ? itLocale : enUS;
   const dateLabel = (() => {
@@ -43,11 +36,9 @@ export function ExpenseHistoryRow({
     return format(d, "d MMM", { locale: dateLocale });
   })();
 
-  const typeLabel = t(
-    `petDetail.timeline.types.${item.type}` as "petDetail.timeline.types.VACCINATION",
-  );
-  const subtitleParts = [pet?.name, typeLabel, dateLabel].filter(
-    (part): part is string => Boolean(part),
+  const categoryLabel = t(`expenses.categories.${item.category}` as "expenses.categories.VET");
+  const subtitleParts = [petName, categoryLabel, dateLabel].filter(
+    (p): p is string => Boolean(p),
   );
 
   return (
@@ -57,24 +48,15 @@ export function ExpenseHistoryRow({
           <IconSymbol name={icon} size={18} tintColor={color} />
         </View>
         <View style={styles.content}>
-          <Text
-            style={[styles.title, { color: theme.colors.textPrimary }]}
-            numberOfLines={1}
-          >
-            {item.title}
+          <Text style={[styles.title, { color: theme.colors.textPrimary }]} numberOfLines={1}>
+            {item.description ?? categoryLabel}
           </Text>
-          <Text
-            style={[styles.subtitle, { color: theme.colors.textTertiary }]}
-            numberOfLines={1}
-          >
+          <Text style={[styles.subtitle, { color: theme.colors.textTertiary }]} numberOfLines={1}>
             {subtitleParts.join(" · ")}
           </Text>
         </View>
-        <Text
-          style={[styles.cost, { color: theme.colors.textPrimary }]}
-          numberOfLines={1}
-        >
-          {formatCurrency(item.cost, item.currency)}
+        <Text style={[styles.cost, { color: theme.colors.textPrimary }]} numberOfLines={1}>
+          {formatCurrency(item.amount, item.currency)}
         </Text>
       </View>
     </NorboPressable>
@@ -96,22 +78,13 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
-  content: {
-    flex: 1,
-    gap: 2,
-  },
-  title: {
-    ...theme.typography.subhead,
-    fontWeight: "600",
-  },
+  content: { flex: 1, gap: 2 },
+  title: { ...theme.typography.subhead, fontWeight: "600" },
   subtitle: {
     ...theme.typography.caption,
     textTransform: "none",
     letterSpacing: 0,
     fontWeight: "400",
   },
-  cost: {
-    ...theme.typography.subhead,
-    fontWeight: "600",
-  },
+  cost: { ...theme.typography.subhead, fontWeight: "600" },
 }));

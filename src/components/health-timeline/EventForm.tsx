@@ -9,8 +9,9 @@ import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
+import { eventCanHaveCost, eventCanSchedule } from "@/shared/pet-event-schemas";
 import { PetEventType } from "@/types/pet-event.types";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import {
   Controller,
   FormProvider,
@@ -18,7 +19,7 @@ import {
   type UseFormReturn,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Switch, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { z } from "zod";
@@ -33,6 +34,9 @@ export const eventFormSchema = z
     description: z.string().max(2000).nullable().optional(),
     cost: z.string().optional(),
     mediaAssetIds: z.array(z.string()).max(MAX_ATTACHMENTS).optional(),
+    createReminder: z.boolean().optional(),
+    createExpense: z.boolean().optional(),
+    vaccineName: z.string().max(120).optional(),
   })
   .superRefine((v, ctx) => {
     if (v.mode === "past" && !v.occurredAt) {
@@ -49,9 +53,35 @@ export const eventFormSchema = z
         message: "required",
       });
     }
+    if (
+      v.type === PetEventType.VACCINATION &&
+      (!v.vaccineName || v.vaccineName.trim().length === 0)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["vaccineName"],
+        message: "required",
+      });
+    }
   });
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
+
+/**
+ * Builds the polymorphic `extra` payload sent to the backend based on
+ * the event type. Returns `undefined` when no type-specific data is
+ * collected so the API receives a clean optional field.
+ */
+export function buildExtra(
+  values: EventFormValues,
+): Record<string, unknown> | undefined {
+  if (values.type === PetEventType.VACCINATION) {
+    const name = values.vaccineName?.trim();
+    if (!name) return undefined;
+    return { vaccineName: name };
+  }
+  return undefined;
+}
 
 interface EventFormProps {
   form: UseFormReturn<EventFormValues>;
@@ -74,6 +104,33 @@ export function EventForm({
 
   const mode = useWatch({ control: form.control, name: "mode" });
   const selectedType = useWatch({ control: form.control, name: "type" });
+  const costValue = useWatch({ control: form.control, name: "cost" });
+
+  const parsedCost = parseFloat(costValue ?? "");
+  const costIsValid = !isNaN(parsedCost) && parsedCost > 0;
+
+  // Capability gates from the global PET_EVENT_CAPABILITIES map.
+  // Some event types (WEIGHT_RECORD, NOTE, PHOTO, …) cannot have a cost
+  // and/or cannot spawn reminders, so the corresponding form sections
+  // must disappear entirely.
+  const typeCanHaveCost = eventCanHaveCost(selectedType);
+  const typeCanSchedule = eventCanSchedule(selectedType);
+
+  // Auto-reset the expense toggle whenever cost becomes invalid OR the
+  // selected event type cannot have a cost, so it can never be ON in an
+  // inconsistent state.
+  useEffect(() => {
+    if (!costIsValid || !typeCanHaveCost) {
+      form.setValue("createExpense", false);
+    }
+  }, [costIsValid, typeCanHaveCost, form]);
+
+  // If the user picks a non-schedulable type, force `createReminder=false`.
+  useEffect(() => {
+    if (!typeCanSchedule) {
+      form.setValue("createReminder", false);
+    }
+  }, [typeCanSchedule, form]);
 
   const typeOptions = useMemo<ChipOption<PetEventType>[]>(
     () => [
@@ -224,6 +281,55 @@ export function EventForm({
           />
         </FormCard>
 
+        {/* Reminder toggle — only for future/scheduled events whose type
+            is schedulable (e.g. NOTE/PHOTO/WEIGHT_RECORD have no reminder). */}
+        {mode === "future" && typeCanSchedule ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.createReminder")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <Controller
+                control={form.control}
+                name="createReminder"
+                render={({ field }) => (
+                  <View style={styles.reminderRow}>
+                    <View style={styles.reminderText}>
+                      <Text
+                        style={[
+                          styles.reminderLabel,
+                          { color: theme.colors.textPrimary },
+                        ]}
+                      >
+                        {t("eventForm.createReminder")}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.reminderSubtitle,
+                          { color: theme.colors.textSecondary },
+                        ]}
+                      >
+                        {t("eventForm.createReminderSubtitle")}
+                      </Text>
+                    </View>
+                    <Switch
+                      // Mirror the actual form value: avoids a UI/payload
+                      // mismatch where the toggle showed ON while the form
+                      // submitted `false` (or vice versa) on edit.
+                      value={!!field.value}
+                      onValueChange={field.onChange}
+                      trackColor={{
+                        false: theme.colors.border,
+                        true: theme.colors.primary,
+                      }}
+                    />
+                  </View>
+                )}
+              />
+            </FormCard>
+          </>
+        ) : null}
+
         {/* Attachments — prominent for PHOTO, secondary otherwise */}
         {selectedType === PetEventType.PHOTO ? (
           <>
@@ -262,18 +368,88 @@ export function EventForm({
           />
         </FormCard>
 
-        {/* Cost */}
-        <SectionLabel style={styles.sectionLabel}>
-          {t("eventForm.cost")}
-        </SectionLabel>
-        <FormCard style={styles.card}>
-          <FormInput
-            name="cost"
-            placeholder="0.00"
-            keyboardType="decimal-pad"
-            returnKeyType="done"
-          />
-        </FormCard>
+        {/* Vaccine-specific fields */}
+        {selectedType === PetEventType.VACCINATION ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.vaccineDetails")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <FormInput
+                name="vaccineName"
+                placeholder={t("eventForm.vaccineNamePlaceholder")}
+                returnKeyType="done"
+              />
+            </FormCard>
+          </>
+        ) : null}
+
+        {/* Cost — hidden for event types that have no cost concept
+            (WEIGHT_RECORD, NOTE, PHOTO, WATER_PARAMETERS, …). */}
+        {typeCanHaveCost ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.cost")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <FormInput
+                name="cost"
+                placeholder="0.00"
+                keyboardType="decimal-pad"
+                returnKeyType="done"
+              />
+            </FormCard>
+          </>
+        ) : null}
+
+        {/* Expense toggle — only for past events with a valid cost AND a
+            cost-capable type. */}
+        {mode === "past" && typeCanHaveCost ? (
+          <FormCard style={styles.card}>
+            <Controller
+              control={form.control}
+              name="createExpense"
+              render={({ field }) => (
+                <View style={styles.reminderRow}>
+                  <View style={styles.reminderText}>
+                    <Text
+                      style={[
+                        styles.reminderLabel,
+                        {
+                          color: costIsValid
+                            ? theme.colors.textPrimary
+                            : theme.colors.textTertiary,
+                        },
+                      ]}
+                    >
+                      {t("eventForm.recordExpense")}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.reminderSubtitle,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {t("eventForm.recordExpenseSubtitle")}
+                    </Text>
+                  </View>
+                  <Switch
+                    value={costIsValid ? (field.value ?? false) : false}
+                    onValueChange={costIsValid ? field.onChange : undefined}
+                    disabled={!costIsValid}
+                    trackColor={{
+                      false: theme.colors.border,
+                      true: theme.colors.primary,
+                    }}
+                    thumbColor={
+                      costIsValid ? undefined : theme.colors.textTertiary
+                    }
+                  />
+                </View>
+              )}
+            />
+          </FormCard>
+        ) : null}
 
         {/* Attachments — secondary position for non-PHOTO event types */}
         {selectedType !== PetEventType.PHOTO ? (
@@ -340,5 +516,22 @@ const styles = StyleSheet.create((theme) => ({
   submitLabel: {
     ...theme.typography.subhead,
     fontWeight: "700",
+  },
+  reminderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: theme.spacing.xs,
+    gap: theme.spacing.md,
+  },
+  reminderText: {
+    flex: 1,
+    gap: 2,
+  },
+  reminderLabel: {
+    ...theme.typography.subhead,
+    fontWeight: "500",
+  },
+  reminderSubtitle: {
+    ...theme.typography.caption,
   },
 }));

@@ -1,19 +1,22 @@
+import { queryClient } from "@/app/_layout";
+import type { EventFormValues } from "@/components/health-timeline/EventForm";
+import {
+  buildExtra,
+  EventForm,
+  eventFormSchema,
+} from "@/components/health-timeline/EventForm";
+import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { Screen } from "@/components/ui/Screen";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
-import { QueryBoundary } from "@/components/ui/QueryBoundary";
-import { EventForm } from "@/components/health-timeline/EventForm";
-import type { EventFormValues } from "@/components/health-timeline/EventForm";
-import { eventFormSchema } from "@/components/health-timeline/EventForm";
 import { useForm } from "@/hooks/useForm";
 import { useMutation } from "@/hooks/useMutation";
 import { petEventsApi } from "@/services/pet-events.api";
 import type { PetEvent } from "@/types/pet-event.types";
 import { PetEventStatus } from "@/types/pet-event.types";
-import { queryClient } from "@/app/_layout";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useTranslation } from "react-i18next";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function EditEventScreen() {
   const { id: petId, eventId } = useLocalSearchParams<{
@@ -55,6 +58,11 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         ? new Date(event.scheduledFor)
         : undefined,
       mediaAssetIds: event.mediaAssetIds,
+      createReminder: event.createReminder,
+      vaccineName:
+        typeof event.extra?.["vaccineName"] === "string"
+          ? (event.extra["vaccineName"] as string)
+          : "",
     },
   });
 
@@ -73,6 +81,13 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
           values.mode === "future" && values.scheduledFor
             ? values.scheduledFor.toISOString()
             : undefined,
+        // Explicitly forward the user's choice. The form initialises this
+        // from `event.createReminder` (boolean) so there's no ambiguity;
+        // defaulting to `true` here would silently re-enable a reminder
+        // that the user had previously turned off.
+        createReminder:
+          values.mode === "future" ? (values.createReminder ?? false) : false,
+        extra: buildExtra(values),
       }),
     showSuccessToast: true,
     successMessage: t("eventForm.saveEdit"),

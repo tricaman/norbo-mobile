@@ -5,48 +5,52 @@ import notifee, {
 } from "@notifee/react-native";
 import {
   getMessaging,
-  getToken,
   onMessage,
   onTokenRefresh,
   setBackgroundMessageHandler,
 } from "@react-native-firebase/messaging";
-import { Platform } from "react-native";
-import { registerPushToken } from "./api";
+import { addDays } from "date-fns";
+import { Linking, Platform } from "react-native";
+import { registerPushToken } from "./push-registration";
+import { remindersApi } from "./reminders.api";
 
-/**
- * Notification service.
- *
- * After the dit → norbo fork (Phase 4) the notification surface is
- * intentionally generic: a single Android channel, no custom sounds,
- * no domain-specific action buttons, and no real-time WebSocket bridge.
- *
- * Kept:
- *   - FCM token registration with norbo-api
- *   - Foreground / background display via Notifee
- *   - Press-to-dismiss locally
- *
- * Removed:
- *   - dit / dah action buttons and Morse audio
- *   - Cross-device dismissal via WebSocket
- *   - Ping store hydration / optimistic updates
- *
- * The new norbo product surface will reintroduce richer behaviours when
- * its own notification model is defined.
- */
-
-const ANDROID_CHANNEL_ID = "default";
+const ANDROID_CHANNEL_DEFAULT = "default";
+const ANDROID_CHANNEL_REMINDERS = "reminders";
+const IOS_CATEGORY_REMINDERS = "REMINDER_ACTIONS";
 
 async function ensureAndroidChannel(): Promise<void> {
   if (Platform.OS !== "android") return;
   await notifee.createChannel({
-    id: ANDROID_CHANNEL_ID,
+    id: ANDROID_CHANNEL_DEFAULT,
     name: "Notifications",
+    importance: AndroidImportance.HIGH,
+    vibrationPattern: [50, 100],
+  });
+  await notifee.createChannel({
+    id: ANDROID_CHANNEL_REMINDERS,
+    name: "Reminders",
     importance: AndroidImportance.HIGH,
     vibrationPattern: [50, 100],
   });
 }
 
-/** Request notification permissions and register the FCM token. */
+async function ensureIosCategories(): Promise<void> {
+  if (Platform.OS !== "ios") return;
+  await notifee.setNotificationCategories([
+    {
+      id: IOS_CATEGORY_REMINDERS,
+      actions: [
+        { id: "done", title: "Done" },
+        { id: "snooze_24h", title: "Tomorrow" },
+      ],
+    },
+  ]);
+}
+
+/**
+ * Request notification permissions, set up channels/categories, register
+ * the FCM token, and wire the token-refresh listener.
+ */
 export async function initNotifications(): Promise<void> {
   const settings = await notifee.requestPermission();
   if (settings.authorizationStatus === AuthorizationStatus.DENIED) {
@@ -54,18 +58,12 @@ export async function initNotifications(): Promise<void> {
   }
 
   await ensureAndroidChannel();
+  await ensureIosCategories();
 
-  const messaging = getMessaging();
-  const fcmToken = await getToken(messaging);
-  const platform = Platform.OS === "ios" ? "IOS" : "ANDROID";
-  await registerPushToken(fcmToken, platform);
+  await registerPushToken();
 
-  onTokenRefresh(messaging, async (newToken) => {
-    try {
-      await registerPushToken(newToken, platform);
-    } catch (e) {
-      console.warn("[notifications] token refresh failed:", e);
-    }
+  onTokenRefresh(getMessaging(), async () => {
+    await registerPushToken();
   });
 }
 
@@ -75,20 +73,60 @@ async function displayNotification(
 ): Promise<void> {
   const title = data["title"] ?? "norbo";
   const body = data["body"] ?? "";
+  const isReminder = data["action"] === "reminder";
+
   await notifee.displayNotification({
     title,
     body,
     data,
     android: {
-      channelId: ANDROID_CHANNEL_ID,
+      channelId: isReminder
+        ? ANDROID_CHANNEL_REMINDERS
+        : ANDROID_CHANNEL_DEFAULT,
       smallIcon: "ic_notification",
       pressAction: { id: "default" },
+      actions: isReminder
+        ? [
+            { title: "Done", pressAction: { id: "done" } },
+            { title: "Tomorrow", pressAction: { id: "snooze_24h" } },
+          ]
+        : undefined,
     },
-    ios: {},
+    ios: {
+      categoryId: isReminder ? IOS_CATEGORY_REMINDERS : undefined,
+    },
   });
 }
 
-let _fgUnsubscribers: Array<() => void> = [];
+/**
+ * Handle a reminder quick action (tap on action button in notification).
+ * Calls the appropriate API endpoint and cancels the notification.
+ */
+async function handleReminderAction(detail: {
+  pressAction?: { id: string };
+  notification?: { id?: string; data?: Record<string, unknown> };
+}): Promise<void> {
+  const reminderId = detail.notification?.data?.["reminderId"];
+  if (typeof reminderId !== "string" || !reminderId) return;
+
+  const actionId = detail.pressAction?.id;
+  try {
+    if (actionId === "done") {
+      await remindersApi.complete(reminderId);
+    } else if (actionId === "snooze_24h") {
+      const until = addDays(new Date(), 1).toISOString();
+      await remindersApi.snooze(reminderId, until);
+    }
+  } catch (e) {
+    console.warn("[notifications] reminder action failed:", e);
+  }
+
+  if (detail.notification?.id) {
+    await notifee.cancelNotification(detail.notification.id);
+  }
+}
+
+let _fgUnsubscribers: (() => void)[] = [];
 
 /** Wire foreground FCM + Notifee handlers. Idempotent. */
 export function setupMessageHandlers(): void {
@@ -112,28 +150,52 @@ export function setupMessageHandlers(): void {
   });
   _fgUnsubscribers.push(unsubMessage);
 
-  const unsubForeground = notifee.onForegroundEvent(async ({ type, detail }) => {
-    if (type !== EventType.PRESS) return;
-    if (detail.notification?.id) {
-      await notifee.cancelNotification(detail.notification.id);
-    }
-  });
+  const unsubForeground = notifee.onForegroundEvent(
+    async ({ type, detail }) => {
+      if (type === EventType.ACTION_PRESS) {
+        await handleReminderAction(
+          detail as Parameters<typeof handleReminderAction>[0],
+        );
+        return;
+      }
+      if (type === EventType.PRESS) {
+        if (detail.notification?.id) {
+          await notifee.cancelNotification(detail.notification.id);
+        }
+        const reminderId = detail.notification?.data?.["reminderId"];
+        if (typeof reminderId === "string" && reminderId) {
+          try {
+            await Linking.openURL(`norbo://reminder/${reminderId}`);
+          } catch (e) {
+            console.warn("[notifications] deep link failed:", e);
+          }
+        }
+      }
+    },
+  );
   _fgUnsubscribers.push(unsubForeground);
 }
 
 /**
- * Read the notification that launched the app (cold start) and dismiss it.
- * No domain-specific navigation yet — that will be reintroduced when the
- * norbo product surface defines its own deep-link targets.
+ * Read the notification that launched the app (cold start) and return the
+ * deep link route to navigate to, if any.
  */
-export async function handleInitialNotification(): Promise<void> {
+export async function handleInitialNotification(): Promise<string | null> {
   try {
     const initial = await notifee.getInitialNotification();
-    if (initial?.notification?.id) {
-      await notifee.cancelNotification(initial.notification.id);
+    if (!initial?.notification) return null;
+
+    const { id, data } = initial.notification;
+    if (id) await notifee.cancelNotification(id);
+
+    const reminderId = data?.["reminderId"];
+    if (typeof reminderId === "string" && reminderId) {
+      return `/reminder/${reminderId}`;
     }
+    return null;
   } catch (e) {
     console.warn("[notifications] handleInitialNotification failed:", e);
+    return null;
   }
 }
 
@@ -156,9 +218,16 @@ export function registerBackgroundHandler(): void {
   });
 
   notifee.onBackgroundEvent(async ({ type, detail }) => {
-    if (type !== EventType.PRESS) return;
-    if (detail.notification?.id) {
-      await notifee.cancelNotification(detail.notification.id);
+    if (type === EventType.ACTION_PRESS) {
+      await handleReminderAction(
+        detail as Parameters<typeof handleReminderAction>[0],
+      );
+      return;
+    }
+    if (type === EventType.PRESS) {
+      if (detail.notification?.id) {
+        await notifee.cancelNotification(detail.notification.id);
+      }
     }
   });
 }

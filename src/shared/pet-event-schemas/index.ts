@@ -37,6 +37,21 @@ export enum PetEventStatus {
 }
 
 /**
+ * ExpenseCategory — single source of truth for expense classification.
+ *
+ * Bookkeeping-style taxonomy (intentionally coarser than PetEventType).
+ * Multiple event types collapse onto the same expense category (e.g.
+ * VACCINATION, VET_VISIT, PARASITE_TREATMENT, MEDICATION → VET).
+ */
+export enum ExpenseCategory {
+  VET = "VET",
+  FOOD = "FOOD",
+  ACCESSORIES = "ACCESSORIES",
+  GROOMING = "GROOMING",
+  OTHER = "OTHER",
+}
+
+/**
  * PetCategory mirrored from pet-management domain entity.
  * Must be kept in sync with `PetCategory` in `pet.entity.ts`.
  */
@@ -315,3 +330,110 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.INSURANCE,
   ],
 };
+
+// ── Event capabilities (cost / reminder) ─────────────────────────────────────
+
+/**
+ * PetEventCapabilities — declares, per `PetEventType`, whether it can:
+ *  - spawn an Expense (`hasCost`)
+ *  - spawn a Reminder when scheduled in the future (`canSchedule`)
+ *
+ * `defaultExpenseCategory` is the suggested `ExpenseCategory` to pre-fill
+ * when an Expense is generated from this event type. It MUST be `null`
+ * iff `hasCost` is `false`.
+ *
+ * Single source of truth used by:
+ *  - the EventForm UI (gating cost / reminder / "create expense" sections)
+ *  - the expense creation flow (default category pre-fill)
+ *  - the reminder engine listener on the API side
+ */
+export interface PetEventCapabilities {
+  hasCost: boolean;
+  canSchedule: boolean;
+  defaultExpenseCategory: ExpenseCategory | null;
+}
+
+export const PET_EVENT_CAPABILITIES: Record<
+  PetEventType,
+  PetEventCapabilities
+> = {
+  [PetEventType.VACCINATION]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.VET,
+  },
+  [PetEventType.VET_VISIT]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.VET,
+  },
+  [PetEventType.PARASITE_TREATMENT]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.VET,
+  },
+  [PetEventType.MEDICATION]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.VET,
+  },
+  [PetEventType.GROOMING]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.GROOMING,
+  },
+  [PetEventType.INSURANCE]: {
+    hasCost: true,
+    canSchedule: true,
+    defaultExpenseCategory: ExpenseCategory.OTHER,
+  },
+  [PetEventType.FEEDING_LOG]: {
+    hasCost: true,
+    canSchedule: false,
+    defaultExpenseCategory: ExpenseCategory.FOOD,
+  },
+  [PetEventType.WATER_CHANGE]: {
+    hasCost: false,
+    canSchedule: true,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.WEIGHT_RECORD]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.WATER_PARAMETERS]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.MOLT]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.PHOTO]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.NOTE]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+};
+
+export function eventCanHaveCost(type: PetEventType): boolean {
+  return PET_EVENT_CAPABILITIES[type].hasCost;
+}
+
+export function eventCanSchedule(type: PetEventType): boolean {
+  return PET_EVENT_CAPABILITIES[type].canSchedule;
+}
+
+export function defaultExpenseCategoryFor(
+  type: PetEventType,
+): ExpenseCategory | null {
+  return PET_EVENT_CAPABILITIES[type].defaultExpenseCategory;
+}

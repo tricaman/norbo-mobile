@@ -1,67 +1,39 @@
-import type {
-  ExpensePeriod,
-  OwnerExpenseSummary,
-} from "@/types/owner-expense.types";
+import type { ExpensePeriod, ExpenseSummary } from "@/types/expense.types";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { formatCurrency, formatTrendPercent } from "./expense-format";
+import { formatCurrency } from "./expense-format";
 
 interface ExpensesHeroProps {
-  summary: OwnerExpenseSummary;
+  summary: ExpenseSummary;
+  period: ExpensePeriod;
 }
 
 /**
  * ExpensesHero — large green card showing the active-period total.
  *
- * Mirrors the "QUEST'ANNO €1284" hero in the design. Includes:
- *   - period label (eyebrow)
- *   - big total
- *   - trend pill vs previous comparable window (when available)
- *   - average-per-month subtitle (when the period has a defined length)
+ * Includes the period label (eyebrow) and the total. Trend pill and
+ * average-per-month copy were removed because the current `ExpenseSummary`
+ * contract doesn't carry the necessary baseline fields; reintroduce when
+ * the backend exposes `trendPercent` / `averagePerMonth` on the summary.
  */
 export function ExpensesHero({
   summary,
+  period,
 }: ExpensesHeroProps): React.ReactElement {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
 
-  const eyebrow = headerKeyForPeriod(summary.period);
-  const totalLabel = formatCurrency(summary.total, summary.currency);
-  const trendLabel = formatTrendPercent(summary.trendPercent);
-
-  const previousLabel =
-    summary.period === "year"
-      ? extractPreviousYearLabel(summary.from)
-      : null;
-
-  const trendCopy = trendLabel
-    ? summary.period === "month"
-      ? t("expenses.trendVsPrevMonth", { value: trendLabel })
-      : summary.period === "year" && previousLabel
-        ? t("expenses.trendVsPrevYear", {
-            value: trendLabel,
-            previous: previousLabel,
-          })
-        : trendLabel
-    : null;
-
-  const avgCopy =
-    summary.averagePerMonth !== null
-      ? t("expenses.averagePerMonth", {
-          value: formatCurrency(summary.averagePerMonth, summary.currency),
-        })
-      : null;
+  const eyebrow = headerKeyForPeriod(period);
+  const totalLabel = formatCurrency(
+    summary.total.amount,
+    summary.total.currency,
+  );
 
   return (
-    <View
-      style={[
-        styles.card,
-        { backgroundColor: theme.colors.primary },
-      ]}
-    >
+    <View style={[styles.card, { backgroundColor: theme.colors.primary }]}>
       {/* Decorative concentric arcs in the bottom-right corner. */}
       <View style={styles.decoration} pointerEvents="none">
         <Svg width={220} height={220}>
@@ -94,36 +66,6 @@ export function ExpensesHero({
       >
         {totalLabel}
       </Text>
-
-      <View style={styles.metaRow}>
-        {trendCopy ? (
-          <View
-            style={[
-              styles.trendPill,
-              { backgroundColor: "rgba(255,255,255,0.18)" },
-            ]}
-          >
-            <Text
-              style={[
-                styles.trendText,
-                { color: theme.colors.textOnPrimary },
-              ]}
-            >
-              {trendCopy}
-            </Text>
-          </View>
-        ) : null}
-        {avgCopy ? (
-          <Text
-            style={[
-              styles.avgText,
-              { color: theme.colors.textOnPrimary, opacity: 0.85 },
-            ]}
-          >
-            · {avgCopy}
-          </Text>
-        ) : null}
-      </View>
     </View>
   );
 }
@@ -137,13 +79,6 @@ function headerKeyForPeriod(
   if (period === "month") return "expenses.heroLabelMonth";
   if (period === "year") return "expenses.heroLabelYear";
   return "expenses.heroLabelAll";
-}
-
-function extractPreviousYearLabel(fromIso: string | null): string | null {
-  if (!fromIso) return null;
-  const d = new Date(fromIso);
-  if (Number.isNaN(d.getTime())) return null;
-  return String(d.getUTCFullYear() - 1);
 }
 
 const styles = StyleSheet.create((theme) => ({
@@ -168,23 +103,5 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.typography.display,
     fontWeight: "700",
     letterSpacing: -0.5,
-  },
-  metaRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: theme.spacing.xs,
-    flexWrap: "wrap",
-  },
-  trendPill: {
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: 4,
-    borderRadius: theme.radius.pill,
-  },
-  trendText: {
-    ...theme.typography.footnote,
-    fontWeight: "600",
-  },
-  avgText: {
-    ...theme.typography.footnote,
   },
 }));

@@ -41,15 +41,3 @@ api.interceptors.response.use(
   },
 );
 
-// ── Push token endpoints ────────────────────────────────────────────
-
-export async function registerPushToken(
-  token: string,
-  platform: "IOS" | "ANDROID",
-): Promise<void> {
-  await api.post("/push-tokens", { token, platform });
-}
-
-export async function unregisterPushToken(token: string): Promise<void> {
-  await api.delete(`/push-tokens/${encodeURIComponent(token)}`);
-}

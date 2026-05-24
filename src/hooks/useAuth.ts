@@ -1,6 +1,7 @@
 import { queryClient } from "@/app/_layout";
 import { AUTH_CALLBACK_URL } from "@/constants/config";
 import { authApi } from "@/services/auth.api";
+import { unregisterPushToken } from "@/services/push-registration";
 import { useAuthStore } from "@/stores/auth.store";
 import type { SocialProvider } from "@/types/auth.types";
 import { haptics } from "@/utils/haptics";
@@ -70,6 +71,7 @@ export function useAuth() {
   );
 
   const signOut = useCallback(async () => {
+    await unregisterPushToken();
     await authApi.signOut();
     clearAuth();
     queryClient.clear();
