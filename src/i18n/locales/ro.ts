@@ -132,7 +132,8 @@ const ro = {
     otpResendCooldown: "retrimite in {{seconds}}s",
     otpSuccess: "verificat",
     emailTitle: "introduceti email-ul",
-    emailSubtitle: "va vom trimite un cod pentru a va conecta sau a va crea contul",
+    emailSubtitle:
+      "va vom trimite un cod pentru a va conecta sau a va crea contul",
     emailPlaceholder: "email",
     emailError: "introduceti un email valid",
     continueWith: "continuati cu {{provider}}",
@@ -217,7 +218,8 @@ const ro = {
     light: "luminoasă",
     dark: "întunecată",
     system: "sistem",
-    description: "alege cum vrei să vezi norbo. \"sistem\" urmează setările dispozitivului tău.",
+    description:
+      'alege cum vrei să vezi norbo. "sistem" urmează setările dispozitivului tău.',
   },
   notifications: {
     title: "notificări",
@@ -230,7 +232,8 @@ const ro = {
     quietHoursEnable: "activează orele liniștite",
     quietHoursStart: "de la",
     quietHoursEnd: "până la",
-    disclaimer: "notificările reale vor veni în actualizările următoare. momentan doar salvăm preferințele tale.",
+    disclaimer:
+      "notificările reale vor veni în actualizările următoare. momentan doar salvăm preferințele tale.",
     saveError: "salvarea a eșuat, încearcă din nou",
   },
   editInfo: {
@@ -243,13 +246,15 @@ const ro = {
     title: "nume",
     label: "numele dvs",
     placeholder: "ex. luca",
-    description: "acesta este numele pe care il vor vedea altii in profilul dvs.",
+    description:
+      "acesta este numele pe care il vor vedea altii in profilul dvs.",
     minLength: "minim 1 caracter",
     maxLength: "maxim 50 caractere",
   },
   deleteAccount: {
     title: "sterge cont",
-    warning: "aceasta va sterge permanent contul si toate datele asociate. aceasta nu poate fi anulata.",
+    warning:
+      "aceasta va sterge permanent contul si toate datele asociate. aceasta nu poate fi anulata.",
     label: "tastati email-ul pentru a confirma",
     placeholder: "email-ul dvs",
     confirm: "sterge cont",
@@ -257,22 +262,28 @@ const ro = {
   },
   terms: {
     title: "termeni de serviciu",
-    intro: "inainte de a incepe sa folositi norbo, va rugam sa cititi si acceptati termenii nostri de serviciu.",
+    intro:
+      "inainte de a incepe sa folositi norbo, va rugam sa cititi si acceptati termenii nostri de serviciu.",
     readLink: "cititi termenii de serviciu completi",
-    zeroTolerance: "norbo are o politica de toleranta zero fata de comportamentul abuziv si continutul necorespunzator. orice utilizator care publica material ofensator sau hartuieste alti utilizatori va fi sters si poate fi raportat la autoritatile competente.",
-    checkbox: "accept termenii de serviciu si ma angajez sa nu public continut ofensator.",
+    zeroTolerance:
+      "norbo are o politica de toleranta zero fata de comportamentul abuziv si continutul necorespunzator. orice utilizator care publica material ofensator sau hartuieste alti utilizatori va fi sters si poate fi raportat la autoritatile competente.",
+    checkbox:
+      "accept termenii de serviciu si ma angajez sa nu public continut ofensator.",
     continue: "continuati",
     error: "nu am putut salva acceptarea dvs. va rugam incercati din nou.",
   },
   onboarding: {
     welcomeTitle: "bine ai venit la norbo",
-    welcomeBody: "norbo te ajută să ai grijă de animalele tale: memento-uri de sănătate, scadențe, totul într-un singur loc.",
+    welcomeBody:
+      "norbo te ajută să ai grijă de animalele tale: memento-uri de sănătate, scadențe, totul într-un singur loc.",
     themeStepTitle: "alege tema",
     themeStepBody: "o poți schimba oricând din setări.",
     notificationsStepTitle: "activează notificările",
-    notificationsStepBody: "te vom anunța pentru scadențe importante precum vaccinuri și antiparazitare. le poți dezactiva oricând.",
+    notificationsStepBody:
+      "te vom anunța pentru scadențe importante precum vaccinuri și antiparazitare. le poți dezactiva oricând.",
     notificationsEnable: "activează notificările",
-    notificationsDenied: "nu ai acordat permisiunea. o poți activa oricând din setările sistemului.",
+    notificationsDenied:
+      "nu ai acordat permisiunea. o poți activa oricând din setările sistemului.",
     skip: "sari",
     next: "următor",
     finish: "gata",
@@ -281,7 +292,8 @@ const ro = {
   upcomingEvents: {
     title: "ce de facut",
     emptyTitle: "totul e la zi",
-    emptySubtitle: "niciun eveniment programat. dupa ce adaugati vaccinuri, vizite la medic veterinar sau alte reamintiri, ele vor aparea aici.",
+    emptySubtitle:
+      "niciun eveniment programat. dupa ce adaugati vaccinuri, vizite la medic veterinar sau alte reamintiri, ele vor aparea aici.",
   },
   homeGreeting: {
     helloWithName: "salut, {{name}}",
@@ -293,7 +305,8 @@ const ro = {
   pets: {
     title: "animalele mele de companie",
     emptyTitle: "sa incepem cu primul",
-    emptySubtitle: "adaugati animalul de companie pentru a pastra intreaga poveste impreuna: vaccinuri, vizite, fotografii, cheltuieli.",
+    emptySubtitle:
+      "adaugati animalul de companie pentru a pastra intreaga poveste impreuna: vaccinuri, vizite, fotografii, cheltuieli.",
     emptyCta: "adauga animal de companie",
     addButton: "adauga",
     deleteConfirmTitle: "sterge animal de companie",
@@ -306,7 +319,8 @@ const ro = {
   petWizard: {
     closeAria: "inchide",
     categoryTitle: "ce fel de animal de companie?",
-    categorySubtitle: "alegeti o categorie, apoi vom restrange rasa sau specia.",
+    categorySubtitle:
+      "alegeti o categorie, apoi vom restrange rasa sau specia.",
     continue: "continuati",
     continueWith: "continuati cu {{category}}",
     skip: "omiteti",
@@ -316,15 +330,17 @@ const ro = {
     namePlaceholder: "tastati un nume",
     nameTooShort: "introduceti cel putin o litera",
     speciesTitle: "rasa sau specie?",
-    speciesSubtitle: "ne ajuta sa adaptem sfaturile. omiteti daca nu sunteti sigur.",
+    speciesSubtitle:
+      "ne ajuta sa adaptem sfaturile. omiteti daca nu sunteti sigur.",
     speciesPlaceholder: "cautati rasa sau specie",
     speciesEmpty: "fara rezultate",
     speciesSelected: "selectat",
     speciesChange: "schimba",
     sexTitle: "mascul sau femela?",
-    sexSubtitle: "puteti alege si \"necunoscut\" daca doriti.",
+    sexSubtitle: 'puteti alege si "necunoscut" daca doriti.',
     birthDateTitle: "cand s-a nascut?",
-    birthDateSubtitle: "o data aproximativa e bine. o vom folosi doar pentru reamintiri.",
+    birthDateSubtitle:
+      "o data aproximativa e bine. o vom folosi doar pentru reamintiri.",
     birthDatePick: "alegeti o data",
     sterilizedTitle: "castrat sau sterilizat?",
     sterilizedSubtitle: "ne ajuta sa personalizam sfaturile de sanatate.",
@@ -332,11 +348,13 @@ const ro = {
     sterilizedNo: "nu",
     sterilizedUnknown: "necunoscut",
     weightTitle: "cat cantareste?",
-    weightSubtitle: "introduceti greutatea curenta. o puteti actualiza mai tarziu.",
+    weightSubtitle:
+      "introduceti greutatea curenta. o puteti actualiza mai tarziu.",
     weightPlaceholder: "ex. 4,5",
     weightInvalid: "introduceti un numar pozitiv",
     confirmTitleTemplate: "{{name}} e in noua casa",
-    confirmSubtitle: "incepeti sa urmarii viata imediat. sugerez sa incepeti aici.",
+    confirmSubtitle:
+      "incepeti sa urmarii viata imediat. sugerez sa incepeti aici.",
     confirmGoToProfile: "mergi la profilul {{name}}",
     confirmAddAnother: "adauga un alt animal de companie",
     suggestionsLabel: "selectii rapide",
@@ -407,6 +425,7 @@ const ro = {
     cost: "cost (optional)",
     attachments: "atasamente (optional)",
     saveNew: "adauga eveniment",
+    saveSuccess: "Eveniment salvat cu succes",
     saveEdit: "salveaza modificarile",
     newTitle: "eveniment nou",
     editTitle: "editeaza eveniment",
@@ -416,6 +435,8 @@ const ro = {
     recordExpenseSubtitle: "adauga o intrare la jurnalul cheltuielilor",
     vaccineDetails: "detalii vaccin",
     vaccineNamePlaceholder: "numele vaccinului",
+    vetVisitDetails: "detalii vizită",
+    reasonPlaceholder: "motivul vizitei",
   },
   weightForm: {
     dateLabel: "data",

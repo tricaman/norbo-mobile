@@ -217,7 +217,7 @@ const zh = {
     light: "浅色",
     dark: "深色",
     system: "系统",
-    description: "选择你想看 norbo 的方式。\"系统\"会跟随设备设置。",
+    description: '选择你想看 norbo 的方式。"系统"会跟随设备设置。',
   },
   notifications: {
     title: "通知",
@@ -259,7 +259,8 @@ const zh = {
     title: "服务条款",
     intro: "开始使用 norbo 之前，请阅读并接受我们的服务条款。",
     readLink: "阅读完整的服务条款",
-    zeroTolerance: "norbo 对辱骂性行为和不当内容采取零容忍政策。任何发布攻击性材料或骚扰他人的用户将被移除，并可能被报告给有关部门。",
+    zeroTolerance:
+      "norbo 对辱骂性行为和不当内容采取零容忍政策。任何发布攻击性材料或骚扰他人的用户将被移除，并可能被报告给有关部门。",
     checkbox: "我接受服务条款，并承诺不发布攻击性内容。",
     continue: "继续",
     error: "无法保存您的接受。请重试。",
@@ -281,7 +282,8 @@ const zh = {
   upcomingEvents: {
     title: "要做的事",
     emptyTitle: "一切就绪",
-    emptySubtitle: "没有预定的事件。一旦您添加疫苗、兽医就诊或其他提醒，它们将显示在这里。",
+    emptySubtitle:
+      "没有预定的事件。一旦您添加疫苗、兽医就诊或其他提醒，它们将显示在这里。",
   },
   homeGreeting: {
     helloWithName: "你好，{{name}}",
@@ -293,7 +295,8 @@ const zh = {
   pets: {
     title: "我的宠物",
     emptyTitle: "从第一个开始",
-    emptySubtitle: "添加您的宠物以将其完整故事保存在一起：疫苗、就诊、照片、费用。",
+    emptySubtitle:
+      "添加您的宠物以将其完整故事保存在一起：疫苗、就诊、照片、费用。",
     emptyCta: "添加宠物",
     addButton: "添加",
     deleteConfirmTitle: "删除宠物",
@@ -322,7 +325,7 @@ const zh = {
     speciesSelected: "已选择",
     speciesChange: "更改",
     sexTitle: "公的还是母的？",
-    sexSubtitle: "如果您愿意，也可以选择\"未知\"。",
+    sexSubtitle: '如果您愿意，也可以选择"未知"。',
     birthDateTitle: "什么时候出生的？",
     birthDateSubtitle: "粗略日期就可以了。我们仅将其用于提醒。",
     birthDatePick: "选择日期",
@@ -407,6 +410,7 @@ const zh = {
     cost: "费用（可选）",
     attachments: "附件（可选）",
     saveNew: "添加事件",
+    saveSuccess: "事件已成功保存",
     saveEdit: "保存更改",
     newTitle: "新事件",
     editTitle: "编辑事件",
@@ -416,6 +420,8 @@ const zh = {
     recordExpenseSubtitle: "将条目添加到您的费用日志",
     vaccineDetails: "疫苗详情",
     vaccineNamePlaceholder: "疫苗名称",
+    vetVisitDetails: "就诊详情",
+    reasonPlaceholder: "就诊原因",
   },
   weightForm: {
     dateLabel: "日期",

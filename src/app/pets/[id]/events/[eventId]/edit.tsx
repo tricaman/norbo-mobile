@@ -63,6 +63,10 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         typeof event.extra?.["vaccineName"] === "string"
           ? (event.extra["vaccineName"] as string)
           : "",
+      reason:
+        typeof event.extra?.["reason"] === "string"
+          ? (event.extra["reason"] as string)
+          : "",
     },
   });
 

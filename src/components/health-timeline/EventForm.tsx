@@ -37,6 +37,7 @@ export const eventFormSchema = z
     createReminder: z.boolean().optional(),
     createExpense: z.boolean().optional(),
     vaccineName: z.string().max(120).optional(),
+    reason: z.string().max(500).optional(),
   })
   .superRefine((v, ctx) => {
     if (v.mode === "past" && !v.occurredAt) {
@@ -63,6 +64,16 @@ export const eventFormSchema = z
         message: "required",
       });
     }
+    if (
+      v.type === PetEventType.VET_VISIT &&
+      (!v.reason || v.reason.trim().length === 0)
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["reason"],
+        message: "required",
+      });
+    }
   });
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
@@ -79,6 +90,11 @@ export function buildExtra(
     const name = values.vaccineName?.trim();
     if (!name) return undefined;
     return { vaccineName: name };
+  }
+  if (values.type === PetEventType.VET_VISIT) {
+    const reason = values.reason?.trim();
+    if (!reason) return undefined;
+    return { reason };
   }
   return undefined;
 }
@@ -384,6 +400,22 @@ export function EventForm({
           </>
         ) : null}
 
+        {/* Vet visit-specific fields */}
+        {selectedType === PetEventType.VET_VISIT ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.vetVisitDetails")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <FormInput
+                name="reason"
+                placeholder={t("eventForm.reasonPlaceholder")}
+                returnKeyType="done"
+              />
+            </FormCard>
+          </>
+        ) : null}
+
         {/* Cost — hidden for event types that have no cost concept
             (WEIGHT_RECORD, NOTE, PHOTO, WATER_PARAMETERS, …). */}
         {typeCanHaveCost ? (
@@ -391,64 +423,59 @@ export function EventForm({
             <SectionLabel style={styles.sectionLabel}>
               {t("eventForm.cost")}
             </SectionLabel>
-            <FormCard style={styles.card}>
+            <FormCard dividedChildren style={styles.card}>
               <FormInput
                 name="cost"
                 placeholder="0.00"
                 keyboardType="decimal-pad"
                 returnKeyType="done"
               />
+              {mode === "past" ? (
+                <Controller
+                  control={form.control}
+                  name="createExpense"
+                  render={({ field }) => (
+                    <View style={styles.reminderRow}>
+                      <View style={styles.reminderText}>
+                        <Text
+                          style={[
+                            styles.reminderLabel,
+                            {
+                              color: costIsValid
+                                ? theme.colors.textPrimary
+                                : theme.colors.textTertiary,
+                            },
+                          ]}
+                        >
+                          {t("eventForm.recordExpense")}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.reminderSubtitle,
+                            { color: theme.colors.textSecondary },
+                          ]}
+                        >
+                          {t("eventForm.recordExpenseSubtitle")}
+                        </Text>
+                      </View>
+                      <Switch
+                        value={costIsValid ? (field.value ?? false) : false}
+                        onValueChange={costIsValid ? field.onChange : undefined}
+                        disabled={!costIsValid}
+                        trackColor={{
+                          false: theme.colors.border,
+                          true: theme.colors.primary,
+                        }}
+                        thumbColor={
+                          costIsValid ? undefined : theme.colors.textTertiary
+                        }
+                      />
+                    </View>
+                  )}
+                />
+              ) : null}
             </FormCard>
           </>
-        ) : null}
-
-        {/* Expense toggle — only for past events with a valid cost AND a
-            cost-capable type. */}
-        {mode === "past" && typeCanHaveCost ? (
-          <FormCard style={styles.card}>
-            <Controller
-              control={form.control}
-              name="createExpense"
-              render={({ field }) => (
-                <View style={styles.reminderRow}>
-                  <View style={styles.reminderText}>
-                    <Text
-                      style={[
-                        styles.reminderLabel,
-                        {
-                          color: costIsValid
-                            ? theme.colors.textPrimary
-                            : theme.colors.textTertiary,
-                        },
-                      ]}
-                    >
-                      {t("eventForm.recordExpense")}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.reminderSubtitle,
-                        { color: theme.colors.textSecondary },
-                      ]}
-                    >
-                      {t("eventForm.recordExpenseSubtitle")}
-                    </Text>
-                  </View>
-                  <Switch
-                    value={costIsValid ? (field.value ?? false) : false}
-                    onValueChange={costIsValid ? field.onChange : undefined}
-                    disabled={!costIsValid}
-                    trackColor={{
-                      false: theme.colors.border,
-                      true: theme.colors.primary,
-                    }}
-                    thumbColor={
-                      costIsValid ? undefined : theme.colors.textTertiary
-                    }
-                  />
-                </View>
-              )}
-            />
-          </FormCard>
         ) : null}
 
         {/* Attachments — secondary position for non-PHOTO event types */}

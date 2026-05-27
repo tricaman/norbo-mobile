@@ -217,7 +217,7 @@ const ja = {
     light: "ライト",
     dark: "ダーク",
     system: "システム",
-    description: "norboの表示方法を選択。\"システム\"はデバイス設定に従います。",
+    description: 'norboの表示方法を選択。"システム"はデバイス設定に従います。',
   },
   notifications: {
     title: "通知",
@@ -230,7 +230,8 @@ const ja = {
     quietHoursEnable: "サイレントアワーを有効化",
     quietHoursStart: "開始",
     quietHoursEnd: "終了",
-    disclaimer: "実際の通知は今後のアップデートで届きます。現在は設定のみ保存しています。",
+    disclaimer:
+      "実際の通知は今後のアップデートで届きます。現在は設定のみ保存しています。",
     saveError: "保存に失敗しました、もう一度お試しください",
   },
   editInfo: {
@@ -249,7 +250,8 @@ const ja = {
   },
   deleteAccount: {
     title: "アカウントを削除",
-    warning: "これはあなたのアカウントと関連するすべてのデータを永久に削除します。これは取り消せません。",
+    warning:
+      "これはあなたのアカウントと関連するすべてのデータを永久に削除します。これは取り消せません。",
     label: "確認するためにメールアドレスを入力してください",
     placeholder: "あなたのメール",
     confirm: "アカウントを削除",
@@ -259,20 +261,25 @@ const ja = {
     title: "利用規約",
     intro: "norbo を使用する前に、利用規約をお読みになり、同意してください。",
     readLink: "完全な利用規約を読む",
-    zeroTolerance: "norbo は、不正行為や不適切なコンテンツに対してゼロトレランスポリシーを持っています。不快な内容を投稿したり、他のユーザーを嫌がらせたりするユーザーは削除され、権限のある当局に報告される場合があります。",
-    checkbox: "利用規約に同意し、不快なコンテンツを公開しないことをお約束します。",
+    zeroTolerance:
+      "norbo は、不正行為や不適切なコンテンツに対してゼロトレランスポリシーを持っています。不快な内容を投稿したり、他のユーザーを嫌がらせたりするユーザーは削除され、権限のある当局に報告される場合があります。",
+    checkbox:
+      "利用規約に同意し、不快なコンテンツを公開しないことをお約束します。",
     continue: "続行",
     error: "あなたの同意を保存できませんでした。もう一度お試しください。",
   },
   onboarding: {
     welcomeTitle: "norboへようこそ",
-    welcomeBody: "norboはあなたのペットのケアを支援します：健康リマインダー、予定、すべてを一箇所に。",
+    welcomeBody:
+      "norboはあなたのペットのケアを支援します：健康リマインダー、予定、すべてを一箇所に。",
     themeStepTitle: "テーマを選択",
     themeStepBody: "後で設定から変更できます。",
     notificationsStepTitle: "通知を有効化",
-    notificationsStepBody: "ワクチンや駆虫薬などの重要な予定をお知らせします。いつでも無効化できます。",
+    notificationsStepBody:
+      "ワクチンや駆虫薬などの重要な予定をお知らせします。いつでも無効化できます。",
     notificationsEnable: "通知を有効化",
-    notificationsDenied: "許可を得られませんでした。システム設定からいつでも有効化できます。",
+    notificationsDenied:
+      "許可を得られませんでした。システム設定からいつでも有効化できます。",
     skip: "スキップ",
     next: "次へ",
     finish: "完了",
@@ -281,7 +288,8 @@ const ja = {
   upcomingEvents: {
     title: "何をするか",
     emptyTitle: "すべて完了",
-    emptySubtitle: "予定されたイベントはありません。ワクチン、獣医の診察、または他のリマインダーを追加すると、ここに表示されます。",
+    emptySubtitle:
+      "予定されたイベントはありません。ワクチン、獣医の診察、または他のリマインダーを追加すると、ここに表示されます。",
   },
   homeGreeting: {
     helloWithName: "こんにちは、{{name}}",
@@ -293,7 +301,8 @@ const ja = {
   pets: {
     title: "マイペット",
     emptyTitle: "最初からいきましょう",
-    emptySubtitle: "ペットを追加して、ペットの全ストーリーを一緒に保ってください：ワクチン、診察、写真、経費。",
+    emptySubtitle:
+      "ペットを追加して、ペットの全ストーリーを一緒に保ってください：ワクチン、診察、写真、経費。",
     emptyCta: "ペットを追加",
     addButton: "追加",
     deleteConfirmTitle: "ペットを削除",
@@ -316,7 +325,8 @@ const ja = {
     namePlaceholder: "名前を入力",
     nameTooShort: "最低 1 文字入力してください",
     speciesTitle: "品種または種?",
-    speciesSubtitle: "アドバイスをカスタマイズするのに役立ちます。確実でない場合はスキップしてください。",
+    speciesSubtitle:
+      "アドバイスをカスタマイズするのに役立ちます。確実でない場合はスキップしてください。",
     speciesPlaceholder: "品種または種を検索",
     speciesEmpty: "結果なし",
     speciesSelected: "選択済み",
@@ -336,7 +346,8 @@ const ja = {
     weightPlaceholder: "例: 4.5",
     weightInvalid: "正の数を入力してください",
     confirmTitleTemplate: "{{name}} は新しい家にいます",
-    confirmSubtitle: "すぐに人生を追跡し始めます。ここから始めることをお勧めします。",
+    confirmSubtitle:
+      "すぐに人生を追跡し始めます。ここから始めることをお勧めします。",
     confirmGoToProfile: "{{name}} のプロフィールに移動",
     confirmAddAnother: "別のペットを追加",
     suggestionsLabel: "クイックピック",
@@ -407,6 +418,7 @@ const ja = {
     cost: "コスト（オプション）",
     attachments: "添付ファイル（オプション）",
     saveNew: "イベントを追加",
+    saveSuccess: "イベントが正常に保存されました",
     saveEdit: "変更を保存",
     newTitle: "新しいイベント",
     editTitle: "イベントを編集",
@@ -416,6 +428,8 @@ const ja = {
     recordExpenseSubtitle: "経費ログにエントリを追加します",
     vaccineDetails: "ワクチンの詳細",
     vaccineNamePlaceholder: "ワクチン名",
+    vetVisitDetails: "診察詳細",
+    reasonPlaceholder: "受診理由",
   },
   weightForm: {
     dateLabel: "日付",

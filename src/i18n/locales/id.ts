@@ -132,7 +132,8 @@ const id = {
     otpResendCooldown: "kirim ulang dalam {{seconds}}d",
     otpSuccess: "terverifikasi",
     emailTitle: "masukkan email anda",
-    emailSubtitle: "kami akan mengirimkan kode untuk masuk atau membuat akun anda",
+    emailSubtitle:
+      "kami akan mengirimkan kode untuk masuk atau membuat akun anda",
     emailPlaceholder: "email",
     emailError: "masukkan email yang valid",
     continueWith: "lanjutkan dengan {{provider}}",
@@ -217,7 +218,8 @@ const id = {
     light: "terang",
     dark: "gelap",
     system: "sistem",
-    description: "pilih bagaimana ingin melihat norbo. \"sistem\" mengikuti pengaturan perangkatmu.",
+    description:
+      'pilih bagaimana ingin melihat norbo. "sistem" mengikuti pengaturan perangkatmu.',
   },
   notifications: {
     title: "notifikasi",
@@ -230,7 +232,8 @@ const id = {
     quietHoursEnable: "aktifkan jam tenang",
     quietHoursStart: "dari",
     quietHoursEnd: "sampai",
-    disclaimer: "notifikasi nyata akan datang di pembaruan berikutnya. saat ini kami hanya menyimpan preferensimu.",
+    disclaimer:
+      "notifikasi nyata akan datang di pembaruan berikutnya. saat ini kami hanya menyimpan preferensimu.",
     saveError: "gagal menyimpan, coba lagi",
   },
   editInfo: {
@@ -249,7 +252,8 @@ const id = {
   },
   deleteAccount: {
     title: "hapus akun",
-    warning: "ini akan menghapus akun dan semua data terkait secara permanen. ini tidak dapat dibatalkan.",
+    warning:
+      "ini akan menghapus akun dan semua data terkait secara permanen. ini tidak dapat dibatalkan.",
     label: "ketik email anda untuk mengonfirmasi",
     placeholder: "email anda",
     confirm: "hapus akun",
@@ -257,22 +261,28 @@ const id = {
   },
   terms: {
     title: "syarat layanan",
-    intro: "sebelum mulai menggunakan norbo, harap baca dan terima syarat layanan kami.",
+    intro:
+      "sebelum mulai menggunakan norbo, harap baca dan terima syarat layanan kami.",
     readLink: "baca syarat layanan lengkap",
-    zeroTolerance: "norbo memiliki kebijakan toleransi nol terhadap perilaku kasar dan konten yang tidak pantas. pengguna apa pun yang memposting materi yang menyinggung atau mengganggu orang lain akan dihapus dan dapat dilaporkan ke otoritas yang berwenang.",
-    checkbox: "saya menerima syarat layanan dan berkomitmen untuk tidak menerbitkan konten yang menyinggung.",
+    zeroTolerance:
+      "norbo memiliki kebijakan toleransi nol terhadap perilaku kasar dan konten yang tidak pantas. pengguna apa pun yang memposting materi yang menyinggung atau mengganggu orang lain akan dihapus dan dapat dilaporkan ke otoritas yang berwenang.",
+    checkbox:
+      "saya menerima syarat layanan dan berkomitmen untuk tidak menerbitkan konten yang menyinggung.",
     continue: "lanjutkan",
     error: "tidak dapat menyimpan penerimaan anda. silakan coba lagi.",
   },
   onboarding: {
     welcomeTitle: "selamat datang di norbo",
-    welcomeBody: "norbo membantumu merawat hewan peliharaan: pengingat kesehatan, jadwal, semua dalam satu tempat.",
+    welcomeBody:
+      "norbo membantumu merawat hewan peliharaan: pengingat kesehatan, jadwal, semua dalam satu tempat.",
     themeStepTitle: "pilih tema",
     themeStepBody: "kamu bisa mengubahnya nanti di pengaturan.",
     notificationsStepTitle: "aktifkan notifikasi",
-    notificationsStepBody: "kami akan memberi tahu untuk jadwal penting seperti vaksin dan antiparasit. kamu bisa menonaktifkannya kapan saja.",
+    notificationsStepBody:
+      "kami akan memberi tahu untuk jadwal penting seperti vaksin dan antiparasit. kamu bisa menonaktifkannya kapan saja.",
     notificationsEnable: "aktifkan notifikasi",
-    notificationsDenied: "kamu tidak memberi izin. kamu selalu bisa mengaktifkannya dari pengaturan sistem.",
+    notificationsDenied:
+      "kamu tidak memberi izin. kamu selalu bisa mengaktifkannya dari pengaturan sistem.",
     skip: "lewati",
     next: "berikutnya",
     finish: "selesai",
@@ -281,7 +291,8 @@ const id = {
   upcomingEvents: {
     title: "apa yang harus dilakukan",
     emptyTitle: "semuanya tertib",
-    emptySubtitle: "tidak ada acara yang dijadwalkan. setelah anda menambahkan vaksin, kunjungan dokter hewan atau pengingat lainnya, mereka akan muncul di sini.",
+    emptySubtitle:
+      "tidak ada acara yang dijadwalkan. setelah anda menambahkan vaksin, kunjungan dokter hewan atau pengingat lainnya, mereka akan muncul di sini.",
   },
   homeGreeting: {
     helloWithName: "halo, {{name}}",
@@ -293,7 +304,8 @@ const id = {
   pets: {
     title: "hewan peliharaan saya",
     emptyTitle: "mulai dengan yang pertama",
-    emptySubtitle: "tambahkan hewan peliharaan anda untuk menyimpan seluruh cerita mereka bersama: vaksin, kunjungan, foto, pengeluaran.",
+    emptySubtitle:
+      "tambahkan hewan peliharaan anda untuk menyimpan seluruh cerita mereka bersama: vaksin, kunjungan, foto, pengeluaran.",
     emptyCta: "tambah hewan peliharaan",
     addButton: "tambah",
     deleteConfirmTitle: "hapus hewan peliharaan",
@@ -306,7 +318,8 @@ const id = {
   petWizard: {
     closeAria: "tutup",
     categoryTitle: "jenis hewan peliharaan apa?",
-    categorySubtitle: "pilih kategori, kemudian kami akan mempersempit ras atau spesies.",
+    categorySubtitle:
+      "pilih kategori, kemudian kami akan mempersempit ras atau spesies.",
     continue: "lanjutkan",
     continueWith: "lanjutkan dengan {{category}}",
     skip: "lewati",
@@ -316,15 +329,17 @@ const id = {
     namePlaceholder: "ketik nama",
     nameTooShort: "masukkan minimal satu huruf",
     speciesTitle: "ras atau spesies?",
-    speciesSubtitle: "membantu kami menyesuaikan saran. lewati jika anda tidak yakin.",
+    speciesSubtitle:
+      "membantu kami menyesuaikan saran. lewati jika anda tidak yakin.",
     speciesPlaceholder: "cari ras atau spesies",
     speciesEmpty: "tidak ada hasil",
     speciesSelected: "dipilih",
     speciesChange: "ubah",
     sexTitle: "jantan atau betina?",
-    sexSubtitle: "anda juga bisa memilih \"tidak diketahui\" jika mau.",
+    sexSubtitle: 'anda juga bisa memilih "tidak diketahui" jika mau.',
     birthDateTitle: "kapan lahir?",
-    birthDateSubtitle: "tanggal kasar saja. kami hanya akan menggunakannya untuk pengingat.",
+    birthDateSubtitle:
+      "tanggal kasar saja. kami hanya akan menggunakannya untuk pengingat.",
     birthDatePick: "pilih tanggal",
     sterilizedTitle: "dikebiri atau disterilkan?",
     sterilizedSubtitle: "membantu kami mempersonalisasi tips kesehatan.",
@@ -336,7 +351,8 @@ const id = {
     weightPlaceholder: "mis. 4,5",
     weightInvalid: "masukkan angka positif",
     confirmTitleTemplate: "{{name}} berada di rumah barunya",
-    confirmSubtitle: "mulai lacak hidup mereka segera. kami menyarankan untuk memulai di sini.",
+    confirmSubtitle:
+      "mulai lacak hidup mereka segera. kami menyarankan untuk memulai di sini.",
     confirmGoToProfile: "buka profil {{name}}",
     confirmAddAnother: "tambah hewan peliharaan lain",
     suggestionsLabel: "pilihan cepat",
@@ -407,6 +423,7 @@ const id = {
     cost: "biaya (opsional)",
     attachments: "lampiran (opsional)",
     saveNew: "tambah acara",
+    saveSuccess: "Acara berhasil disimpan",
     saveEdit: "simpan perubahan",
     newTitle: "acara baru",
     editTitle: "edit acara",
@@ -416,6 +433,8 @@ const id = {
     recordExpenseSubtitle: "menambah entri ke log pengeluaran anda",
     vaccineDetails: "detail vaksin",
     vaccineNamePlaceholder: "nama vaksin",
+    vetVisitDetails: "detail kunjungan",
+    reasonPlaceholder: "alasan kunjungan",
   },
   weightForm: {
     dateLabel: "tanggal",

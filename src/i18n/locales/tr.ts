@@ -132,7 +132,8 @@ const tr = {
     otpResendCooldown: "{{seconds}}s içinde yeniden gönder",
     otpSuccess: "doğrulandı",
     emailTitle: "e-postanızı girin",
-    emailSubtitle: "oturum açmanız veya hesabınızı oluşturmanız için bir kod göndereceğiz",
+    emailSubtitle:
+      "oturum açmanız veya hesabınızı oluşturmanız için bir kod göndereceğiz",
     emailPlaceholder: "e-posta",
     emailError: "geçerli bir e-posta girin",
     continueWith: "{{provider}} ile devam et",
@@ -217,7 +218,8 @@ const tr = {
     light: "açık",
     dark: "koyu",
     system: "sistem",
-    description: "norbo'yu nasıl görmek istediğini seç. \"sistem\" cihaz ayarlarını takip eder.",
+    description:
+      'norbo\'yu nasıl görmek istediğini seç. "sistem" cihaz ayarlarını takip eder.',
   },
   notifications: {
     title: "bildirimler",
@@ -230,7 +232,8 @@ const tr = {
     quietHoursEnable: "sessiz saatleri aç",
     quietHoursStart: "başlangıç",
     quietHoursEnd: "bitiş",
-    disclaimer: "gerçek bildirimler sonraki güncellemelerle gelecek. şimdilik sadece tercihlerini kaydediyoruz.",
+    disclaimer:
+      "gerçek bildirimler sonraki güncellemelerle gelecek. şimdilik sadece tercihlerini kaydediyoruz.",
     saveError: "kaydedilemedi, tekrar dene",
   },
   editInfo: {
@@ -249,7 +252,8 @@ const tr = {
   },
   deleteAccount: {
     title: "hesabı sil",
-    warning: "bu, hesabınızı ve tüm ilgili verileri kalıcı olarak silecektir. bu işlem geri alınamaz.",
+    warning:
+      "bu, hesabınızı ve tüm ilgili verileri kalıcı olarak silecektir. bu işlem geri alınamaz.",
     label: "onaylamak için e-postanızı yazın",
     placeholder: "e-postanız",
     confirm: "hesabı sil",
@@ -257,22 +261,28 @@ const tr = {
   },
   terms: {
     title: "hizmet şartları",
-    intro: "norbo kullanmaya başlamadan önce lütfen hizmet şartlarımızı okuyun ve kabul edin.",
+    intro:
+      "norbo kullanmaya başlamadan önce lütfen hizmet şartlarımızı okuyun ve kabul edin.",
     readLink: "tam hizmet şartlarını oku",
-    zeroTolerance: "norbo, aşındırıcı davranış ve uygunsuz içeriğe karşı sıfır tolerans politikası izlemektedir. rahatsız edici materyal yayınlayan veya başkalarını taciz eden herhangi bir kullanıcı kaldırılacak ve yetkili makamlarına bildirilebilir.",
-    checkbox: "hizmet şartlarını kabul ediyorum ve rahatsız edici içerik yayınlamamayı taahhüt ediyorum.",
+    zeroTolerance:
+      "norbo, aşındırıcı davranış ve uygunsuz içeriğe karşı sıfır tolerans politikası izlemektedir. rahatsız edici materyal yayınlayan veya başkalarını taciz eden herhangi bir kullanıcı kaldırılacak ve yetkili makamlarına bildirilebilir.",
+    checkbox:
+      "hizmet şartlarını kabul ediyorum ve rahatsız edici içerik yayınlamamayı taahhüt ediyorum.",
     continue: "devam et",
     error: "onayınız kaydedilemedi. lütfen tekrar deneyin.",
   },
   onboarding: {
     welcomeTitle: "norbo'ya hoş geldin",
-    welcomeBody: "norbo, hayvanlarına bakmana yardım eder: sağlık hatırlatıcıları, tarihler, hepsi tek yerde.",
+    welcomeBody:
+      "norbo, hayvanlarına bakmana yardım eder: sağlık hatırlatıcıları, tarihler, hepsi tek yerde.",
     themeStepTitle: "temayı seç",
     themeStepBody: "daha sonra ayarlardan değiştirebilirsin.",
     notificationsStepTitle: "bildirimleri aç",
-    notificationsStepBody: "aşı ve parazit gibi önemli tarihler için seni uyaracağız. istediğin zaman kapatabilirsin.",
+    notificationsStepBody:
+      "aşı ve parazit gibi önemli tarihler için seni uyaracağız. istediğin zaman kapatabilirsin.",
     notificationsEnable: "bildirimleri aç",
-    notificationsDenied: "izin vermedin. her zaman sistem ayarlarından açabilirsin.",
+    notificationsDenied:
+      "izin vermedin. her zaman sistem ayarlarından açabilirsin.",
     skip: "atla",
     next: "ileri",
     finish: "tamam",
@@ -281,7 +291,8 @@ const tr = {
   upcomingEvents: {
     title: "ne yapılacak",
     emptyTitle: "hepsi tamamlandı",
-    emptySubtitle: "planlanan olay yok. aşılar, veteriner ziyaretleri veya diğer hatırlatmalar eklendikten sonra burada görüneceklerdir.",
+    emptySubtitle:
+      "planlanan olay yok. aşılar, veteriner ziyaretleri veya diğer hatırlatmalar eklendikten sonra burada görüneceklerdir.",
   },
   homeGreeting: {
     helloWithName: "merhaba, {{name}}",
@@ -293,7 +304,8 @@ const tr = {
   pets: {
     title: "evcil hayvanlarım",
     emptyTitle: "ilk olandan başlayalım",
-    emptySubtitle: "tüm hikayesini bir arada tutmak için evcil hayvanını ekle: aşılar, ziyaretler, fotoğraflar, harcamalar.",
+    emptySubtitle:
+      "tüm hikayesini bir arada tutmak için evcil hayvanını ekle: aşılar, ziyaretler, fotoğraflar, harcamalar.",
     emptyCta: "evcil hayvan ekle",
     addButton: "ekle",
     deleteConfirmTitle: "evcil hayvanı sil",
@@ -306,7 +318,8 @@ const tr = {
   petWizard: {
     closeAria: "kapat",
     categoryTitle: "ne tür bir evcil hayvan?",
-    categorySubtitle: "bir kategori seçin, sonra ırkı veya türünü daraltacağız.",
+    categorySubtitle:
+      "bir kategori seçin, sonra ırkı veya türünü daraltacağız.",
     continue: "devam et",
     continueWith: "{{category}} ile devam et",
     skip: "atla",
@@ -316,15 +329,17 @@ const tr = {
     namePlaceholder: "bir ad yazın",
     nameTooShort: "en az bir harf girin",
     speciesTitle: "ırk mı yoksa tür mü?",
-    speciesSubtitle: "tavsiyelerimizi özelleştirmemize yardımcı olur. emin değilseniz atla.",
+    speciesSubtitle:
+      "tavsiyelerimizi özelleştirmemize yardımcı olur. emin değilseniz atla.",
     speciesPlaceholder: "ırk veya türü ara",
     speciesEmpty: "sonuç yok",
     speciesSelected: "seçildi",
     speciesChange: "değiştir",
     sexTitle: "erkek mi yoksa dişi mi?",
-    sexSubtitle: "isterseniz \"bilinmiyor\" seçeneğini de seçebilirsiniz.",
+    sexSubtitle: 'isterseniz "bilinmiyor" seçeneğini de seçebilirsiniz.',
     birthDateTitle: "ne zaman doğdu?",
-    birthDateSubtitle: "yaklaşık bir tarih iyidir. bunu yalnızca hatırlatmalar için kullanacağız.",
+    birthDateSubtitle:
+      "yaklaşık bir tarih iyidir. bunu yalnızca hatırlatmalar için kullanacağız.",
     birthDatePick: "bir tarih seçin",
     sterilizedTitle: "kısırlaştırılmış mı yoksa sterilize edilmiş mi?",
     sterilizedSubtitle: "sağlık ipuçlarını kişiselleştirmemize yardımcı olur.",
@@ -336,7 +351,8 @@ const tr = {
     weightPlaceholder: "örn. 4,5",
     weightInvalid: "pozitif bir sayı girin",
     confirmTitleTemplate: "{{name}} yeni evinde",
-    confirmSubtitle: "hayatını hemen izlemeye başlayın. buradan başlamanızı öneriyoruz.",
+    confirmSubtitle:
+      "hayatını hemen izlemeye başlayın. buradan başlamanızı öneriyoruz.",
     confirmGoToProfile: "{{name}} profiline git",
     confirmAddAnother: "başka bir evcil hayvan ekle",
     suggestionsLabel: "hızlı seçimler",
@@ -407,6 +423,7 @@ const tr = {
     cost: "maliyet (isteğe bağlı)",
     attachments: "ekler (isteğe bağlı)",
     saveNew: "olay ekle",
+    saveSuccess: "Olay başarıyla kaydedildi",
     saveEdit: "değişiklikleri kaydet",
     newTitle: "yeni olay",
     editTitle: "olayı düzenle",
@@ -416,6 +433,8 @@ const tr = {
     recordExpenseSubtitle: "harcama günlüğünüze bir giriş ekler",
     vaccineDetails: "aşı detayları",
     vaccineNamePlaceholder: "aşı adı",
+    vetVisitDetails: "ziyaret detayları",
+    reasonPlaceholder: "ziyaret nedeni",
   },
   weightForm: {
     dateLabel: "tarih",

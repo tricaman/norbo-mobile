@@ -37,6 +37,7 @@ export default function NewEventScreen() {
       createReminder: true,
       createExpense: false,
       vaccineName: "",
+      reason: "",
     },
   });
 
@@ -65,7 +66,7 @@ export default function NewEventScreen() {
         extra: buildExtra(values),
       }),
     showSuccessToast: true,
-    successMessage: t("eventForm.saveNew"),
+    successMessage: t("eventForm.saveSuccess"),
     onSuccess: (response, values) => {
       void queryClient.invalidateQueries({ queryKey: ["pet-events", petId] });
       router.back();

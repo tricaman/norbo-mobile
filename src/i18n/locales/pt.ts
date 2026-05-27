@@ -132,7 +132,8 @@ const pt = {
     otpResendCooldown: "reenviar em {{seconds}}s",
     otpSuccess: "verificado",
     emailTitle: "insira seu email",
-    emailSubtitle: "enviaremos um código para você fazer login ou criar sua conta",
+    emailSubtitle:
+      "enviaremos um código para você fazer login ou criar sua conta",
     emailPlaceholder: "email",
     emailError: "insira um email válido",
     continueWith: "continuar com {{provider}}",
@@ -217,20 +218,23 @@ const pt = {
     light: "claro",
     dark: "escuro",
     system: "sistema",
-    description: "escolha como você quer ver o norbo. \"sistema\" segue as configurações do seu dispositivo.",
+    description:
+      'escolha como você quer ver o norbo. "sistema" segue as configurações do seu dispositivo.',
   },
   notifications: {
     title: "notificações",
     sectionLabel: "lembretes",
     healthReminders: "lembretes de saúde",
-    healthRemindersSubtitle: "vacinas, antiparasitários, consultas veterinárias",
+    healthRemindersSubtitle:
+      "vacinas, antiparasitários, consultas veterinárias",
     maintenanceReminders: "lembretes de cuidado",
     maintenanceRemindersSubtitle: "comida, higiene, rotina",
     quietHoursSection: "horário silencioso",
     quietHoursEnable: "ativar horário silencioso",
     quietHoursStart: "de",
     quietHoursEnd: "até",
-    disclaimer: "notificações reais chegarão nas próximas atualizações. por enquanto estamos só salvando suas preferências.",
+    disclaimer:
+      "notificações reais chegarão nas próximas atualizações. por enquanto estamos só salvando suas preferências.",
     saveError: "falha ao salvar, tente de novo",
   },
   editInfo: {
@@ -249,7 +253,8 @@ const pt = {
   },
   deleteAccount: {
     title: "deletar conta",
-    warning: "isso excluirá permanentemente sua conta e todos os dados relacionados. isso não pode ser desfeito.",
+    warning:
+      "isso excluirá permanentemente sua conta e todos os dados relacionados. isso não pode ser desfeito.",
     label: "digite seu email para confirmar",
     placeholder: "seu email",
     confirm: "deletar conta",
@@ -257,22 +262,28 @@ const pt = {
   },
   terms: {
     title: "termos de serviço",
-    intro: "antes de começar a usar norbo, leia e aceite nossos termos de serviço.",
+    intro:
+      "antes de começar a usar norbo, leia e aceite nossos termos de serviço.",
     readLink: "ler os termos de serviço completos",
-    zeroTolerance: "norbo tem uma política de tolerância zero para comportamento abusivo e conteúdo inadequado. qualquer usuário que poste material ofensivo ou assediar outros será removido e pode ser reportado às autoridades competentes.",
-    checkbox: "aceito os termos de serviço e me comprometo a não publicar conteúdo ofensivo.",
+    zeroTolerance:
+      "norbo tem uma política de tolerância zero para comportamento abusivo e conteúdo inadequado. qualquer usuário que poste material ofensivo ou assediar outros será removido e pode ser reportado às autoridades competentes.",
+    checkbox:
+      "aceito os termos de serviço e me comprometo a não publicar conteúdo ofensivo.",
     continue: "continuar",
     error: "não foi possível salvar sua aceitação. tente novamente.",
   },
   onboarding: {
     welcomeTitle: "bem-vindo ao norbo",
-    welcomeBody: "o norbo ajuda você a cuidar dos seus animais: lembretes de saúde, prazos, tudo em um só lugar.",
+    welcomeBody:
+      "o norbo ajuda você a cuidar dos seus animais: lembretes de saúde, prazos, tudo em um só lugar.",
     themeStepTitle: "escolha o tema",
     themeStepBody: "você pode mudar depois nas configurações.",
     notificationsStepTitle: "ative as notificações",
-    notificationsStepBody: "vamos avisar você sobre prazos importantes como vacinas e antiparasitários. você pode desativar a qualquer momento.",
+    notificationsStepBody:
+      "vamos avisar você sobre prazos importantes como vacinas e antiparasitários. você pode desativar a qualquer momento.",
     notificationsEnable: "ativar notificações",
-    notificationsDenied: "você não concedeu permissão. pode sempre ativar nas configurações do sistema.",
+    notificationsDenied:
+      "você não concedeu permissão. pode sempre ativar nas configurações do sistema.",
     skip: "pular",
     next: "próximo",
     finish: "concluído",
@@ -281,7 +292,8 @@ const pt = {
   upcomingEvents: {
     title: "o que fazer",
     emptyTitle: "tudo em dia",
-    emptySubtitle: "sem eventos agendados. depois que você adicionar vacinas, visitas ao veterinário ou outros lembretes, eles aparecerão aqui.",
+    emptySubtitle:
+      "sem eventos agendados. depois que você adicionar vacinas, visitas ao veterinário ou outros lembretes, eles aparecerão aqui.",
   },
   homeGreeting: {
     helloWithName: "olá, {{name}}",
@@ -293,7 +305,8 @@ const pt = {
   pets: {
     title: "meus animais de estimação",
     emptyTitle: "vamos começar com o primeiro",
-    emptySubtitle: "adicione seu animal de estimação para manter toda a sua história junta: vacinas, visitas, fotos, despesas.",
+    emptySubtitle:
+      "adicione seu animal de estimação para manter toda a sua história junta: vacinas, visitas, fotos, despesas.",
     emptyCta: "adicionar animal de estimação",
     addButton: "adicionar",
     deleteConfirmTitle: "deletar animal de estimação",
@@ -306,7 +319,8 @@ const pt = {
   petWizard: {
     closeAria: "fechar",
     categoryTitle: "que tipo de animal de estimação?",
-    categorySubtitle: "escolha uma categoria, então afuniaremos a raça ou espécie.",
+    categorySubtitle:
+      "escolha uma categoria, então afuniaremos a raça ou espécie.",
     continue: "continuar",
     continueWith: "continuar com {{category}}",
     skip: "pular",
@@ -316,15 +330,17 @@ const pt = {
     namePlaceholder: "digite um nome",
     nameTooShort: "insira pelo menos uma letra",
     speciesTitle: "raça ou espécie?",
-    speciesSubtitle: "nos ajuda a personalizar conselhos. pule se você não tiver certeza.",
+    speciesSubtitle:
+      "nos ajuda a personalizar conselhos. pule se você não tiver certeza.",
     speciesPlaceholder: "pesquisar raça ou espécie",
     speciesEmpty: "sem resultados",
     speciesSelected: "selecionado",
     speciesChange: "mudar",
     sexTitle: "macho ou fêmea?",
-    sexSubtitle: "você também pode escolher \"desconhecido\" se preferir.",
+    sexSubtitle: 'você também pode escolher "desconhecido" se preferir.',
     birthDateTitle: "quando nasceu?",
-    birthDateSubtitle: "uma data aproximada é fina. só usaremos para lembretes.",
+    birthDateSubtitle:
+      "uma data aproximada é fina. só usaremos para lembretes.",
     birthDatePick: "escolher data",
     sterilizedTitle: "castrado ou esterilizado?",
     sterilizedSubtitle: "nos ajuda a personalizar dicas de saúde.",
@@ -336,7 +352,8 @@ const pt = {
     weightPlaceholder: "ex. 4,5",
     weightInvalid: "insira um número positivo",
     confirmTitleTemplate: "{{name}} está em seu novo lar",
-    confirmSubtitle: "comece a rastrear sua vida imediatamente. sugerimos começar aqui.",
+    confirmSubtitle:
+      "comece a rastrear sua vida imediatamente. sugerimos começar aqui.",
     confirmGoToProfile: "ir para o perfil de {{name}}",
     confirmAddAnother: "adicionar outro animal de estimação",
     suggestionsLabel: "seleções rápidas",
@@ -407,15 +424,19 @@ const pt = {
     cost: "custo (opcional)",
     attachments: "anexos (opcional)",
     saveNew: "adicionar evento",
+    saveSuccess: "Evento salvo com sucesso",
     saveEdit: "salvar alterações",
     newTitle: "novo evento",
     editTitle: "editar evento",
     createReminder: "criar lembrete",
-    createReminderSubtitle: "receba uma notificação antes da data de vencimento",
+    createReminderSubtitle:
+      "receba uma notificação antes da data de vencimento",
     recordExpense: "registrar como despesa",
     recordExpenseSubtitle: "adiciona uma entrada ao seu registro de despesas",
     vaccineDetails: "detalhes da vacina",
     vaccineNamePlaceholder: "nome da vacina",
+    vetVisitDetails: "detalhes da visita",
+    reasonPlaceholder: "motivo da visita",
   },
   weightForm: {
     dateLabel: "data",

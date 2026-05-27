@@ -217,7 +217,8 @@ const en = {
     light: "light",
     dark: "dark",
     system: "system",
-    description: "choose how you want to see norbo. \"system\" follows your device settings.",
+    description:
+      'choose how you want to see norbo. "system" follows your device settings.',
   },
   notifications: {
     title: "notifications",
@@ -230,7 +231,8 @@ const en = {
     quietHoursEnable: "enable quiet hours",
     quietHoursStart: "from",
     quietHoursEnd: "to",
-    disclaimer: "actual notifications will arrive in upcoming releases. for now we are just saving your preferences.",
+    disclaimer:
+      "actual notifications will arrive in upcoming releases. for now we are just saving your preferences.",
     saveError: "couldn't save, try again",
   },
   editInfo: {
@@ -249,7 +251,8 @@ const en = {
   },
   deleteAccount: {
     title: "delete account",
-    warning: "this will permanently delete your account and all related data. this cannot be undone.",
+    warning:
+      "this will permanently delete your account and all related data. this cannot be undone.",
     label: "type your email to confirm",
     placeholder: "your email",
     confirm: "delete account",
@@ -257,22 +260,28 @@ const en = {
   },
   terms: {
     title: "terms of service",
-    intro: "before you start using norbo, please read and accept our terms of service.",
+    intro:
+      "before you start using norbo, please read and accept our terms of service.",
     readLink: "read the full terms of service",
-    zeroTolerance: "norbo has a zero-tolerance policy toward abusive behavior and inappropriate content. any user who posts offensive material or harasses others will be removed and may be reported to the competent authorities.",
-    checkbox: "i accept the terms of service and commit to not publish offensive content.",
+    zeroTolerance:
+      "norbo has a zero-tolerance policy toward abusive behavior and inappropriate content. any user who posts offensive material or harasses others will be removed and may be reported to the competent authorities.",
+    checkbox:
+      "i accept the terms of service and commit to not publish offensive content.",
     continue: "continue",
     error: "couldn't save your acceptance. please try again.",
   },
   onboarding: {
     welcomeTitle: "welcome to norbo",
-    welcomeBody: "norbo helps you care for your pets: health reminders, due dates, everything in one place.",
+    welcomeBody:
+      "norbo helps you care for your pets: health reminders, due dates, everything in one place.",
     themeStepTitle: "pick a theme",
     themeStepBody: "you can change it later from settings.",
     notificationsStepTitle: "enable notifications",
-    notificationsStepBody: "we'll alert you about important due dates like vaccines and parasite treatments. you can disable them anytime.",
+    notificationsStepBody:
+      "we'll alert you about important due dates like vaccines and parasite treatments. you can disable them anytime.",
     notificationsEnable: "enable notifications",
-    notificationsDenied: "you didn't grant permission. you can always enable it from system settings.",
+    notificationsDenied:
+      "you didn't grant permission. you can always enable it from system settings.",
     skip: "skip",
     next: "next",
     finish: "done",
@@ -281,7 +290,8 @@ const en = {
   upcomingEvents: {
     title: "what to do",
     emptyTitle: "all caught up",
-    emptySubtitle: "no events scheduled. once you add vaccines, vet visits or other reminders they'll show up here.",
+    emptySubtitle:
+      "no events scheduled. once you add vaccines, vet visits or other reminders they'll show up here.",
   },
   homeGreeting: {
     helloWithName: "hi, {{name}}",
@@ -293,7 +303,8 @@ const en = {
   pets: {
     title: "my pets",
     emptyTitle: "let's start with the first one",
-    emptySubtitle: "add your pet to keep their whole story together: vaccines, visits, photos, expenses.",
+    emptySubtitle:
+      "add your pet to keep their whole story together: vaccines, visits, photos, expenses.",
     emptyCta: "add a pet",
     addButton: "add",
     deleteConfirmTitle: "delete pet",
@@ -306,7 +317,8 @@ const en = {
   petWizard: {
     closeAria: "close",
     categoryTitle: "what kind of pet?",
-    categorySubtitle: "pick a category, then we'll narrow down the breed or species.",
+    categorySubtitle:
+      "pick a category, then we'll narrow down the breed or species.",
     continue: "continue",
     continueWith: "continue with {{category}}",
     skip: "skip",
@@ -322,7 +334,7 @@ const en = {
     speciesSelected: "selected",
     speciesChange: "change",
     sexTitle: "male or female?",
-    sexSubtitle: "you can also pick \"unknown\" if you'd rather.",
+    sexSubtitle: 'you can also pick "unknown" if you\'d rather.',
     birthDateTitle: "when were they born?",
     birthDateSubtitle: "a rough date is fine. we'll use it for reminders only.",
     birthDatePick: "pick a date",
@@ -336,7 +348,8 @@ const en = {
     weightPlaceholder: "e.g. 4.5",
     weightInvalid: "enter a positive number",
     confirmTitleTemplate: "{{name}} is in their new home",
-    confirmSubtitle: "start tracking their life right away. we suggest beginning here.",
+    confirmSubtitle:
+      "start tracking their life right away. we suggest beginning here.",
     confirmGoToProfile: "go to {{name}}'s profile",
     confirmAddAnother: "add another pet",
     suggestionsLabel: "quick picks",
@@ -407,6 +420,7 @@ const en = {
     cost: "cost (optional)",
     attachments: "attachments (optional)",
     saveNew: "add event",
+    saveSuccess: "Event saved successfully",
     saveEdit: "save changes",
     newTitle: "new event",
     editTitle: "edit event",
@@ -416,6 +430,8 @@ const en = {
     recordExpenseSubtitle: "adds an entry to your expense log",
     vaccineDetails: "vaccine details",
     vaccineNamePlaceholder: "vaccine name",
+    vetVisitDetails: "visit details",
+    reasonPlaceholder: "reason for visit",
   },
   weightForm: {
     dateLabel: "date",

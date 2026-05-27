@@ -447,6 +447,7 @@ const it = {
     cost: "costo (opzionale)",
     attachments: "allegati (opzionale)",
     saveNew: "aggiungi evento",
+    saveSuccess: "Evento salvato con successo",
     saveEdit: "salva modifiche",
     newTitle: "nuovo evento",
     editTitle: "modifica evento",
@@ -456,6 +457,8 @@ const it = {
     recordExpenseSubtitle: "aggiunge una voce nel registro spese",
     vaccineDetails: "dettagli vaccino",
     vaccineNamePlaceholder: "nome vaccino",
+    vetVisitDetails: "dettagli visita",
+    reasonPlaceholder: "motivo della visita",
   },
 
   weightForm: {

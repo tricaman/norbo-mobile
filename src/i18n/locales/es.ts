@@ -132,7 +132,8 @@ const es = {
     otpResendCooldown: "reenviar en {{seconds}}s",
     otpSuccess: "verificado",
     emailTitle: "ingrese su correo electrónico",
-    emailSubtitle: "le enviaremos un código para iniciar sesión o crear su cuenta",
+    emailSubtitle:
+      "le enviaremos un código para iniciar sesión o crear su cuenta",
     emailPlaceholder: "correo electrónico",
     emailError: "ingrese un correo electrónico válido",
     continueWith: "continuar con {{provider}}",
@@ -217,20 +218,23 @@ const es = {
     light: "claro",
     dark: "oscuro",
     system: "sistema",
-    description: "elige cómo quieres ver norbo. \"sistema\" sigue los ajustes de tu dispositivo.",
+    description:
+      'elige cómo quieres ver norbo. "sistema" sigue los ajustes de tu dispositivo.',
   },
   notifications: {
     title: "notificaciones",
     sectionLabel: "recordatorios",
     healthReminders: "recordatorios de salud",
-    healthRemindersSubtitle: "vacunas, antiparasitarios, visitas al veterinario",
+    healthRemindersSubtitle:
+      "vacunas, antiparasitarios, visitas al veterinario",
     maintenanceReminders: "recordatorios de cuidado",
     maintenanceRemindersSubtitle: "comida, higiene, rutina",
     quietHoursSection: "horas de silencio",
     quietHoursEnable: "activar horas de silencio",
     quietHoursStart: "desde",
     quietHoursEnd: "hasta",
-    disclaimer: "las notificaciones reales llegarán en próximas actualizaciones. por ahora solo guardamos tus preferencias.",
+    disclaimer:
+      "las notificaciones reales llegarán en próximas actualizaciones. por ahora solo guardamos tus preferencias.",
     saveError: "no se pudo guardar, intenta de nuevo",
   },
   editInfo: {
@@ -249,7 +253,8 @@ const es = {
   },
   deleteAccount: {
     title: "eliminar cuenta",
-    warning: "esto eliminará permanentemente su cuenta y todos los datos relacionados. esto no se puede deshacer.",
+    warning:
+      "esto eliminará permanentemente su cuenta y todos los datos relacionados. esto no se puede deshacer.",
     label: "escriba su correo electrónico para confirmar",
     placeholder: "su correo electrónico",
     confirm: "eliminar cuenta",
@@ -257,22 +262,28 @@ const es = {
   },
   terms: {
     title: "términos de servicio",
-    intro: "antes de comenzar a usar norbo, lea y acepte nuestros términos de servicio.",
+    intro:
+      "antes de comenzar a usar norbo, lea y acepte nuestros términos de servicio.",
     readLink: "leer los términos de servicio completos",
-    zeroTolerance: "norbo tiene una política de tolerancia cero hacia el comportamiento abusivo y el contenido inapropiado. cualquier usuario que publique material ofensivo o acose a otros será eliminado y podrá ser reportado a las autoridades competentes.",
-    checkbox: "acepto los términos de servicio y me comprometo a no publicar contenido ofensivo.",
+    zeroTolerance:
+      "norbo tiene una política de tolerancia cero hacia el comportamiento abusivo y el contenido inapropiado. cualquier usuario que publique material ofensivo o acose a otros será eliminado y podrá ser reportado a las autoridades competentes.",
+    checkbox:
+      "acepto los términos de servicio y me comprometo a no publicar contenido ofensivo.",
     continue: "continuar",
     error: "no se pudo guardar su aceptación. por favor intente de nuevo.",
   },
   onboarding: {
     welcomeTitle: "bienvenido a norbo",
-    welcomeBody: "norbo te ayuda a cuidar de tus animales: recordatorios de salud, fechas, todo en un solo lugar.",
+    welcomeBody:
+      "norbo te ayuda a cuidar de tus animales: recordatorios de salud, fechas, todo en un solo lugar.",
     themeStepTitle: "elige el tema",
     themeStepBody: "puedes cambiarlo después desde los ajustes.",
     notificationsStepTitle: "activa las notificaciones",
-    notificationsStepBody: "te avisaremos sobre fechas importantes como vacunas y antiparasitarios. puedes desactivarlas cuando quieras.",
+    notificationsStepBody:
+      "te avisaremos sobre fechas importantes como vacunas y antiparasitarios. puedes desactivarlas cuando quieras.",
     notificationsEnable: "activar notificaciones",
-    notificationsDenied: "no diste permiso. puedes activarlas en los ajustes del sistema.",
+    notificationsDenied:
+      "no diste permiso. puedes activarlas en los ajustes del sistema.",
     skip: "omitir",
     next: "siguiente",
     finish: "listo",
@@ -281,7 +292,8 @@ const es = {
   upcomingEvents: {
     title: "qué hacer",
     emptyTitle: "todo al día",
-    emptySubtitle: "no hay eventos programados. una vez que agregue vacunas, visitas veterinarias u otros recordatorios, aparecerán aquí.",
+    emptySubtitle:
+      "no hay eventos programados. una vez que agregue vacunas, visitas veterinarias u otros recordatorios, aparecerán aquí.",
   },
   homeGreeting: {
     helloWithName: "hola, {{name}}",
@@ -293,7 +305,8 @@ const es = {
   pets: {
     title: "mis mascotas",
     emptyTitle: "comencemos con la primera",
-    emptySubtitle: "agregue su mascota para mantener toda su historia junta: vacunas, visitas, fotos, gastos.",
+    emptySubtitle:
+      "agregue su mascota para mantener toda su historia junta: vacunas, visitas, fotos, gastos.",
     emptyCta: "agregar mascota",
     addButton: "agregar",
     deleteConfirmTitle: "eliminar mascota",
@@ -306,7 +319,8 @@ const es = {
   petWizard: {
     closeAria: "cerrar",
     categoryTitle: "¿qué tipo de mascota?",
-    categorySubtitle: "elija una categoría, luego ajustaremos la raza o especie.",
+    categorySubtitle:
+      "elija una categoría, luego ajustaremos la raza o especie.",
     continue: "continuar",
     continueWith: "continuar con {{category}}",
     skip: "saltar",
@@ -316,15 +330,17 @@ const es = {
     namePlaceholder: "escriba un nombre",
     nameTooShort: "ingrese al menos una letra",
     speciesTitle: "¿raza o especie?",
-    speciesSubtitle: "nos ayuda a personalizar consejos. salte si no está seguro.",
+    speciesSubtitle:
+      "nos ayuda a personalizar consejos. salte si no está seguro.",
     speciesPlaceholder: "buscar raza o especie",
     speciesEmpty: "sin resultados",
     speciesSelected: "seleccionado",
     speciesChange: "cambiar",
     sexTitle: "¿macho o hembra?",
-    sexSubtitle: "también puede elegir \"desconocido\" si lo prefiere.",
+    sexSubtitle: 'también puede elegir "desconocido" si lo prefiere.',
     birthDateTitle: "¿cuándo nació?",
-    birthDateSubtitle: "una fecha aproximada está bien. solo la usaremos para recordatorios.",
+    birthDateSubtitle:
+      "una fecha aproximada está bien. solo la usaremos para recordatorios.",
     birthDatePick: "elegir una fecha",
     sterilizedTitle: "¿castrado o esterilizado?",
     sterilizedSubtitle: "nos ayuda a personalizar consejos de salud.",
@@ -336,7 +352,8 @@ const es = {
     weightPlaceholder: "ej. 4,5",
     weightInvalid: "ingrese un número positivo",
     confirmTitleTemplate: "{{name}} está en su nuevo hogar",
-    confirmSubtitle: "comience a rastrear su vida de inmediato. sugerimos empezar aquí.",
+    confirmSubtitle:
+      "comience a rastrear su vida de inmediato. sugerimos empezar aquí.",
     confirmGoToProfile: "ir al perfil de {{name}}",
     confirmAddAnother: "agregar otra mascota",
     suggestionsLabel: "selecciones rápidas",
@@ -407,15 +424,19 @@ const es = {
     cost: "costo (opcional)",
     attachments: "archivos adjuntos (opcional)",
     saveNew: "agregar evento",
+    saveSuccess: "Evento guardado exitosamente",
     saveEdit: "guardar cambios",
     newTitle: "nuevo evento",
     editTitle: "editar evento",
     createReminder: "crear recordatorio",
-    createReminderSubtitle: "reciba una notificación antes de la fecha de vencimiento",
+    createReminderSubtitle:
+      "reciba una notificación antes de la fecha de vencimiento",
     recordExpense: "registrar como gasto",
     recordExpenseSubtitle: "agrega una entrada a su registro de gastos",
     vaccineDetails: "detalles de vacuna",
     vaccineNamePlaceholder: "nombre de la vacuna",
+    vetVisitDetails: "detalles de la visita",
+    reasonPlaceholder: "motivo de la visita",
   },
   weightForm: {
     dateLabel: "fecha",
