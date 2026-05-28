@@ -335,6 +335,32 @@ const it = {
     deleteConfirmCancel: "annulla",
     deleteSuccess: "animale eliminato",
     viewAll: "vedi tutti",
+    memorialSection: "in memoria",
+  },
+
+  memorial: {
+    markAsMemory: "segna come ricordo",
+    markAsMemorySubtitle: "i dati resteranno al sicuro",
+    empathyTitle: "siamo con te",
+    empathyMessage:
+      "i ricordi di {{name}} resteranno sempre qui, al sicuro. potrai tornare a rivivere ogni momento insieme.",
+    dateLabel: "data",
+    datePlaceholder: "quando è successo?",
+    noteLabel: "un ultimo pensiero",
+    notePlaceholder: "scrivi qualcosa se vuoi...",
+    confirm: "conferma",
+    continue: "continua",
+    safeMessage: "i ricordi di {{name}} sono al sicuro qui",
+    restore: "ripristina",
+    restoreConfirmTitle: "ripristina pet",
+    restoreConfirmMessage:
+      "vuoi riportare {{name}} tra i pet attivi?",
+    restoreConfirmOk: "ripristina",
+    restoreConfirmCancel: "annulla",
+    restoreSuccess: "{{name}} è di nuovo tra i pet attivi",
+    restoreExpired: "il periodo di ripristino di 14 giorni è scaduto",
+    anniversaryOptIn: "ricordami l'anniversario",
+    managementSection: "gestione",
   },
 
   petWizard: {

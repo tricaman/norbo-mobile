@@ -12,6 +12,7 @@ export enum PetEventType {
   PHOTO = "PHOTO",
   NOTE = "NOTE",
   INSURANCE = "INSURANCE",
+  PASSING = "PASSING",
 }
 
 export enum PetEventStatus {

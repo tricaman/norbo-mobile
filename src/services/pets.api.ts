@@ -22,6 +22,16 @@ export const petsApi = {
 
   delete: (petId: string) => api.delete(`/pets/${petId}`),
 
+  markDeceased: (
+    petId: string,
+    input: { deceasedAt?: string; note?: string; mediaAssetIds?: string[] },
+  ) => api.post(`/pets/${petId}/mark-deceased`, input),
+
+  restore: (petId: string) => api.post(`/pets/${petId}/restore`),
+
+  listDeceased: () =>
+    api.get<Pet[]>('/pets', { params: { lifeStatus: 'DECEASED' } }),
+
   searchSpecies: (params: SearchSpeciesParams) =>
     api.get<SpeciesResult[]>('/species', { params }),
 } as const;

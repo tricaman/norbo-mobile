@@ -18,6 +18,11 @@ export enum Sex {
   UNKNOWN = "UNKNOWN",
 }
 
+export enum LifeStatus {
+  ALIVE = "ALIVE",
+  DECEASED = "DECEASED",
+}
+
 export interface SpeciesResult {
   id: string;
   category: PetCategory;
@@ -41,6 +46,8 @@ export interface Pet {
   sex: Sex;
   sterilized: boolean | null;
   notes: string | null;
+  lifeStatus: LifeStatus;
+  deceasedAt: string | null;
   deletedAt: string | null;
   createdAt: string;
   updatedAt: string;

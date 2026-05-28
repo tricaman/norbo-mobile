@@ -28,6 +28,7 @@ export enum PetEventType {
   PHOTO = "PHOTO",
   NOTE = "NOTE",
   INSURANCE = "INSURANCE",
+  PASSING = "PASSING",
 }
 
 export enum PetEventStatus {
@@ -175,6 +176,14 @@ export type NoteExtra = z.infer<typeof NoteExtraSchema>;
 export const InsuranceExtraSchema = z.object({});
 export type InsuranceExtra = z.infer<typeof InsuranceExtraSchema>;
 
+export const PassingExtraSchema = z.object({
+  cause: z.string().max(500).optional(),
+  vetName: z.string().max(120).optional(),
+  location: z.string().max(200).optional(),
+  notes: z.string().max(2000).optional(),
+});
+export type PassingExtra = z.infer<typeof PassingExtraSchema>;
+
 // ── Discriminator map ─────────────────────────────────────────────────────────
 
 export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
@@ -191,6 +200,7 @@ export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
   [PetEventType.PHOTO]: PhotoExtraSchema,
   [PetEventType.NOTE]: NoteExtraSchema,
   [PetEventType.INSURANCE]: InsuranceExtraSchema,
+  [PetEventType.PASSING]: PassingExtraSchema,
 };
 
 /**
@@ -221,6 +231,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.MAMMAL_CAT]: [
     PetEventType.VACCINATION,
@@ -233,6 +244,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.MAMMAL_SMALL]: [
     PetEventType.VACCINATION,
@@ -244,6 +256,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.BIRD]: [
     PetEventType.VACCINATION,
@@ -255,6 +268,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.FISH_FRESHWATER]: [
     PetEventType.VET_VISIT,
@@ -265,6 +279,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.FISH_SALTWATER]: [
     PetEventType.VET_VISIT,
@@ -275,6 +290,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.REPTILE]: [
     PetEventType.VET_VISIT,
@@ -285,6 +301,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.AMPHIBIAN]: [
     PetEventType.VET_VISIT,
@@ -296,6 +313,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.INVERTEBRATE]: [
     PetEventType.VET_VISIT,
@@ -305,6 +323,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.EQUINE]: [
     PetEventType.VACCINATION,
@@ -317,6 +336,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
   [PetCategory.FARM]: [
     PetEventType.VACCINATION,
@@ -328,6 +348,7 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
+    PetEventType.PASSING,
   ],
 };
 
@@ -418,6 +439,11 @@ export const PET_EVENT_CAPABILITIES: Record<
     defaultExpenseCategory: null,
   },
   [PetEventType.NOTE]: {
+    hasCost: false,
+    canSchedule: false,
+    defaultExpenseCategory: null,
+  },
+  [PetEventType.PASSING]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,

@@ -274,6 +274,50 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
               numberOfLines={3}
             />
           </FormCard>
+
+          {!pet.lifeStatus || pet.lifeStatus === "ALIVE" ? (
+            <View style={styles.managementSection}>
+              <Text
+                style={[
+                  styles.managementTitle,
+                  { color: theme.colors.textTertiary },
+                ]}
+              >
+                {t("memorial.managementSection")}
+              </Text>
+              <NorboPressable
+                style={[
+                  styles.managementBtn,
+                  { backgroundColor: theme.colors.surface },
+                ]}
+                scale="row"
+                haptic="light"
+                onPress={() => router.push(`/pets/${petId}/memorial`)}
+              >
+                <IconSymbol
+                  name="heart.fill"
+                  size={18}
+                  tintColor={theme.colors.textSecondary}
+                />
+                <Text
+                  style={[
+                    styles.managementBtnText,
+                    { color: theme.colors.textPrimary },
+                  ]}
+                >
+                  {t("memorial.markAsMemory")}
+                </Text>
+                <Text
+                  style={[
+                    styles.managementBtnSub,
+                    { color: theme.colors.textTertiary },
+                  ]}
+                >
+                  {t("memorial.markAsMemorySubtitle")}
+                </Text>
+              </NorboPressable>
+            </View>
+          ) : null}
         </ScrollView>
       </FormProvider>
     </>
@@ -338,5 +382,30 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.typography.caption,
     color: theme.colors.textTertiary,
     fontStyle: "italic",
+  },
+  managementSection: {
+    marginTop: theme.spacing.xl,
+    gap: theme.spacing.sm,
+  },
+  managementTitle: {
+    ...theme.typography.caption,
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+    paddingHorizontal: theme.spacing.sm,
+  },
+  managementBtn: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 4,
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+    borderRadius: theme.radius.lg,
+  },
+  managementBtnText: {
+    ...theme.typography.body,
+    fontWeight: "500",
+  },
+  managementBtnSub: {
+    ...theme.typography.caption,
   },
 }));

@@ -20,6 +20,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     wallet: "wallet-outline",
     "wallet.fill": "wallet",
     heart: "heart-outline",
+    "heart.fill": "heart",
     bell: "notifications-outline",
     "bell.fill": "notifications-sharp",
     photo: "image-outline",

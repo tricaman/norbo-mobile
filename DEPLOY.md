@@ -2,7 +2,7 @@
 
 Guida operativa per produrre una release di produzione.
 
-Versione corrente: **1.2.1** (Android `versionCode` 2 / iOS `buildNumber` 4).
+Versione corrente: **1.3.0** (Android `versionCode` 3 / iOS `buildNumber` 5).
 
 ---
 

@@ -15,7 +15,7 @@ import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
 import { useWeightHistory } from "@/hooks/useWeightHistory";
 import { petsApi } from "@/services/pets.api";
-import { Sex, type Pet } from "@/types/pet.types";
+import { LifeStatus, Sex, type Pet } from "@/types/pet.types";
 import { formatPetAge } from "@/utils/age";
 import { formatWeight } from "@/utils/weight";
 import { useQuery } from "@tanstack/react-query";
@@ -61,6 +61,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<PetDetailTab>("timeline");
 
+  const isDeceased = pet.lifeStatus === LifeStatus.DECEASED;
   const meta = CATEGORY_META[pet.category];
   const speciesLabel = pet.speciesLabelFreetext ?? null;
 
@@ -94,6 +95,16 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
     },
   });
 
+  const { mutate: restorePet } = useMutation({
+    mutationFn: () => petsApi.restore(petId),
+    showSuccessToast: true,
+    successMessage: t("memorial.restoreSuccess", { name: pet.name }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["pets"] });
+      void queryClient.invalidateQueries({ queryKey: ["pets", petId] });
+    },
+  });
+
   function confirmDelete() {
     Alert.alert(
       t("pets.deleteConfirmTitle"),
@@ -104,6 +115,20 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
           text: t("pets.deleteConfirmOk"),
           style: "destructive",
           onPress: () => deletePet(),
+        },
+      ],
+    );
+  }
+
+  function confirmRestore() {
+    Alert.alert(
+      t("memorial.restoreConfirmTitle"),
+      t("memorial.restoreConfirmMessage", { name: pet.name }),
+      [
+        { text: t("memorial.restoreConfirmCancel"), style: "cancel" },
+        {
+          text: t("memorial.restoreConfirmOk"),
+          onPress: () => restorePet(),
         },
       ],
     );
@@ -151,7 +176,9 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       label: t("petDetail.stats.weight"),
       onPress: () => setActiveTab("weight"),
     },
-    { icon: "bell", value: "—", label: t("petDetail.stats.next") },
+    ...(isDeceased
+      ? []
+      : [{ icon: "bell", value: "—", label: t("petDetail.stats.next") }]),
     { icon: "photo", value: "0", label: t("petDetail.stats.photos") },
   ];
 
@@ -357,19 +384,35 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       <Dropdown
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
-        items={[
-          {
-            label: t("petForm.editTitle"),
-            icon: "pencil",
-            onPress: () => router.push(`/pets/${petId}/edit`),
-          },
-          {
-            label: t("pets.deleteConfirmOk"),
-            icon: "trash.fill",
-            destructive: true,
-            onPress: confirmDelete,
-          },
-        ]}
+        items={
+          isDeceased
+            ? [
+                {
+                  label: t("memorial.restore"),
+                  icon: "arrow.uturn.backward",
+                  onPress: confirmRestore,
+                },
+                {
+                  label: t("pets.deleteConfirmOk"),
+                  icon: "trash.fill",
+                  destructive: true,
+                  onPress: confirmDelete,
+                },
+              ]
+            : [
+                {
+                  label: t("petForm.editTitle"),
+                  icon: "pencil",
+                  onPress: () => router.push(`/pets/${petId}/edit`),
+                },
+                {
+                  label: t("pets.deleteConfirmOk"),
+                  icon: "trash.fill",
+                  destructive: true,
+                  onPress: confirmDelete,
+                },
+              ]
+        }
       />
     </View>
   );

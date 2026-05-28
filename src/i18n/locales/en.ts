@@ -313,7 +313,34 @@ const en = {
     deleteConfirmCancel: "cancel",
     deleteSuccess: "pet deleted",
     viewAll: "view all",
+    memorialSection: "in memory",
   },
+
+  memorial: {
+    markAsMemory: "mark as memory",
+    markAsMemorySubtitle: "data will be kept safe",
+    empathyTitle: "we're with you",
+    empathyMessage:
+      "the memories of {{name}} will always be here, safe and sound. you can come back to relive every moment together.",
+    dateLabel: "date",
+    datePlaceholder: "when did it happen?",
+    noteLabel: "a last thought",
+    notePlaceholder: "write something if you'd like...",
+    confirm: "confirm",
+    continue: "continue",
+    safeMessage: "the memories of {{name}} are safe here",
+    restore: "restore",
+    restoreConfirmTitle: "restore pet",
+    restoreConfirmMessage:
+      "bring {{name}} back to active pets?",
+    restoreConfirmOk: "restore",
+    restoreConfirmCancel: "cancel",
+    restoreSuccess: "{{name}} is back among active pets",
+    restoreExpired: "the 14-day restore window has expired",
+    anniversaryOptIn: "remind me of the anniversary",
+    managementSection: "management",
+  },
+
   petWizard: {
     closeAria: "close",
     categoryTitle: "what kind of pet?",
