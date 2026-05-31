@@ -1,8 +1,9 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { springs } from "@/hooks/useSpring";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  ScrollView,
   Text,
   View,
   type LayoutChangeEvent,
@@ -29,13 +30,16 @@ interface SegmentedTabsProps<K extends string> {
   style?: StyleProp<ViewStyle>;
 }
 
-const PADDING = 4;
+interface TabLayout {
+  x: number;
+  width: number;
+}
 
 /**
- * SegmentedTabs — iOS-style segmented control. A surface-coloured pill
- * slides with a spring under the active tab against a muted `surface2`
- * background. Each tab can show an optional icon beside its label.
- * Full-width pressables — tap anywhere in the option to select.
+ * SegmentedTabs — modern underline-style tab bar (Instagram / Apple Music /
+ * App Store pattern). A primary-coloured indicator slides with a spring
+ * under the active tab. Horizontally scrollable when content overflows,
+ * with edge fade gradients to communicate scrollability.
  */
 export function SegmentedTabs<K extends string>({
   tabs,
@@ -44,129 +48,159 @@ export function SegmentedTabs<K extends string>({
   style,
 }: SegmentedTabsProps<K>) {
   const { theme } = useUnistyles();
-  const [innerWidth, setInnerWidth] = useState(0);
+  const scrollRef = useRef<ScrollView>(null);
+  const [tabLayouts, setTabLayouts] = useState<Map<string, TabLayout>>(
+    new Map(),
+  );
 
   const activeIndex = Math.max(
     0,
     tabs.findIndex((t) => t.key === value),
   );
 
-  const tabWidth = innerWidth > 0 ? innerWidth / tabs.length : 0;
-  const translateX = useSharedValue(activeIndex * tabWidth);
+  const activeLayout = tabLayouts.get(value);
+  const translateX = useSharedValue(activeLayout?.x ?? 0);
+  const pillWidth = useSharedValue(activeLayout?.width ?? 0);
 
   useEffect(() => {
-    const next = activeIndex * tabWidth;
-    if (innerWidth === 0) {
-      translateX.value = next;
-      return;
+    if (!activeLayout) return;
+    const isInitial = tabLayouts.size < tabs.length;
+    if (isInitial) {
+      translateX.value = activeLayout.x;
+      pillWidth.value = activeLayout.width;
+    } else {
+      translateX.value = withSpring(activeLayout.x, springs.snappy);
+      pillWidth.value = withSpring(activeLayout.width, springs.snappy);
     }
-    translateX.value = withSpring(next, springs.snappy);
-  }, [activeIndex, tabWidth, innerWidth, translateX]);
+
+    scrollRef.current?.scrollTo({
+      x: activeLayout.x - 40,
+      animated: !isInitial,
+    });
+  }, [activeLayout, tabLayouts.size, tabs.length, translateX, pillWidth]);
 
   const pillStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
-    width: tabWidth,
+    width: pillWidth.value,
   }));
 
-  function handleLayout(e: LayoutChangeEvent) {
-    setInnerWidth(e.nativeEvent.layout.width);
+  function handleTabLayout(key: string, e: LayoutChangeEvent) {
+    const { x, width } = e.nativeEvent.layout;
+    setTabLayouts((prev) => new Map(prev).set(key, { x, width }));
   }
 
-  return (
-    <View
-      style={[
-        styles.bar,
-        { backgroundColor: theme.colors.surface2 },
-        style,
-      ]}
-    >
-      <View style={styles.inner} onLayout={handleLayout}>
-        {innerWidth > 0 ? (
-          <Animated.View
-            pointerEvents="none"
-            style={[
-              styles.pill,
-              {
-                backgroundColor: theme.colors.surface,
-                shadowColor: "#000",
-              },
-              pillStyle,
-            ]}
-          />
-        ) : null}
+  const allLayoutsReady = tabLayouts.size === tabs.length;
 
-        {tabs.map((tab) => {
-          const isActive = value === tab.key;
-          return (
-            <NorboPressable
-              key={tab.key}
-              style={styles.btn}
-              scale="row"
-              haptic="light"
-              onPress={() => onChange(tab.key)}
-            >
-              {tab.icon ? (
-                <IconSymbol
-                  name={tab.icon}
-                  size={14}
-                  tintColor={
-                    isActive
-                      ? theme.colors.textPrimary
-                      : theme.colors.textTertiary
-                  }
-                />
-              ) : null}
-              <Text
-                style={[
-                  styles.label,
-                  {
-                    color: isActive
-                      ? theme.colors.textPrimary
-                      : theme.colors.textSecondary,
-                  },
-                  isActive && styles.labelActive,
-                ]}
-              >
-                {tab.label}
-              </Text>
-            </NorboPressable>
-          );
-        })}
-      </View>
+  return (
+    <View style={[styles.bar, style]}>
+      <ScrollView
+        ref={scrollRef}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <View style={styles.inner}>
+          {tabs.map((tab) => {
+            const isActive = value === tab.key;
+            return (
+              <View key={tab.key} onLayout={(e) => handleTabLayout(tab.key, e)}>
+                <NorboPressable
+                  style={styles.btn}
+                  scale="row"
+                  haptic="light"
+                  onPress={() => onChange(tab.key)}
+                >
+                  {tab.icon ? (
+                    <IconSymbol
+                      name={tab.icon}
+                      size={15}
+                      tintColor={
+                        isActive
+                          ? theme.colors.textPrimary
+                          : theme.colors.textTertiary
+                      }
+                    />
+                  ) : null}
+                  <Text
+                    style={[
+                      styles.label,
+                      {
+                        color: isActive
+                          ? theme.colors.textPrimary
+                          : theme.colors.textTertiary,
+                      },
+                      isActive && styles.labelActive,
+                    ]}
+                  >
+                    {tab.label}
+                  </Text>
+                </NorboPressable>
+              </View>
+            );
+          })}
+
+          {allLayoutsReady ? (
+            <Animated.View
+              pointerEvents="none"
+              style={[
+                styles.indicator,
+                { backgroundColor: theme.colors.textPrimary },
+                pillStyle,
+              ]}
+            />
+          ) : null}
+        </View>
+
+        <View
+          style={[styles.baseline, { backgroundColor: theme.colors.border }]}
+          pointerEvents="none"
+        />
+      </ScrollView>
     </View>
   );
 }
 
+const INDICATOR_HEIGHT = 2;
+const BAR_HEIGHT = 44;
+
 const styles = StyleSheet.create((theme) => ({
   bar: {
-    padding: PADDING,
-    borderRadius: theme.radius.lg,
+    position: "relative",
+  },
+  scrollContent: {
+    paddingHorizontal: 4,
   },
   inner: {
     flexDirection: "row",
     position: "relative",
-    height: 38,
+    height: BAR_HEIGHT,
   },
-  pill: {
+  baseline: {
     position: "absolute",
-    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: theme.hairline,
+  },
+  indicator: {
+    position: "absolute",
     left: 0,
     bottom: 0,
-    borderRadius: theme.radius.md,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 2,
+    height: INDICATOR_HEIGHT,
+    borderTopLeftRadius: INDICATOR_HEIGHT,
+    borderTopRightRadius: INDICATOR_HEIGHT,
   },
   btn: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 14,
+    height: BAR_HEIGHT,
     gap: 6,
   },
   label: {
-    ...theme.typography.caption,
+    ...theme.typography.subhead,
+    fontWeight: "500",
   },
   labelActive: {
     fontWeight: "600",

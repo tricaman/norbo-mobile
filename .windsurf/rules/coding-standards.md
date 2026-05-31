@@ -104,8 +104,12 @@ Never use `Alert.alert` for transient feedback. Reserve `Alert.alert` for destru
 - Prefer `theme.hairline` over the literal `0.5`. Use `theme.avatarSize.*` for avatar dimensions.
 - Before redefining a style, check the centralized primitives in `src/components/ui/`
   (`Screen`, `ScreenHeader`, `TabHeader`, `SaveHeaderAction`, `FormCard`, `SettingsCard`/`SettingsRow`,
-  `SectionLabel`, `Description`, `Divider`, `ListSeparator`, `Avatar`).
+  `SectionLabel`, `Description`, `Divider`, `ListSeparator`, `Avatar`, `SegmentedTabs`).
   Never inline-duplicate their styles. See `libs-unistyles.md`.
+- `SegmentedTabs` is a modern underline-style tab bar (Instagram / Apple Music / App Store pattern):
+  horizontally scrollable with dynamic tab widths, an animated underline indicator that follows the
+  active tab, hairline baseline, and edge fade gradients when content overflows. Designed for 3+ tabs
+  and long labels in any language. Despite the name, it is NOT a pill-style segmented control anymore.
 
 ## Color usage rules
 

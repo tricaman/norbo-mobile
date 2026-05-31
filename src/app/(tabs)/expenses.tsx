@@ -2,6 +2,7 @@ import { NorboPressable } from "@/components/CustomPressable";
 import { CategoryBreakdown } from "@/components/expenses/CategoryBreakdown";
 import { ExpenseHistoryRow } from "@/components/expenses/ExpenseHistoryRow";
 import { ExpensesHero } from "@/components/expenses/ExpensesHero";
+import { ExpenseTrendChart } from "@/components/expenses/ExpenseTrendChart";
 import { PeriodChips } from "@/components/expenses/PeriodChips";
 import { PetFilterChips } from "@/components/expenses/PetFilterChips";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -51,6 +52,12 @@ export default function ExpensesTab(): React.JSX.Element {
     queryKey: ["expenses-summary", { period, petIds: sortedPetIds }],
     queryFn: () =>
       expensesApi.summary({ period, petIds: petIdsParam }).then((r) => r.data),
+  });
+
+  const trendQuery = useQuery({
+    queryKey: ["expenses-trend", { petIds: sortedPetIds }],
+    queryFn: () =>
+      expensesApi.trend({ petIds: petIdsParam }).then((r) => r.data),
   });
 
   const listQuery = useInfiniteQuery({
@@ -105,11 +112,13 @@ export default function ExpensesTab(): React.JSX.Element {
           <View style={styles.header}>
             <PeriodChips value={period} onChange={setPeriod} />
             {pets.length > 1 && (
-              <PetFilterChips
-                pets={pets}
-                selected={selectedPetIds}
-                onChange={setSelectedPetIds}
-              />
+              <View style={styles.heroWrap}>
+                <PetFilterChips
+                  pets={pets}
+                  selected={selectedPetIds}
+                  onChange={setSelectedPetIds}
+                />
+              </View>
             )}
             {summary && (
               <View style={styles.heroWrap}>
@@ -121,6 +130,23 @@ export default function ExpensesTab(): React.JSX.Element {
                 <CategoryBreakdown summary={summary} />
               </View>
             )}
+            {trendQuery.data &&
+              trendQuery.data.data.some((d) => d.amount > 0) && (
+                <View style={styles.section}>
+                  <Text
+                    style={[
+                      styles.cardTitle,
+                      { color: theme.colors.textPrimary },
+                    ]}
+                  >
+                    {t("expenses.trend")}
+                  </Text>
+                  <ExpenseTrendChart
+                    data={trendQuery.data.data}
+                    currency={trendQuery.data.currency}
+                  />
+                </View>
+              )}
             {summary && summary.byPet.length > 1 && (
               <View style={styles.section}>
                 <View
@@ -234,6 +260,7 @@ export default function ExpensesTab(): React.JSX.Element {
             onRefresh={() => {
               void listQuery.refetch();
               void summaryQuery.refetch();
+              void trendQuery.refetch();
             }}
           />
         }

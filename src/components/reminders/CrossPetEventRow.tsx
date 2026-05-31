@@ -26,9 +26,9 @@ const EVENT_ICONS: Record<PetEventType, string> = {
   [PetEventType.MOLT]: "leaf.fill",
   [PetEventType.FEEDING_LOG]: "fork.knife",
   [PetEventType.MEDICATION]: "pill.fill",
-  [PetEventType.PHOTO]: "camera.fill",
   [PetEventType.NOTE]: "note.text",
   [PetEventType.INSURANCE]: "shield.fill",
+  [PetEventType.PASSING]: "heart.slash",
 };
 
 interface CrossPetEventRowProps {

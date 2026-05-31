@@ -1,7 +1,9 @@
+import { NorboPressable } from "@/components/CustomPressable";
 import { HomeGreeting } from "@/components/home/HomeGreeting";
 import { UpcomingEventsSection } from "@/components/home/UpcomingEventsSection";
 import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { Screen } from "@/components/ui/Screen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
@@ -15,6 +17,7 @@ import {
   FlatList,
   RefreshControl,
   ScrollView,
+  Text,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -51,6 +54,12 @@ export default function HomeScreen() {
     queryKey: ["pets"],
     queryFn: () => petsApi.list().then((r) => r.data),
   });
+
+  const deceasedQuery = useQuery({
+    queryKey: ["pets", "deceased"],
+    queryFn: () => petsApi.listDeceased().then((r) => r.data),
+  });
+  const deceasedCount = deceasedQuery.data?.length ?? 0;
 
   return (
     <Screen edges={["top"]}>
@@ -96,6 +105,28 @@ export default function HomeScreen() {
                   snapToInterval={cardWidth + theme.spacing.sm}
                   decelerationRate="fast"
                 />
+                {(pets.length > PET_CAROUSEL_LIMIT || deceasedCount > 0) && (
+                  <NorboPressable
+                    style={styles.viewAll}
+                    scale="row"
+                    haptic="light"
+                    onPress={() => router.push("/pets")}
+                  >
+                    <Text
+                      style={[
+                        styles.viewAllText,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {t("pets.viewAll")}
+                    </Text>
+                    <IconSymbol
+                      name="chevron.right"
+                      size={12}
+                      tintColor={theme.colors.textSecondary}
+                    />
+                  </NorboPressable>
+                )}
                 <UpcomingEventsSection
                   pets={pets}
                   onPressEvent={(event) => router.push(`/pets/${event.petId}`)}
@@ -119,5 +150,17 @@ const styles = StyleSheet.create((theme) => ({
   grid: {
     paddingHorizontal: theme.spacing.lg,
     paddingBottom: theme.spacing.sm,
+  },
+  viewAll: {
+    flexDirection: "row",
+    alignSelf: "center",
+    alignItems: "center",
+    gap: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
+  },
+  viewAllText: {
+    ...theme.typography.footnote,
+    textTransform: "lowercase",
   },
 }));

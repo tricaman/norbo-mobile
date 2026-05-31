@@ -13,23 +13,41 @@ import { PetWeightTab } from "@/components/pets/weights/PetWeightTab";
 import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
+import { usePhotoCount } from "@/hooks/usePhotoAlbums";
 import { useWeightHistory } from "@/hooks/useWeightHistory";
 import { petsApi } from "@/services/pets.api";
+import { remindersApi } from "@/services/reminders.api";
 import { LifeStatus, Sex, type Pet } from "@/types/pet.types";
 import { formatPetAge } from "@/utils/age";
 import { formatWeight } from "@/utils/weight";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { enUS, it as itLocale } from "date-fns/locale";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 type PetDetailTab = "timeline" | "photos" | "expenses" | "weight" | "care";
 
 const HERO_HEIGHT = 280;
+const COLLAPSED_HERO_HEIGHT = 56;
+// Map scroll → collapse 1:1 so the body content slides exactly with the
+// shrinking header (no parallax mismatch, no feedback loop).
+const SCROLL_THRESHOLD = HERO_HEIGHT - COLLAPSED_HERO_HEIGHT;
+// Sensible initial estimate for the floating group (stats card + tabs +
+// surrounding paddings). Refined via onLayout on first render.
+const FLOATING_GROUP_ESTIMATE = 144;
 
 export default function PetDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -54,12 +72,71 @@ export default function PetDetailScreen() {
 }
 
 function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { theme } = useUnistyles();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [menuVisible, setMenuVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<PetDetailTab>("timeline");
+
+  // Header is an absolute-positioned overlay; the scroll view is full-screen
+  // with paddingTop = headerHeight. This decouples the scroll frame from the
+  // hero collapse, so there's no feedback loop (the source of the trembling
+  // when content was short enough to not fully collapse the hero).
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = Math.max(0, event.contentOffset.y);
+    },
+  });
+
+  const [floatingGroupHeight, setFloatingGroupHeight] = useState(
+    FLOATING_GROUP_ESTIMATE,
+  );
+  const onFloatingGroupLayout = useCallback(
+    (e: { nativeEvent: { layout: { height: number } } }) => {
+      const h = e.nativeEvent.layout.height;
+      if (h > 0) setFloatingGroupHeight(h);
+    },
+    [],
+  );
+  const headerHeight = HERO_HEIGHT + insets.top + floatingGroupHeight;
+
+  const heroAnimatedStyle = useAnimatedStyle(() => ({
+    height: interpolate(
+      scrollY.value,
+      [0, SCROLL_THRESHOLD],
+      [HERO_HEIGHT + insets.top, COLLAPSED_HERO_HEIGHT + insets.top],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const heroContentAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [0, SCROLL_THRESHOLD * 0.5],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const overlayAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [0, SCROLL_THRESHOLD * 0.6],
+      [1, 0],
+      Extrapolation.CLAMP,
+    ),
+  }));
+
+  const collapsedNameAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      scrollY.value,
+      [SCROLL_THRESHOLD * 0.5, SCROLL_THRESHOLD * 0.8],
+      [0, 1],
+      Extrapolation.CLAMP,
+    ),
+  }));
 
   const isDeceased = pet.lifeStatus === LifeStatus.DECEASED;
   const meta = CATEGORY_META[pet.category];
@@ -83,6 +160,26 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
   const { latest: latestWeight } = useWeightHistory(petId);
   const weightLabel = latestWeight
     ? formatWeight(latestWeight.weightMg, { category: pet.category })
+    : "—";
+
+  const photoCountQuery = usePhotoCount(petId);
+  const photoCountLabel =
+    photoCountQuery.data != null ? String(photoCountQuery.data) : "—";
+
+  const dateLocale = i18n.language.startsWith("it") ? itLocale : enUS;
+
+  const nextReminderQuery = useQuery({
+    queryKey: ["reminders", { petId, filter: "all" }],
+    queryFn: () =>
+      remindersApi
+        .list({ filter: "all", petId, limit: 1 })
+        .then((r) => r.data.rows[0] ?? null),
+    enabled: !!petId && !isDeceased,
+  });
+  const nextReminderLabel = nextReminderQuery.data?.dueAt
+    ? format(new Date(nextReminderQuery.data.dueAt), "d MMM", {
+        locale: dateLocale,
+      })
     : "—";
 
   const { mutate: deletePet } = useMutation({
@@ -178,74 +275,205 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
     },
     ...(isDeceased
       ? []
-      : [{ icon: "bell", value: "—", label: t("petDetail.stats.next") }]),
-    { icon: "photo", value: "0", label: t("petDetail.stats.photos") },
+      : [
+          {
+            icon: "bell",
+            value: nextReminderLabel,
+            label: t("petDetail.stats.next"),
+          },
+        ]),
+    {
+      icon: "photo",
+      value: photoCountLabel,
+      label: t("petDetail.stats.photos"),
+      onPress: () => setActiveTab("photos"),
+    },
   ];
 
   return (
     <View style={styles.screen}>
-      {/* ── Hero ───────────────────────────────────── */}
-      <View
-        style={[
-          styles.hero,
-          { height: HERO_HEIGHT + insets.top, backgroundColor: meta.tint },
-        ]}
-      >
-        {pet.photoUrl ? (
-          <Image
-            source={{ uri: pet.photoUrl }}
-            style={styles.heroPhoto}
-            contentFit="cover"
-          />
-        ) : null}
-
-        <View style={styles.heroIconWrapper} pointerEvents="none">
-          <PetCategoryIcon
-            category={pet.category}
-            size={120}
-            color="rgba(255,255,255,0.20)"
-          />
-        </View>
-
-        <NorboPressable
-          style={[styles.heroBtn, { top: insets.top + 10, left: 16 }]}
-          scale="row"
-          haptic="light"
-          onPress={() => router.back()}
+      {/* ── Tab content (full-screen; content padded under header) ─── */}
+      {activeTab === "timeline" ? (
+        <PetTimeline
+          petId={petId}
+          onScroll={scrollHandler}
+          contentInsetTop={headerHeight}
+        />
+      ) : activeTab === "weight" ? (
+        <PetWeightTab
+          petId={petId}
+          category={pet.category}
+          onScroll={scrollHandler}
+          contentInsetTop={headerHeight}
+        />
+      ) : activeTab === "photos" ? (
+        <PetPhotosTab
+          petId={petId}
+          onScroll={scrollHandler}
+          contentInsetTop={headerHeight}
+        />
+      ) : activeTab === "expenses" ? (
+        <PetExpensesTab
+          petId={petId}
+          onScroll={scrollHandler}
+          contentInsetTop={headerHeight}
+        />
+      ) : (
+        <Animated.ScrollView
+          key={activeTab}
+          style={styles.tabContent}
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
+          contentContainerStyle={[
+            styles.tabContentInner,
+            {
+              paddingTop: headerHeight + theme.spacing["3xl"],
+              paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom,
+            },
+          ]}
         >
-          <IconSymbol name="chevron.left" size={20} tintColor="#fff" />
-        </NorboPressable>
-
-        <NorboPressable
-          style={[styles.heroBtn, { top: insets.top + 10, right: 16 }]}
-          scale="row"
-          haptic="light"
-          onPress={() => setMenuVisible(true)}
-        >
-          <IconSymbol name="ellipsis.horizontal" size={20} tintColor="#fff" />
-        </NorboPressable>
-
-        <View style={styles.heroOverlay}>
-          <View style={styles.pillTag}>
-            <Text style={styles.pillTagText} numberOfLines={1}>
-              {pillText}
+          <View style={styles.placeholder}>
+            <IconSymbol
+              name={PLACEHOLDER[activeTab].icon}
+              size={32}
+              tintColor={theme.colors.textTertiary}
+            />
+            <Text
+              style={[
+                styles.placeholderText,
+                { color: theme.colors.textTertiary },
+              ]}
+            >
+              {PLACEHOLDER[activeTab].message}
             </Text>
           </View>
-          <Text style={styles.heroName}>{pet.name}</Text>
-          {subtitle ? (
-            <Text style={styles.heroSubtitle}>{subtitle}</Text>
-          ) : null}
-        </View>
-      </View>
+        </Animated.ScrollView>
+      )}
 
-      {/* ── Floating stats + tabs ───────────────── */}
-      <View style={styles.floatingGroup}>
-        <View
-          style={[styles.statsCard, { backgroundColor: theme.colors.surface }]}
+      {/* ── Header overlay (absolute) ───────────────── */}
+      <Animated.View style={styles.headerOverlay}>
+        {/* ── Hero ───────────────────────────────────── */}
+        <Animated.View
+          style={[
+            styles.hero,
+            { backgroundColor: meta.tint },
+            heroAnimatedStyle,
+          ]}
         >
-          {STATS.map((stat, i) => {
-            const inner = stat.onPress ? (
-              <View style={styles.statCellRow}>
+          {pet.photoUrl ? (
+            <Animated.View style={[styles.heroPhoto, heroContentAnimatedStyle]}>
+              <Image
+                source={{ uri: pet.photoUrl }}
+                style={{ flex: 1 }}
+                contentFit="cover"
+              />
+            </Animated.View>
+          ) : null}
+
+          <Animated.View
+            style={[styles.heroIconWrapper, heroContentAnimatedStyle]}
+            pointerEvents="none"
+          >
+            <PetCategoryIcon
+              category={pet.category}
+              size={120}
+              color="rgba(255,255,255,0.20)"
+            />
+          </Animated.View>
+
+          <NorboPressable
+            style={[styles.heroBtn, { top: insets.top + 10, left: 16 }]}
+            scale="row"
+            haptic="light"
+            onPress={() => router.back()}
+          >
+            <IconSymbol name="chevron.left" size={20} tintColor="#fff" />
+          </NorboPressable>
+
+          <NorboPressable
+            style={[styles.heroBtn, { top: insets.top + 10, right: 16 }]}
+            scale="row"
+            haptic="light"
+            onPress={() => setMenuVisible(true)}
+          >
+            <IconSymbol name="ellipsis.horizontal" size={20} tintColor="#fff" />
+          </NorboPressable>
+
+          <Animated.View style={[styles.heroOverlay, overlayAnimatedStyle]}>
+            <View style={styles.pillTag}>
+              <Text style={styles.pillTagText} numberOfLines={1}>
+                {pillText}
+              </Text>
+            </View>
+            <Text style={styles.heroName}>{pet.name}</Text>
+            {subtitle ? (
+              <Text style={styles.heroSubtitle}>{subtitle}</Text>
+            ) : null}
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.collapsedName,
+              { top: insets.top + 10 },
+              collapsedNameAnimatedStyle,
+            ]}
+            pointerEvents="none"
+          >
+            <Text style={styles.collapsedNameText} numberOfLines={1}>
+              {pet.name}
+            </Text>
+          </Animated.View>
+        </Animated.View>
+
+        {/* ── Floating stats + tabs ───────────────── */}
+        <View
+          style={[
+            styles.floatingGroup,
+            { backgroundColor: theme.colors.background },
+          ]}
+          onLayout={onFloatingGroupLayout}
+        >
+          <View
+            style={[
+              styles.statsCard,
+              { backgroundColor: theme.colors.surface },
+            ]}
+          >
+            {STATS.map((stat, i) => {
+              const inner = stat.onPress ? (
+                <View style={styles.statCellRow}>
+                  <View style={styles.statContent}>
+                    <IconSymbol
+                      name={stat.icon}
+                      size={16}
+                      tintColor={theme.colors.textSecondary}
+                    />
+                    <Text
+                      style={[
+                        styles.statValue,
+                        { color: theme.colors.textPrimary },
+                      ]}
+                    >
+                      {stat.value}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.statLabel,
+                        { color: theme.colors.textTertiary },
+                      ]}
+                    >
+                      {stat.label}
+                    </Text>
+                  </View>
+                  <View style={styles.statChevron}>
+                    <IconSymbol
+                      name="chevron.right"
+                      size={12}
+                      tintColor={theme.colors.textTertiary}
+                    />
+                  </View>
+                </View>
+              ) : (
                 <View style={styles.statContent}>
                   <IconSymbol
                     name={stat.icon}
@@ -269,116 +497,57 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
                     {stat.label}
                   </Text>
                 </View>
-                <View style={styles.statChevron}>
-                  <IconSymbol
-                    name="chevron.right"
-                    size={12}
-                    tintColor={theme.colors.textTertiary}
-                  />
-                </View>
-              </View>
-            ) : (
-              <View style={styles.statContent}>
-                <IconSymbol
-                  name={stat.icon}
-                  size={16}
-                  tintColor={theme.colors.textSecondary}
-                />
-                <Text
-                  style={[
-                    styles.statValue,
-                    { color: theme.colors.textPrimary },
-                  ]}
-                >
-                  {stat.value}
-                </Text>
-                <Text
-                  style={[
-                    styles.statLabel,
-                    { color: theme.colors.textTertiary },
-                  ]}
-                >
-                  {stat.label}
-                </Text>
-              </View>
-            );
-            return (
-              <React.Fragment key={stat.label}>
-                {i > 0 && (
-                  <View
-                    style={[
-                      styles.statDivider,
-                      { backgroundColor: theme.colors.border },
-                    ]}
-                  />
-                )}
-                {stat.onPress ? (
-                  <NorboPressable
-                    style={styles.statCell}
-                    scale="row"
-                    haptic="light"
-                    onPress={stat.onPress}
-                  >
-                    {inner}
-                  </NorboPressable>
-                ) : (
-                  <View style={styles.statCell}>{inner}</View>
-                )}
-              </React.Fragment>
-            );
-          })}
-        </View>
-
-        <SegmentedTabs<PetDetailTab>
-          tabs={TABS}
-          value={activeTab}
-          onChange={setActiveTab}
-          style={styles.tabs}
-        />
-      </View>
-
-      {/* ── Tab content ────────────────────────────── */}
-      {activeTab === "timeline" ? (
-        <View style={styles.tabContent}>
-          <PetTimeline petId={petId} />
-        </View>
-      ) : activeTab === "weight" ? (
-        <View style={styles.tabContent}>
-          <PetWeightTab petId={petId} />
-        </View>
-      ) : activeTab === "photos" ? (
-        <View style={styles.tabContent}>
-          <PetPhotosTab petId={petId} />
-        </View>
-      ) : activeTab === "expenses" ? (
-        <View style={styles.tabContent}>
-          <PetExpensesTab petId={petId} />
-        </View>
-      ) : (
-        <ScrollView
-          key={activeTab}
-          style={styles.tabContent}
-          contentContainerStyle={[
-            styles.tabContentInner,
-            { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom },
-          ]}
-        >
-          <View style={styles.placeholder}>
-            <IconSymbol
-              name={PLACEHOLDER[activeTab].icon}
-              size={32}
-              tintColor={theme.colors.textTertiary}
-            />
-            <Text
-              style={[
-                styles.placeholderText,
-                { color: theme.colors.textTertiary },
-              ]}
-            >
-              {PLACEHOLDER[activeTab].message}
-            </Text>
+              );
+              return (
+                <React.Fragment key={stat.label}>
+                  {i > 0 && (
+                    <View
+                      style={[
+                        styles.statDivider,
+                        { backgroundColor: theme.colors.border },
+                      ]}
+                    />
+                  )}
+                  {stat.onPress ? (
+                    <NorboPressable
+                      style={styles.statCell}
+                      scale="row"
+                      haptic="light"
+                      onPress={stat.onPress}
+                    >
+                      {inner}
+                    </NorboPressable>
+                  ) : (
+                    <View style={styles.statCell}>{inner}</View>
+                  )}
+                </React.Fragment>
+              );
+            })}
           </View>
-        </ScrollView>
+
+          <SegmentedTabs<PetDetailTab>
+            tabs={TABS}
+            value={activeTab}
+            onChange={setActiveTab}
+            style={styles.tabs}
+          />
+        </View>
+      </Animated.View>
+
+      {activeTab === "expenses" && (
+        <NorboPressable
+          style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+          haptic="medium"
+          onPress={() =>
+            router.push(`/expense/new?petId=${petId}&locked=1` as never)
+          }
+        >
+          <IconSymbol
+            name="plus"
+            size={22}
+            tintColor={theme.colors.textOnPrimary}
+          />
+        </NorboPressable>
       )}
 
       <Dropdown
@@ -540,6 +709,12 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.typography.caption,
   },
   // Content
+  headerOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+  },
   tabContent: {
     flex: 1,
   },
@@ -557,5 +732,34 @@ const styles = StyleSheet.create((theme) => ({
   placeholderText: {
     ...theme.typography.footnote,
     textAlign: "center",
+  },
+  // Collapsed header
+  collapsedName: {
+    position: "absolute" as const,
+    left: 60,
+    right: 60,
+    height: 36,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+  },
+  collapsedNameText: {
+    ...theme.typography.subhead,
+    fontWeight: "600" as const,
+    color: theme.colors.textOnPrimary,
+  },
+  fab: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: theme.colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
 }));

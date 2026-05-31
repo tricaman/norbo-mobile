@@ -1,6 +1,9 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import type { ChipOption } from "@/components/ui/ChipSelector";
-import { ChipSelector } from "@/components/ui/ChipSelector";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import {
+  SingleSelectSheet,
+  type SingleSelectOption,
+} from "@/components/ui/SingleSelectSheet";
 import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
@@ -43,40 +46,25 @@ export function ReminderForm({
   const { theme } = useUnistyles();
   const insets = useSafeAreaInsets();
 
-  const subjectTypeOptions = useMemo<ChipOption<ReminderSubjectType>[]>(
-    () => [
-      {
-        value: ReminderSubjectType.HEALTH_EVENT,
-        label: t("reminders.subject.HEALTH_EVENT"),
-        icon: "bell.fill",
-      },
-      {
-        value: ReminderSubjectType.MAINTENANCE,
-        label: t("reminders.subject.MAINTENANCE"),
-        icon: "wrench",
-      },
-      {
-        value: ReminderSubjectType.CONSUMABLE,
-        label: t("reminders.subject.CONSUMABLE"),
-        icon: "cart.fill",
-      },
-      {
-        value: ReminderSubjectType.ADMIN,
-        label: t("reminders.subject.ADMIN"),
-        icon: "doc.text",
-      },
-      {
-        value: ReminderSubjectType.MILESTONE,
-        label: t("reminders.subject.MILESTONE"),
-        icon: "flag.fill",
-      },
-      {
-        value: ReminderSubjectType.CUSTOM,
-        label: t("reminders.subject.CUSTOM"),
-        icon: "note.text",
-      },
-    ],
-    [t],
+  const subjectTypeEntries: Array<{ value: ReminderSubjectType; i18n: string; icon: string }> = [
+    { value: ReminderSubjectType.HEALTH_EVENT, i18n: "HEALTH_EVENT", icon: "bell.fill" },
+    { value: ReminderSubjectType.MAINTENANCE, i18n: "MAINTENANCE", icon: "wrench" },
+    { value: ReminderSubjectType.CONSUMABLE, i18n: "CONSUMABLE", icon: "cart.fill" },
+    { value: ReminderSubjectType.ADMIN, i18n: "ADMIN", icon: "doc.text" },
+    { value: ReminderSubjectType.MILESTONE, i18n: "MILESTONE", icon: "flag.fill" },
+    { value: ReminderSubjectType.CUSTOM, i18n: "CUSTOM", icon: "note.text" },
+  ];
+
+  const subjectTypeOptions = useMemo<SingleSelectOption<ReminderSubjectType>[]>(
+    () =>
+      subjectTypeEntries.map((e) => ({
+        value: e.value,
+        label: t(`reminders.subject.${e.i18n}` as "reminders.subject.HEALTH_EVENT"),
+        leading: () => (
+          <IconSymbol name={e.icon} size={18} tintColor={theme.colors.textSecondary} />
+        ),
+      })),
+    [t, theme],
   );
 
   const handleSubmit = form.handleSubmit(onSubmit);
@@ -99,12 +87,13 @@ export function ReminderForm({
               control={form.control}
               name="subjectType"
               render={({ field }) => (
-                <ChipSelector
+                <SingleSelectSheet
                   options={subjectTypeOptions}
                   value={field.value}
                   onChange={(v) => {
                     field.onChange(v);
                   }}
+                  title={t("reminderForm.subjectType")}
                 />
               )}
             />

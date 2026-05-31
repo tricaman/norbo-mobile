@@ -4,13 +4,21 @@ import {
   MAX_ATTACHMENTS,
 } from "@/components/media/AttachmentSection";
 import { ChipSelector, type ChipOption } from "@/components/ui/ChipSelector";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import {
+  SingleSelectSheet,
+  type SingleSelectOption,
+} from "@/components/ui/SingleSelectSheet";
 import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
-import { eventCanHaveCost, eventCanSchedule } from "@/shared/pet-event-schemas";
-import { PetEventType } from "@/types/pet-event.types";
+import {
+  eventCanHaveCost,
+  eventCanSchedule,
+  PetEventType,
+} from "@/shared/pet-event-schemas";
 import React, { useCallback, useEffect, useMemo } from "react";
 import {
   Controller,
@@ -148,73 +156,33 @@ export function EventForm({
     }
   }, [typeCanSchedule, form]);
 
-  const typeOptions = useMemo<ChipOption<PetEventType>[]>(
-    () => [
-      {
-        value: PetEventType.VET_VISIT,
-        label: t("petDetail.timeline.types.VET_VISIT"),
-        icon: "stethoscope",
-      },
-      {
-        value: PetEventType.VACCINATION,
-        label: t("petDetail.timeline.types.VACCINATION"),
-        icon: "syringe",
-      },
-      {
-        value: PetEventType.PARASITE_TREATMENT,
-        label: t("petDetail.timeline.types.PARASITE_TREATMENT"),
-        icon: "shield.checkerboard",
-      },
-      {
-        value: PetEventType.GROOMING,
-        label: t("petDetail.timeline.types.GROOMING"),
-        icon: "scissors",
-      },
-      // WEIGHT_RECORD is intentionally excluded: weights are logged via
-      // the dedicated /pets/:id/weights screen so the canonical
-      // weightMg payload is always set.
-      {
-        value: PetEventType.WATER_PARAMETERS,
-        label: t("petDetail.timeline.types.WATER_PARAMETERS"),
-        icon: "drop.fill",
-      },
-      {
-        value: PetEventType.WATER_CHANGE,
-        label: t("petDetail.timeline.types.WATER_CHANGE"),
-        icon: "arrow.triangle.2.circlepath",
-      },
-      {
-        value: PetEventType.MOLT,
-        label: t("petDetail.timeline.types.MOLT"),
-        icon: "leaf.fill",
-      },
-      {
-        value: PetEventType.FEEDING_LOG,
-        label: t("petDetail.timeline.types.FEEDING_LOG"),
-        icon: "fork.knife",
-      },
-      {
-        value: PetEventType.MEDICATION,
-        label: t("petDetail.timeline.types.MEDICATION"),
-        icon: "pill.fill",
-      },
-      {
-        value: PetEventType.PHOTO,
-        label: t("petDetail.timeline.types.PHOTO"),
-        icon: "camera.fill",
-      },
-      {
-        value: PetEventType.NOTE,
-        label: t("petDetail.timeline.types.NOTE"),
-        icon: "note.text",
-      },
-      {
-        value: PetEventType.INSURANCE,
-        label: t("petDetail.timeline.types.INSURANCE"),
-        icon: "shield.fill",
-      },
-    ],
-    [t],
+  const typeEntries: Array<{ value: PetEventType; i18n: string; icon: string }> = [
+    { value: PetEventType.VET_VISIT, i18n: "VET_VISIT", icon: "stethoscope" },
+    { value: PetEventType.VACCINATION, i18n: "VACCINATION", icon: "syringe" },
+    { value: PetEventType.PARASITE_TREATMENT, i18n: "PARASITE_TREATMENT", icon: "shield.checkerboard" },
+    { value: PetEventType.GROOMING, i18n: "GROOMING", icon: "scissors" },
+    // WEIGHT_RECORD is intentionally excluded: weights are logged via
+    // the dedicated /pets/:id/weights screen so the canonical
+    // weightMg payload is always set.
+    { value: PetEventType.WATER_PARAMETERS, i18n: "WATER_PARAMETERS", icon: "drop.fill" },
+    { value: PetEventType.WATER_CHANGE, i18n: "WATER_CHANGE", icon: "arrow.triangle.2.circlepath" },
+    { value: PetEventType.MOLT, i18n: "MOLT", icon: "leaf.fill" },
+    { value: PetEventType.FEEDING_LOG, i18n: "FEEDING_LOG", icon: "fork.knife" },
+    { value: PetEventType.MEDICATION, i18n: "MEDICATION", icon: "pill.fill" },
+    { value: PetEventType.NOTE, i18n: "NOTE", icon: "note.text" },
+    { value: PetEventType.INSURANCE, i18n: "INSURANCE", icon: "shield.fill" },
+  ];
+
+  const typeOptions = useMemo<SingleSelectOption<PetEventType>[]>(
+    () =>
+      typeEntries.map((e) => ({
+        value: e.value,
+        label: t(`petDetail.timeline.types.${e.i18n}` as "petDetail.timeline.types.VET_VISIT"),
+        leading: () => (
+          <IconSymbol name={e.icon} size={18} tintColor={theme.colors.textSecondary} />
+        ),
+      })),
+    [t, theme],
   );
 
   const handleSubmit = form.handleSubmit(onSubmit);
@@ -262,7 +230,7 @@ export function EventForm({
             <SectionLabel style={styles.sectionLabel}>
               {t("eventForm.type")}
             </SectionLabel>
-            <ChipSelector
+            <SingleSelectSheet
               options={typeOptions}
               value={selectedType}
               onChange={(type) => {
@@ -271,6 +239,7 @@ export function EventForm({
                   shouldTouch: true,
                 });
               }}
+              title={t("eventForm.type")}
             />
           </>
         ) : null}
@@ -343,25 +312,6 @@ export function EventForm({
                 )}
               />
             </FormCard>
-          </>
-        ) : null}
-
-        {/* Attachments — prominent for PHOTO, secondary otherwise */}
-        {selectedType === PetEventType.PHOTO ? (
-          <>
-            <SectionLabel style={styles.sectionLabel}>
-              {t("eventForm.attachments")}
-            </SectionLabel>
-            <Controller
-              control={form.control}
-              name="mediaAssetIds"
-              render={({ field }) => (
-                <AttachmentSection
-                  value={field.value ?? []}
-                  onChange={field.onChange}
-                />
-              )}
-            />
           </>
         ) : null}
 
@@ -478,24 +428,20 @@ export function EventForm({
           </>
         ) : null}
 
-        {/* Attachments — secondary position for non-PHOTO event types */}
-        {selectedType !== PetEventType.PHOTO ? (
-          <>
-            <SectionLabel style={styles.sectionLabel}>
-              {t("eventForm.attachments")}
-            </SectionLabel>
-            <Controller
-              control={form.control}
-              name="mediaAssetIds"
-              render={({ field }) => (
-                <AttachmentSection
-                  value={field.value ?? []}
-                  onChange={field.onChange}
-                />
-              )}
+        {/* Attachments */}
+        <SectionLabel style={styles.sectionLabel}>
+          {t("eventForm.attachments")}
+        </SectionLabel>
+        <Controller
+          control={form.control}
+          name="mediaAssetIds"
+          render={({ field }) => (
+            <AttachmentSection
+              value={field.value ?? []}
+              onChange={field.onChange}
             />
-          </>
-        ) : null}
+          )}
+        />
 
         {/* Submit */}
         <NorboPressable

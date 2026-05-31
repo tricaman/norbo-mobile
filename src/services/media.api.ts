@@ -1,3 +1,6 @@
+import * as FileSystem from "expo-file-system/legacy";
+import { Platform } from "react-native";
+
 import { api } from "./api";
 import type {
   MediaAsset,
@@ -41,6 +44,20 @@ export async function uploadFileToR2(
   mimeType: string,
   onProgress?: (progress: number) => void,
 ): Promise<void> {
+  if (Platform.OS === "android") {
+    // Android: use expo-file-system native upload (fetch doesn't support file:// URIs)
+    const result = await FileSystem.uploadAsync(uploadUrl, uri, {
+      httpMethod: "PUT",
+      uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+      headers: { "Content-Type": mimeType },
+    });
+    if (result.status < 200 || result.status >= 300) {
+      throw new Error(`R2 upload failed: HTTP ${result.status.toString()}`);
+    }
+    return;
+  }
+
+  // iOS: fetch supports file:// URIs natively
   const fileResponse = await fetch(uri);
   const blob = await fileResponse.blob();
 

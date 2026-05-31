@@ -5,7 +5,8 @@ export type MediaContextType =
   | "PET_DOCUMENT"
   | "PET_EVENT_MEDIA"
   | "EVENT_ATTACHMENT"
-  | "EXPENSE_RECEIPT";
+  | "EXPENSE_RECEIPT"
+  | "PET_PHOTO_ALBUM";
 
 export type MediaStatus = "PENDING" | "READY" | "FAILED" | "DELETED";
 

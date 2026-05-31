@@ -1,7 +1,10 @@
 import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
-import type { ChipOption } from "@/components/ui/ChipSelector";
-import { ChipSelector } from "@/components/ui/ChipSelector";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import {
+  SingleSelectSheet,
+  type SingleSelectOption,
+} from "@/components/ui/SingleSelectSheet";
 import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
@@ -51,7 +54,10 @@ export default function NewExpenseScreen(): React.JSX.Element {
     amount?: string;
     category?: string;
     petEventId?: string;
+    locked?: string;
   }>();
+
+  const petLocked = !!params.locked && !!params.petId;
 
   const petsQuery = useQuery({
     queryKey: ["pets"],
@@ -99,23 +105,31 @@ export default function NewExpenseScreen(): React.JSX.Element {
     },
   });
 
-  const categoryOptions = useMemo<ChipOption<ExpenseCategory>[]>(
+  const categoryIcons: Record<string, string> = {
+    VET: "stethoscope",
+    FOOD: "fork.knife",
+    ACCESSORIES: "bag",
+    GROOMING: "scissors",
+    OTHER: "creditcard",
+  };
+
+  const categoryOptions = useMemo<SingleSelectOption<ExpenseCategory>[]>(
     () =>
       Object.values(ExpenseCategory).map((c) => ({
         value: c,
         label: t(`expenses.categories.${c}` as "expenses.categories.VET"),
-        icon: {
-          VET: "stethoscope",
-          FOOD: "fork.knife",
-          ACCESSORIES: "bag",
-          GROOMING: "scissors",
-          OTHER: "creditcard",
-        }[c],
+        leading: () => (
+          <IconSymbol
+            name={categoryIcons[c] ?? "creditcard"}
+            size={18}
+            tintColor={theme.colors.textSecondary}
+          />
+        ),
       })),
-    [t],
+    [t, theme],
   );
 
-  const petOptions = useMemo<ChipOption<string>[]>(
+  const petOptions = useMemo<SingleSelectOption<string>[]>(
     () => (petsQuery.data ?? []).map((p) => ({ value: p.id, label: p.name })),
     [petsQuery.data],
   );
@@ -141,7 +155,7 @@ export default function NewExpenseScreen(): React.JSX.Element {
             { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom + 80 },
           ]}
         >
-          {pets.length > 1 && (
+          {pets.length > 1 && !petLocked && (
             <>
               <SectionLabel style={styles.label}>
                 {t("expenses.fieldPet")}
@@ -150,10 +164,11 @@ export default function NewExpenseScreen(): React.JSX.Element {
                 control={form.control}
                 name="petId"
                 render={({ field }) => (
-                  <ChipSelector
+                  <SingleSelectSheet
                     options={petOptions}
                     value={field.value}
                     onChange={field.onChange}
+                    title={t("expenses.fieldPet")}
                   />
                 )}
               />
@@ -167,10 +182,11 @@ export default function NewExpenseScreen(): React.JSX.Element {
             control={form.control}
             name="category"
             render={({ field }) => (
-              <ChipSelector
+              <SingleSelectSheet
                 options={categoryOptions}
                 value={field.value}
                 onChange={field.onChange}
+                title={t("expenses.fieldCategory")}
               />
             )}
           />

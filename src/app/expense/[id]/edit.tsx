@@ -1,7 +1,10 @@
 import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
-import type { ChipOption } from "@/components/ui/ChipSelector";
-import { ChipSelector } from "@/components/ui/ChipSelector";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import {
+  SingleSelectSheet,
+  type SingleSelectOption,
+} from "@/components/ui/SingleSelectSheet";
 import { DateField } from "@/components/ui/DateField";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
@@ -85,12 +88,27 @@ function EditForm({ expense }: { expense: Expense }): React.JSX.Element {
     },
   });
 
-  const categoryOptions = useMemo<ChipOption<ExpenseCategory>[]>(
+  const categoryIcons: Record<string, string> = {
+    VET: "stethoscope",
+    FOOD: "fork.knife",
+    ACCESSORIES: "bag",
+    GROOMING: "scissors",
+    OTHER: "creditcard",
+  };
+
+  const categoryOptions = useMemo<SingleSelectOption<ExpenseCategory>[]>(
     () => Object.values(ExpenseCategory).map((c) => ({
       value: c,
       label: t(`expenses.categories.${c}` as "expenses.categories.VET"),
+      leading: () => (
+        <IconSymbol
+          name={categoryIcons[c] ?? "creditcard"}
+          size={18}
+          tintColor={theme.colors.textSecondary}
+        />
+      ),
     })),
-    [t],
+    [t, theme],
   );
 
   const handleSubmit = form.handleSubmit((v) => mutate(v));
@@ -108,7 +126,7 @@ function EditForm({ expense }: { expense: Expense }): React.JSX.Element {
             control={form.control}
             name="category"
             render={({ field }) => (
-              <ChipSelector options={categoryOptions} value={field.value} onChange={field.onChange} />
+              <SingleSelectSheet options={categoryOptions} value={field.value} onChange={field.onChange} title={t("expenses.fieldCategory")} />
             )}
           />
 

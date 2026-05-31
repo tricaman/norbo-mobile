@@ -1,7 +1,7 @@
 /**
  * pet-event-schemas — shared Zod schemas for PetEvent polymorphic payload.
  *
- * Single source of truth for all 13 PetEventType-specific `extra` schemas.
+ * Single source of truth for all 12 PetEventType-specific `extra` schemas.
  * Kept in sync between norbo-api and norbo-mobile: both copies must be
  * identical. When a future monorepo workspace is set up this file becomes
  * a proper internal package and the duplication disappears.
@@ -25,7 +25,6 @@ export enum PetEventType {
   MOLT = "MOLT",
   FEEDING_LOG = "FEEDING_LOG",
   MEDICATION = "MEDICATION",
-  PHOTO = "PHOTO",
   NOTE = "NOTE",
   INSURANCE = "INSURANCE",
   PASSING = "PASSING",
@@ -158,11 +157,6 @@ export const MedicationExtraSchema = z.object({
 });
 export type MedicationExtra = z.infer<typeof MedicationExtraSchema>;
 
-export const PhotoExtraSchema = z.object({
-  caption: z.string().max(500).optional(),
-});
-export type PhotoExtra = z.infer<typeof PhotoExtraSchema>;
-
 export const NoteExtraSchema = z.object({
   content: z.string().min(1).max(5000),
 });
@@ -197,7 +191,6 @@ export const PetEventExtraSchemaByType: Record<PetEventType, ZodType> = {
   [PetEventType.MOLT]: MoltExtraSchema,
   [PetEventType.FEEDING_LOG]: FeedingLogExtraSchema,
   [PetEventType.MEDICATION]: MedicationExtraSchema,
-  [PetEventType.PHOTO]: PhotoExtraSchema,
   [PetEventType.NOTE]: NoteExtraSchema,
   [PetEventType.INSURANCE]: InsuranceExtraSchema,
   [PetEventType.PASSING]: PassingExtraSchema,
@@ -228,7 +221,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -241,7 +233,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -253,7 +244,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -265,7 +255,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -276,7 +265,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WATER_CHANGE,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -287,7 +275,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WATER_CHANGE,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -298,7 +285,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MOLT,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -310,7 +296,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WATER_CHANGE,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -320,7 +305,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.MOLT,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -333,7 +317,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -345,7 +328,6 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
     PetEventType.WEIGHT_RECORD,
     PetEventType.FEEDING_LOG,
     PetEventType.MEDICATION,
-    PetEventType.PHOTO,
     PetEventType.NOTE,
     PetEventType.INSURANCE,
     PetEventType.PASSING,
@@ -429,11 +411,6 @@ export const PET_EVENT_CAPABILITIES: Record<
     defaultExpenseCategory: null,
   },
   [PetEventType.MOLT]: {
-    hasCost: false,
-    canSchedule: false,
-    defaultExpenseCategory: null,
-  },
-  [PetEventType.PHOTO]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,

@@ -5,6 +5,7 @@ import type {
   ExpenseListResponse,
   ExpensePeriod,
   ExpenseSummary,
+  ExpenseTrendResponse,
   UpdateExpenseInput,
 } from "@/types/expense.types";
 import { api } from "./api";
@@ -80,6 +81,22 @@ export const expensesApi = {
     if (cursor) params.cursor = cursor;
     if (limit) params.limit = limit;
     return api.get<ExpenseListResponse>("/expenses", { params });
+  },
+
+  trend: ({
+    petId,
+    petIds,
+    months,
+  }: {
+    petId?: string;
+    petIds?: string[];
+    months?: number;
+  } = {}) => {
+    const params: Record<string, unknown> = {
+      ...buildPetParams(petId, petIds),
+    };
+    if (months) params.months = months;
+    return api.get<ExpenseTrendResponse>("/expenses/trend", { params });
   },
 
   get: (id: string) => api.get<Expense>(`/expenses/${encodeURIComponent(id)}`),

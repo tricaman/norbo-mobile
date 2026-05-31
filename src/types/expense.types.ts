@@ -53,6 +53,11 @@ export interface ExpenseSummary {
 
 export type ExpensePeriod = "month" | "year" | "all";
 
+export interface ExpenseTrendResponse {
+  currency: string;
+  data: ExpenseMonthBreakdown[];
+}
+
 export interface CreateExpenseInput {
   petId: string;
   amount: number;

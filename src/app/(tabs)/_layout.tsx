@@ -20,13 +20,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="pets"
-        options={{
-          title: t("tabs.pets"),
-          tabBarLabel: t("tabs.pets"),
-        }}
-      />
-      <Tabs.Screen
         name="reminders"
         options={{
           title: t("tabs.reminders"),

@@ -1,3 +1,4 @@
+import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
@@ -5,26 +6,26 @@ import { useMutation } from "@/hooks/useMutation";
 import { petEventsApi } from "@/services/pet-events.api";
 import type { PetEvent, PetEventTimeline } from "@/types/pet-event.types";
 import { PetEventStatus } from "@/types/pet-event.types";
-import { queryClient } from "@/app/_layout";
-import {
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
 import { useRouter } from "expo-router";
 import React, { useCallback, useMemo } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  View,
-} from "react-native";
+import { useTranslation } from "react-i18next";
+import { ActivityIndicator, RefreshControl, Text, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { useTranslation } from "react-i18next";
 import { EventItem } from "./EventItem";
 
 interface PetTimelineProps {
   petId: string;
+  onScroll?: (event: any) => void;
+  /**
+   * Top inset applied to the list content (so it starts beneath the
+   * collapsing pet-detail header). Also passed to the RefreshControl
+   * so the spinner appears below the header.
+   */
+  contentInsetTop?: number;
 }
 
 type ListItem =
@@ -46,7 +47,11 @@ function groupByMonth(events: PetEvent[]): ListItem[] {
   return items;
 }
 
-export function PetTimeline({ petId }: PetTimelineProps) {
+export function PetTimeline({
+  petId,
+  onScroll,
+  contentInsetTop = 0,
+}: PetTimelineProps) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const router = useRouter();
@@ -63,8 +68,7 @@ export function PetTimeline({ petId }: PetTimelineProps) {
   });
 
   const { mutate: completeMutation } = useMutation({
-    mutationFn: (eventId: string) =>
-      petEventsApi.complete(petId, eventId),
+    mutationFn: (eventId: string) => petEventsApi.complete(petId, eventId),
     showSuccessToast: true,
     successMessage: t("petDetail.timeline.completeSuccess"),
     onSuccess: () => {
@@ -73,8 +77,7 @@ export function PetTimeline({ petId }: PetTimelineProps) {
   });
 
   const { mutate: cancelMutation } = useMutation({
-    mutationFn: (eventId: string) =>
-      petEventsApi.cancel(petId, eventId),
+    mutationFn: (eventId: string) => petEventsApi.cancel(petId, eventId),
     showSuccessToast: true,
     successMessage: t("petDetail.timeline.cancelSuccess"),
     onSuccess: () => {
@@ -83,8 +86,7 @@ export function PetTimeline({ petId }: PetTimelineProps) {
   });
 
   const { mutate: deleteMutation } = useMutation({
-    mutationFn: (eventId: string) =>
-      petEventsApi.delete(petId, eventId),
+    mutationFn: (eventId: string) => petEventsApi.delete(petId, eventId),
     showSuccessToast: true,
     successMessage: t("petDetail.timeline.deleteSuccess"),
     onSuccess: () => {
@@ -181,13 +183,11 @@ export function PetTimeline({ petId }: PetTimelineProps) {
   }
 
   const isEmpty =
-    !query.isPending &&
-    allUpcoming.length === 0 &&
-    allPast.length === 0;
+    !query.isPending && allUpcoming.length === 0 && allPast.length === 0;
 
   if (query.isPending) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { paddingTop: contentInsetTop }]}>
         <ActivityIndicator color={theme.colors.primary} />
       </View>
     );
@@ -195,23 +195,33 @@ export function PetTimeline({ petId }: PetTimelineProps) {
 
   return (
     <View style={styles.root}>
-      <FlatList
+      <Animated.FlatList
         data={listData}
         keyExtractor={(item, i) =>
           item.kind === "section" ? `section-${item.label}-${i}` : item.event.id
         }
         renderItem={renderItem}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
         onEndReached={() => {
           if (query.hasNextPage && !query.isFetchingNextPage) {
             void query.fetchNextPage();
           }
         }}
         onEndReachedThreshold={0.4}
-        refreshing={query.isRefetching}
-        onRefresh={() => void query.refetch()}
+        refreshControl={
+          <RefreshControl
+            refreshing={query.isRefetching}
+            onRefresh={() => void query.refetch()}
+            progressViewOffset={contentInsetTop}
+          />
+        }
         contentContainerStyle={[
           styles.listContent,
-          { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom },
+          {
+            paddingTop: contentInsetTop,
+            paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom,
+          },
           isEmpty && styles.centeredContent,
         ]}
         ListEmptyComponent={
@@ -222,22 +232,14 @@ export function PetTimeline({ petId }: PetTimelineProps) {
               tintColor={theme.colors.textTertiary}
             />
             <Text
-              style={[
-                styles.emptyText,
-                { color: theme.colors.textTertiary },
-              ]}
+              style={[styles.emptyText, { color: theme.colors.textTertiary }]}
             >
               {t("petDetail.timeline.empty")}
             </Text>
             <NorboPressable
-              style={[
-                styles.addBtn,
-                { backgroundColor: theme.colors.primary },
-              ]}
+              style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
               haptic="medium"
-              onPress={() =>
-                router.push(`/pets/${petId}/events/new` as never)
-              }
+              onPress={() => router.push(`/pets/${petId}/events/new` as never)}
             >
               <Text
                 style={[
@@ -253,10 +255,7 @@ export function PetTimeline({ petId }: PetTimelineProps) {
         ListFooterComponent={
           query.isFetchingNextPage ? (
             <View style={styles.footer}>
-              <ActivityIndicator
-                size="small"
-                color={theme.colors.primary}
-              />
+              <ActivityIndicator size="small" color={theme.colors.primary} />
             </View>
           ) : null
         }

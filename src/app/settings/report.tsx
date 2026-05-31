@@ -1,6 +1,9 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import type { ChipOption } from "@/components/ui/ChipSelector";
-import { ChipSelector } from "@/components/ui/ChipSelector";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import {
+  SingleSelectSheet,
+  type SingleSelectOption,
+} from "@/components/ui/SingleSelectSheet";
 import { FormCard } from "@/components/ui/FormCard";
 import { FormInput } from "@/components/ui/FormInput";
 import { Screen } from "@/components/ui/Screen";
@@ -70,21 +73,29 @@ export default function ReportScreen(): React.JSX.Element {
     },
   });
 
-  const typeOptions = useMemo<ChipOption<ReportType>[]>(
+  const typeIcons: Record<string, string> = {
+    BUG: "ladybug",
+    INAPPROPRIATE_CONTENT: "exclamationmark.triangle",
+    PET_HEALTH: "heart.text.clipboard",
+  };
+
+  const typeOptions = useMemo<SingleSelectOption<ReportType>[]>(
     () =>
       Object.values(ReportType).map((type) => ({
         value: type,
         label: t(`report.types.${type}` as "report.types.BUG"),
-        icon: {
-          BUG: "ladybug",
-          INAPPROPRIATE_CONTENT: "exclamationmark.triangle",
-          PET_HEALTH: "heart.text.clipboard",
-        }[type],
+        leading: () => (
+          <IconSymbol
+            name={typeIcons[type] ?? "doc.text"}
+            size={18}
+            tintColor={theme.colors.textSecondary}
+          />
+        ),
       })),
-    [t],
+    [t, theme],
   );
 
-  const petOptions = useMemo<ChipOption<string>[]>(
+  const petOptions = useMemo<SingleSelectOption<string>[]>(
     () => pets.map((p) => ({ value: p.id, label: p.name })),
     [pets],
   );
@@ -109,10 +120,11 @@ export default function ReportScreen(): React.JSX.Element {
             control={form.control}
             name="type"
             render={({ field }) => (
-              <ChipSelector
+              <SingleSelectSheet
                 options={typeOptions}
                 value={field.value}
                 onChange={field.onChange}
+                title={t("report.typeLabel")}
               />
             )}
           />
@@ -131,10 +143,11 @@ export default function ReportScreen(): React.JSX.Element {
                 control={form.control}
                 name="petId"
                 render={({ field }) => (
-                  <ChipSelector
+                  <SingleSelectSheet
                     options={petOptions}
                     value={field.value ?? ""}
                     onChange={field.onChange}
+                    title={t("report.petLabel")}
                   />
                 )}
               />

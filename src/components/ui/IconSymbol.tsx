@@ -11,7 +11,16 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
 
     // Actions
     checkmark: "checkmark",
+    "checkmark.circle": "checkmark-circle-outline",
+    "checkmark.circle.fill": "checkmark-circle",
     magnifyingglass: "search",
+    paperclip: "attach",
+    "moon.zzz": "moon-outline",
+    "moon.zzz.fill": "moon",
+    "star.fill": "star",
+    star: "star-outline",
+    "doc.fill": "document",
+    "chart.line.uptrend.xyaxis": "trending-up",
     "square.and.pencil": "create-outline",
     calendar: "calendar-outline",
     "photo.on.rectangle": "image-outline",

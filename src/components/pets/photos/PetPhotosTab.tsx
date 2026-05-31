@@ -1,185 +1,152 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
-import { mediaApi } from "@/services/media.api";
-import { petEventsApi } from "@/services/pet-events.api";
-import type { MediaAsset } from "@/types/media.types";
-import type { PetEvent, PetEventTimeline } from "@/types/pet-event.types";
-import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
-import { Image } from "expo-image";
+import { useAlbumList } from "@/hooks/usePhotoAlbums";
+import type { PhotoAlbum } from "@/types/photo-album.types";
 import { useRouter } from "expo-router";
-import React, { useMemo } from "react";
+import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ActivityIndicator,
   Dimensions,
-  FlatList,
+  RefreshControl,
   Text,
   View,
 } from "react-native";
+import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import { AlbumCard } from "./AlbumCard";
 
 interface PetPhotosTabProps {
   petId: string;
+  onScroll?: (event: any) => void;
+  contentInsetTop?: number;
 }
 
-interface PhotoTile {
-  assetId: string;
-  eventId: string;
-}
-
-const COLUMNS = 3;
+const COLUMNS = 2;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-/**
- * PetPhotosTab — aggregated gallery of every media asset attached to
- * any PetEvent of this pet.
- *
- * Implementation: paginated timeline query (same key as PetTimeline so
- * cache is shared) → flatMap `mediaAssetIds` → fetch each `MediaAsset`
- * via parallel `useQueries`. Tapping a tile opens the parent event.
- *
- * MVP: shows raster thumbnails. PDFs render a generic doc tile. When a
- * dedicated `?hasMedia=true` filter lands on the backend, swap the
- * query implementation without touching the tab.
- */
-export function PetPhotosTab({ petId }: PetPhotosTabProps): React.ReactElement {
+export function PetPhotosTab({
+  petId,
+  onScroll,
+  contentInsetTop = 0,
+}: PetPhotosTabProps): React.ReactElement {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const timeline = useInfiniteQuery({
-    queryKey: ["pet-events", petId],
-    queryFn: ({ pageParam }) =>
-      petEventsApi
-        .list(petId, { cursor: pageParam as string | undefined, limit: 20 })
-        .then((r) => r.data),
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: (last: PetEventTimeline) => last.nextCursor ?? undefined,
-    enabled: !!petId,
-  });
+  const albumsQuery = useAlbumList(petId);
 
-  // Flatten every event with attachments and keep the event ↔ asset link.
-  const tiles = useMemo<PhotoTile[]>(() => {
-    if (!timeline.data) return [];
-    const out: PhotoTile[] = [];
-    for (const page of timeline.data.pages) {
-      const all: PetEvent[] = [...page.past, ...page.upcoming];
-      for (const event of all) {
-        for (const assetId of event.mediaAssetIds) {
-          out.push({ assetId, eventId: event.id });
-        }
-      }
-    }
-    return out;
-  }, [timeline.data]);
-
-  // Fetch every MediaAsset in parallel. Each query is keyed by assetId
-  // so it is shared with any other view that needs the same asset.
-  const assetQueries = useQueries({
-    queries: tiles.map(({ assetId }) => ({
-      queryKey: ["media", assetId],
-      queryFn: () => mediaApi.getAsset(assetId).then((r) => r.data),
-      staleTime: 5 * 60 * 1000,
-    })),
-  });
+  const albums = albumsQuery.data?.pages.flatMap((page) => page.rows) ?? [];
 
   const tileSize = Math.floor(
-    (SCREEN_WIDTH - theme.spacing.lg * 2 - theme.spacing.xs * (COLUMNS - 1)) /
+    (SCREEN_WIDTH - theme.spacing.lg * 2 - theme.spacing.sm * (COLUMNS - 1)) /
       COLUMNS,
   );
 
-  if (timeline.isPending) {
+  const navigateToAlbum = useCallback(
+    (albumId: string) => {
+      router.push(`/pets/${petId}/albums/${albumId}` as never);
+    },
+    [router, petId],
+  );
+
+  const navigateToCreate = useCallback(() => {
+    router.push(`/pets/${petId}/albums/new` as never);
+  }, [router, petId]);
+
+  const renderItem = useCallback(
+    ({ item }: { item: PhotoAlbum }) => (
+      <AlbumCard
+        album={item}
+        size={tileSize}
+        onPress={() => navigateToAlbum(item.id)}
+      />
+    ),
+    [tileSize, navigateToAlbum],
+  );
+
+  if (albumsQuery.isPending) {
     return (
-      <View style={styles.centered}>
+      <View style={[styles.centered, { paddingTop: contentInsetTop }]}>
         <ActivityIndicator color={theme.colors.primary} />
       </View>
     );
   }
 
-  if (tiles.length === 0) {
+  if (albums.length === 0) {
     return (
-      <View style={styles.empty}>
+      <View style={[styles.empty, { paddingTop: contentInsetTop }]}>
         <IconSymbol
-          name="photo"
+          name="photo.on.rectangle"
           size={32}
           tintColor={theme.colors.textTertiary}
         />
         <Text style={[styles.emptyText, { color: theme.colors.textTertiary }]}>
-          {t("petDetail.photos.empty")}
+          {t("photoAlbums.noAlbums")}
         </Text>
+        <NorboPressable
+          style={[styles.createBtn, { backgroundColor: theme.colors.primary }]}
+          scale="row"
+          haptic="medium"
+          onPress={navigateToCreate}
+        >
+          <IconSymbol name="plus" size={16} tintColor="#fff" />
+          <Text style={styles.createBtnText}>{t("photoAlbums.create")}</Text>
+        </NorboPressable>
       </View>
     );
   }
 
   return (
-    <FlatList<PhotoTile>
-      data={tiles}
-      keyExtractor={(item) => item.assetId}
-      numColumns={COLUMNS}
-      columnWrapperStyle={styles.row}
-      contentContainerStyle={[
-        styles.grid,
-        { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom },
-      ]}
-      renderItem={({ item, index }) => {
-        const asset: MediaAsset | undefined = assetQueries[index]?.data;
-        const isPdf = asset?.mimeType === "application/pdf";
-        const uri = asset?.thumbSmUrl ?? asset?.thumbMdUrl ?? asset?.originalUrl;
-        return (
-          <NorboPressable
-            style={[
-              styles.tile,
-              {
-                width: tileSize,
-                height: tileSize,
-                backgroundColor: theme.colors.surface,
-                borderColor: theme.colors.border,
-              },
-            ]}
-            scale="row"
-            haptic="light"
-            onPress={() =>
-              router.push(
-                `/pets/${petId}/events/${item.eventId}` as never,
-              )
-            }
-          >
-            {isPdf ? (
-              <View style={styles.pdfTile}>
-                <IconSymbol
-                  name="doc.fill"
-                  size={28}
-                  tintColor={theme.colors.primary}
-                />
-                <Text
-                  style={[
-                    styles.pdfLabel,
-                    { color: theme.colors.textSecondary },
-                  ]}
-                >
-                  PDF
-                </Text>
-              </View>
-            ) : uri ? (
-              <Image
-                source={{ uri }}
-                style={{ width: tileSize, height: tileSize }}
-                contentFit="cover"
-              />
-            ) : (
-              <ActivityIndicator color={theme.colors.primary} />
-            )}
-          </NorboPressable>
-        );
-      }}
-    />
+    <View style={styles.root}>
+      <Animated.FlatList
+        data={albums}
+        keyExtractor={(item: PhotoAlbum) => item.id}
+        numColumns={COLUMNS}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={[
+          styles.grid,
+          {
+            paddingTop: contentInsetTop + theme.spacing.md,
+            paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom,
+          },
+        ]}
+        renderItem={renderItem as any}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        onEndReached={() => {
+          if (albumsQuery.hasNextPage && !albumsQuery.isFetchingNextPage) {
+            void albumsQuery.fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.5}
+        refreshControl={
+          <RefreshControl
+            refreshing={albumsQuery.isRefetching}
+            onRefresh={() => void albumsQuery.refetch()}
+            progressViewOffset={contentInsetTop}
+          />
+        }
+      />
+
+      <NorboPressable
+        style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+        haptic="medium"
+        onPress={navigateToCreate}
+      >
+        <IconSymbol name="plus" size={22} tintColor="#fff" />
+      </NorboPressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
+  root: {
+    flex: 1,
+  },
   centered: {
     flex: 1,
     alignItems: "center",
@@ -196,29 +163,40 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.typography.footnote,
     textAlign: "center",
   },
+  createBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
+    borderRadius: theme.radius.pill,
+    marginTop: theme.spacing.sm,
+  },
+  createBtnText: {
+    ...theme.typography.subhead,
+    color: "#fff",
+    fontWeight: "600",
+  },
   grid: {
     paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.md,
-    gap: theme.spacing.xs,
+    gap: theme.spacing.sm,
   },
   row: {
-    gap: theme.spacing.xs,
+    gap: theme.spacing.sm,
   },
-  tile: {
-    borderRadius: theme.radius.md,
-    borderWidth: theme.hairline,
-    overflow: "hidden",
+  fab: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     alignItems: "center",
     justifyContent: "center",
-  },
-  pdfTile: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 4,
-  },
-  pdfLabel: {
-    ...theme.typography.caption,
-    fontWeight: "700",
-    letterSpacing: 0.5,
+    shadowColor: theme.colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
 }));

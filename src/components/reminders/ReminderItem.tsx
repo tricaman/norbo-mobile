@@ -6,13 +6,17 @@ import { ReminderStatus, ReminderSubjectType } from "@/types/reminder.types";
 import type { HapticWeight } from "@/utils/haptics";
 import { formatDistanceToNowStrict, isPast, parseISO } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withRepeat,
+  withSequence,
+  withTiming,
+  Easing,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
@@ -113,6 +117,49 @@ export function ReminderItem({
     reminder.status === ReminderStatus.CANCELLED;
 
   const totalActionWidth = TOTAL_ACTIONS * ACTION_WIDTH;
+
+  // Overdue pulse animations
+  const dotOpacity = useSharedValue(isOverdue ? 1 : 0);
+  const dotScale = useSharedValue(1);
+  const glowOpacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (isOverdue) {
+      dotOpacity.value = withRepeat(
+        withSequence(
+          withTiming(0.3, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      );
+      dotScale.value = withRepeat(
+        withSequence(
+          withTiming(1.6, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      );
+      glowOpacity.value = withRepeat(
+        withSequence(
+          withTiming(0.08, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0.02, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        false,
+      );
+    }
+  }, [isOverdue, dotOpacity, dotScale, glowOpacity]);
+
+  const animatedDotStyle = useAnimatedStyle(() => ({
+    opacity: dotOpacity.value,
+    transform: [{ scale: dotScale.value }],
+  }));
+
+  const animatedGlowStyle = useAnimatedStyle(() => ({
+    opacity: glowOpacity.value,
+  }));
 
   const panGesture = Gesture.Pan()
     .activeOffsetX([-10, 10])
@@ -233,15 +280,39 @@ export function ReminderItem({
             onPress={() => onPress(reminder)}
           >
             {isOverdue && (
-              <View style={[styles.overdueBar, { backgroundColor: theme.colors.error }]} />
+              <>
+                <Animated.View
+                  style={[
+                    styles.overdueGlow,
+                    { backgroundColor: theme.colors.error },
+                    animatedGlowStyle,
+                  ]}
+                />
+                <View style={[styles.overdueBar, { backgroundColor: theme.colors.error }]} />
+              </>
             )}
 
-            <View style={[styles.iconBadge, { backgroundColor: iconBg }]}>
+            <View style={[
+              styles.iconBadge,
+              { backgroundColor: isOverdue ? theme.colors.errorSoft : iconBg },
+            ]}>
               <IconSymbol
                 name={SUBJECT_ICONS[reminder.subjectType] ?? "bell"}
                 size={20}
-                tintColor={iconTint}
+                tintColor={isOverdue ? theme.colors.error : iconTint}
               />
+              {isOverdue && (
+                <View style={styles.dotContainer}>
+                  <Animated.View
+                    style={[
+                      styles.dotPulse,
+                      { backgroundColor: theme.colors.error },
+                      animatedDotStyle,
+                    ]}
+                  />
+                  <View style={[styles.dotSolid, { backgroundColor: theme.colors.error }]} />
+                </View>
+              )}
             </View>
 
             <View style={styles.content}>
@@ -267,7 +338,7 @@ export function ReminderItem({
                   style={[
                     styles.meta,
                     { color: metaColor },
-                    isOverdue && styles.metaUnderline,
+                    isOverdue && styles.metaOverdue,
                   ]}
                   numberOfLines={1}
                 >
@@ -315,12 +386,21 @@ const styles = StyleSheet.create((theme) => ({
     paddingVertical: theme.spacing.md,
     gap: theme.spacing.md,
   },
-  overdueBar: {
+  overdueGlow: {
     position: "absolute",
     left: 0,
     top: 0,
     bottom: 0,
-    width: 4,
+    right: 0,
+  },
+  overdueBar: {
+    position: "absolute",
+    left: 0,
+    top: 6,
+    bottom: 6,
+    width: 3,
+    borderTopRightRadius: 3,
+    borderBottomRightRadius: 3,
   },
   iconBadge: {
     width: 44,
@@ -329,6 +409,26 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
+  },
+  dotContainer: {
+    position: "absolute",
+    top: -2,
+    right: -2,
+    width: 12,
+    height: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dotPulse: {
+    position: "absolute",
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  dotSolid: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
   },
   content: {
     flex: 1,
@@ -350,7 +450,8 @@ const styles = StyleSheet.create((theme) => ({
     ...theme.typography.caption,
     flexShrink: 1,
   },
-  metaUnderline: {
-    textDecorationLine: "underline",
+  metaOverdue: {
+    fontWeight: "600",
+    letterSpacing: 0.2,
   },
 }));

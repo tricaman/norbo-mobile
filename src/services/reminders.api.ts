@@ -11,7 +11,7 @@ export interface CreateReminderInput {
 }
 
 export const remindersApi = {
-  list: (params: { filter: ReminderFilter; cursor?: string; limit?: number }) =>
+  list: (params: { filter: ReminderFilter; petId?: string; cursor?: string; limit?: number }) =>
     api.get<ReminderListResponse>('/reminders', { params }),
 
   create: (input: CreateReminderInput) =>
