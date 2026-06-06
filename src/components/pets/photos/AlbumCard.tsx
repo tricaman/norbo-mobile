@@ -49,7 +49,7 @@ export function AlbumCard({
       <View
         style={[
           styles.cover,
-          { height: size, backgroundColor: theme.colors.backgroundSecondary },
+          { height: size, backgroundColor: theme.colors.surface2 },
         ]}
       >
         {coverUri ? (

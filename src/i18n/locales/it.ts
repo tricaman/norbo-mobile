@@ -10,6 +10,7 @@ const it = {
     comingSoon: "disponibile presto",
     back: "indietro",
     cancel: "annulla",
+    select: "seleziona",
   },
 
   tabs: {
@@ -74,6 +75,110 @@ const it = {
       result: "età umana",
       years: "anni",
       disclaimer: "valore indicativo, non sostituisce il veterinario",
+    },
+    common: {
+      addPetTitle: "aggiungi un pet",
+      addPetSubtitle: "collega questo strumento al tuo animale",
+    },
+    unitConverter: {
+      weight: "peso",
+      length: "lunghezza",
+      temperature: "temperatura",
+      volume: "volume",
+      value: "valore",
+      from: "da",
+      to: "a",
+      result: "risultato",
+    },
+    maintenanceCost: {
+      amount: "importo",
+      week: "settimana",
+      month: "mese",
+      year: "anno",
+      monthly: "costo mensile",
+      yearly: "costo annuo",
+      cat: {
+        VET: "veterinario",
+        FOOD: "cibo",
+        ACCESSORIES: "accessori",
+        GROOMING: "toelettatura",
+        OTHER: "altro",
+      },
+    },
+    foodConsumption: {
+      packageWeight: "peso confezione",
+      dailyRation: "razione giornaliera",
+      currentStock: "scorta attuale",
+      results: "risultati",
+      daysLeft: "giorni rimanenti",
+      days: "giorni",
+      reorderDate: "data di riacquisto",
+      createReminder: "crea promemoria riacquisto",
+      reminderCreated: "promemoria creato",
+      reminderTitle: "Riacquisto cibo per {{name}}",
+    },
+    foodPlantToxicity: {
+      placeholder: "nome alimento o pianta",
+      result: "risultato",
+      hint: "scrivi un alimento o una pianta per verificarne la sicurezza",
+      unknown: "non in elenco: nel dubbio contatta il veterinario",
+      disclaimer:
+        "In caso di ingestione contatta immediatamente il veterinario.",
+      risk: { SAFE: "sicuro", CAUTION: "attenzione", TOXIC: "tossico" },
+      notes: {
+        chocolate: "Il cioccolato contiene teobromina, tossica.",
+        grapes: "Uva e uvetta possono causare danni renali.",
+        allium: "Cipolla e aglio danneggiano i globuli rossi.",
+        xylitol: "Lo xilitolo provoca grave ipoglicemia.",
+        carrot: "Le carote sono generalmente sicure con moderazione.",
+        lily: "I gigli sono altamente tossici per i gatti.",
+        dairy: "Molti gatti sono intolleranti al lattosio.",
+      },
+    },
+    bodyConditionScore: {
+      unsupported: "scala non disponibile per questa categoria",
+      disclaimer:
+        "Strumento indicativo, non sostituisce la valutazione del veterinario.",
+      scale: { wsava: "scala WSAVA", henneke: "scala Henneke" },
+      q: {
+        ribs: "costole",
+        waist: "vita",
+        tuck: "addome (vista laterale)",
+        neck: "collo / garrese",
+        tailhead: "base della coda",
+      },
+      opt: {
+        ribs: {
+          low: "molto sporgenti",
+          ideal: "percepibili, grasso minimo",
+          high: "non percepibili",
+        },
+        waist: {
+          low: "molto marcata",
+          ideal: "ben proporzionata",
+          high: "assente",
+        },
+        tuck: {
+          low: "molto retratto",
+          ideal: "retratto",
+          high: "disteso",
+        },
+        neck: {
+          low: "magro, ossa visibili",
+          ideal: "armonico",
+          high: "ispessito, grasso",
+        },
+        tailhead: {
+          low: "ossa sporgenti",
+          ideal: "armonica",
+          high: "coperta di grasso",
+        },
+      },
+      interp: {
+        under: "sottopeso",
+        ideal: "peso ideale",
+        over: "sovrappeso",
+      },
     },
   },
 

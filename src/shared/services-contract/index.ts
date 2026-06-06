@@ -33,6 +33,15 @@
  * Nothing else in this file changes.
  */
 import { z } from 'zod';
+import { ExpenseCategory, PetCategory } from '../pet-event-schemas';
+
+const petCategoryEnum = z.enum(
+  Object.values(PetCategory) as [PetCategory, ...PetCategory[]],
+);
+const expenseCategoryEnum = z.enum(
+  Object.values(ExpenseCategory) as [ExpenseCategory, ...ExpenseCategory[]],
+);
+const frequencyEnum = z.enum(['WEEK', 'MONTH', 'YEAR']);
 
 /**
  * Shape every contract entry satisfies. Kept as a structural constraint
@@ -86,6 +95,68 @@ export const petAgeHumanYearsInput = z.object({
   sizeClass: z.enum(['SMALL', 'MEDIUM', 'LARGE']),
 });
 
+// ── Cross-species tools ───────────────────────────────────────────────────────
+
+/**
+ * `pet-unit-converter` — offline unit conversion within a group (weight,
+ * length, temperature, volume). No pet, no persistence. The conversion table
+ * lives in the frontend component; units are free strings validated there.
+ */
+export const petUnitConverterInput = z.object({
+  group: z.enum(['WEIGHT', 'LENGTH', 'TEMPERATURE', 'VOLUME']),
+  value: z.number(),
+  fromUnit: z.string().min(1).max(8),
+  toUnit: z.string().min(1).max(8),
+});
+
+/**
+ * `maintenance-cost` — recurring cost line items (category + amount +
+ * frequency) → monthly/annual total (computed in the component). Categories
+ * reuse the Expense module's `ExpenseCategory`.
+ */
+export const maintenanceCostInput = z.object({
+  items: z
+    .array(
+      z.object({
+        category: expenseCategoryEnum,
+        amount: z.number().min(0).max(1_000_000),
+        frequency: frequencyEnum,
+      }),
+    )
+    .max(20),
+});
+
+/**
+ * `food-consumption` — package weight + daily ration + current stock →
+ * days of autonomy and reorder date (computed in the component). The optional
+ * "create CONSUMABLE reminder" action uses the existing Reminder Engine API.
+ */
+export const foodConsumptionInput = z.object({
+  packageWeightG: z.number().positive().max(100_000),
+  dailyGramsG: z.number().positive().max(10_000),
+  currentStockG: z.number().min(0).max(100_000),
+});
+
+/**
+ * `food-plant-toxicity` — look up a food/plant name within an animal
+ * category. Content (risk level + note) is curated in care-knowledge; this
+ * just carries the query + category. No persistence.
+ */
+export const foodPlantToxicityInput = z.object({
+  category: petCategoryEnum,
+  query: z.string().min(1).max(120),
+});
+
+/**
+ * `body-condition-score` — guided questionnaire answers + category → a 1–9
+ * score (scale/questions are care-knowledge content; scoring in the
+ * component). `answers` are option indices, one per question.
+ */
+export const bodyConditionScoreInput = z.object({
+  category: petCategoryEnum,
+  answers: z.array(z.number().int().min(0).max(10)).min(1).max(6),
+});
+
 /**
  * `reptile-environment-guide` — structured care content (no calculation): the
  * selected curated reptile profile whose target temperature/humidity ranges
@@ -126,6 +197,31 @@ export const SERVICE_TOOL_CONTRACTS = {
     id: 'pet-age-human-years',
     schemaVersion: 1,
     inputSchema: petAgeHumanYearsInput,
+  },
+  'pet-unit-converter': {
+    id: 'pet-unit-converter',
+    schemaVersion: 1,
+    inputSchema: petUnitConverterInput,
+  },
+  'maintenance-cost': {
+    id: 'maintenance-cost',
+    schemaVersion: 1,
+    inputSchema: maintenanceCostInput,
+  },
+  'food-consumption': {
+    id: 'food-consumption',
+    schemaVersion: 1,
+    inputSchema: foodConsumptionInput,
+  },
+  'food-plant-toxicity': {
+    id: 'food-plant-toxicity',
+    schemaVersion: 1,
+    inputSchema: foodPlantToxicityInput,
+  },
+  'body-condition-score': {
+    id: 'body-condition-score',
+    schemaVersion: 1,
+    inputSchema: bodyConditionScoreInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

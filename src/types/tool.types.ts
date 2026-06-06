@@ -14,6 +14,8 @@ import type { PetCategory } from "@/types/pet.types";
 export interface ToolMetadata {
   id: ServiceToolId;
   categories: PetCategory[];
+  /** Shown regardless of the user's pet categories (even with no pets). */
+  crossSpecies: boolean;
   isPremium: boolean;
   /**
    * Authoritative, server-computed premium gate for the current user

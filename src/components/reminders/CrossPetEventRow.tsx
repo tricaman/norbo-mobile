@@ -29,6 +29,7 @@ const EVENT_ICONS: Record<PetEventType, string> = {
   [PetEventType.NOTE]: "note.text",
   [PetEventType.INSURANCE]: "shield.fill",
   [PetEventType.PASSING]: "heart.slash",
+  [PetEventType.PHOTO]: "photo",
 };
 
 interface CrossPetEventRowProps {

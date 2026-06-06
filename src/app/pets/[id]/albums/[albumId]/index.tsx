@@ -178,7 +178,7 @@ export default function AlbumDetailScreen(): React.JSX.Element {
           handler,
         );
       } else {
-        Alert.alert(undefined, undefined, [
+        Alert.alert("", undefined, [
           { text: options[0], onPress: () => handler(0) },
           {
             text: options[1],
@@ -249,7 +249,7 @@ export default function AlbumDetailScreen(): React.JSX.Element {
             <View
               style={[
                 styles.photoPlaceholder,
-                { backgroundColor: theme.colors.backgroundSecondary },
+                { backgroundColor: theme.colors.surface2 },
               ]}
             >
               <ActivityIndicator color={theme.colors.primary} />
@@ -395,7 +395,7 @@ export default function AlbumDetailScreen(): React.JSX.Element {
                       {
                         width: tileSize,
                         height: tileSize,
-                        backgroundColor: theme.colors.backgroundSecondary,
+                        backgroundColor: theme.colors.surface2,
                       },
                     ]}
                   >

@@ -54,6 +54,7 @@ const EVENT_ICONS: Record<PetEventType, string> = {
   [PetEventType.NOTE]: "note.text",
   [PetEventType.INSURANCE]: "checkmark.shield.fill",
   [PetEventType.PASSING]: "heart.slash",
+  [PetEventType.PHOTO]: "photo",
 };
 
 interface EventItemProps {

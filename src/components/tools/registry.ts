@@ -64,6 +64,26 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/PetAgeTool"),
       true,
     ),
+    "pet-unit-converter": defineLazyTool<"pet-unit-converter">(
+      () => import("./impl/PetUnitConverterTool"),
+      false,
+    ),
+    "maintenance-cost": defineLazyTool<"maintenance-cost">(
+      () => import("./impl/MaintenanceCostTool"),
+      true,
+    ),
+    "food-consumption": defineLazyTool<"food-consumption">(
+      () => import("./impl/FoodConsumptionTool"),
+      true,
+    ),
+    "food-plant-toxicity": defineLazyTool<"food-plant-toxicity">(
+      () => import("./impl/FoodPlantToxicityTool"),
+      false,
+    ),
+    "body-condition-score": defineLazyTool<"body-condition-score">(
+      () => import("./impl/BodyConditionScoreTool"),
+      true,
+    ),
   };
 
 /** The tool ids this app build can render — the local side of the intersection. */

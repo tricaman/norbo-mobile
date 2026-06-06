@@ -42,10 +42,13 @@ export default function ServicesTab(): React.JSX.Element {
     <TabScreen title={t("tabs.services")}>
       <QueryBoundary query={query} EmptyComponent={ToolsEmpty}>
         {(tools) => {
-          // Only keep tools that apply to at least one pet the user owns —
-          // a tool for a category you don't have is noise.
-          const visibleTools = tools.filter((tool) =>
-            pets.some((pet) => tool.categories.includes(pet.category)),
+          // Keep cross-species tools (always) plus category tools that apply
+          // to at least one pet the user owns — a category tool for a category
+          // you don't have is noise.
+          const visibleTools = tools.filter(
+            (tool) =>
+              tool.crossSpecies ||
+              pets.some((pet) => tool.categories.includes(pet.category)),
           );
           return (
             <ScrollView
