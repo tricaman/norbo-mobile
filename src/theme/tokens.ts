@@ -44,6 +44,20 @@ export const typography = {
   },
 } as const;
 
+/**
+ * Centralized card styling token.
+ * Change these values once to update every card in the app.
+ */
+export const card = {
+  borderRadius: radius.lg,
+  borderWidth: 0,
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.06,
+  shadowRadius: 6,
+  elevation: 1,
+} as const;
+
 export const pressScale = {
   row: 0.97,
   card: 0.96,

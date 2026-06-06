@@ -115,8 +115,8 @@ export function SettingsCard({
 const styles = StyleSheet.create((theme) => ({
   card: {
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.lg,
     overflow: "hidden",
+    ...theme.card,
   },
   cardTitle: {
     color: theme.colors.primary,

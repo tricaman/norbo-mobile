@@ -271,6 +271,10 @@ function AppInner() {
         name="expense/[id]/edit"
         options={{ animation: "slide_from_right" }}
       />
+      <Stack.Screen
+        name="tool/[toolId]"
+        options={{ animation: "slide_from_right" }}
+      />
     </Stack>
   );
 }

@@ -1,5 +1,6 @@
 import {
   avatarSize,
+  card,
   hairline,
   monoTypography,
   pressScale,
@@ -23,6 +24,7 @@ const shared = {
   fonts,
   hairline,
   avatarSize,
+  card,
 };
 
 const primary = "#5B7553";

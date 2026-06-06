@@ -16,6 +16,7 @@ const ja = {
     profile: "プロフィール",
     pets: "ペット",
     reminders: "リマインダー",
+    services: "サービス",
     expenses: "経費",
     settings: "設定",
   },

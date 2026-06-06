@@ -45,8 +45,8 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.md,
+    paddingHorizontal: theme.spacing["3xl"],
+    paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.lg,
     gap: theme.spacing.md,
   },
@@ -56,7 +56,7 @@ const styles = StyleSheet.create((theme) => ({
   },
   title: {
     ...theme.typography.title1,
-    fontWeight: "700",
+    letterSpacing: 2,
   },
   subtitle: {
     ...theme.typography.footnote,

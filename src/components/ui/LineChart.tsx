@@ -96,7 +96,6 @@ export function LineChart({
           {
             height,
             backgroundColor: theme.colors.surface,
-            borderColor: theme.colors.border,
           },
         ]}
         onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
@@ -113,9 +112,7 @@ export function LineChart({
 
   const toX = (i: number) =>
     PADDING_LEFT +
-    (points.length > 1
-      ? (i / (points.length - 1)) * drawWidth
-      : drawWidth / 2);
+    (points.length > 1 ? (i / (points.length - 1)) * drawWidth : drawWidth / 2);
 
   const toY = (val: number) =>
     PADDING_TOP + drawHeight - ((val - yMin) / (yMax - yMin)) * drawHeight;
@@ -159,7 +156,6 @@ export function LineChart({
         {
           height: chartHeight,
           backgroundColor: theme.colors.surface,
-          borderColor: theme.colors.border,
         },
       ]}
       onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
@@ -275,9 +271,7 @@ function niceMax(value: number): number {
 
 const styles = StyleSheet.create((theme) => ({
   container: {
-    marginHorizontal: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     overflow: "hidden",
+    ...theme.card,
   },
 }));

@@ -90,7 +90,6 @@ export function PetExpensesTab({
                   styles.totalCard,
                   {
                     backgroundColor: theme.colors.surface,
-                    borderColor: theme.colors.border,
                   },
                 ]}
               >
@@ -209,11 +208,10 @@ const styles = StyleSheet.create((theme) => ({
     paddingVertical: theme.spacing["2xl"],
   },
   totalCard: {
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.lg,
     gap: theme.spacing.xs,
+    ...theme.card,
   },
   totalLabel: { ...theme.typography.caption },
   totalValue: { ...theme.typography.display, fontWeight: "700" },

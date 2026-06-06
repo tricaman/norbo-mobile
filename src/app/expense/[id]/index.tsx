@@ -1,5 +1,10 @@
 import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
+import {
+  EXPENSE_CATEGORY_COLORS,
+  EXPENSE_CATEGORY_ICON,
+  formatCurrency,
+} from "@/components/expenses/expense-format";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { Screen } from "@/components/ui/Screen";
@@ -18,11 +23,6 @@ import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import {
-  EXPENSE_CATEGORY_COLORS,
-  EXPENSE_CATEGORY_ICON,
-  formatCurrency,
-} from "@/components/expenses/expense-format";
 
 export default function ExpenseDetailScreen(): React.JSX.Element {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -64,29 +64,59 @@ function ExpenseDetail({ expense }: { expense: Expense }): React.JSX.Element {
       t("expenses.deleteConfirmMessage"),
       [
         { text: t("expenses.deleteConfirmCancel"), style: "cancel" },
-        { text: t("expenses.deleteConfirmOk"), style: "destructive", onPress: () => { deleteMutation(); } },
+        {
+          text: t("expenses.deleteConfirmOk"),
+          style: "destructive",
+          onPress: () => {
+            deleteMutation();
+          },
+        },
       ],
     );
   };
 
-  const color = EXPENSE_CATEGORY_COLORS[expense.category] ?? theme.colors.primary;
+  const color =
+    EXPENSE_CATEGORY_COLORS[expense.category] ?? theme.colors.primary;
   const icon = EXPENSE_CATEGORY_ICON[expense.category] ?? "creditcard";
-  const dateLabel = format(parseISO(expense.occurredAt), "d MMMM yyyy", { locale: dateLocale });
-  const categoryLabel = t(`expenses.categories.${expense.category}` as "expenses.categories.VET");
+  const dateLabel = format(parseISO(expense.occurredAt), "d MMMM yyyy", {
+    locale: dateLocale,
+  });
+  const categoryLabel = t(
+    `expenses.categories.${expense.category}` as "expenses.categories.VET",
+  );
 
   return (
     <>
       <ScreenHeader
         title={categoryLabel}
         right={
-          <NorboPressable haptic="light" onPress={() => router.push(`/expense/${expense.id}/edit` as never)}>
-            <IconSymbol name="pencil" size={18} tintColor={theme.colors.primary} />
+          <NorboPressable
+            haptic="light"
+            onPress={() => router.push(`/expense/${expense.id}/edit` as never)}
+          >
+            <IconSymbol
+              name="pencil"
+              size={18}
+              tintColor={theme.colors.primary}
+            />
           </NorboPressable>
         }
       />
-      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom }]}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: SCREEN_BOTTOM_PADDING + insets.bottom },
+        ]}
+      >
         {/* Main card */}
-        <View style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
+        <View
+          style={[
+            styles.card,
+            {
+              backgroundColor: theme.colors.surface,
+            },
+          ]}
+        >
           <View style={styles.iconRow}>
             <View style={[styles.iconWrap, { backgroundColor: `${color}22` }]}>
               <IconSymbol name={icon} size={22} tintColor={color} />
@@ -95,20 +125,41 @@ function ExpenseDetail({ expense }: { expense: Expense }): React.JSX.Element {
               {formatCurrency(expense.amount, expense.currency)}
             </Text>
           </View>
-          <Text style={[styles.category, { color: theme.colors.textSecondary }]}>{categoryLabel}</Text>
-          <Text style={[styles.date, { color: theme.colors.textTertiary }]}>{dateLabel}</Text>
+          <Text
+            style={[styles.category, { color: theme.colors.textSecondary }]}
+          >
+            {categoryLabel}
+          </Text>
+          <Text style={[styles.date, { color: theme.colors.textTertiary }]}>
+            {dateLabel}
+          </Text>
           {expense.description ? (
-            <Text style={[styles.description, { color: theme.colors.textSecondary }]}>{expense.description}</Text>
+            <Text
+              style={[
+                styles.description,
+                { color: theme.colors.textSecondary },
+              ]}
+            >
+              {expense.description}
+            </Text>
           ) : null}
         </View>
 
         {/* Receipt */}
         {expense.receiptUrl ? (
-          <View style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
-            <Text style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}>
+          <View
+            style={[styles.card, { backgroundColor: theme.colors.surface }]}
+          >
+            <Text
+              style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}
+            >
               {t("expenses.fieldReceipt").toUpperCase()}
             </Text>
-            <Image source={{ uri: expense.receiptUrl }} style={styles.receipt} contentFit="contain" />
+            <Image
+              source={{ uri: expense.receiptUrl }}
+              style={styles.receipt}
+              contentFit="contain"
+            />
           </View>
         ) : null}
 
@@ -118,8 +169,17 @@ function ExpenseDetail({ expense }: { expense: Expense }): React.JSX.Element {
           haptic="error"
           onPress={confirmDelete}
         >
-          <IconSymbol name="trash.fill" size={18} tintColor={theme.colors.textOnPrimary} />
-          <Text style={[styles.deleteBtnLabel, { color: theme.colors.textOnPrimary }]}>
+          <IconSymbol
+            name="trash.fill"
+            size={18}
+            tintColor={theme.colors.textOnPrimary}
+          />
+          <Text
+            style={[
+              styles.deleteBtnLabel,
+              { color: theme.colors.textOnPrimary },
+            ]}
+          >
             {t("expenses.deleteConfirmOk")}
           </Text>
         </NorboPressable>
@@ -130,15 +190,41 @@ function ExpenseDetail({ expense }: { expense: Expense }): React.JSX.Element {
 
 const styles = StyleSheet.create((theme) => ({
   content: { padding: theme.spacing.lg, gap: theme.spacing.md, flexGrow: 1 },
-  card: { borderRadius: theme.radius.lg, borderWidth: theme.hairline, padding: theme.spacing.lg, gap: theme.spacing.sm },
-  iconRow: { flexDirection: "row", alignItems: "center", gap: theme.spacing.md },
-  iconWrap: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
+  card: {
+    padding: theme.spacing.lg,
+    gap: theme.spacing.sm,
+    ...theme.card,
+  },
+  iconRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.md,
+  },
+  iconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   amount: { ...theme.typography.display, fontWeight: "700" },
   category: { ...theme.typography.subhead },
   date: { ...theme.typography.caption },
   description: { ...theme.typography.body, lineHeight: 22 },
-  fieldLabel: { ...theme.typography.caption, fontWeight: "600", letterSpacing: 0.5 },
+  fieldLabel: {
+    ...theme.typography.caption,
+    fontWeight: "600",
+    letterSpacing: 0.5,
+  },
   receipt: { width: "100%", height: 200, borderRadius: theme.radius.md },
-  deleteBtn: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: theme.spacing.sm, paddingVertical: theme.spacing.md, borderRadius: theme.radius.pill, marginTop: theme.spacing.lg },
+  deleteBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: theme.spacing.sm,
+    paddingVertical: theme.spacing.md,
+    borderRadius: theme.radius.pill,
+    marginTop: theme.spacing.lg,
+  },
   deleteBtnLabel: { ...theme.typography.subhead, fontWeight: "600" },
 }));

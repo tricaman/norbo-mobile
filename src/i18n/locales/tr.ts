@@ -16,6 +16,7 @@ const tr = {
     profile: "profil",
     pets: "evcil hayvanlar",
     reminders: "hatırlatmalar",
+    services: "hizmetler",
     expenses: "harcamalar",
     settings: "ayarlar",
   },

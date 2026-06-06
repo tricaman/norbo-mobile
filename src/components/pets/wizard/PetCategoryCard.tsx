@@ -1,9 +1,9 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import type { PetCategory } from "@/types/pet.types";
 import React from "react";
 import { Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import type { PetCategory } from "@/types/pet.types";
 import { CATEGORY_META } from "./category-meta";
 import { PetCategoryIcon } from "./PetCategoryIcon";
 
@@ -47,9 +47,7 @@ export function PetCategoryCard({
       onPress={onPress}
     >
       {selected ? (
-        <View
-          style={[styles.badge, { backgroundColor: theme.colors.primary }]}
-        >
+        <View style={[styles.badge, { backgroundColor: theme.colors.primary }]}>
           <IconSymbol
             name="checkmark"
             size={12}
@@ -81,11 +79,10 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
     minHeight: 116,
     backgroundColor: theme.colors.surface,
-    borderRadius: CARD_RADIUS,
-    borderWidth: theme.hairline,
-    borderColor: theme.colors.border,
     paddingVertical: theme.spacing.lg,
     paddingHorizontal: theme.spacing.lg,
+    ...theme.card,
+    borderRadius: CARD_RADIUS,
     gap: theme.spacing.xs,
     justifyContent: "center",
   },

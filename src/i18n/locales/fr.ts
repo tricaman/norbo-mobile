@@ -16,6 +16,7 @@ const fr = {
     profile: "profil",
     pets: "animaux",
     reminders: "rappels",
+    services: "services",
     expenses: "dépenses",
     settings: "paramètres",
   },

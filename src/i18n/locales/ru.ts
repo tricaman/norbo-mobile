@@ -16,6 +16,7 @@ const ru = {
     profile: "профиль",
     pets: "питомцы",
     reminders: "напоминания",
+    services: "услуги",
     expenses: "расходы",
     settings: "настройки",
   },

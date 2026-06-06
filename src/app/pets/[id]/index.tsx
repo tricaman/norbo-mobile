@@ -665,12 +665,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "stretch",
     height: 72,
-    borderRadius: theme.radius.lg,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 3,
+    ...theme.card,
   },
   statCell: {
     flex: 1,

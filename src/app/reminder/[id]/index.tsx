@@ -14,8 +14,8 @@ import { format, parseISO } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
@@ -37,7 +37,11 @@ export default function ReminderDetailScreen(): React.JSX.Element {
   );
 }
 
-function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element {
+function ReminderDetail({
+  reminder,
+}: {
+  reminder: Reminder;
+}): React.JSX.Element {
   const { t, i18n } = useTranslation();
   const { theme } = useUnistyles();
   const router = useRouter();
@@ -88,33 +92,39 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
   }
 
   function showSnoozePicker(): void {
-    Alert.alert(
-      t("reminderDetail.snoozeTitle"),
-      undefined,
-      [
-        {
-          text: t("reminderDetail.snooze1h"),
-          onPress: () => { snoozeFor(60 * 60 * 1000); },
+    Alert.alert(t("reminderDetail.snoozeTitle"), undefined, [
+      {
+        text: t("reminderDetail.snooze1h"),
+        onPress: () => {
+          snoozeFor(60 * 60 * 1000);
         },
-        {
-          text: t("reminderDetail.snooze3h"),
-          onPress: () => { snoozeFor(3 * 60 * 60 * 1000); },
+      },
+      {
+        text: t("reminderDetail.snooze3h"),
+        onPress: () => {
+          snoozeFor(3 * 60 * 60 * 1000);
         },
-        {
-          text: t("reminderDetail.snooze24h"),
-          onPress: () => { snoozeFor(24 * 60 * 60 * 1000); },
+      },
+      {
+        text: t("reminderDetail.snooze24h"),
+        onPress: () => {
+          snoozeFor(24 * 60 * 60 * 1000);
         },
-        {
-          text: t("reminderDetail.snooze3d"),
-          onPress: () => { snoozeFor(3 * 24 * 60 * 60 * 1000); },
+      },
+      {
+        text: t("reminderDetail.snooze3d"),
+        onPress: () => {
+          snoozeFor(3 * 24 * 60 * 60 * 1000);
         },
-        {
-          text: t("reminderDetail.snooze1w"),
-          onPress: () => { snoozeFor(7 * 24 * 60 * 60 * 1000); },
+      },
+      {
+        text: t("reminderDetail.snooze1w"),
+        onPress: () => {
+          snoozeFor(7 * 24 * 60 * 60 * 1000);
         },
-        { text: t("common.cancel"), style: "cancel" },
-      ],
-    );
+      },
+      { text: t("common.cancel"), style: "cancel" },
+    ]);
   }
 
   function confirmDelete(): void {
@@ -126,13 +136,17 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
         {
           text: t("reminders.deleteConfirmOk"),
           style: "destructive",
-          onPress: () => { deleteMutation(); },
+          onPress: () => {
+            deleteMutation();
+          },
         },
       ],
     );
   }
 
-  const dueLabel = format(parseISO(reminder.dueAt), "PPP", { locale: dateLocale });
+  const dueLabel = format(parseISO(reminder.dueAt), "PPP", {
+    locale: dateLocale,
+  });
   const subjectLabel = t(
     `reminders.subject.${reminder.subjectType}` as "reminders.subject.HEALTH_EVENT",
   );
@@ -182,18 +196,24 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
             styles.card,
             {
               backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border,
             },
           ]}
         >
-          <Text style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}>
+          <Text
+            style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}
+          >
             {t("reminderForm.details").toUpperCase()}
           </Text>
           <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
             {reminder.title}
           </Text>
           {reminder.description ? (
-            <Text style={[styles.description, { color: theme.colors.textSecondary }]}>
+            <Text
+              style={[
+                styles.description,
+                { color: theme.colors.textSecondary },
+              ]}
+            >
               {reminder.description}
             </Text>
           ) : null}
@@ -205,15 +225,18 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
             styles.card,
             {
               backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border,
             },
           ]}
         >
           <View style={styles.metaRow}>
-            <Text style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}>
+            <Text
+              style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}
+            >
               {t("reminderDetail.due").toUpperCase()}
             </Text>
-            <Text style={[styles.metaValue, { color: theme.colors.textPrimary }]}>
+            <Text
+              style={[styles.metaValue, { color: theme.colors.textPrimary }]}
+            >
               {dueLabel}
             </Text>
           </View>
@@ -221,10 +244,17 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
           <View style={styles.separator} />
 
           <View style={styles.metaRow}>
-            <Text style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}>
+            <Text
+              style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}
+            >
               {t("reminderDetail.subjectLabel").toUpperCase()}
             </Text>
-            <View style={[styles.badge, { backgroundColor: `${theme.colors.primary}22` }]}>
+            <View
+              style={[
+                styles.badge,
+                { backgroundColor: `${theme.colors.primary}22` },
+              ]}
+            >
               <Text style={[styles.badgeText, { color: theme.colors.primary }]}>
                 {subjectLabel}
               </Text>
@@ -234,7 +264,9 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
           <View style={styles.separator} />
 
           <View style={styles.metaRow}>
-            <Text style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}>
+            <Text
+              style={[styles.fieldLabel, { color: theme.colors.textTertiary }]}
+            >
               {t("reminderDetail.statusLabel").toUpperCase()}
             </Text>
             <Text style={[styles.metaValue, { color: statusColor }]}>
@@ -246,9 +278,16 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
             <>
               <View style={styles.separator} />
               <View style={styles.metaRow}>
-                <Text style={[styles.metaNote, { color: theme.colors.textSecondary }]}>
+                <Text
+                  style={[
+                    styles.metaNote,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
                   {t("reminderDetail.snoozedUntil", {
-                    date: format(parseISO(reminder.snoozedUntil), "PPP", { locale: dateLocale }),
+                    date: format(parseISO(reminder.snoozedUntil), "PPP", {
+                      locale: dateLocale,
+                    }),
                   })}
                 </Text>
               </View>
@@ -259,9 +298,16 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
             <>
               <View style={styles.separator} />
               <View style={styles.metaRow}>
-                <Text style={[styles.metaNote, { color: theme.colors.textSecondary }]}>
+                <Text
+                  style={[
+                    styles.metaNote,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
                   {t("reminderDetail.completedAt", {
-                    date: format(parseISO(reminder.completedAt), "PPP", { locale: dateLocale }),
+                    date: format(parseISO(reminder.completedAt), "PPP", {
+                      locale: dateLocale,
+                    }),
                   })}
                 </Text>
               </View>
@@ -273,23 +319,36 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
         {canTransition && (
           <View style={styles.actions}>
             <NorboPressable
-              style={[styles.actionBtn, { backgroundColor: theme.colors.primary }]}
+              style={[
+                styles.actionBtn,
+                { backgroundColor: theme.colors.primary },
+              ]}
               haptic="success"
               disabled={isWorking}
-              onPress={() => { completeMutation(); }}
+              onPress={() => {
+                completeMutation();
+              }}
             >
               <IconSymbol
                 name="checkmark.circle.fill"
                 size={20}
                 tintColor={theme.colors.textOnPrimary}
               />
-              <Text style={[styles.actionLabel, { color: theme.colors.textOnPrimary }]}>
+              <Text
+                style={[
+                  styles.actionLabel,
+                  { color: theme.colors.textOnPrimary },
+                ]}
+              >
                 {t("reminderDetail.actionComplete")}
               </Text>
             </NorboPressable>
 
             <NorboPressable
-              style={[styles.actionBtn, { backgroundColor: theme.colors.warning }]}
+              style={[
+                styles.actionBtn,
+                { backgroundColor: theme.colors.warning },
+              ]}
               haptic="warning"
               disabled={isWorking}
               onPress={showSnoozePicker}
@@ -299,14 +358,21 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
                 size={18}
                 tintColor={theme.colors.textOnPrimary}
               />
-              <Text style={[styles.actionLabel, { color: theme.colors.textOnPrimary }]}>
+              <Text
+                style={[
+                  styles.actionLabel,
+                  { color: theme.colors.textOnPrimary },
+                ]}
+              >
                 {t("reminderDetail.actionSnooze")}
               </Text>
             </NorboPressable>
           </View>
         )}
 
-        <View style={[styles.actions, !canTransition && styles.actionsTopMargin]}>
+        <View
+          style={[styles.actions, !canTransition && styles.actionsTopMargin]}
+        >
           <NorboPressable
             style={[styles.actionBtn, { backgroundColor: theme.colors.error }]}
             haptic="error"
@@ -318,7 +384,12 @@ function ReminderDetail({ reminder }: { reminder: Reminder }): React.JSX.Element
               size={18}
               tintColor={theme.colors.textOnPrimary}
             />
-            <Text style={[styles.actionLabel, { color: theme.colors.textOnPrimary }]}>
+            <Text
+              style={[
+                styles.actionLabel,
+                { color: theme.colors.textOnPrimary },
+              ]}
+            >
               {t("reminderDetail.actionDelete")}
             </Text>
           </NorboPressable>
@@ -335,10 +406,9 @@ const styles = StyleSheet.create((theme) => ({
     flexGrow: 1,
   },
   card: {
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     padding: theme.spacing.lg,
     gap: theme.spacing.sm,
+    ...theme.card,
   },
   fieldLabel: {
     ...theme.typography.caption,

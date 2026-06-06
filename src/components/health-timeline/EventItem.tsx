@@ -1,20 +1,20 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { springs } from "@/hooks/useSpring";
 import type { PetEvent } from "@/types/pet-event.types";
 import { PetEventStatus, PetEventType } from "@/types/pet-event.types";
 import { format, isToday, isTomorrow, parseISO } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, Text, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { useTranslation } from "react-i18next";
-import { springs } from "@/hooks/useSpring";
 
 const SWIPE_THRESHOLD = -60;
 const ACTION_WIDTH = 64;
@@ -204,7 +204,6 @@ export function EventItem({
             styles.row,
             {
               backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border,
             },
           ]}
         >
@@ -340,13 +339,7 @@ const styles = StyleSheet.create((theme) => ({
   row: {
     marginHorizontal: theme.spacing.lg,
     marginBottom: theme.spacing.sm,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 1,
+    ...theme.card,
   },
   rowPressable: {
     flexDirection: "row",

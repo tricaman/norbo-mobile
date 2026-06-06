@@ -15,6 +15,41 @@ Bare Expo workflow, React Native 0.83+ New Architecture enabled. iOS + Android o
 - Notifee handles all notifications. `PING_ACTIONS` category registered at app startup before any notification arrives.
 - date-fns only for dates. No moment.js, no dayjs, no raw Date manipulation.
 - English only: code, comments, logs, commit messages.
+- `src/shared/` mirrors framework-free contracts from norbo-api. Files with a "DO NOT EDIT" banner (e.g. `services-contract/`) are generated — edit the source in norbo-api and run `pnpm sync:contracts` there. The Services Tool System reads its `{ id, inputSchema, schemaVersion }` from `src/shared/services-contract`; the component + `persistsResult` flag are the frontend's own (see TOOLS).
+
+## TOOLS (Services Tool System)
+
+Three sources of truth, one key — the tool `id` string:
+
+- **Shared contract** `src/shared/services-contract` (generated): input zod schema + `schemaVersion`. Import validation from here — NEVER redefine a tool's schema in the app.
+- **Frontend registry** `src/components/tools/registry.ts`: `id → { component (lazy), persistsResult }`. This is the local source of truth for "which tools this build can render". `Partial<Record<ServiceToolId, …>>` on purpose — a build need not ship every tool.
+- **Backend metadata**: DB-backed `Tool` catalog (seeded) — categories / `isPremium` / `locked` / icon / `coverImageUrl` / **already-localized `title`+`description`** (resolved server-side from Accept-Language), served by `GET /tools` (filtered to the user's pet categories). The app shows server strings directly — no client i18n key lookup for tool title/description (in-tool field labels stay client i18n).
+
+`useAvailableTools()` (`src/hooks/useTools.ts`) fetches the server list and intersects it with the registry via the pure `intersectAvailableTools()` (`src/utils/toolAvailability.ts`) — a tool renders only when present on BOTH sides (skew-safe + server kill-switch). The intersection/filter logic lives ONLY in that util + the backend; never inline it in screens. Adding a tool = touch the three sources of truth, nothing else. Components are placeholders until step 5; results are never persisted — only inputs are. `isPremium` is a soft client gate for now (paywall = step 7).
+
+### Loader
+
+`src/app/tool/[toolId].tsx` (`ToolScreen`) is the generic loader — **data-driven on the id, closed to modification**: adding a tool never touches it. It resolves the component from `TOOL_REGISTRY`, applies `PremiumGate`, lazy-mounts under a `<Suspense>` `ToolLoading` skeleton, and fires telemetry. There is NO per-tool switch/if anywhere. Note (RN + Metro): dynamic `import()` with an interpolated path is unsupported, so the explicit id→component map is a necessity; `lazy()` here defers module evaluation (snappier tab), it does NOT create separate downloadable bundles like on web.
+
+All cross-cutting concerns live in the loader; tools stay pure and receive only typed PROPS — `ToolComponentProps<TInputs>` (`src/components/tools/tool-component.ts`): `{ pet, initialInputs, onInputsChange }`. `onInputsChange` communicates INPUTS only, never a computed result. A tool annotates its default export with `ToolComponent<Id>` to get inputs strongly typed from the shared contract (`ServiceToolInput<Id>`) — no untyped Json, mismatches caught at compile time. Register a real tool with `defineLazyTool(() => import("./MyTool"), persistsResult)` (ties the lazy module to its id at compile time, then erases for storage; `ToolComponentProps` is invariant in its input type, so the single cast inside `defineLazyTool` is unavoidable and safe — the loader always feeds that id's runtime inputs).
+
+### Reusable UI blocks
+
+Compose tools from `src/components/tools/ui/` — never ad-hoc styling: `ToolNumberField` (labelled numeric input + unit suffix), `ToolResultCard` (result presentation, DM Mono value), `ToolSection` (labelled separator for longer forms — wraps `Divider` + `SectionLabel`), `ToolUnitToggle` (segmented picker — units like kg/lb/cm/in, but also any small enum choice e.g. activity/sterilized). All built on the design system tokens.
+
+### Reference tools (the three patterns)
+
+Real tools live in `src/components/tools/impl/`, each a default-export `ToolComponent<Id>` composed only from the UI blocks; copy the closest one when adding a tool:
+
+- `DogCalorieTool` — **numeric calc** (RER/MER formula in-component; persists inputs; vet disclaimer).
+- `AquariumVolumeTool` — **geometric calc** (gross/effective volume + indicative stocking, L/gal toggle; persists inputs).
+- `ReptileGuideTool` — **structured content, no calc, no persistence**: fetches curated profiles from `careKnowledgeApi.reptileEnvironment()` (`/care-knowledge/...`), pre-selects by the pet's species, renders target temp/humidity ranges.
+
+Tools never import persistence/premium/telemetry — they only read `initialInputs`/`pet` and call `onInputsChange`. They debounce input changes with `useDebounce` before notifying (the loader persists). Adding a tool = the three sources of truth only (contract + this registry + backend catalog) + its i18n keys; never the loader/persistence/UI blocks.
+
+- **Premium**: `PremiumGate` (`src/components/tools/PremiumGate.tsx`) renders `PremiumPaywall` when the tool is `locked`, else passes through. `locked` is **server-authoritative** — the loader reads it from the tools list (`GET /tools` computes `isPremium && !entitled`); the client never decides entitlement itself. This is the ONLY gating seam — tools never change. All tools are currently free (`isPremium: false` server-side) so nothing locks; the gate stays wired for the future. Client gate ≠ security: a truly-protected tool would ALSO be enforced server-side (set `isPremium: true` + guard its sensitive endpoint with `PremiumGuard`). Store payment/receipt integration is out of scope — the paywall CTA is a stub.
+- **Persistence (offline-first)**: `useToolInputs(toolId, petId, enabled)` (`src/hooks/useToolInputs.ts`) reads the MMKV cache (`src/services/tool-inputs.cache.ts`, `createMMKV({ id: "norbo-tool-inputs" })`) synchronously as `initialData`, then React Query syncs with `GET/PUT /tools/:toolId/result`. Both cache read and query discard inputs whose `schemaVersion` is incompatible with the contract. `enabled` = the tool's `persistsResult`.
+- **Telemetry**: `analytics` (`src/services/analytics.ts`) — `tool_opened` on mount, `tool_completed` on a successful save, both fired by the loader (zero per-tool code). ⚠️ No analytics SDK is wired yet; `track` is a dev-log/no-op seam (like PremiumGate). Replace its body when a provider is adopted.
 
 ## DESIGN SYSTEM
 

@@ -23,8 +23,7 @@ export function AlbumCard({
 
   const coverQuery = useQuery({
     queryKey: ["media", album.coverAssetId],
-    queryFn: () =>
-      mediaApi.getAsset(album.coverAssetId!).then((r) => r.data),
+    queryFn: () => mediaApi.getAsset(album.coverAssetId!).then((r) => r.data),
     enabled: !!album.coverAssetId,
     staleTime: 5 * 60 * 1000,
   });
@@ -41,7 +40,6 @@ export function AlbumCard({
         {
           width: size,
           backgroundColor: theme.colors.surface,
-          borderColor: theme.colors.border,
         },
       ]}
       scale="row"
@@ -73,9 +71,7 @@ export function AlbumCard({
         <View
           style={[styles.countBadge, { backgroundColor: theme.colors.scrim }]}
         >
-          <Text style={styles.countText}>
-            {album.mediaAssetIds.length}
-          </Text>
+          <Text style={styles.countText}>{album.mediaAssetIds.length}</Text>
         </View>
       </View>
 
@@ -101,9 +97,8 @@ export function AlbumCard({
 
 const styles = StyleSheet.create((theme) => ({
   card: {
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     overflow: "hidden",
+    ...theme.card,
   },
   cover: {
     position: "relative",

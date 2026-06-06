@@ -27,6 +27,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="services"
+        options={{
+          title: t("tabs.services"),
+          tabBarLabel: t("tabs.services"),
+        }}
+      />
+      <Tabs.Screen
         name="expenses"
         options={{
           title: t("tabs.expenses"),

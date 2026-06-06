@@ -45,10 +45,10 @@ const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.lg,
     paddingVertical: theme.spacing.sm,
     paddingHorizontal: theme.spacing.xs,
     alignItems: "center",
+    ...theme.card,
     gap: theme.spacing.xs,
   },
   labelMuted: {

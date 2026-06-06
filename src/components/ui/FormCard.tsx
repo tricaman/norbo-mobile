@@ -47,10 +47,10 @@ export function FormCard({
 const styles = StyleSheet.create((theme) => ({
   card: {
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.sm,
+    ...theme.card,
   },
   label: {
     ...theme.typography.footnote,

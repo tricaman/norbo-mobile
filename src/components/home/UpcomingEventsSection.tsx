@@ -127,9 +127,8 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     paddingVertical: theme.spacing["2xl"],
     paddingHorizontal: theme.spacing.xl,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     gap: theme.spacing.sm,
+    ...theme.card,
   },
   emptyIcon: {
     width: 56,

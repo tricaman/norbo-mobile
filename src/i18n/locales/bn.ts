@@ -16,6 +16,7 @@ const bn = {
     profile: "প্রোফাইল",
     pets: "পোষা প্রাণী",
     reminders: "অনুস্মারক",
+    services: "পরিষেবা",
     expenses: "খরচ",
     settings: "সেটিংস",
   },

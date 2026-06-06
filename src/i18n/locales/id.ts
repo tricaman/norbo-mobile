@@ -16,6 +16,7 @@ const id = {
     profile: "profil",
     pets: "hewan peliharaan",
     reminders: "pengingat",
+    services: "layanan",
     expenses: "pengeluaran",
     settings: "pengaturan",
   },

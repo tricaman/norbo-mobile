@@ -7,18 +7,18 @@ import type { HapticWeight } from "@/utils/haptics";
 import { formatDistanceToNowStrict, isPast, parseISO } from "date-fns";
 import { enUS, it as itLocale } from "date-fns/locale";
 import React, { useEffect } from "react";
-import { Alert, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Alert, Text, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withRepeat,
   withSequence,
+  withSpring,
   withTiming,
-  Easing,
 } from "react-native-reanimated";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 const SWIPE_THRESHOLD = -60;
@@ -27,11 +27,11 @@ const TOTAL_ACTIONS = 4;
 
 const SUBJECT_ICONS: Record<ReminderSubjectType, string> = {
   [ReminderSubjectType.HEALTH_EVENT]: "bell.fill",
-  [ReminderSubjectType.MAINTENANCE]:  "wrench",
-  [ReminderSubjectType.CONSUMABLE]:   "cart.fill",
-  [ReminderSubjectType.ADMIN]:        "doc.text",
-  [ReminderSubjectType.MILESTONE]:    "flag.fill",
-  [ReminderSubjectType.CUSTOM]:       "note.text",
+  [ReminderSubjectType.MAINTENANCE]: "wrench",
+  [ReminderSubjectType.CONSUMABLE]: "cart.fill",
+  [ReminderSubjectType.ADMIN]: "doc.text",
+  [ReminderSubjectType.MILESTONE]: "flag.fill",
+  [ReminderSubjectType.CUSTOM]: "note.text",
 };
 
 interface SwipeActionProps {
@@ -43,7 +43,14 @@ interface SwipeActionProps {
   disabled?: boolean;
 }
 
-function SwipeAction({ icon, label, tint, haptic, onPress, disabled = false }: SwipeActionProps) {
+function SwipeAction({
+  icon,
+  label,
+  tint,
+  haptic,
+  onPress,
+  disabled = false,
+}: SwipeActionProps) {
   return (
     <NorboPressable
       style={[actionStyles.btn, { opacity: disabled ? 0.35 : 1 }]}
@@ -82,7 +89,10 @@ const actionStyles = StyleSheet.create((theme) => ({
 }));
 
 export function isReminderOverdue(reminder: Reminder): boolean {
-  return reminder.status === ReminderStatus.PENDING && isPast(parseISO(reminder.dueAt));
+  return (
+    reminder.status === ReminderStatus.PENDING &&
+    isPast(parseISO(reminder.dueAt))
+  );
 }
 
 export interface ReminderItemProps {
@@ -127,7 +137,10 @@ export function ReminderItem({
     if (isOverdue) {
       dotOpacity.value = withRepeat(
         withSequence(
-          withTiming(0.3, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0.3, {
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+          }),
           withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
         ),
         -1,
@@ -135,7 +148,10 @@ export function ReminderItem({
       );
       dotScale.value = withRepeat(
         withSequence(
-          withTiming(1.6, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(1.6, {
+            duration: 1000,
+            easing: Easing.inOut(Easing.ease),
+          }),
           withTiming(1, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
         ),
         -1,
@@ -143,8 +159,14 @@ export function ReminderItem({
       );
       glowOpacity.value = withRepeat(
         withSequence(
-          withTiming(0.08, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
-          withTiming(0.02, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0.08, {
+            duration: 1500,
+            easing: Easing.inOut(Easing.ease),
+          }),
+          withTiming(0.02, {
+            duration: 1500,
+            easing: Easing.inOut(Easing.ease),
+          }),
         ),
         -1,
         false,
@@ -211,12 +233,6 @@ export function ReminderItem({
 
   const subtitle = `${relativeDate} · ${subjectLabel}`;
 
-  const borderColor = isOverdue
-    ? theme.colors.error
-    : isSnoozed
-      ? theme.colors.warning
-      : theme.colors.border;
-
   const iconTint = isDimmed ? theme.colors.textTertiary : theme.colors.primary;
   const iconBg = isDimmed ? theme.colors.border : `${theme.colors.primary}22`;
 
@@ -239,7 +255,10 @@ export function ReminderItem({
           tint={theme.colors.primary}
           haptic="success"
           disabled={!canTransition}
-          onPress={() => { close(); onDone(reminder); }}
+          onPress={() => {
+            close();
+            onDone(reminder);
+          }}
         />
         <SwipeAction
           icon="moon.zzz.fill"
@@ -247,14 +266,20 @@ export function ReminderItem({
           tint={theme.colors.warning}
           haptic="warning"
           disabled={!canTransition}
-          onPress={() => { close(); onSnooze(reminder); }}
+          onPress={() => {
+            close();
+            onSnooze(reminder);
+          }}
         />
         <SwipeAction
           icon="pencil"
           label={t("reminders.actions.edit")}
           tint={theme.colors.info}
           haptic="light"
-          onPress={() => { close(); onEdit(reminder); }}
+          onPress={() => {
+            close();
+            onEdit(reminder);
+          }}
         />
         <SwipeAction
           icon="trash.fill"
@@ -270,7 +295,7 @@ export function ReminderItem({
           style={[
             animatedRow,
             styles.row,
-            { backgroundColor: theme.colors.surface, borderColor },
+            { backgroundColor: theme.colors.surface },
           ]}
         >
           <NorboPressable
@@ -288,14 +313,23 @@ export function ReminderItem({
                     animatedGlowStyle,
                   ]}
                 />
-                <View style={[styles.overdueBar, { backgroundColor: theme.colors.error }]} />
+                <View
+                  style={[
+                    styles.overdueBar,
+                    { backgroundColor: theme.colors.error },
+                  ]}
+                />
               </>
             )}
 
-            <View style={[
-              styles.iconBadge,
-              { backgroundColor: isOverdue ? theme.colors.errorSoft : iconBg },
-            ]}>
+            <View
+              style={[
+                styles.iconBadge,
+                {
+                  backgroundColor: isOverdue ? theme.colors.errorSoft : iconBg,
+                },
+              ]}
+            >
               <IconSymbol
                 name={SUBJECT_ICONS[reminder.subjectType] ?? "bell"}
                 size={20}
@@ -310,7 +344,12 @@ export function ReminderItem({
                       animatedDotStyle,
                     ]}
                   />
-                  <View style={[styles.dotSolid, { backgroundColor: theme.colors.error }]} />
+                  <View
+                    style={[
+                      styles.dotSolid,
+                      { backgroundColor: theme.colors.error },
+                    ]}
+                  />
                 </View>
               )}
             </View>
@@ -370,14 +409,8 @@ const styles = StyleSheet.create((theme) => ({
   row: {
     marginHorizontal: theme.spacing.lg,
     marginBottom: theme.spacing.sm,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 1,
+    ...theme.card,
   },
   rowPressable: {
     flexDirection: "row",

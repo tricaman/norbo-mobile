@@ -16,6 +16,7 @@ const ro = {
     profile: "profil",
     pets: "animale de companie",
     reminders: "reamintiri",
+    services: "servicii",
     expenses: "cheltuieli",
     settings: "setări",
   },

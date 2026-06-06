@@ -16,6 +16,7 @@ const ar = {
     profile: "الملف الشخصي",
     pets: "الحيوانات الأليفة",
     reminders: "التذكيرات",
+    services: "الخدمات",
     expenses: "المصروفات",
     settings: "الإعدادات",
   },

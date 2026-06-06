@@ -1,3 +1,4 @@
+import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
@@ -8,15 +9,14 @@ import { useMutation } from "@/hooks/useMutation";
 import { petEventsApi } from "@/services/pet-events.api";
 import type { PetEvent } from "@/types/pet-event.types";
 import { PetEventStatus } from "@/types/pet-event.types";
-import { queryClient } from "@/app/_layout";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { useTranslation } from "react-i18next";
 
 export default function EventDetailScreen() {
   const { id: petId, eventId } = useLocalSearchParams<{
@@ -125,7 +125,6 @@ function EventDetail({ petId, event }: { petId: string; event: PetEvent }) {
             styles.card,
             {
               backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border,
             },
           ]}
         >
@@ -165,7 +164,6 @@ function EventDetail({ petId, event }: { petId: string; event: PetEvent }) {
               styles.card,
               {
                 backgroundColor: theme.colors.surface,
-                borderColor: theme.colors.border,
               },
             ]}
           >
@@ -241,10 +239,9 @@ const styles = StyleSheet.create((theme) => ({
     flexGrow: 1,
   },
   card: {
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     padding: theme.spacing.lg,
     gap: theme.spacing.sm,
+    ...theme.card,
   },
   cardRow: {
     flexDirection: "row",

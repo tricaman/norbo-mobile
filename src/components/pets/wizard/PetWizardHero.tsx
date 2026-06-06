@@ -41,11 +41,12 @@ export function PetWizardHero({ category, badge }: PetWizardHeroProps) {
 const styles = StyleSheet.create((theme) => ({
   card: {
     height: 140,
-    borderRadius: theme.radius.xl,
     overflow: "hidden",
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.md,
     justifyContent: "space-between",
+    ...theme.card,
+    borderRadius: theme.radius.xl,
   },
   badge: {
     alignSelf: "flex-start",

@@ -16,6 +16,7 @@ const hi = {
     profile: "प्रोफ़ाइल",
     pets: "पालतू जानवर",
     reminders: "रिमाइंडर",
+    services: "सेवाएँ",
     expenses: "खर्च",
     settings: "सेटिंग्स",
   },

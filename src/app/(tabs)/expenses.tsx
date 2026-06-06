@@ -136,7 +136,10 @@ export default function ExpensesTab(): React.JSX.Element {
                   <Text
                     style={[
                       styles.cardTitle,
-                      { color: theme.colors.textPrimary },
+                      {
+                        color: theme.colors.textPrimary,
+                        marginBottom: theme.spacing.sm,
+                      },
                     ]}
                   >
                     {t("expenses.trend")}
@@ -154,7 +157,6 @@ export default function ExpensesTab(): React.JSX.Element {
                     styles.card,
                     {
                       backgroundColor: theme.colors.surface,
-                      borderColor: theme.colors.border,
                     },
                   ]}
                 >
@@ -295,11 +297,10 @@ const styles = StyleSheet.create((theme) => ({
   heroWrap: { paddingHorizontal: theme.spacing.lg },
   section: { paddingHorizontal: theme.spacing.lg },
   card: {
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.md,
     gap: theme.spacing.sm,
+    ...theme.card,
   },
   cardTitle: { ...theme.typography.subhead, fontWeight: "600" },
   petRow: { flexDirection: "row", justifyContent: "space-between" },

@@ -89,10 +89,9 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
 
 const styles = StyleSheet.create((theme) => ({
   card: {
-    borderRadius: theme.radius.xl,
     overflow: "hidden",
-    borderColor: theme.colors.border,
-    borderWidth: 1,
+    ...theme.card,
+    borderRadius: theme.radius.xl,
   },
   imageArea: {
     aspectRatio: 4 / 3,

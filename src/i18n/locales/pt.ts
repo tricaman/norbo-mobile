@@ -16,6 +16,7 @@ const pt = {
     profile: "perfil",
     pets: "animais de estimação",
     reminders: "lembretes",
+    services: "serviços",
     expenses: "despesas",
     settings: "configurações",
   },

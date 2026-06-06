@@ -16,6 +16,7 @@ const ur = {
     profile: "پروفائل",
     pets: "پالتو جانور",
     reminders: "یادداشتیں",
+    services: "خدمات",
     expenses: "اخراجات",
     settings: "ترتیبات",
   },

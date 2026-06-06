@@ -149,10 +149,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   disclaimerCard: {
     backgroundColor: theme.colors.warningSoft,
-    borderRadius: theme.radius.lg,
     padding: theme.spacing.lg,
-    borderWidth: theme.hairline,
-    borderColor: theme.colors.warningBorder,
+    ...theme.card,
   },
   disclaimerText: {
     ...theme.typography.footnote,

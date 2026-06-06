@@ -158,10 +158,8 @@ const styles = StyleSheet.create((theme) => ({
   },
   warningCard: {
     backgroundColor: theme.colors.surface,
-    borderRadius: theme.radius.lg,
     padding: theme.spacing.xl,
-    borderWidth: theme.hairline,
-    borderColor: theme.colors.border,
+    ...theme.card,
   },
   warningText: {
     ...theme.typography.footnote,

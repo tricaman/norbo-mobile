@@ -83,12 +83,12 @@ function headerKeyForPeriod(
 
 const styles = StyleSheet.create((theme) => ({
   card: {
-    borderRadius: theme.radius.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingVertical: theme.spacing.xl,
     overflow: "hidden",
     gap: theme.spacing.sm,
     minHeight: 160,
+    ...theme.card,
   },
   decoration: {
     position: "absolute",

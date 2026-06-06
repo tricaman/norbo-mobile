@@ -16,6 +16,7 @@ const zh = {
     profile: "个人资料",
     pets: "宠物",
     reminders: "提醒",
+    services: "服务",
     expenses: "费用",
     settings: "设置",
   },

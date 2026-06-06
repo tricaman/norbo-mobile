@@ -97,7 +97,6 @@ export function CrossPetEventRow({
         styles.row,
         {
           backgroundColor: theme.colors.surface,
-          borderColor: overdue ? theme.colors.error : theme.colors.border,
         },
       ]}
     >
@@ -122,10 +121,7 @@ export function CrossPetEventRow({
           />
         )}
         <View
-          style={[
-            styles.typeBadge,
-            { backgroundColor: theme.colors.surface },
-          ]}
+          style={[styles.typeBadge, { backgroundColor: theme.colors.surface }]}
         >
           <IconSymbol
             name={EVENT_ICONS[event.type] ?? "calendar"}
@@ -207,9 +203,8 @@ const styles = StyleSheet.create((theme) => ({
     paddingVertical: theme.spacing.md,
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     overflow: "hidden",
+    ...theme.card,
   },
   overdueBar: {
     position: "absolute",

@@ -5,7 +5,11 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
 import { remindersApi } from "@/services/reminders.api";
-import type { Reminder, ReminderFilter, ReminderListResponse } from "@/types/reminder.types";
+import type {
+  Reminder,
+  ReminderFilter,
+  ReminderListResponse,
+} from "@/types/reminder.types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React, { useCallback, useMemo, useState } from "react";
@@ -28,18 +32,33 @@ interface EmptyStateConfig {
   onCta?: () => void;
 }
 
-function ReminderEmptyState({ config }: { config: EmptyStateConfig }): React.JSX.Element {
+function ReminderEmptyState({
+  config,
+}: {
+  config: EmptyStateConfig;
+}): React.JSX.Element {
   const { theme } = useUnistyles();
   return (
     <View style={emptyStyles.wrap}>
-      <View style={[emptyStyles.iconWrap, { backgroundColor: `${theme.colors.primary}22` }]}>
-        <IconSymbol name={config.icon} size={26} tintColor={theme.colors.primary} />
+      <View
+        style={[
+          emptyStyles.iconWrap,
+          { backgroundColor: `${theme.colors.primary}22` },
+        ]}
+      >
+        <IconSymbol
+          name={config.icon}
+          size={26}
+          tintColor={theme.colors.primary}
+        />
       </View>
       <Text style={[emptyStyles.title, { color: theme.colors.textPrimary }]}>
         {config.title}
       </Text>
       {config.subtitle !== undefined && (
-        <Text style={[emptyStyles.subtitle, { color: theme.colors.textSecondary }]}>
+        <Text
+          style={[emptyStyles.subtitle, { color: theme.colors.textSecondary }]}
+        >
           {config.subtitle}
         </Text>
       )}
@@ -49,7 +68,12 @@ function ReminderEmptyState({ config }: { config: EmptyStateConfig }): React.JSX
           haptic="medium"
           onPress={config.onCta}
         >
-          <Text style={[emptyStyles.ctaLabel, { color: theme.colors.textOnPrimary }]}>
+          <Text
+            style={[
+              emptyStyles.ctaLabel,
+              { color: theme.colors.textOnPrimary },
+            ]}
+          >
             {config.cta}
           </Text>
         </NorboPressable>
@@ -99,14 +123,14 @@ export function RemindersList(): React.JSX.Element {
   const { theme } = useUnistyles();
   const router = useRouter();
 
-  const [filter, setFilter] = useState<ReminderFilter>("upcoming");
+  const [filter, setFilter] = useState<ReminderFilter>("all");
 
   const filterOptions: { value: ReminderFilter; label: string }[] = [
-    { value: "upcoming",  label: t("reminders.filters.upcoming") },
-    { value: "today",     label: t("reminders.filters.today") },
+    { value: "all", label: t("reminders.filters.all") },
+    { value: "upcoming", label: t("reminders.filters.upcoming") },
+    { value: "today", label: t("reminders.filters.today") },
     { value: "next7days", label: t("reminders.filters.next7days") },
-    { value: "overdue",   label: t("reminders.filters.overdue") },
-    { value: "all",       label: t("reminders.filters.all") },
+    { value: "overdue", label: t("reminders.filters.overdue") },
   ];
 
   const query = useInfiniteQuery({
@@ -116,13 +140,16 @@ export function RemindersList(): React.JSX.Element {
         .list({ filter, cursor: pageParam as string | undefined, limit: 20 })
         .then((r) => r.data),
     initialPageParam: undefined as string | undefined,
-    getNextPageParam: (last: ReminderListResponse) => last.nextCursor ?? undefined,
+    getNextPageParam: (last: ReminderListResponse) =>
+      last.nextCursor ?? undefined,
   });
 
-  const allRows = useMemo(
-    () => query.data?.pages.flatMap((p) => p.rows) ?? [],
-    [query.data],
-  );
+  const allRows = useMemo(() => {
+    const rows = query.data?.pages.flatMap((p) => p.rows) ?? [];
+    return [...rows].sort(
+      (a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime(),
+    );
+  }, [query.data]);
 
   const { mutate: doneMutation } = useMutation({
     mutationFn: (id: string) => remindersApi.complete(id),
@@ -135,7 +162,10 @@ export function RemindersList(): React.JSX.Element {
 
   const { mutate: snoozeMutation } = useMutation({
     mutationFn: (id: string) =>
-      remindersApi.snooze(id, new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()),
+      remindersApi.snooze(
+        id,
+        new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      ),
     showSuccessToast: true,
     successMessage: t("reminders.toast.snoozed"),
     onSuccess: () => {
@@ -160,12 +190,16 @@ export function RemindersList(): React.JSX.Element {
   );
 
   const handleDone = useCallback(
-    (reminder: Reminder): void => { doneMutation(reminder.id); },
+    (reminder: Reminder): void => {
+      doneMutation(reminder.id);
+    },
     [doneMutation],
   );
 
   const handleSnooze = useCallback(
-    (reminder: Reminder): void => { snoozeMutation(reminder.id); },
+    (reminder: Reminder): void => {
+      snoozeMutation(reminder.id);
+    },
     [snoozeMutation],
   );
 
@@ -177,7 +211,9 @@ export function RemindersList(): React.JSX.Element {
   );
 
   const handleDelete = useCallback(
-    (reminder: Reminder): void => { deleteMutation(reminder.id); },
+    (reminder: Reminder): void => {
+      deleteMutation(reminder.id);
+    },
     [deleteMutation],
   );
 
@@ -206,7 +242,9 @@ export function RemindersList(): React.JSX.Element {
           icon: "tray",
           title: t("reminders.empty.all.title"),
           cta: t("reminders.empty.all.cta"),
-          onCta: () => { router.push("/reminder/new" as never); },
+          onCta: () => {
+            router.push("/reminder/new" as never);
+          },
         };
       default:
         return {
@@ -241,7 +279,9 @@ export function RemindersList(): React.JSX.Element {
                 key={opt.value}
                 scale="row"
                 haptic="light"
-                onPress={() => { setFilter(opt.value); }}
+                onPress={() => {
+                  setFilter(opt.value);
+                }}
                 style={[
                   styles.filterChip,
                   isActive
@@ -307,7 +347,9 @@ export function RemindersList(): React.JSX.Element {
         refreshControl={
           <RefreshControl
             refreshing={query.isRefetching}
-            onRefresh={() => { void query.refetch(); }}
+            onRefresh={() => {
+              void query.refetch();
+            }}
           />
         }
         contentContainerStyle={styles.listContent}
@@ -317,9 +359,15 @@ export function RemindersList(): React.JSX.Element {
       <NorboPressable
         style={[styles.fab, { backgroundColor: theme.colors.primary }]}
         haptic="medium"
-        onPress={() => { router.push("/reminder/new" as never); }}
+        onPress={() => {
+          router.push("/reminder/new" as never);
+        }}
       >
-        <IconSymbol name="plus" size={22} tintColor={theme.colors.textOnPrimary} />
+        <IconSymbol
+          name="plus"
+          size={22}
+          tintColor={theme.colors.textOnPrimary}
+        />
       </NorboPressable>
     </View>
   );

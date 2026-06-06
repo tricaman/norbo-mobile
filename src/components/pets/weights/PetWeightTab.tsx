@@ -143,7 +143,6 @@ export function PetWeightTab({
               styles.latestCard,
               {
                 backgroundColor: theme.colors.surface,
-                borderColor: theme.colors.border,
               },
             ]}
           >
@@ -162,7 +161,9 @@ export function PetWeightTab({
 
         {/* Chart */}
         {filteredRecords.length >= 2 ? (
-          <WeightChart records={filteredRecords} category={category} />
+          <View style={{ marginHorizontal: theme.spacing.lg }}>
+            <WeightChart records={filteredRecords} category={category} />
+          </View>
         ) : (
           <View style={styles.chartEmpty}>
             <Text
@@ -189,7 +190,6 @@ export function PetWeightTab({
               styles.historyRow,
               {
                 backgroundColor: theme.colors.surface,
-                borderColor: theme.colors.border,
               },
             ]}
           >
@@ -269,11 +269,10 @@ const styles = StyleSheet.create((theme) => ({
   },
   latestCard: {
     marginHorizontal: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.lg,
     gap: theme.spacing.xs,
+    ...theme.card,
   },
   latestLabel: {
     ...theme.typography.caption,
@@ -303,8 +302,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.md,
-    borderRadius: theme.radius.lg,
-    borderWidth: theme.hairline,
+    ...theme.card,
   },
   historyWeight: {
     ...theme.typography.body,
