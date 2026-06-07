@@ -1,19 +1,19 @@
 import { ExpenseCategory } from "@/types/expense.types";
 
 export const EXPENSE_CATEGORY_COLORS: Record<ExpenseCategory, string> = {
-  [ExpenseCategory.VET]:         "#6B8595",
-  [ExpenseCategory.FOOD]:        "#C9A567",
-  [ExpenseCategory.ACCESSORIES]: "#A88FC2",
-  [ExpenseCategory.GROOMING]:    "#D4A24C",
-  [ExpenseCategory.OTHER]:       "#9CAEBA",
+  [ExpenseCategory.VET]: "#3B82A0",
+  [ExpenseCategory.FOOD]: "#2FA66A",
+  [ExpenseCategory.ACCESSORIES]: "#9B5DE5",
+  [ExpenseCategory.GROOMING]: "#E76F51",
+  [ExpenseCategory.OTHER]: "#8A9AA6",
 };
 
 export const EXPENSE_CATEGORY_ICON: Record<ExpenseCategory, string> = {
-  [ExpenseCategory.VET]:         "stethoscope",
-  [ExpenseCategory.FOOD]:        "fork.knife",
+  [ExpenseCategory.VET]: "stethoscope",
+  [ExpenseCategory.FOOD]: "fork.knife",
   [ExpenseCategory.ACCESSORIES]: "bag",
-  [ExpenseCategory.GROOMING]:    "scissors",
-  [ExpenseCategory.OTHER]:       "creditcard",
+  [ExpenseCategory.GROOMING]: "scissors",
+  [ExpenseCategory.OTHER]: "creditcard",
 };
 
 export function formatCurrency(amount: number, currency: string): string {

@@ -630,7 +630,8 @@ const de = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -821,7 +822,8 @@ const de = {
     markAsMemory: "als andenken markieren",
     markAsMemorySubtitle: "die daten bleiben sicher gespeichert",
     empathyTitle: "wir sind bei dir",
-    empathyMessage: "die erinnerungen an {{name}} bleiben für immer hier, sicher aufgehoben. du kannst jederzeit zurückkehren und jeden moment neu erleben.",
+    empathyMessage:
+      "die erinnerungen an {{name}} bleiben für immer hier, sicher aufgehoben. du kannst jederzeit zurückkehren und jeden moment neu erleben.",
     dateLabel: "datum",
     datePlaceholder: "wann ist es passiert?",
     noteLabel: "ein letzter gedanke",
@@ -838,6 +840,10 @@ const de = {
     restoreExpired: "das 14-tägige wiederherstellungsfenster ist abgelaufen",
     anniversaryOptIn: "an den jahrestag erinnern",
     managementSection: "verwaltung",
+  },
+  avatar: {
+    changePhoto: "foto ändern",
+    removePhoto: "foto entfernen",
   },
 } as const;
 

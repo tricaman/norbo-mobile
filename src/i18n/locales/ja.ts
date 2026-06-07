@@ -620,7 +620,8 @@ const ja = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -811,7 +812,8 @@ const ja = {
     markAsMemory: "思い出として保存",
     markAsMemorySubtitle: "データは安全に保管されます",
     empathyTitle: "あなたのそばにいます",
-    empathyMessage: "{{name}} の思い出は、ここに安全に残ります。いつでも振り返り、一緒に過ごした時間を追体験できます。",
+    empathyMessage:
+      "{{name}} の思い出は、ここに安全に残ります。いつでも振り返り、一緒に過ごした時間を追体験できます。",
     dateLabel: "日付",
     datePlaceholder: "いつ起こりましたか？",
     noteLabel: "最後の想い",
@@ -828,6 +830,10 @@ const ja = {
     restoreExpired: "14日間の復元期間が終了しました",
     anniversaryOptIn: "記念日を通知する",
     managementSection: "管理",
+  },
+  avatar: {
+    changePhoto: "写真を変更",
+    removePhoto: "写真を削除",
   },
 } as const;
 

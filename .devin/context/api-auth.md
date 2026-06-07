@@ -30,4 +30,4 @@ Supported providers: google, facebook, microsoft
 
 GET /auth/me → current user (requires session cookie)
 POST /auth/sign-out → clears session cookie
-POST /auth/ws-token → returns { wsToken } for dit-ping WebSocket auth
+POST /auth/ws-token → returns { wsToken } for norbo-ping WebSocket auth

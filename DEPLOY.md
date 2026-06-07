@@ -10,7 +10,7 @@ Versione corrente: **1.3.1** (Android `versionCode` 4 / iOS `buildNumber` 6).
 
 - [ ] Tutto committato su `main`
 - [ ] `pnpm install` aggiornato
-- [ ] Backend prod (`norbo-api.mariustrica.com`, `norbo-ws.mariustrica.com`) raggiungibili
+- [ ] Backend prod (`api.norbo.app`, `ws.norbo.app`) raggiungibili
 - [ ] `.env.prod` presente in root (vedi `.env.example` per la lista variabili)
 - [ ] File Firebase prod presenti:
   - `firebase/prod/google-services.json`
@@ -20,7 +20,7 @@ Versione corrente: **1.3.1** (Android `versionCode` 4 / iOS `buildNumber` 6).
   - `NORBO_UPLOAD_STORE_PASSWORD`
   - `NORBO_UPLOAD_KEY_ALIAS`
   - `NORBO_UPLOAD_KEY_PASSWORD`
-  > Senza queste l'APK release viene firmato con la debug key (NON pubblicabile).
+    > Senza queste l'APK release viene firmato con la debug key (NON pubblicabile).
 
 ---
 
@@ -104,9 +104,9 @@ eas build --profile production --platform all
 ## 6. Verifica build
 
 - [ ] L'app installata si chiama **norbo** (non "norbo (Dev)" né "norbo (Preview)")
-- [ ] Bundle id: `app.mariustrica.norbo` (no suffisso `.dev` / `.preview`)
-- [ ] Login funziona contro `norbo-api.mariustrica.com`
-- [ ] WebSocket si connette a `norbo-ws.mariustrica.com/ws`
+- [ ] Bundle id: `app.norbo` (no suffisso `.dev` / `.preview`)
+- [ ] Login funziona contro `api.norbo.app`
+- [ ] WebSocket si connette a `ws.norbo.app/ws`
 - [ ] Push notification arrivano (token FCM registrato sul progetto Firebase prod)
 
 ---

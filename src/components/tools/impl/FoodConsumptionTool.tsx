@@ -1,23 +1,19 @@
-import { NorboPressable } from "@/components/CustomPressable";
 import { AddPetBanner } from "@/components/tools/AddPetBanner";
+import { ConsumableReminderButton } from "@/components/tools/ConsumableReminderButton";
 import {
   ToolNumberField,
   ToolResultCard,
   ToolSection,
 } from "@/components/tools/ui";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
-import { remindersApi } from "@/services/reminders.api";
 import type { ServiceToolInput } from "@/shared/services-contract";
-import { ReminderSubjectType } from "@/types/reminder.types";
 import { useQuery } from "@tanstack/react-query";
 import { addDays, format } from "date-fns";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text, View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import type { Pet } from "@/types/pet.types";
+import { ScrollView } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 import type { ToolComponent } from "../tool-component";
 
 type Inputs = ServiceToolInput<"food-consumption">;
@@ -28,7 +24,6 @@ const FoodConsumptionTool: ToolComponent<"food-consumption"> = ({
   onInputsChange,
 }) => {
   const { t } = useTranslation();
-  const { theme } = useUnistyles();
   const petsQuery = useQuery({
     queryKey: ["pets"],
     queryFn: () => petsApi.list().then((r) => r.data),
@@ -103,10 +98,12 @@ const FoodConsumptionTool: ToolComponent<"food-consumption"> = ({
             value={format(reorderDate, "dd/MM/yyyy")}
           />
           {pet ? (
-            <ReminderLink
-              pet={pet}
+            <ConsumableReminderButton
+              petId={pet.id}
+              title={t("tools.foodConsumption.reminderTitle", {
+                name: pet.name,
+              })}
               dueAt={reorderDate}
-              labelColor={theme.colors.primary}
             />
           ) : null}
         </ToolSection>
@@ -117,63 +114,10 @@ const FoodConsumptionTool: ToolComponent<"food-consumption"> = ({
 
 export default FoodConsumptionTool;
 
-/** Creates a CONSUMABLE reminder via the existing Reminder Engine API. */
-function ReminderLink({
-  pet,
-  dueAt,
-  labelColor,
-}: {
-  pet: Pet;
-  dueAt: Date;
-  labelColor: string;
-}): React.JSX.Element {
-  const { t } = useTranslation();
-  const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: () =>
-      remindersApi
-        .create({
-          subjectType: ReminderSubjectType.CONSUMABLE,
-          petId: pet.id,
-          title: t("tools.foodConsumption.reminderTitle", { name: pet.name }),
-          dueAt: dueAt.toISOString(),
-        })
-        .then((r) => r.data),
-    showSuccessToast: true,
-    successMessage: t("tools.foodConsumption.reminderCreated"),
-  });
-
-  return (
-    <NorboPressable
-      scale="row"
-      haptic="medium"
-      disabled={isPending || isSuccess}
-      onPress={() => mutate()}
-      style={styles.reminderBtn}
-    >
-      <Text style={[styles.reminderLabel, { color: labelColor }]}>
-        {isSuccess
-          ? t("tools.foodConsumption.reminderCreated")
-          : t("tools.foodConsumption.createReminder")}
-      </Text>
-    </NorboPressable>
-  );
-}
-
 const styles = StyleSheet.create((theme) => ({
   content: {
     padding: theme.spacing.lg,
     gap: theme.spacing.md,
     paddingBottom: theme.spacing["4xl"],
-  },
-  reminderBtn: {
-    alignItems: "center",
-    paddingVertical: theme.spacing.md,
-    borderRadius: theme.radius.pill,
-    borderWidth: theme.hairline,
-    borderColor: theme.colors.primary,
-  },
-  reminderLabel: {
-    ...theme.typography.subhead,
-    fontFamily: theme.fonts.monoMd,
   },
 }));

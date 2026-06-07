@@ -5,6 +5,7 @@ import {
   ToolUnitToggle,
 } from "@/components/tools/ui";
 import { useDebounce } from "@/hooks/useDebounce";
+import { restingEnergyKcal } from "@/utils/energy";
 import type { ServiceToolInput } from "@/shared/services-contract";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -21,7 +22,7 @@ type Activity = Inputs["activity"];
  * Indicative husbandry estimate — never a clinical or drug dose.
  */
 function mer(weightKg: number, ageMonths: number, activity: Activity, neutered: boolean): number {
-  const rer = 70 * Math.pow(weightKg, 0.75);
+  const rer = restingEnergyKcal(weightKg);
   let factor: number;
   if (ageMonths < 4) factor = 3.0; // early growth
   else if (ageMonths < 12) factor = 2.0; // growth

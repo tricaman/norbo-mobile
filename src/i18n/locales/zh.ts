@@ -612,7 +612,8 @@ const zh = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -803,7 +804,8 @@ const zh = {
     markAsMemory: "标记为纪念",
     markAsMemorySubtitle: "数据将安全保存",
     empathyTitle: "我们陪伴着你",
-    empathyMessage: "{{name}} 的回忆将永远在这里，安然无恙。你可以随时回来重温每一个陪伴的时刻。",
+    empathyMessage:
+      "{{name}} 的回忆将永远在这里，安然无恙。你可以随时回来重温每一个陪伴的时刻。",
     dateLabel: "日期",
     datePlaceholder: "什么时候发生的？",
     noteLabel: "最后的寄语",
@@ -820,6 +822,10 @@ const zh = {
     restoreExpired: "14天恢复期已过",
     anniversaryOptIn: "提醒我周年纪念",
     managementSection: "管理",
+  },
+  avatar: {
+    changePhoto: "更换照片",
+    removePhoto: "移除照片",
   },
 } as const;
 

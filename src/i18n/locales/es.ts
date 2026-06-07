@@ -627,7 +627,8 @@ const es = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -678,7 +679,8 @@ const es = {
     },
     petAgeHumanYears: {
       title: "edad en años humanos",
-      description: "convierte la edad de tu mascota en años humanos indicativos",
+      description:
+        "convierte la edad de tu mascota en años humanos indicativos",
       age: "edad",
       months: "meses",
       size: "tamaño",
@@ -753,7 +755,8 @@ const es = {
     },
     bodyConditionScore: {
       unsupported: "escala no disponible para esta categoría",
-      disclaimer: "Herramienta indicativa, no sustituye la valoración del veterinario.",
+      disclaimer:
+        "Herramienta indicativa, no sustituye la valoración del veterinario.",
       scale: {
         wsava: "escala WSAVA",
         henneke: "escala Henneke",
@@ -818,7 +821,8 @@ const es = {
     markAsMemory: "marcar como recuerdo",
     markAsMemorySubtitle: "los datos se conservarán a salvo",
     empathyTitle: "estamos contigo",
-    empathyMessage: "los recuerdos de {{name}} estarán siempre aquí, a salvo. puedes volver para revivir cada momento juntos.",
+    empathyMessage:
+      "los recuerdos de {{name}} estarán siempre aquí, a salvo. puedes volver para revivir cada momento juntos.",
     dateLabel: "fecha",
     datePlaceholder: "¿cuándo ocurrió?",
     noteLabel: "un último pensamiento",
@@ -835,6 +839,10 @@ const es = {
     restoreExpired: "el periodo de restauración de 14 días ha caducado",
     anniversaryOptIn: "recordarme el aniversario",
     managementSection: "gestión",
+  },
+  avatar: {
+    changePhoto: "cambiar foto",
+    removePhoto: "eliminar foto",
   },
 } as const;
 

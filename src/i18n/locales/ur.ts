@@ -625,7 +625,8 @@ const ur = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -676,7 +677,8 @@ const ur = {
     },
     petAgeHumanYears: {
       title: "انسانی سالوں میں عمر",
-      description: "آپ کے پالتو جانور کی عمر کو اشارے کے طور پر انسانی سالوں میں تبدیل کرتا ہے",
+      description:
+        "آپ کے پالتو جانور کی عمر کو اشارے کے طور پر انسانی سالوں میں تبدیل کرتا ہے",
       age: "عمر",
       months: "مہینے",
       size: "سائز",
@@ -816,7 +818,8 @@ const ur = {
     markAsMemory: "یاد کے طور پر نشان زد کریں",
     markAsMemorySubtitle: "ڈیٹا محفوظ رہے گا",
     empathyTitle: "ہم آپ کے ساتھ ہیں",
-    empathyMessage: "{{name}} کی یادیں ہمیشہ یہاں، محفوظ و سلامت رہیں گی۔ آپ واپس آ کر ہر لمحہ دوبارہ جی سکتے ہیں۔",
+    empathyMessage:
+      "{{name}} کی یادیں ہمیشہ یہاں، محفوظ و سلامت رہیں گی۔ آپ واپس آ کر ہر لمحہ دوبارہ جی سکتے ہیں۔",
     dateLabel: "تاریخ",
     datePlaceholder: "یہ کب ہوا؟",
     noteLabel: "آخری خیال",
@@ -826,13 +829,18 @@ const ur = {
     safeMessage: "{{name}} کی یادیں یہاں محفوظ ہیں",
     restore: "بحال کریں",
     restoreConfirmTitle: "پالتو جانور بحال کریں",
-    restoreConfirmMessage: "کیا {{name}} کو دوبارہ فعال پالتو جانوروں میں شامل کیا جائے؟",
+    restoreConfirmMessage:
+      "کیا {{name}} کو دوبارہ فعال پالتو جانوروں میں شامل کیا جائے؟",
     restoreConfirmOk: "بحال کریں",
     restoreConfirmCancel: "منسوخ",
     restoreSuccess: "{{name}} دوبارہ فعال پالتو جانوروں میں شامل ہوگیا ہے",
     restoreExpired: "14 دن کی بحالی کی مدت ختم ہوگئی ہے",
     anniversaryOptIn: "مجھے برسی کی یاد دہانی کروائیں",
     managementSection: "انتظام",
+  },
+  avatar: {
+    changePhoto: "تصویر تبدیل کریں",
+    removePhoto: "تصویر ہٹائیں",
   },
 } as const;
 

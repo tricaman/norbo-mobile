@@ -627,7 +627,8 @@ const hi = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -678,7 +679,8 @@ const hi = {
     },
     petAgeHumanYears: {
       title: "मानव वर्षों में आयु",
-      description: "आपके पालतू जानवर की आयु को संकेतात्मक मानव वर्षों में बदलता है",
+      description:
+        "आपके पालतू जानवर की आयु को संकेतात्मक मानव वर्षों में बदलता है",
       age: "आयु",
       months: "महीने",
       size: "आकार",
@@ -735,7 +737,8 @@ const hi = {
       result: "परिणाम",
       hint: "यह जाँचने के लिए कोई भोजन या पौधा टाइप करें कि वह सुरक्षित है या नहीं",
       unknown: "सूचीबद्ध नहीं: संदेह होने पर अपने पशु चिकित्सक से संपर्क करें",
-      disclaimer: "अगर निगल लिया गया है, तो तुरंत अपने पशु चिकित्सक से संपर्क करें।",
+      disclaimer:
+        "अगर निगल लिया गया है, तो तुरंत अपने पशु चिकित्सक से संपर्क करें।",
       risk: {
         SAFE: "सुरक्षित",
         CAUTION: "सावधानी",
@@ -753,7 +756,8 @@ const hi = {
     },
     bodyConditionScore: {
       unsupported: "इस श्रेणी के लिए पैमाना उपलब्ध नहीं है",
-      disclaimer: "संकेतात्मक उपकरण, आपके पशु चिकित्सक के मूल्यांकन का विकल्प नहीं।",
+      disclaimer:
+        "संकेतात्मक उपकरण, आपके पशु चिकित्सक के मूल्यांकन का विकल्प नहीं।",
       scale: {
         wsava: "WSAVA पैमाना",
         henneke: "Henneke पैमाना",
@@ -818,7 +822,8 @@ const hi = {
     markAsMemory: "स्मृति के रूप में चिह्नित करें",
     markAsMemorySubtitle: "डेटा सुरक्षित रखा जाएगा",
     empathyTitle: "हम आपके साथ हैं",
-    empathyMessage: "{{name}} की यादें हमेशा यहाँ सुरक्षित रहेंगी। आप वापस आकर हर पल को फिर से जी सकते हैं।",
+    empathyMessage:
+      "{{name}} की यादें हमेशा यहाँ सुरक्षित रहेंगी। आप वापस आकर हर पल को फिर से जी सकते हैं।",
     dateLabel: "तारीख",
     datePlaceholder: "यह कब हुआ?",
     noteLabel: "एक अंतिम विचार",
@@ -835,6 +840,10 @@ const hi = {
     restoreExpired: "14 दिन की पुनर्स्थापना अवधि समाप्त हो गई है",
     anniversaryOptIn: "मुझे वर्षगाँठ की याद दिलाएँ",
     managementSection: "प्रबंधन",
+  },
+  avatar: {
+    changePhoto: "फ़ोटो बदलें",
+    removePhoto: "फ़ोटो हटाएँ",
   },
 } as const;
 

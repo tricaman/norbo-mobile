@@ -627,7 +627,8 @@ const pt = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -753,7 +754,8 @@ const pt = {
     },
     bodyConditionScore: {
       unsupported: "escala não disponível para esta categoria",
-      disclaimer: "Ferramenta indicativa, não substitui a avaliação do veterinário.",
+      disclaimer:
+        "Ferramenta indicativa, não substitui a avaliação do veterinário.",
       scale: {
         wsava: "Escala WSAVA",
         henneke: "Escala Henneke",
@@ -818,7 +820,8 @@ const pt = {
     markAsMemory: "marcar como memória",
     markAsMemorySubtitle: "os dados serão mantidos em segurança",
     empathyTitle: "estamos com você",
-    empathyMessage: "as lembranças de {{name}} estarão sempre aqui, seguras e intactas. você pode voltar para reviver cada momento juntos.",
+    empathyMessage:
+      "as lembranças de {{name}} estarão sempre aqui, seguras e intactas. você pode voltar para reviver cada momento juntos.",
     dateLabel: "data",
     datePlaceholder: "quando aconteceu?",
     noteLabel: "um último pensamento",
@@ -835,6 +838,10 @@ const pt = {
     restoreExpired: "o prazo de 14 dias para restaurar expirou",
     anniversaryOptIn: "lembrar-me do aniversário",
     managementSection: "gerenciamento",
+  },
+  avatar: {
+    changePhoto: "alterar foto",
+    removePhoto: "remover foto",
   },
 } as const;
 

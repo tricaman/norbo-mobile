@@ -51,7 +51,7 @@ Navigation rules:
 
 ## WebSocket Lifecycle
 
-1. **Connect** on successful auth → open WebSocket to dit-ping.
+1. **Connect** on successful auth → open WebSocket to norbo-ping.
 2. **Auth message** → send `{ type: "auth", token }` immediately on `onopen`.
 3. **Heartbeat loop** → send `{ type: "heartbeat" }` every 30 seconds.
 4. **Reconnect backoff** → on close/error, exponential backoff (1s → 2s → 4s → ... → 30s max).
@@ -126,7 +126,7 @@ Animates via Reanimated shared values for zero-JS-thread updates on WebSocket me
 1. Hydrate: read user from MMKV → isAuthed = true (optimistic)
 2. Validate: GET /auth/me → if 401, clearAuth() and show login
 3. WS token: POST /auth/ws-token → store wsToken in memory
-4. Connect: open WebSocket to dit-ping with wsToken
+4. Connect: open WebSocket to norbo-ping with wsToken
 
 ### Login
 

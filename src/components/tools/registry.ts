@@ -84,6 +84,54 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/BodyConditionScoreTool"),
       true,
     ),
+    "dog-water-intake": defineLazyTool<"dog-water-intake">(
+      () => import("./impl/DogWaterIntakeTool"),
+      true,
+    ),
+    "dog-activity-guide": defineLazyTool<"dog-activity-guide">(
+      () => import("./impl/DogActivityGuideTool"),
+      false,
+    ),
+    "puppy-milestone-tracker": defineLazyTool<"puppy-milestone-tracker">(
+      () => import("./impl/PuppyMilestoneTrackerTool"),
+      false,
+    ),
+    "dog-ideal-weight": defineLazyTool<"dog-ideal-weight">(
+      () => import("./impl/DogIdealWeightTool"),
+      true,
+    ),
+    "cat-litter-calculator": defineLazyTool<"cat-litter-calculator">(
+      () => import("./impl/CatLitterCalculatorTool"),
+      false,
+    ),
+    "cat-wet-dry-balance": defineLazyTool<"cat-wet-dry-balance">(
+      () => import("./impl/CatWetDryBalanceTool"),
+      true,
+    ),
+    "cat-water-intake": defineLazyTool<"cat-water-intake">(
+      () => import("./impl/CatWaterIntakeTool"),
+      true,
+    ),
+    "cat-plant-toxicity": defineLazyTool<"cat-plant-toxicity">(
+      () => import("./impl/CatPlantToxicityTool"),
+      false,
+    ),
+    "safe-temperatures-small": defineLazyTool<"safe-temperatures-small">(
+      () => import("./impl/SafeTemperaturesSmallTool"),
+      false,
+    ),
+    "small-mammal-ration": defineLazyTool<"small-mammal-ration">(
+      () => import("./impl/SmallMammalRationTool"),
+      true,
+    ),
+    "small-mammal-enclosure": defineLazyTool<"small-mammal-enclosure">(
+      () => import("./impl/SmallMammalEnclosureTool"),
+      false,
+    ),
+    "rabbit-hay-supply": defineLazyTool<"rabbit-hay-supply">(
+      () => import("./impl/RabbitHaySupplyTool"),
+      true,
+    ),
   };
 
 /** The tool ids this app build can render — the local side of the intersection. */

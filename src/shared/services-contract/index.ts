@@ -42,6 +42,8 @@ const expenseCategoryEnum = z.enum(
   Object.values(ExpenseCategory) as [ExpenseCategory, ...ExpenseCategory[]],
 );
 const frequencyEnum = z.enum(['WEEK', 'MONTH', 'YEAR']);
+const dogSizeEnum = z.enum(['TOY', 'SMALL', 'MEDIUM', 'LARGE', 'GIANT']);
+const sexEnum = z.enum(['MALE', 'FEMALE', 'UNKNOWN']);
 
 /**
  * Shape every contract entry satisfies. Kept as a structural constraint
@@ -157,6 +159,120 @@ export const bodyConditionScoreInput = z.object({
   answers: z.array(z.number().int().min(0).max(10)).min(1).max(6),
 });
 
+// ── Dog-specific tools ────────────────────────────────────────────────────────
+
+/**
+ * `dog-water-intake` — indicative daily water need for a dog from body
+ * weight (≈50–70 ml/kg for adult dogs at rest). The coefficient + notes live
+ * in the frontend component. Non-clinical. Weight pre-fills from the profile.
+ */
+export const dogWaterIntakeInput = z.object({
+  weightKg: z.number().positive().max(120),
+});
+
+/**
+ * `dog-activity-guide` — structured reference (no calc): exercise guidance by
+ * size + age band, content served from care-knowledge. Not persisted.
+ */
+export const dogActivityGuideInput = z.object({
+  size: dogSizeEnum,
+  ageBand: z.enum(['PUPPY', 'ADULT', 'SENIOR']),
+});
+
+/**
+ * `puppy-milestone-tracker` — derived from the pet's birth date (only for
+ * dogs under 24 months). Milestones are care-knowledge content indexed by
+ * size; the input just carries the size. Not persisted, no clinical content.
+ */
+export const puppyMilestoneTrackerInput = z.object({
+  size: dogSizeEnum,
+});
+
+/**
+ * `dog-ideal-weight` — ideal weight range by breed standard (or by size for
+ * mixed breeds) + sex, compared with the current weight. Breed/size data is
+ * care-knowledge content. `breedId` is a care-knowledge breed id or a
+ * `size:<SIZE>` fallback token. Non-clinical. Persisted per pet.
+ */
+export const dogIdealWeightInput = z.object({
+  breedId: z.string().min(1).max(64),
+  sex: sexEnum,
+});
+
+// ── Cat-specific tools ────────────────────────────────────────────────────────
+
+/**
+ * `cat-litter-calculator` — reference guide (no persistence): number of cats →
+ * recommended litter boxes (n+1) + min size + placement/cleaning notes
+ * (content from care-knowledge). Cat count pre-fills from registered cats.
+ */
+export const catLitterCalculatorInput = z.object({
+  catCount: z.number().int().min(1).max(20),
+});
+
+/**
+ * `cat-wet-dry-balance` — cat weight + desired wet share → grams of wet/dry
+ * to hit the daily kcal target (RER × cat factor, computed in the component;
+ * caloric densities are care-knowledge config, not hardcoded). Persisted.
+ */
+export const catWetDryBalanceInput = z.object({
+  weightKg: z.number().positive().max(20),
+  wetPercent: z.number().min(0).max(100),
+});
+
+/**
+ * `cat-water-intake` — cat weight + prevalent food type → indicative total
+ * water need and the free-water share to add (net of water in food).
+ * Coefficients + hydration notes are care-knowledge content. Persisted.
+ */
+export const catWaterIntakeInput = z.object({
+  weightKg: z.number().positive().max(20),
+  foodType: z.enum(['DRY', 'WET', 'MIXED']),
+});
+
+// ── Small-mammal tools ────────────────────────────────────────────────────────
+// `species` is a care-knowledge species id (rabbit, hamster, …); unknown ids
+// fall back to the generic MAMMAL_SMALL content.
+
+/**
+ * `safe-temperatures-small` — structured content (no calc, no persistence):
+ * safe ambient range, heat-stroke and torpor thresholds, behaviour cues, by
+ * species (care-knowledge).
+ */
+export const safeTemperaturesSmallInput = z.object({
+  species: z.string().min(1).max(64),
+});
+
+/**
+ * `small-mammal-ration` — indicative daily ration by species + weight + age
+ * (proportions from published guidelines in care-knowledge; never clinical
+ * supplement dosing). Persisted per pet.
+ */
+export const smallMammalRationInput = z.object({
+  species: z.string().min(1).max(64),
+  weightKg: z.number().positive().max(20),
+  ageMonths: z.number().int().min(0).max(360),
+});
+
+/**
+ * `small-mammal-enclosure` — minimum floor area / height + enrichment notes by
+ * species + number of animals (care-knowledge). Not persisted.
+ */
+export const smallMammalEnclosureInput = z.object({
+  species: z.string().min(1).max(64),
+  count: z.number().int().min(1).max(20),
+});
+
+/**
+ * `rabbit-hay-supply` — rabbit hay autonomy: weight + current stock → days
+ * left + reorder date (hay g/kg/day from care-knowledge). Offers a CONSUMABLE
+ * reminder via the existing Reminder Engine integration. Persisted per pet.
+ */
+export const rabbitHaySupplyInput = z.object({
+  weightKg: z.number().positive().max(20),
+  currentStockG: z.number().min(0).max(100_000),
+});
+
 /**
  * `reptile-environment-guide` — structured care content (no calculation): the
  * selected curated reptile profile whose target temperature/humidity ranges
@@ -222,6 +338,68 @@ export const SERVICE_TOOL_CONTRACTS = {
     id: 'body-condition-score',
     schemaVersion: 1,
     inputSchema: bodyConditionScoreInput,
+  },
+  'dog-water-intake': {
+    id: 'dog-water-intake',
+    schemaVersion: 1,
+    inputSchema: dogWaterIntakeInput,
+  },
+  'dog-activity-guide': {
+    id: 'dog-activity-guide',
+    schemaVersion: 1,
+    inputSchema: dogActivityGuideInput,
+  },
+  'puppy-milestone-tracker': {
+    id: 'puppy-milestone-tracker',
+    schemaVersion: 1,
+    inputSchema: puppyMilestoneTrackerInput,
+  },
+  'dog-ideal-weight': {
+    id: 'dog-ideal-weight',
+    schemaVersion: 1,
+    inputSchema: dogIdealWeightInput,
+  },
+  'cat-litter-calculator': {
+    id: 'cat-litter-calculator',
+    schemaVersion: 1,
+    inputSchema: catLitterCalculatorInput,
+  },
+  'cat-wet-dry-balance': {
+    id: 'cat-wet-dry-balance',
+    schemaVersion: 1,
+    inputSchema: catWetDryBalanceInput,
+  },
+  'cat-water-intake': {
+    id: 'cat-water-intake',
+    schemaVersion: 1,
+    inputSchema: catWaterIntakeInput,
+  },
+  // Cat-specialised plant toxicity: a quick-access into the same cross-species
+  // toxicity tool, pre-filtered to cats. Reuses the toxicity input shape.
+  'cat-plant-toxicity': {
+    id: 'cat-plant-toxicity',
+    schemaVersion: 1,
+    inputSchema: foodPlantToxicityInput,
+  },
+  'safe-temperatures-small': {
+    id: 'safe-temperatures-small',
+    schemaVersion: 1,
+    inputSchema: safeTemperaturesSmallInput,
+  },
+  'small-mammal-ration': {
+    id: 'small-mammal-ration',
+    schemaVersion: 1,
+    inputSchema: smallMammalRationInput,
+  },
+  'small-mammal-enclosure': {
+    id: 'small-mammal-enclosure',
+    schemaVersion: 1,
+    inputSchema: smallMammalEnclosureInput,
+  },
+  'rabbit-hay-supply': {
+    id: 'rabbit-hay-supply',
+    schemaVersion: 1,
+    inputSchema: rabbitHaySupplyInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

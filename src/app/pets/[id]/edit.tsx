@@ -1,3 +1,4 @@
+import { queryClient } from "@/app/_layout";
 import { NorboPressable } from "@/components/CustomPressable";
 import { AvatarUploader } from "@/components/media/AvatarUploader";
 import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
@@ -14,17 +15,16 @@ import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useForm } from "@/hooks/useForm";
 import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
-import { Sex, type Pet, type SpeciesResult } from "@/types/pet.types";
-import { queryClient } from "@/app/_layout";
 import type { MediaAsset } from "@/types/media.types";
+import { Sex, type Pet, type SpeciesResult } from "@/types/pet.types";
 import { useQuery } from "@tanstack/react-query";
+import { format, parseISO } from "date-fns";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import { Controller, FormProvider } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { useTranslation } from "react-i18next";
-import { format, parseISO } from "date-fns";
 import { z } from "zod";
 
 const petEditSchema = z.object({
@@ -80,6 +80,15 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
     },
   });
 
+  const { mutate: removePhoto } = useMutation({
+    mutationFn: () => petsApi.deletePhoto(petId),
+    showSuccessToast: true,
+    successMessage: t("avatar.removePhoto"),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["pets", petId] });
+    },
+  });
+
   const form = useForm<PetEditValues>({
     schema: petEditSchema,
     defaultValues: {
@@ -92,12 +101,13 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
     },
   });
 
-  const speciesId = form.watch("speciesId");
+  const [selectedSpeciesId, setSelectedSpeciesId] = useState<string | null>(
+    pet.speciesId ?? null,
+  );
   const [speciesInput, setSpeciesInput] = useState("");
   const [debouncedInput, setDebouncedInput] = useState("");
   const [speciesLabel, setSpeciesLabel] = useState(
-    pet.speciesLabelFreetext ??
-      (pet.speciesId ? t("petForm.speciesLabel") : ""),
+    pet.speciesLabelFreetext ?? "",
   );
 
   useEffect(() => {
@@ -116,18 +126,20 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
 
   const showSuggestions =
     debouncedInput.length >= 2 &&
-    !speciesId &&
+    !selectedSpeciesId &&
     (speciesQuery.data?.length ?? 0) > 0;
 
   function selectSpecies(s: SpeciesResult) {
-    form.setValue("speciesId", s.id);
+    setSelectedSpeciesId(s.id);
+    form.setValue("speciesId", s.id, { shouldDirty: true });
     setSpeciesLabel(s.commonName);
     setSpeciesInput("");
     setDebouncedInput("");
   }
 
   function clearSpecies() {
-    form.setValue("speciesId", null);
+    setSelectedSpeciesId(null);
+    form.setValue("speciesId", null, { shouldDirty: true });
     setSpeciesLabel("");
     setSpeciesInput("");
     setDebouncedInput("");
@@ -138,6 +150,7 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
       petsApi.update(petId, {
         name: values.name,
         speciesId: values.speciesId ?? null,
+        speciesLabelFreetext: values.speciesId ? null : speciesLabel || null,
         sex: values.sex,
         birthDate: values.birthDate ?? null,
         sterilized: values.sterilized ?? null,
@@ -172,6 +185,7 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
               context="PET_AVATAR"
               contextRef={`pet:${petId}`}
               onUploaded={updatePhoto}
+              onRemove={() => removePhoto()}
               size="xl"
             />
           </View>
@@ -185,9 +199,11 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
           </FormCard>
 
           <FormCard label={t("petForm.speciesLabel")}>
-            {speciesId ? (
+            {selectedSpeciesId ? (
               <View style={styles.speciesSelected}>
-                <Text style={styles.speciesSelectedText}>{speciesLabel}</Text>
+                <Text style={styles.speciesSelectedText}>
+                  {speciesLabel || t("petWizard.speciesSelected")}
+                </Text>
                 <NorboPressable
                   scale="row"
                   haptic="light"
@@ -203,10 +219,10 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
             ) : (
               <TextInput
                 placeholder={t("petForm.speciesPlaceholder")}
+                placeholderTextColor={theme.colors.textTertiary}
                 value={speciesInput}
                 onChangeText={(v: string) => {
                   setSpeciesInput(v);
-                  form.setValue("speciesId", null);
                 }}
                 autoCorrect={false}
                 autoCapitalize="none"

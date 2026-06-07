@@ -625,7 +625,8 @@ const id = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -676,7 +677,8 @@ const id = {
     },
     petAgeHumanYears: {
       title: "usia dalam tahun manusia",
-      description: "mengonversi usia hewan peliharaan Anda ke tahun manusia indikatif",
+      description:
+        "mengonversi usia hewan peliharaan Anda ke tahun manusia indikatif",
       age: "usia",
       months: "bulan",
       size: "ukuran",
@@ -751,7 +753,8 @@ const id = {
     },
     bodyConditionScore: {
       unsupported: "skala tidak tersedia untuk kategori ini",
-      disclaimer: "Alat indikatif, bukan pengganti penilaian dokter hewan Anda.",
+      disclaimer:
+        "Alat indikatif, bukan pengganti penilaian dokter hewan Anda.",
       scale: {
         wsava: "Skala WSAVA",
         henneke: "Skala Henneke",
@@ -816,7 +819,8 @@ const id = {
     markAsMemory: "tandai sebagai kenangan",
     markAsMemorySubtitle: "data akan tetap aman tersimpan",
     empathyTitle: "kami bersamamu",
-    empathyMessage: "kenangan {{name}} akan selalu ada di sini, aman dan tenteram. kamu bisa kembali untuk mengulang setiap momen bersama.",
+    empathyMessage:
+      "kenangan {{name}} akan selalu ada di sini, aman dan tenteram. kamu bisa kembali untuk mengulang setiap momen bersama.",
     dateLabel: "tanggal",
     datePlaceholder: "kapan itu terjadi?",
     noteLabel: "pesan terakhir",
@@ -833,6 +837,10 @@ const id = {
     restoreExpired: "jangka waktu pemulihan 14 hari telah berakhir",
     anniversaryOptIn: "ingatkan saya pada hari peringatan",
     managementSection: "pengelolaan",
+  },
+  avatar: {
+    changePhoto: "ubah foto",
+    removePhoto: "hapus foto",
   },
 } as const;
 

@@ -22,7 +22,7 @@ description: "ADR log for norbo-mobile. Read before proposing alternatives to es
 
 **Date:** 2026-04-05
 **Decision:** Use the built-in `WebSocket` API (React Native polyfill) instead of socket.io-client.
-**Rationale:** dit-ping speaks raw WebSocket with a custom JSON protocol. socket.io adds an abstraction layer (engine.io transport negotiation, room/namespace concepts) that we don't need and that would require socket.io on the Go server side.
+**Rationale:** norbo-ping speaks raw WebSocket with a custom JSON protocol. socket.io adds an abstraction layer (engine.io transport negotiation, room/namespace concepts) that we don't need and that would require socket.io on the Go server side.
 **Consequence:** Implement heartbeat and reconnect logic manually in `src/services/websocket.ts`. No automatic reconnect, no multiplexing — all handled explicitly. Message framing is JSON with a `type` discriminator.
 
 ## ADR-003 — MMKV over AsyncStorage

@@ -56,6 +56,14 @@ Tools never import persistence/premium/telemetry — they only read `initialInpu
 Styling: react-native-unistyles v3. NEVER RN's StyleSheet.create().
 Every style via `StyleSheet.create(theme => ...)` from `react-native-unistyles`.
 For theme access in component logic: `const { theme } = useUnistyles()`.
+MANDATORY: the unistyles Babel plugin MUST be in `babel.config.js`
+(`['react-native-unistyles/plugin', { root: 'src' }]`, before reanimated and
+before react-compiler). It is what installs the native binding that propagates
+runtime theme changes. WITHOUT it, `StyleSheet.create` styles are static and
+the theme only "updates" on app restart (MMKV bootstrap) — never at runtime.
+Do NOT work around this with manual `useThemeStore`/`useUnistyles()`
+subscriptions in components; fix the plugin. Babel changes need `--clear`
+(Metro cache); no native rebuild needed since the native module already ships.
 Tokens in src/theme/.
 Primary color: toxic green. Dark: #2EF080. Light: #00B84E.
 Text on primary fill: theme.colors.textOnPrimary (never hardcode).
@@ -252,9 +260,9 @@ Custom toast system — `burnt` is gone.
 
 **Dah/ignore flow**: Send via WebSocket if `wsService.isConnected()`, otherwise REST fallback (`pingsApi.dahPing` / `pingsApi.ignorePing`). Never use optimistic timeout without server confirmation.
 
-**`dahed` event**: dit-ping sends the `dahed` WS event to **both** the ping sender AND the dah sender (ping recipient). The dah sender's client uses this as confirmation to resolve the promise. Never assume `dahed` only arrives on the sender's device.
+**`dahed` event**: norbo-ping sends the `dahed` WS event to **both** the ping sender AND the dah sender (ping recipient). The dah sender's client uses this as confirmation to resolve the promise. Never assume `dahed` only arrives on the sender's device.
 
-**WebSocket URL**: `ws://localhost:8080/ws` (plain WS, NOT `wss://`). dit-ping has no TLS. Port is 8080. Set in `.env` as `EXPO_PUBLIC_WS_URL`. Wrong scheme or port will silently fail to connect — Go server will show no activity.
+**WebSocket URL**: `ws://localhost:8080/ws` (plain WS, NOT `wss://`). norbo-ping has no TLS. Port is 8080. Set in `.env` as `EXPO_PUBLIC_WS_URL`. Wrong scheme or port will silently fail to connect — Go server will show no activity.
 
 Optimistic updates in store on send. Dah updates store only after server confirmation (WS `dahed` event or REST response). Rollback on failure.
 PingTimeline rendered with Skia. Never replace with View/Text components.

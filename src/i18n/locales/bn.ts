@@ -628,7 +628,8 @@ const bn = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -735,7 +736,8 @@ const bn = {
       placeholder: "খাবার বা উদ্ভিদের নাম",
       result: "ফলাফল",
       hint: "নিরাপদ কিনা তা পরীক্ষা করতে একটি খাবার বা উদ্ভিদ লিখুন",
-      unknown: "তালিকাভুক্ত নয়: সন্দেহ হলে আপনার পশুচিকিৎসকের সাথে যোগাযোগ করুন",
+      unknown:
+        "তালিকাভুক্ত নয়: সন্দেহ হলে আপনার পশুচিকিৎসকের সাথে যোগাযোগ করুন",
       disclaimer: "গিলে ফেললে অবিলম্বে আপনার পশুচিকিৎসকের সাথে যোগাযোগ করুন।",
       risk: {
         SAFE: "নিরাপদ",
@@ -819,7 +821,8 @@ const bn = {
     markAsMemory: "স্মৃতি হিসেবে চিহ্নিত করুন",
     markAsMemorySubtitle: "তথ্য নিরাপদে রাখা হবে",
     empathyTitle: "আমরা আপনার সাথে আছি",
-    empathyMessage: "{{name}}-এর স্মৃতি সবসময় এখানে, নিরাপদ ও সুরক্ষিত থাকবে। আপনি যে কোনো সময় ফিরে এসে প্রতিটি মুহূর্ত পুনরায় অভিজ্ঞতা করতে পারেন।",
+    empathyMessage:
+      "{{name}}-এর স্মৃতি সবসময় এখানে, নিরাপদ ও সুরক্ষিত থাকবে। আপনি যে কোনো সময় ফিরে এসে প্রতিটি মুহূর্ত পুনরায় অভিজ্ঞতা করতে পারেন।",
     dateLabel: "তারিখ",
     datePlaceholder: "কখন ঘটেছিল?",
     noteLabel: "একটি শেষ চিন্তা",
@@ -836,6 +839,10 @@ const bn = {
     restoreExpired: "14 দিনের পুনরুদ্ধারের সময়সীমা শেষ হয়েছে",
     anniversaryOptIn: "বার্ষিকীর কথা আমাকে মনে করিয়ে দিন",
     managementSection: "ব্যবস্থাপনা",
+  },
+  avatar: {
+    changePhoto: "ছবি পরিবর্তন করুন",
+    removePhoto: "ছবি সরান",
   },
 } as const;
 

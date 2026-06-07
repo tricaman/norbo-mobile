@@ -18,7 +18,7 @@ Two people. One signal. A dit (ping sent) or a dah (ping acknowledged). Nothing 
 | Storage      | react-native-mmkv (encrypted)                             |
 | Animations   | react-native-reanimated v3                                |
 | Gestures     | react-native-gesture-handler                              |
-| Real-time    | Native WebSocket → dit-ping (Go)                          |
+| Real-time    | Native WebSocket → norbo-ping (Go)                        |
 | Auth         | BetterAuth (session cookie) via norbo-api                 |
 | Push         | FCM/APNs → Notifee                                        |
 | Canvas       | @shopify/react-native-skia (PingTimeline only)            |
@@ -236,7 +236,7 @@ Cold start sequence:
 1. Restore user from MMKV → optimistic `isAuthed = true`
 2. Validate via `GET /auth/me` → 401 clears auth and shows login
 3. Fetch WS token via `POST /auth/ws-token` → stored in memory only
-4. Connect WebSocket to dit-ping
+4. Connect WebSocket to norbo-ping
 
 The session cookie is handled automatically by axios (`withCredentials: true`). Never store or manage it manually.
 

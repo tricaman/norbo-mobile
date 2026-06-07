@@ -8,7 +8,7 @@ import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { Screen } from "@/components/ui/Screen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { petsApi } from "@/services/pets.api";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -44,6 +44,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const { theme } = useUnistyles();
   const { width: windowWidth } = useWindowDimensions();
+  const queryClient = useQueryClient();
 
   const numColumns = getNumColumns(windowWidth);
   const cardWidth =
@@ -61,13 +62,23 @@ export default function HomeScreen() {
   });
   const deceasedCount = deceasedQuery.data?.length ?? 0;
 
+  const handleRefresh = React.useCallback(async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ["pets"] }),
+      queryClient.invalidateQueries({ queryKey: ["upcoming-events"] }),
+    ]);
+  }, [queryClient]);
+
   return (
     <Screen edges={["top"]}>
       <QueryBoundary query={query} isEmpty={() => false}>
-        {(pets, { refetch, isFetching }) => (
+        {(pets, { isFetching }) => (
           <ScrollView
             refreshControl={
-              <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              <RefreshControl
+                refreshing={isFetching}
+                onRefresh={handleRefresh}
+              />
             }
             contentContainerStyle={[
               styles.scrollContent,

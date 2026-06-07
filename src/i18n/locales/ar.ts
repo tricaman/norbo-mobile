@@ -618,7 +618,8 @@ const ar = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -809,7 +810,8 @@ const ar = {
     markAsMemory: "وضع كذكرى",
     markAsMemorySubtitle: "سيتم الاحتفاظ بالبيانات بأمان",
     empathyTitle: "نحن معك",
-    empathyMessage: "ذكريات {{name}} ستبقى هنا دائمًا، آمنة وبأمان. يمكنك العودة لاسترجاع كل لحظة معًا.",
+    empathyMessage:
+      "ذكريات {{name}} ستبقى هنا دائمًا، آمنة وبأمان. يمكنك العودة لاسترجاع كل لحظة معًا.",
     dateLabel: "التاريخ",
     datePlaceholder: "متى حدث ذلك؟",
     noteLabel: "آخر فكرة",
@@ -826,6 +828,10 @@ const ar = {
     restoreExpired: "انتهت فترة الاستعادة البالغة 14 يومًا",
     anniversaryOptIn: "ذكرني بمناسبة الذكرى السنوية",
     managementSection: "إدارة",
+  },
+  avatar: {
+    changePhoto: "تغيير الصورة",
+    removePhoto: "إزالة الصورة",
   },
 } as const;
 

@@ -624,7 +624,8 @@ const ru = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -815,7 +816,8 @@ const ru = {
     markAsMemory: "отметить как память",
     markAsMemorySubtitle: "данные будут сохранены",
     empathyTitle: "мы с вами",
-    empathyMessage: "воспоминания о {{name}} навсегда останутся здесь, в сохранности. вы можете вернуться, чтобы пережить каждый момент снова.",
+    empathyMessage:
+      "воспоминания о {{name}} навсегда останутся здесь, в сохранности. вы можете вернуться, чтобы пережить каждый момент снова.",
     dateLabel: "дата",
     datePlaceholder: "когда это случилось?",
     noteLabel: "мысль на прощание",
@@ -832,6 +834,10 @@ const ru = {
     restoreExpired: "окно восстановления в 14 дней истекло",
     anniversaryOptIn: "напомнить о годовщине",
     managementSection: "управление",
+  },
+  avatar: {
+    changePhoto: "изменить фото",
+    removePhoto: "удалить фото",
   },
 } as const;
 

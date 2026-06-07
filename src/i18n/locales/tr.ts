@@ -625,7 +625,8 @@ const tr = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -751,7 +752,8 @@ const tr = {
     },
     bodyConditionScore: {
       unsupported: "bu kategori için skala mevcut değil",
-      disclaimer: "Gösterge niteliğinde araç, veterinerinizin değerlendirmesinin yerine geçmez.",
+      disclaimer:
+        "Gösterge niteliğinde araç, veterinerinizin değerlendirmesinin yerine geçmez.",
       scale: {
         wsava: "WSAVA skalası",
         henneke: "Henneke skalası",
@@ -816,7 +818,8 @@ const tr = {
     markAsMemory: "anı olarak işaretle",
     markAsMemorySubtitle: "veriler güvende tutulacak",
     empathyTitle: "yanındayız",
-    empathyMessage: "{{name}}'in anıları her zaman burada, güvende olacak. her anı birlikte yaşamak için geri gelebilirsiniz.",
+    empathyMessage:
+      "{{name}}'in anıları her zaman burada, güvende olacak. her anı birlikte yaşamak için geri gelebilirsiniz.",
     dateLabel: "tarih",
     datePlaceholder: "ne zaman oldu?",
     noteLabel: "son bir düşünce",
@@ -833,6 +836,10 @@ const tr = {
     restoreExpired: "14 günlük geri yükleme süresi doldu",
     anniversaryOptIn: "yıldönümünü hatırlat",
     managementSection: "yönetim",
+  },
+  avatar: {
+    changePhoto: "fotoğrafı değiştir",
+    removePhoto: "fotoğrafı kaldır",
   },
 } as const;
 

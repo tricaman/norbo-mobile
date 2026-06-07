@@ -627,7 +627,8 @@ const fr = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -678,7 +679,8 @@ const fr = {
     },
     petAgeHumanYears: {
       title: "âge en années humaines",
-      description: "convertit l'âge de votre animal en années humaines indicatives",
+      description:
+        "convertit l'âge de votre animal en années humaines indicatives",
       age: "âge",
       months: "mois",
       size: "taille",
@@ -753,7 +755,8 @@ const fr = {
     },
     bodyConditionScore: {
       unsupported: "échelle non disponible pour cette catégorie",
-      disclaimer: "Outil indicatif, ne remplace pas l'évaluation du vétérinaire.",
+      disclaimer:
+        "Outil indicatif, ne remplace pas l'évaluation du vétérinaire.",
       scale: {
         wsava: "échelle WSAVA",
         henneke: "échelle Henneke",
@@ -818,7 +821,8 @@ const fr = {
     markAsMemory: "marquer comme souvenir",
     markAsMemorySubtitle: "les données seront conservées en sécurité",
     empathyTitle: "nous sommes avec vous",
-    empathyMessage: "les souvenirs de {{name}} resteront toujours ici, en sécurité. vous pourrez revenir revivre chaque moment ensemble.",
+    empathyMessage:
+      "les souvenirs de {{name}} resteront toujours ici, en sécurité. vous pourrez revenir revivre chaque moment ensemble.",
     dateLabel: "date",
     datePlaceholder: "quand est-ce arrivé ?",
     noteLabel: "une dernière pensée",
@@ -835,6 +839,10 @@ const fr = {
     restoreExpired: "le délai de restauration de 14 jours a expiré",
     anniversaryOptIn: "me rappeler l'anniversaire",
     managementSection: "gestion",
+  },
+  avatar: {
+    changePhoto: "changer la photo",
+    removePhoto: "supprimer la photo",
   },
 } as const;
 

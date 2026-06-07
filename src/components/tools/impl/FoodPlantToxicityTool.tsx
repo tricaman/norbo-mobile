@@ -26,14 +26,21 @@ function findMatch(items: ToxicityItem[], query: string): ToxicityItem | null {
   );
 }
 
-const FoodPlantToxicityTool: ToolComponent<"food-plant-toxicity"> = ({
-  pet,
-}) => {
+/**
+ * Shared toxicity view. Reused by the cross-species food-plant-toxicity tool
+ * and the cat "plants" quick-access (pre-filtered to cats, picker hidden) — so
+ * the component is not duplicated.
+ */
+export function FoodPlantToxicityView({
+  defaultCategory,
+  showCategoryPicker,
+}: {
+  defaultCategory: PetCategory;
+  showCategoryPicker: boolean;
+}): React.JSX.Element {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
-  const [category, setCategory] = React.useState<PetCategory>(
-    pet?.category ?? PetCategory.MAMMAL_DOG,
-  );
+  const [category, setCategory] = React.useState<PetCategory>(defaultCategory);
   const [query, setQuery] = React.useState("");
 
   const toxicityQuery = useQuery({
@@ -43,7 +50,9 @@ const FoodPlantToxicityTool: ToolComponent<"food-plant-toxicity"> = ({
 
   return (
     <ScrollView contentContainerStyle={styles.content}>
-      <ToolCategoryPicker value={category} onChange={setCategory} />
+      {showCategoryPicker ? (
+        <ToolCategoryPicker value={category} onChange={setCategory} />
+      ) : null}
 
       <TextInput
         value={query}
@@ -89,7 +98,16 @@ const FoodPlantToxicityTool: ToolComponent<"food-plant-toxicity"> = ({
       </QueryBoundary>
     </ScrollView>
   );
-};
+}
+
+const FoodPlantToxicityTool: ToolComponent<"food-plant-toxicity"> = ({
+  pet,
+}) => (
+  <FoodPlantToxicityView
+    defaultCategory={pet?.category ?? PetCategory.MAMMAL_DOG}
+    showCategoryPicker
+  />
+);
 
 export default FoodPlantToxicityTool;
 

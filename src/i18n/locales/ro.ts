@@ -627,7 +627,8 @@ const ro = {
     removePhoto: "remove photo",
     setCover: "set as cover",
     deleteConfirmTitle: "delete album?",
-    deleteConfirmMessage: "this action cannot be undone. photos will not be deleted.",
+    deleteConfirmMessage:
+      "this action cannot be undone. photos will not be deleted.",
     deleteConfirmOk: "delete",
     emptyAlbum: "no photos yet",
     emptyAlbumSubtitle: "add photos to this album",
@@ -753,7 +754,8 @@ const ro = {
     },
     bodyConditionScore: {
       unsupported: "scală indisponibilă pentru această categorie",
-      disclaimer: "Instrument orientativ, nu înlocuiește evaluarea medicului veterinar.",
+      disclaimer:
+        "Instrument orientativ, nu înlocuiește evaluarea medicului veterinar.",
       scale: {
         wsava: "Scala WSAVA",
         henneke: "Scala Henneke",
@@ -818,7 +820,8 @@ const ro = {
     markAsMemory: "marchează ca amintire",
     markAsMemorySubtitle: "datele vor fi păstrate în siguranță",
     empathyTitle: "suntem alături de tine",
-    empathyMessage: "amintirile lui {{name}} vor rămâne mereu aici, în siguranță. poți reveni oricând să retrăiești fiecare moment împreună.",
+    empathyMessage:
+      "amintirile lui {{name}} vor rămâne mereu aici, în siguranță. poți reveni oricând să retrăiești fiecare moment împreună.",
     dateLabel: "dată",
     datePlaceholder: "când s-a întâmplat?",
     noteLabel: "un ultim gând",
@@ -835,6 +838,10 @@ const ro = {
     restoreExpired: "perioada de 14 zile pentru restaurare a expirat",
     anniversaryOptIn: "amintește-mi de aniversare",
     managementSection: "gestionare",
+  },
+  avatar: {
+    changePhoto: "schimbă fotografia",
+    removePhoto: "elimină fotografia",
   },
 } as const;
 
