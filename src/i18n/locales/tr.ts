@@ -333,6 +333,10 @@ const tr = {
     nameSubtitle: "isimle başlayın. daha sonra her zaman değiştirebilirsiniz.",
     namePlaceholder: "bir ad yazın",
     nameTooShort: "en az bir harf girin",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "ırk mı yoksa tür mü?",
     speciesSubtitle:
       "tavsiyelerimizi özelleştirmemize yardımcı olur. emin değilseniz atla.",

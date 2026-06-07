@@ -2,7 +2,9 @@ import type {
   CreatePetInput,
   Pet,
   SearchSpeciesParams,
+  SearchSubcategoriesParams,
   SpeciesResult,
+  SubcategoryResult,
   UpdatePetInput,
 } from "@/types/pet.types";
 import { api } from "./api";
@@ -36,4 +38,7 @@ export const petsApi = {
 
   searchSpecies: (params: SearchSpeciesParams) =>
     api.get<SpeciesResult[]>("/species", { params }),
+
+  searchSubcategories: (params: SearchSubcategoriesParams) =>
+    api.get<SubcategoryResult[]>("/subcategories", { params }),
 } as const;

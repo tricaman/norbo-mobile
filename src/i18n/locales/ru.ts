@@ -332,6 +332,10 @@ const ru = {
     nameSubtitle: "начните с имени. вы всегда можете изменить его позже.",
     namePlaceholder: "введите имя",
     nameTooShort: "введите хотя бы одну букву",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "порода или вид?",
     speciesSubtitle:
       "помогает нам адаптировать советы. пропустите, если вы не уверены.",

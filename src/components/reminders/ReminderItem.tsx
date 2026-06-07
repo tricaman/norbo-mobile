@@ -407,7 +407,7 @@ const styles = StyleSheet.create((theme) => ({
     paddingRight: theme.spacing.md,
   },
   row: {
-    marginHorizontal: theme.spacing.lg,
+    marginHorizontal: theme.spacing["3xl"],
     marginBottom: theme.spacing.sm,
     overflow: "hidden",
     ...theme.card,

@@ -4,6 +4,7 @@ import { ConfirmStep } from "@/components/pets/wizard/steps/ConfirmStep";
 import { NameStep } from "@/components/pets/wizard/steps/NameStep";
 import { SexStep } from "@/components/pets/wizard/steps/SexStep";
 import { SpeciesStep } from "@/components/pets/wizard/steps/SpeciesStep";
+import { SubcategoryStep } from "@/components/pets/wizard/steps/SubcategoryStep";
 import { SterilizedStep } from "@/components/pets/wizard/steps/SterilizedStep";
 import { BirthDateStep } from "@/components/pets/wizard/steps/BirthDateStep";
 import {
@@ -12,7 +13,12 @@ import {
 } from "@/components/pets/wizard/wizard.types";
 import { useMutation } from "@/hooks/useMutation";
 import { petsApi } from "@/services/pets.api";
-import { type Pet, PetCategory, Sex } from "@/types/pet.types";
+import {
+  type Pet,
+  PetCategory,
+  Sex,
+  type SubcategoryResult,
+} from "@/types/pet.types";
 import { useRouter } from "expo-router";
 import React, { useCallback, useState } from "react";
 
@@ -22,12 +28,16 @@ interface WizardState {
   step: PetWizardStep;
   data: WizardData;
   createdPet: Pet | null;
+  /** True when the subcategory step auto-applied a lone kind (dog/cat),
+   *  so navigating back from species bypasses it. */
+  subcategoryAutoSkipped: boolean;
 }
 
 const INITIAL_STATE: WizardState = {
   step: "category",
   data: {},
   createdPet: null,
+  subcategoryAutoSkipped: false,
 };
 
 /**
@@ -49,7 +59,7 @@ export default function NewPetScreen() {
   const router = useRouter();
 
   const [state, setState] = useState<WizardState>(INITIAL_STATE);
-  const { step, data, createdPet } = state;
+  const { step, data, createdPet, subcategoryAutoSkipped } = state;
 
   const update = useCallback((patch: Partial<WizardData>) => {
     setState((prev) => ({ ...prev, data: { ...prev.data, ...patch } }));
@@ -57,6 +67,59 @@ export default function NewPetScreen() {
 
   const goTo = useCallback((next: PetWizardStep) => {
     setState((prev) => ({ ...prev, step: next }));
+  }, []);
+
+  // Picking a (different) category invalidates the downstream kind/species.
+  const selectCategory = useCallback((category: PetCategory) => {
+    setState((prev) =>
+      prev.data.category === category
+        ? { ...prev, data: { ...prev.data, category } }
+        : {
+            ...prev,
+            subcategoryAutoSkipped: false,
+            data: {
+              ...prev.data,
+              category,
+              subcategoryId: null,
+              subcategoryLabel: null,
+              speciesId: null,
+              speciesLabelFreetext: null,
+            },
+          },
+    );
+  }, []);
+
+  // Choosing the kind invalidates any species picked under another kind.
+  const selectSubcategory = useCallback(
+    (sub: { id: string; label: string }) => {
+      setState((prev) => ({
+        ...prev,
+        step: "species",
+        subcategoryAutoSkipped: false,
+        data: {
+          ...prev.data,
+          subcategoryId: sub.id,
+          subcategoryLabel: sub.label,
+          speciesId: null,
+          speciesLabelFreetext: null,
+        },
+      }));
+    },
+    [],
+  );
+
+  // Single-kind category (dog, cat): apply the lone kind and skip the step.
+  const autoSkipSubcategory = useCallback((single: SubcategoryResult | null) => {
+    setState((prev) => ({
+      ...prev,
+      step: prev.step === "subcategory" ? "species" : prev.step,
+      subcategoryAutoSkipped: true,
+      data: {
+        ...prev.data,
+        subcategoryId: single?.id ?? null,
+        subcategoryLabel: single?.commonName ?? null,
+      },
+    }));
   }, []);
 
   const close = useCallback(() => {
@@ -69,6 +132,7 @@ export default function NewPetScreen() {
       petsApi.create({
         category: input.category,
         name: input.name.trim(),
+        subcategoryId: input.subcategoryId ?? null,
         speciesId: input.speciesId ?? null,
         speciesLabelFreetext: input.speciesLabelFreetext ?? null,
         sex: input.sex ?? Sex.UNKNOWN,
@@ -91,6 +155,7 @@ export default function NewPetScreen() {
     createPet({
       category: data.category,
       name: data.name,
+      subcategoryId: data.subcategoryId ?? null,
       speciesId: data.speciesId ?? null,
       speciesLabelFreetext: data.speciesLabelFreetext ?? null,
       sex: data.sex,
@@ -108,7 +173,7 @@ export default function NewPetScreen() {
     return (
       <CategoryStep
         value={data.category}
-        onChange={(category: PetCategory) => update({ category })}
+        onChange={selectCategory}
         onNext={() => goTo("name")}
         onClose={close}
       />
@@ -121,7 +186,7 @@ export default function NewPetScreen() {
     return (
       <CategoryStep
         value={undefined}
-        onChange={(category: PetCategory) => update({ category })}
+        onChange={selectCategory}
         onNext={() => goTo("name")}
         onClose={close}
       />
@@ -134,8 +199,19 @@ export default function NewPetScreen() {
         category={data.category}
         value={data.name ?? ""}
         onChange={(name) => update({ name })}
-        onNext={() => goTo("species")}
+        onNext={() => goTo("subcategory")}
         onBack={() => goTo("category")}
+      />
+    );
+  }
+
+  if (step === "subcategory") {
+    return (
+      <SubcategoryStep
+        category={data.category}
+        onSelect={selectSubcategory}
+        onAutoSkip={autoSkipSubcategory}
+        onBack={() => goTo("name")}
       />
     );
   }
@@ -144,6 +220,7 @@ export default function NewPetScreen() {
     return (
       <SpeciesStep
         category={data.category}
+        subcategoryId={data.subcategoryId ?? undefined}
         speciesId={data.speciesId}
         speciesLabel={data.speciesLabelFreetext ?? undefined}
         onChange={({ id, label }) =>
@@ -153,7 +230,9 @@ export default function NewPetScreen() {
           })
         }
         onNext={() => goTo("sex")}
-        onBack={() => goTo("name")}
+        onBack={() =>
+          goTo(subcategoryAutoSkipped ? "name" : "subcategory")
+        }
         onSkip={() => {
           update({ speciesId: null, speciesLabelFreetext: null });
           goTo("sex");
@@ -225,7 +304,7 @@ export default function NewPetScreen() {
   return (
     <CategoryStep
       value={data.category}
-      onChange={(category: PetCategory) => update({ category })}
+      onChange={selectCategory}
       onNext={() => goTo("name")}
       onClose={close}
     />

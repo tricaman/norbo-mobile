@@ -334,6 +334,10 @@ const fr = {
       "commencez par le nom. vous pouvez toujours le changer plus tard.",
     namePlaceholder: "tapez un nom",
     nameTooShort: "entrez au moins une lettre",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "race ou espèce ?",
     speciesSubtitle:
       "cela nous aide à adapter les conseils. passez si vous n'êtes pas sûr.",

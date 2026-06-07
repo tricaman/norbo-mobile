@@ -334,6 +334,10 @@ const pt = {
     nameSubtitle: "comece com o nome. você sempre pode mudar depois.",
     namePlaceholder: "digite um nome",
     nameTooShort: "insira pelo menos uma letra",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "raça ou espécie?",
     speciesSubtitle:
       "nos ajuda a personalizar conselhos. pule se você não tiver certeza.",

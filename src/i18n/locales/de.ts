@@ -335,6 +335,10 @@ const de = {
     nameSubtitle: "beginnen sie mit dem namen. sie können ihn später ändern.",
     namePlaceholder: "geben sie einen namen ein",
     nameTooShort: "geben sie mindestens einen buchstaben ein",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "rasse oder art?",
     speciesSubtitle:
       "hilft uns, ratschläge anzupassen. überspringen sie, wenn sie sich nicht sicher sind.",

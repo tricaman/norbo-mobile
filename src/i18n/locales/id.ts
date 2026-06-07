@@ -333,6 +333,10 @@ const id = {
     nameSubtitle: "mulai dengan nama. anda dapat mengubahnya nanti.",
     namePlaceholder: "ketik nama",
     nameTooShort: "masukkan minimal satu huruf",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "ras atau spesies?",
     speciesSubtitle:
       "membantu kami menyesuaikan saran. lewati jika anda tidak yakin.",

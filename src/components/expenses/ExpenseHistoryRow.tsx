@@ -36,7 +36,9 @@ export function ExpenseHistoryRow({
     return format(d, "d MMM", { locale: dateLocale });
   })();
 
-  const categoryLabel = t(`expenses.categories.${item.category}` as "expenses.categories.VET");
+  const categoryLabel = t(
+    `expenses.categories.${item.category}` as "expenses.categories.VET",
+  );
   const subtitleParts = [petName, categoryLabel, dateLabel].filter(
     (p): p is string => Boolean(p),
   );
@@ -48,14 +50,23 @@ export function ExpenseHistoryRow({
           <IconSymbol name={icon} size={18} tintColor={color} />
         </View>
         <View style={styles.content}>
-          <Text style={[styles.title, { color: theme.colors.textPrimary }]} numberOfLines={1}>
+          <Text
+            style={[styles.title, { color: theme.colors.textPrimary }]}
+            numberOfLines={1}
+          >
             {item.description ?? categoryLabel}
           </Text>
-          <Text style={[styles.subtitle, { color: theme.colors.textTertiary }]} numberOfLines={1}>
+          <Text
+            style={[styles.subtitle, { color: theme.colors.textTertiary }]}
+            numberOfLines={1}
+          >
             {subtitleParts.join(" · ")}
           </Text>
         </View>
-        <Text style={[styles.cost, { color: theme.colors.textPrimary }]} numberOfLines={1}>
+        <Text
+          style={[styles.cost, { color: theme.colors.textPrimary }]}
+          numberOfLines={1}
+        >
           {formatCurrency(item.amount, item.currency)}
         </Text>
       </View>
@@ -68,7 +79,7 @@ const styles = StyleSheet.create((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: theme.spacing.md,
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
     paddingVertical: theme.spacing.md,
   },
   icon: {

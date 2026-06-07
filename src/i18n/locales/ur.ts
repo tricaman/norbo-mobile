@@ -333,6 +333,10 @@ const ur = {
     nameSubtitle: "نام سے شروع کریں۔ آپ اسے بعد میں تبدیل کر سکتے ہیں۔",
     namePlaceholder: "نام درج کریں",
     nameTooShort: "کم از کم ایک حرف درج کریں",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "نسل یا نوع؟",
     speciesSubtitle:
       "ہمیں مشورے اپنی ضرورت کے مطابق بنانے میں مدد کرتا ہے۔ اگر آپ کو یقین نہیں ہے تو چھوڑ دیں۔",

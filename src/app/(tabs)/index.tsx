@@ -48,7 +48,9 @@ export default function HomeScreen() {
 
   const numColumns = getNumColumns(windowWidth);
   const cardWidth =
-    (windowWidth - theme.spacing.lg * 2 - theme.spacing.sm * (numColumns - 1)) /
+    (windowWidth -
+      theme.spacing["3xl"] * 2 -
+      theme.spacing.sm * (numColumns - 1)) /
     numColumns;
 
   const query = useQuery({
@@ -159,7 +161,7 @@ const styles = StyleSheet.create((theme) => ({
     flexGrow: 1,
   },
   grid: {
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
     paddingBottom: theme.spacing.sm,
   },
   viewAll: {

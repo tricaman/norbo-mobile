@@ -14,12 +14,19 @@ interface PeriodChipsProps {
 
 const ORDER: ReadonlyArray<{
   value: Period;
-  i18nKey: "expenses.periodMonth" | "expenses.periodYear" | "expenses.periodAll";
+  i18nKey:
+    | "expenses.periodMonth"
+    | "expenses.periodYear"
+    | "expenses.periodAll";
   icon: string;
 }> = [
   { value: "month", i18nKey: "expenses.periodMonth", icon: "calendar" },
   { value: "year", i18nKey: "expenses.periodYear", icon: "calendar" },
-  { value: "all", i18nKey: "expenses.periodAll", icon: "arrow.triangle.2.circlepath" },
+  {
+    value: "all",
+    i18nKey: "expenses.periodAll",
+    icon: "arrow.triangle.2.circlepath",
+  },
 ];
 
 export function PeriodChips({
@@ -82,7 +89,7 @@ const styles = StyleSheet.create((theme) => ({
   row: {
     flexDirection: "row",
     gap: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
   },
   chip: {
     flex: 1,

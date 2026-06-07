@@ -15,6 +15,8 @@ import { TOTAL_FORM_STEPS } from "../wizard.types";
 
 interface SpeciesStepProps {
   category: PetCategory;
+  /** Scopes the species search to the chosen kind, when one was picked. */
+  subcategoryId?: string;
   speciesId: string | null | undefined;
   speciesLabel: string | undefined;
   onChange: (next: { id: string | null; label: string | null }) => void;
@@ -32,6 +34,7 @@ const DEBOUNCE_MS = 350;
  */
 export function SpeciesStep({
   category,
+  subcategoryId,
   speciesId,
   speciesLabel,
   onChange,
@@ -51,10 +54,10 @@ export function SpeciesStep({
   }, [input]);
 
   const query = useQuery({
-    queryKey: ["species", category, debounced],
+    queryKey: ["species", category, subcategoryId ?? null, debounced],
     queryFn: () =>
       petsApi
-        .searchSpecies({ category, q: debounced, limit: 10 })
+        .searchSpecies({ category, subcategoryId, q: debounced, limit: 10 })
         .then((r) => r.data),
     enabled: !speciesId && debounced.length >= 2,
   });

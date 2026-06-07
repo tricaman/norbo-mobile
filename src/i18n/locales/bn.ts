@@ -335,6 +335,10 @@ const bn = {
       "নাম দিয়ে শুরু করুন। আপনি পরে যেকোনো সময় এটি পরিবর্তন করতে পারেন।",
     namePlaceholder: "একটি নাম টাইপ করুন",
     nameTooShort: "কমপক্ষে একটি অক্ষর প্রবেশ করুন",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "প্রজাতি বা প্রজাতি?",
     speciesSubtitle:
       "আমাদের পরামর্শ কাস্টমাইজ করতে সাহায্য করে। আপনি নিশ্চিত না হলে এড়িয়ে যান।",

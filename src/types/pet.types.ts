@@ -23,9 +23,20 @@ export enum LifeStatus {
   DECEASED = "DECEASED",
 }
 
+export interface SubcategoryResult {
+  id: string;
+  category: PetCategory;
+  commonName: string;
+  scientificName: string | null;
+  aliases: string[];
+  imageUrl: string | null;
+  isGeneric: boolean;
+}
+
 export interface SpeciesResult {
   id: string;
   category: PetCategory;
+  subcategoryId: string | null;
   commonName: string;
   scientificName: string | null;
   aliases: string[];
@@ -36,6 +47,7 @@ export interface Pet {
   id: string;
   ownerId: string;
   category: PetCategory;
+  subcategoryId: string | null;
   name: string;
   speciesId: string | null;
   speciesLabelFreetext: string | null;
@@ -56,6 +68,7 @@ export interface Pet {
 export interface CreatePetInput {
   category: PetCategory;
   name: string;
+  subcategoryId?: string | null;
   speciesId?: string | null;
   speciesLabelFreetext?: string | null;
   photoMediaAssetId?: string | null;
@@ -69,6 +82,7 @@ export interface CreatePetInput {
 
 export interface UpdatePetInput {
   name?: string;
+  subcategoryId?: string | null;
   speciesId?: string | null;
   speciesLabelFreetext?: string | null;
   birthDate?: string | null;
@@ -80,6 +94,14 @@ export interface UpdatePetInput {
 }
 
 export interface SearchSpeciesParams {
+  category: PetCategory;
+  subcategoryId?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface SearchSubcategoriesParams {
   category: PetCategory;
   q?: string;
   limit?: number;

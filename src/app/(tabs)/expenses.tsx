@@ -294,8 +294,8 @@ export default function ExpensesTab(): React.JSX.Element {
 
 const styles = StyleSheet.create((theme) => ({
   header: { gap: theme.spacing.md, paddingTop: theme.spacing.sm },
-  heroWrap: { paddingHorizontal: theme.spacing.lg },
-  section: { paddingHorizontal: theme.spacing.lg },
+  heroWrap: { paddingHorizontal: theme.spacing["3xl"] },
+  section: { paddingHorizontal: theme.spacing["3xl"] },
   card: {
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.md,
@@ -308,7 +308,7 @@ const styles = StyleSheet.create((theme) => ({
   petAmount: { ...theme.typography.subhead, fontWeight: "600" },
   sectionLabel: {
     ...theme.typography.caption,
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
     paddingTop: theme.spacing.sm,
   },
   listContent: { flexGrow: 1 },
@@ -333,7 +333,7 @@ const styles = StyleSheet.create((theme) => ({
   footer: { paddingVertical: theme.spacing.lg, alignItems: "center" },
   rowDivider: {
     height: theme.hairline,
-    marginLeft: theme.spacing.lg + 38 + theme.spacing.md,
+    marginLeft: theme.spacing["3xl"] + 38 + theme.spacing.md,
   },
   fab: {
     position: "absolute",

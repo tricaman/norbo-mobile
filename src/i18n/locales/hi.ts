@@ -333,6 +333,10 @@ const hi = {
     nameSubtitle: "नाम से शुरू करें। आप इसे बाद में बदल सकते हैं।",
     namePlaceholder: "एक नाम दर्ज करें",
     nameTooShort: "कम से कम एक अक्षर दर्ज करें",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "नस्ल या प्रजाति?",
     speciesSubtitle:
       "हमें सलाह तैयार करने में मदद करता है। यदि आप निश्चित नहीं हैं तो छोड़ें।",

@@ -390,7 +390,7 @@ const styles = StyleSheet.create((theme) => ({
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
     gap: theme.spacing.sm,
   },
   filterChip: {

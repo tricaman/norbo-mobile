@@ -737,6 +737,10 @@ const it = {
     nameSubtitle: "iniziamo dal nome. potrai cambiarlo in qualsiasi momento.",
     namePlaceholder: "scrivi il nome",
     nameTooShort: "inserisci almeno una lettera",
+    subcategoryTitle: "che tipo?",
+    subcategorySubtitle: "scegli il tipo di animale per mostrarti le opzioni giuste.",
+    subcategoryPlaceholder: "cerca tipo",
+    subcategoryEmpty: "nessun risultato",
     speciesTitle: "razza o specie?",
     speciesSubtitle:
       "ci aiuta a darti consigli più precisi. puoi saltare se non lo sai.",

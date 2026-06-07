@@ -329,6 +329,10 @@ const ja = {
     nameSubtitle: "名前から始めます。後でいつでも変更できます。",
     namePlaceholder: "名前を入力",
     nameTooShort: "最低 1 文字入力してください",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "品種または種?",
     speciesSubtitle:
       "アドバイスをカスタマイズするのに役立ちます。確実でない場合はスキップしてください。",

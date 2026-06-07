@@ -108,7 +108,7 @@ function UpcomingEventsEmpty() {
 const styles = StyleSheet.create((theme) => ({
   section: {
     marginTop: theme.spacing.md,
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: theme.spacing["3xl"],
     gap: theme.spacing.sm,
   },
   header: {

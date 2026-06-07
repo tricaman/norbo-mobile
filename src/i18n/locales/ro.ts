@@ -334,6 +334,10 @@ const ro = {
     nameSubtitle: "incepeti cu numele. il puteti schimba mai tarziu.",
     namePlaceholder: "tastati un nume",
     nameTooShort: "introduceti cel putin o litera",
+    subcategoryTitle: "what kind?",
+    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategoryPlaceholder: "search kind",
+    subcategoryEmpty: "no results",
     speciesTitle: "rasa sau specie?",
     speciesSubtitle:
       "ne ajuta sa adaptem sfaturile. omiteti daca nu sunteti sigur.",
