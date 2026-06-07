@@ -1,0 +1,208 @@
+{
+  "common": {
+    "select": "selecionar"
+  },
+  "pets": {
+    "memorialSection": "em memória"
+  },
+  "tools": {
+    "dogCalorieNeeds": {
+      "title": "necessidades calóricas do cão",
+      "description": "estimativa indicativa da necessidade energética diária",
+      "weight": "peso",
+      "age": "idade",
+      "months": "meses",
+      "activity": "nível de atividade",
+      "low": "baixo",
+      "normal": "normal",
+      "high": "alto",
+      "neuteredYes": "castrado",
+      "neuteredNo": "intacto",
+      "result": "necessidades diárias",
+      "disclaimer": "valor indicativo, não substitui o veterinário"
+    },
+    "aquariumVolume": {
+      "title": "volume do aquário",
+      "description": "volume de água a partir das dimensões do tanque",
+      "length": "comprimento",
+      "width": "largura",
+      "height": "altura",
+      "decor": "deslocamento do decor",
+      "results": "resultados",
+      "gross": "volume bruto",
+      "effective": "volume efetivo",
+      "stocking": "lotação máxima",
+      "stockingUnit": "cm de peixe",
+      "disclaimer": "valor indicativo (água doce)"
+    },
+    "reptileEnvironmentGuide": {
+      "title": "guia de ambiente para répteis",
+      "description": "temperaturas e umidade alvo por espécie",
+      "selectProfile": "espécie",
+      "temperature": "temperatura",
+      "basking": "zona de aquecimento",
+      "cool": "zona fria",
+      "humidity": "umidade",
+      "disclaimer": "valores indicativos, não substituem o veterinário"
+    },
+    "petAgeHumanYears": {
+      "title": "idade em anos humanos",
+      "description": "converte a idade do seu pet em anos humanos indicativos",
+      "age": "idade",
+      "months": "meses",
+      "size": "porte",
+      "small": "pequeno",
+      "medium": "médio",
+      "large": "grande",
+      "result": "idade humana",
+      "years": "anos",
+      "disclaimer": "valor indicativo, não substitui o veterinário"
+    },
+    "common": {
+      "addPetTitle": "adicionar um pet",
+      "addPetSubtitle": "vincule esta ferramenta ao seu animal"
+    },
+    "unitConverter": {
+      "weight": "peso",
+      "length": "comprimento",
+      "temperature": "temperatura",
+      "volume": "volume",
+      "value": "valor",
+      "from": "de",
+      "to": "para",
+      "result": "resultado"
+    },
+    "maintenanceCost": {
+      "amount": "valor",
+      "week": "semana",
+      "month": "mês",
+      "year": "ano",
+      "monthly": "custo mensal",
+      "yearly": "custo anual",
+      "cat": {
+        "VET": "veterinário",
+        "FOOD": "alimentação",
+        "ACCESSORIES": "acessórios",
+        "GROOMING": "higiene",
+        "OTHER": "outros"
+      }
+    },
+    "foodConsumption": {
+      "packageWeight": "peso da embalagem",
+      "dailyRation": "ração diária",
+      "currentStock": "estoque atual",
+      "results": "resultados",
+      "daysLeft": "dias restantes",
+      "days": "dias",
+      "reorderDate": "data de reposição",
+      "createReminder": "criar lembrete de reposição",
+      "reminderCreated": "lembrete criado",
+      "reminderTitle": "Repor alimento para {{name}}"
+    },
+    "foodPlantToxicity": {
+      "placeholder": "nome do alimento ou planta",
+      "result": "resultado",
+      "hint": "digite um alimento ou planta para verificar se é seguro",
+      "unknown": "não listado: em caso de dúvida, consulte o veterinário",
+      "disclaimer": "Se ingerido, contate o veterinário imediatamente.",
+      "risk": {
+        "SAFE": "seguro",
+        "CAUTION": "cuidado",
+        "TOXIC": "tóxico"
+      },
+      "notes": {
+        "chocolate": "O chocolate contém teobromina, que é tóxica.",
+        "grapes": "Uvas e passas podem causar danos renais.",
+        "allium": "Cebola e alho danificam os glóbulos vermelhos.",
+        "xylitol": "Xilitol causa hipoglicemia severa.",
+        "carrot": "Cenouras são geralmente seguras com moderação.",
+        "lily": "Lírios são altamente tóxicos para gatos.",
+        "dairy": "Muitos gatos são intolerantes à lactose."
+      }
+    },
+    "bodyConditionScore": {
+      "unsupported": "escala não disponível para esta categoria",
+      "disclaimer": "Ferramenta indicativa, não substitui a avaliação do veterinário.",
+      "scale": {
+        "wsava": "Escala WSAVA",
+        "henneke": "Escala Henneke"
+      },
+      "q": {
+        "ribs": "costelas",
+        "waist": "cintura",
+        "tuck": "abdômen (vista lateral)",
+        "neck": "pescoço / crista",
+        "tailhead": "base da cauda"
+      },
+      "opt": {
+        "ribs": {
+          "low": "muito proeminentes",
+          "ideal": "palpáveis, gordura mínima",
+          "high": "não palpáveis"
+        },
+        "waist": {
+          "low": "muito acentuada",
+          "ideal": "bem proporcionada",
+          "high": "ausente"
+        },
+        "tuck": {
+          "low": "muito retraído",
+          "ideal": "retraído",
+          "high": "distendido"
+        },
+        "neck": {
+          "low": "fino, ossos visíveis",
+          "ideal": "bem equilibrado",
+          "high": "grosso, com gordura"
+        },
+        "tailhead": {
+          "low": "ossos proeminentes",
+          "ideal": "bem equilibrado",
+          "high": "coberto de gordura"
+        }
+      },
+      "interp": {
+        "under": "abaixo do peso",
+        "ideal": "peso ideal",
+        "over": "acima do peso"
+      }
+    }
+  },
+  "careKnowledge": {
+    "reptile": {
+      "beardedDragon": "dragão barbudo",
+      "leopardGecko": "geco leopardo",
+      "ballPython": "pílos real",
+      "cornSnake": "cobra do milho"
+    }
+  },
+  "paywall": {
+    "badge": "premium",
+    "title": "ferramenta premium",
+    "description": "esta ferramenta está incluída na assinatura premium.",
+    "cta": "assinar",
+    "comingSoon": "assinaturas em breve"
+  },
+  "memorial": {
+    "markAsMemory": "marcar como memória",
+    "markAsMemorySubtitle": "os dados serão mantidos em segurança",
+    "empathyTitle": "estamos com você",
+    "empathyMessage": "as lembranças de {{name}} estarão sempre aqui, seguras e intactas. você pode voltar para reviver cada momento juntos.",
+    "dateLabel": "data",
+    "datePlaceholder": "quando aconteceu?",
+    "noteLabel": "um último pensamento",
+    "notePlaceholder": "escreva algo se quiser...",
+    "confirm": "confirmar",
+    "continue": "continuar",
+    "safeMessage": "as lembranças de {{name}} estão seguras aqui",
+    "restore": "restaurar",
+    "restoreConfirmTitle": "restaurar pet",
+    "restoreConfirmMessage": "trazer {{name}} de volta para os pets ativos?",
+    "restoreConfirmOk": "restaurar",
+    "restoreConfirmCancel": "cancelar",
+    "restoreSuccess": "{{name}} está de volta entre os pets ativos",
+    "restoreExpired": "o prazo de 14 dias para restaurar expirou",
+    "anniversaryOptIn": "lembrar-me do aniversário",
+    "managementSection": "gerenciamento"
+  }
+}

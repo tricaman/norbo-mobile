@@ -1,0 +1,208 @@
+{
+  "common": {
+    "select": "选择"
+  },
+  "pets": {
+    "memorialSection": "纪念中"
+  },
+  "tools": {
+    "dogCalorieNeeds": {
+      "title": "狗狗热量需求",
+      "description": "日常能量需求参考估算",
+      "weight": "体重",
+      "age": "年龄",
+      "months": "月",
+      "activity": "活动水平",
+      "low": "低",
+      "normal": "正常",
+      "high": "高",
+      "neuteredYes": "已绝育",
+      "neuteredNo": "未绝育",
+      "result": "每日需求",
+      "disclaimer": "参考值，不能替代兽医建议"
+    },
+    "aquariumVolume": {
+      "title": "鱼缸水量",
+      "description": "根据鱼缸尺寸计算水量",
+      "length": "长度",
+      "width": "宽度",
+      "height": "高度",
+      "decor": "造景位移",
+      "results": "结果",
+      "gross": "总容积",
+      "effective": "有效容积",
+      "stocking": "最大饲养量",
+      "stockingUnit": "厘米鱼",
+      "disclaimer": "参考值（淡水）"
+    },
+    "reptileEnvironmentGuide": {
+      "title": "爬宠环境指南",
+      "description": "不同种类的目标温度和湿度",
+      "selectProfile": "物种",
+      "temperature": "温度",
+      "basking": "晒点区",
+      "cool": "凉爽区",
+      "humidity": "湿度",
+      "disclaimer": "参考值，不能替代兽医建议"
+    },
+    "petAgeHumanYears": {
+      "title": "人类年龄",
+      "description": "将宠物年龄换算为大概的人类年龄",
+      "age": "年龄",
+      "months": "月",
+      "size": "体型",
+      "small": "小型",
+      "medium": "中型",
+      "large": "大型",
+      "result": "人类年龄",
+      "years": "岁",
+      "disclaimer": "参考值，不能替代兽医建议"
+    },
+    "common": {
+      "addPetTitle": "添加宠物",
+      "addPetSubtitle": "将此工具关联到您的动物"
+    },
+    "unitConverter": {
+      "weight": "重量",
+      "length": "长度",
+      "temperature": "温度",
+      "volume": "体积",
+      "value": "值",
+      "from": "从",
+      "to": "至",
+      "result": "结果"
+    },
+    "maintenanceCost": {
+      "amount": "金额",
+      "week": "周",
+      "month": "月",
+      "year": "年",
+      "monthly": "每月费用",
+      "yearly": "每年费用",
+      "cat": {
+        "VET": "兽医",
+        "FOOD": "食物",
+        "ACCESSORIES": "用品",
+        "GROOMING": "美容",
+        "OTHER": "其他"
+      }
+    },
+    "foodConsumption": {
+      "packageWeight": "包装重量",
+      "dailyRation": "每日口粮",
+      "currentStock": "当前存量",
+      "results": "结果",
+      "daysLeft": "剩余天数",
+      "days": "天",
+      "reorderDate": "补货日期",
+      "createReminder": "创建补货提醒",
+      "reminderCreated": "提醒已创建",
+      "reminderTitle": "为{{name}}补货食物"
+    },
+    "foodPlantToxicity": {
+      "placeholder": "食物或植物名称",
+      "result": "结果",
+      "hint": "输入食物或植物名称来检查是否安全",
+      "unknown": "未收录：如有疑问，请联系兽医",
+      "disclaimer": "如果误食，请立即联系兽医。",
+      "risk": {
+        "SAFE": "安全",
+        "CAUTION": "注意",
+        "TOXIC": "有毒"
+      },
+      "notes": {
+        "chocolate": "巧克力含有可可碱，有毒。",
+        "grapes": "葡萄和葡萄干会导致肾损伤。",
+        "allium": "洋葱和大蒜损害红细胞。",
+        "xylitol": "木糖醇会导致严重低血糖。",
+        "carrot": "胡萝卜适量食用一般是安全的。",
+        "lily": "百合对猫咪高度有毒。",
+        "dairy": "许多猫咪乳糖不耐受。"
+      }
+    },
+    "bodyConditionScore": {
+      "unsupported": "该类别不适用此量尺",
+      "disclaimer": "仅供参考，不能替代兽医的评估。",
+      "scale": {
+        "wsava": "WSAVA 量尺",
+        "henneke": "Henneke 量尺"
+      },
+      "q": {
+        "ribs": "肋骨",
+        "waist": "腰部",
+        "tuck": "腹部（侧观）",
+        "neck": "颈部/脊突",
+        "tailhead": "尾根"
+      },
+      "opt": {
+        "ribs": {
+          "low": "非常突出",
+          "ideal": "可触摸，脂肪极少",
+          "high": "无法触摸"
+        },
+        "waist": {
+          "low": "非常明显",
+          "ideal": "比例匀称",
+          "high": "不存在"
+        },
+        "tuck": {
+          "low": "非常收拢",
+          "ideal": "收拢",
+          "high": "膨胀"
+        },
+        "neck": {
+          "low": "瘦，骨可见",
+          "ideal": "均匀",
+          "high": "粗，脂肪多"
+        },
+        "tailhead": {
+          "low": "骨骼突出",
+          "ideal": "均匀",
+          "high": "脂肪覆盖"
+        }
+      },
+      "interp": {
+        "under": "体重过轻",
+        "ideal": "理想体重",
+        "over": "超重"
+      }
+    }
+  },
+  "careKnowledge": {
+    "reptile": {
+      "beardedDragon": "鬃狮蜥",
+      "leopardGecko": "豹纹守宫",
+      "ballPython": "球蟒",
+      "cornSnake": "玉米蛇"
+    }
+  },
+  "paywall": {
+    "badge": "高级",
+    "title": "高级工具",
+    "description": "此工具包含在高级订阅中。",
+    "cta": "订阅",
+    "comingSoon": "订阅即将上线"
+  },
+  "memorial": {
+    "markAsMemory": "标记为纪念",
+    "markAsMemorySubtitle": "数据将安全保存",
+    "empathyTitle": "我们陪伴着你",
+    "empathyMessage": "{{name}} 的回忆将永远在这里，安然无恙。你可以随时回来重温每一个陪伴的时刻。",
+    "dateLabel": "日期",
+    "datePlaceholder": "什么时候发生的？",
+    "noteLabel": "最后的寄语",
+    "notePlaceholder": "如果你愿意，写点什么吧……",
+    "confirm": "确认",
+    "continue": "继续",
+    "safeMessage": "{{name}} 的回忆已安全保存于此",
+    "restore": "恢复",
+    "restoreConfirmTitle": "恢复宠物",
+    "restoreConfirmMessage": "将 {{name}} 移回活跃宠物？",
+    "restoreConfirmOk": "恢复",
+    "restoreConfirmCancel": "取消",
+    "restoreSuccess": "{{name}} 已回到活跃宠物中",
+    "restoreExpired": "14天恢复期已过",
+    "anniversaryOptIn": "提醒我周年纪念",
+    "managementSection": "管理"
+  }
+}

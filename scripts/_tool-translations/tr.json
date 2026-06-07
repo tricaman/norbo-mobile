@@ -1,0 +1,208 @@
+{
+  "common": {
+    "select": "seç"
+  },
+  "pets": {
+    "memorialSection": "anısına"
+  },
+  "tools": {
+    "dogCalorieNeeds": {
+      "title": "köpek kalori ihtiyacı",
+      "description": "gösterge niteliğinde günlük enerji ihtiyacı tahmini",
+      "weight": "ağırlık",
+      "age": "yaş",
+      "months": "ay",
+      "activity": "aktivite seviyesi",
+      "low": "düşük",
+      "normal": "normal",
+      "high": "yüksek",
+      "neuteredYes": "kısırlaştırılmış",
+      "neuteredNo": "kısırlaştırılmamış",
+      "result": "günlük ihtiyaç",
+      "disclaimer": "gösterge niteliğinde değer, veterinerin yerine geçmez"
+    },
+    "aquariumVolume": {
+      "title": "akvaryum hacmi",
+      "description": "tank boyutlarından su hacmi",
+      "length": "uzunluk",
+      "width": "genişlik",
+      "height": "yükseklik",
+      "decor": "dekor hacmi",
+      "results": "sonuçlar",
+      "gross": "toplam hacim",
+      "effective": "efektif hacim",
+      "stocking": "maksimum balık",
+      "stockingUnit": "cm balık",
+      "disclaimer": "gösterge niteliğinde değer (tatlı su)"
+    },
+    "reptileEnvironmentGuide": {
+      "title": "sürüngen ortam rehberi",
+      "description": "türe göre hedef sıcaklık ve nem",
+      "selectProfile": "tür",
+      "temperature": "sıcaklık",
+      "basking": "güneşlenme bölgesi",
+      "cool": "serin bölge",
+      "humidity": "nem",
+      "disclaimer": "gösterge niteliğinde değerler, veterinerin yerine geçmez"
+    },
+    "petAgeHumanYears": {
+      "title": "insan yaşı karşılığı",
+      "description": "evinizin yaşını gösterge niteliğinde insan yaşına çevirir",
+      "age": "yaş",
+      "months": "ay",
+      "size": "boyut",
+      "small": "küçük",
+      "medium": "orta",
+      "large": "büyük",
+      "result": "insan yaşı",
+      "years": "yıl",
+      "disclaimer": "gösterge niteliğinde değer, veterinerin yerine geçmez"
+    },
+    "common": {
+      "addPetTitle": "evcil hayvan ekle",
+      "addPetSubtitle": "bu aracı hayvanınıza bağlayın"
+    },
+    "unitConverter": {
+      "weight": "ağırlık",
+      "length": "uzunluk",
+      "temperature": "sıcaklık",
+      "volume": "hacim",
+      "value": "değer",
+      "from": "kaynak",
+      "to": "hedef",
+      "result": "sonuç"
+    },
+    "maintenanceCost": {
+      "amount": "tutar",
+      "week": "hafta",
+      "month": "ay",
+      "year": "yıl",
+      "monthly": "aylık maliyet",
+      "yearly": "yıllık maliyet",
+      "cat": {
+        "VET": "veteriner",
+        "FOOD": "mama",
+        "ACCESSORIES": "aksesuarlar",
+        "GROOMING": "bakım",
+        "OTHER": "diğer"
+      }
+    },
+    "foodConsumption": {
+      "packageWeight": "paket ağırlığı",
+      "dailyRation": "günlük rasyon",
+      "currentStock": "mevcut stok",
+      "results": "sonuçlar",
+      "daysLeft": "kalan gün",
+      "days": "gün",
+      "reorderDate": "sipariş tarihi",
+      "createReminder": "sipariş hatırlatıcısı oluştur",
+      "reminderCreated": "hatırlatıcı oluşturuldu",
+      "reminderTitle": "{{name}} için mama siparişi"
+    },
+    "foodPlantToxicity": {
+      "placeholder": "mama veya bitki adı",
+      "result": "sonuç",
+      "hint": "güvenli olup olmadığını kontrol etmek için bir mama veya bitki yazın",
+      "unknown": "listede yok: şüphedeyseniz veterinerinize danışın",
+      "disclaimer": "Yutulması halinde hemen veterinerinize başvurun.",
+      "risk": {
+        "SAFE": "güvenli",
+        "CAUTION": "dikkat",
+        "TOXIC": "zehirli"
+      },
+      "notes": {
+        "chocolate": "Çikolata, zehirli olan teobromin içerir.",
+        "grapes": "Üzüm ve kuru üzüm böbrek hasarına neden olabilir.",
+        "allium": "Soğan ve sarımsak kırmızı kan hücrelerine zarar verir.",
+        "xylitol": "Ksilitol şiddetli hipoglisemiye neden olur.",
+        "carrot": "Havuç genellikle ölçülü tüketimde güvenlidir.",
+        "lily": "Zambaklar kediler için oldukça zehirlidir.",
+        "dairy": "Birçok kedi laktoz intoleransına sahiptir."
+      }
+    },
+    "bodyConditionScore": {
+      "unsupported": "bu kategori için skala mevcut değil",
+      "disclaimer": "Gösterge niteliğinde araç, veterinerinizin değerlendirmesinin yerine geçmez.",
+      "scale": {
+        "wsava": "WSAVA skalası",
+        "henneke": "Henneke skalası"
+      },
+      "q": {
+        "ribs": "kaburgalar",
+        "waist": "bel",
+        "tuck": "karın (yan görünüm)",
+        "neck": "boyun/tepe",
+        "tailhead": "kuyruk dibi"
+      },
+      "opt": {
+        "ribs": {
+          "low": "çok belirgin",
+          "ideal": "hissedilir, az yağ",
+          "high": "hissedilmez"
+        },
+        "waist": {
+          "low": "çok belirgin",
+          "ideal": "orantılı",
+          "high": "yok"
+        },
+        "tuck": {
+          "low": "çok çekik",
+          "ideal": "çekik",
+          "high": "şişkin"
+        },
+        "neck": {
+          "low": "ince, kemikler görünür",
+          "ideal": "dengeli",
+          "high": "kalın, yağlı"
+        },
+        "tailhead": {
+          "low": "kemikler belirgin",
+          "ideal": "dengeli",
+          "high": "yağla kaplı"
+        }
+      },
+      "interp": {
+        "under": "zayıf",
+        "ideal": "ideal kilo",
+        "over": "kilolu"
+      }
+    }
+  },
+  "careKnowledge": {
+    "reptile": {
+      "beardedDragon": "sakallı ejder",
+      "leopardGecko": "leopar gekosu",
+      "ballPython": "top piton",
+      "cornSnake": "mısır yılanı"
+    }
+  },
+  "paywall": {
+    "badge": "premium",
+    "title": "premium araç",
+    "description": "bu araç premium aboneliğe dahildir.",
+    "cta": "abone ol",
+    "comingSoon": "abonelikler yakında"
+  },
+  "memorial": {
+    "markAsMemory": "anı olarak işaretle",
+    "markAsMemorySubtitle": "veriler güvende tutulacak",
+    "empathyTitle": "yanındayız",
+    "empathyMessage": "{{name}}'in anıları her zaman burada, güvende olacak. her anı birlikte yaşamak için geri gelebilirsiniz.",
+    "dateLabel": "tarih",
+    "datePlaceholder": "ne zaman oldu?",
+    "noteLabel": "son bir düşünce",
+    "notePlaceholder": "isterseniz bir şeyler yazın...",
+    "confirm": "onayla",
+    "continue": "devam et",
+    "safeMessage": "{{name}}'in anıları burada güvende",
+    "restore": "geri yükle",
+    "restoreConfirmTitle": "evcil hayvanı geri yükle",
+    "restoreConfirmMessage": "{{name}} aktif hayvanlara geri getirilsin mi?",
+    "restoreConfirmOk": "geri yükle",
+    "restoreConfirmCancel": "iptal",
+    "restoreSuccess": "{{name}} aktif hayvanlar arasına geri döndü",
+    "restoreExpired": "14 günlük geri yükleme süresi doldu",
+    "anniversaryOptIn": "yıldönümünü hatırlat",
+    "managementSection": "yönetim"
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "common": {
+    "select": "選択"
+  },
+  "pets": {
+    "memorialSection": "思い出"
+  },
+  "tools": {
+    "dogCalorieNeeds": {
+      "title": "犬のカロリー必要量",
+      "description": "目安となる1日のエネルギー所要量",
+      "weight": "体重",
+      "age": "年齢",
+      "months": "ヶ月",
+      "activity": "活動レベル",
+      "low": "低い",
+      "normal": "普通",
+      "high": "高い",
+      "neuteredYes": "去勢済み",
+      "neuteredNo": "未去勢",
+      "result": "1日の必要量",
+      "disclaimer": "目安であり、獣医の診断に代わるものではありません"
+    },
+    "aquariumVolume": {
+      "title": "水槽容量",
+      "description": "水槽の寸法から水量を計算",
+      "length": "長さ",
+      "width": "幅",
+      "height": "高さ",
+      "decor": "レイアウトの変位量",
+      "results": "結果",
+      "gross": "総容量",
+      "effective": "有効容量",
+      "stocking": "最大収容数",
+      "stockingUnit": "cmの魚",
+      "disclaimer": "目安（淡水魚用）"
+    },
+    "reptileEnvironmentGuide": {
+      "title": "爬虫類飼育環境ガイド",
+      "description": "種別の目標温度と湿度",
+      "selectProfile": "種",
+      "temperature": "温度",
+      "basking": "バスキングゾーン",
+      "cool": "クールゾーン",
+      "humidity": "湿度",
+      "disclaimer": "目安であり、獣医の診断に代わるものではありません"
+    },
+    "petAgeHumanYears": {
+      "title": "人間年齢換算",
+      "description": "ペットの年齢をおおよその人間年齢に換算",
+      "age": "年齢",
+      "months": "ヶ月",
+      "size": "サイズ",
+      "small": "小型",
+      "medium": "中型",
+      "large": "大型",
+      "result": "人間年齢",
+      "years": "歳",
+      "disclaimer": "目安であり、獣医の診断に代わるものではありません"
+    },
+    "common": {
+      "addPetTitle": "ペットを追加する",
+      "addPetSubtitle": "このツールをあなたの動物に関連付けます"
+    },
+    "unitConverter": {
+      "weight": "重さ",
+      "length": "長さ",
+      "temperature": "温度",
+      "volume": "体積",
+      "value": "値",
+      "from": "から",
+      "to": "へ",
+      "result": "結果"
+    },
+    "maintenanceCost": {
+      "amount": "金額",
+      "week": "週",
+      "month": "月",
+      "year": "年",
+      "monthly": "月額",
+      "yearly": "年間",
+      "cat": {
+        "VET": "動物病院",
+        "FOOD": "餌",
+        "ACCESSORIES": "アクセサリー",
+        "GROOMING": "グルーミング",
+        "OTHER": "その他"
+      }
+    },
+    "foodConsumption": {
+      "packageWeight": "パッケージの重さ",
+      "dailyRation": "1日の量",
+      "currentStock": "手持ち在庫",
+      "results": "結果",
+      "daysLeft": "残り日数",
+      "days": "日",
+      "reorderDate": "再注文日",
+      "createReminder": "再注文リマインダーを作成",
+      "reminderCreated": "リマインダーを作成しました",
+      "reminderTitle": "{{name}} の餌を再注文"
+    },
+    "foodPlantToxicity": {
+      "placeholder": "食品または植物の名前",
+      "result": "結果",
+      "hint": "安全かどうか確認するために食品や植物の名前を入力",
+      "unknown": "リストにありません：不明な場合は獣医に相談してください",
+      "disclaimer": "摂取した場合は、すぐに獣医に連絡してください。",
+      "risk": {
+        "SAFE": "安全",
+        "CAUTION": "注意",
+        "TOXIC": "有毒"
+      },
+      "notes": {
+        "chocolate": "チョコレートにはテオブロミンが含まれており、有毒です。",
+        "grapes": "ブドウとレーズンは腎臓障害を引き起こす可能性があります。",
+        "allium": "タマネギとニンニクは赤血球を損傷します。",
+        "xylitol": "キシリトールは重度の低血糖を引き起こします。",
+        "carrot": "ニンジンは適度であれば一般的に安全です。",
+        "lily": "ユリは猫にとって非常に有毒です。",
+        "dairy": "多くの猫は乳糖不耐症です。"
+      }
+    },
+    "bodyConditionScore": {
+      "unsupported": "このカテゴリでは評価尺度は利用できません",
+      "disclaimer": "目安であり、獣医の評価に代わるものではありません。",
+      "scale": {
+        "wsava": "WSAVA尺度",
+        "henneke": "Henneke尺度"
+      },
+      "q": {
+        "ribs": "肋骨",
+        "waist": "腰くびれ",
+        "tuck": "腹部（側面）",
+        "neck": "頸部/クレスト",
+        "tailhead": "尾の付け根"
+      },
+      "opt": {
+        "ribs": {
+          "low": "非常に目立つ",
+          "ideal": "触れる、脂肪が最小限",
+          "high": "触れない"
+        },
+        "waist": {
+          "low": "非常に顕著",
+          "ideal": "バランスが良い",
+          "high": "なし"
+        },
+        "tuck": {
+          "low": "非常に引っ込んでいる",
+          "ideal": "引っ込んでいる",
+          "high": "膨張している"
+        },
+        "neck": {
+          "low": "細く、骨が見える",
+          "ideal": "バランスが良い",
+          "high": "厚く、脂肪が多い"
+        },
+        "tailhead": {
+          "low": "骨が目立つ",
+          "ideal": "バランスが良い",
+          "high": "脂肪で覆われている"
+        }
+      },
+      "interp": {
+        "under": "低体重",
+        "ideal": "適正体重",
+        "over": "過体重"
+      }
+    }
+  },
+  "careKnowledge": {
+    "reptile": {
+      "beardedDragon": "フトアゴヒゲトカゲ",
+      "leopardGecko": "ヒョウモントカゲモドキ",
+      "ballPython": "ボールパイソン",
+      "cornSnake": "コーンスネーク"
+    }
+  },
+  "paywall": {
+    "badge": "プレミアム",
+    "title": "プレミアムツール",
+    "description": "このツールはプレミアムサブスクリプションに含まれています。",
+    "cta": "購読する",
+    "comingSoon": "まもなく購読開始"
+  },
+  "memorial": {
+    "markAsMemory": "思い出として保存",
+    "markAsMemorySubtitle": "データは安全に保管されます",
+    "empathyTitle": "あなたのそばにいます",
+    "empathyMessage": "{{name}} の思い出は、ここに安全に残ります。いつでも振り返り、一緒に過ごした時間を追体験できます。",
+    "dateLabel": "日付",
+    "datePlaceholder": "いつ起こりましたか？",
+    "noteLabel": "最後の想い",
+    "notePlaceholder": "よろしければ何か書いてください...",
+    "confirm": "確認",
+    "continue": "続ける",
+    "safeMessage": "{{name}} の思い出はここに安全に保管されています",
+    "restore": "復元",
+    "restoreConfirmTitle": "ペットを復元",
+    "restoreConfirmMessage": "{{name}} をアクティブなペットに戻しますか？",
+    "restoreConfirmOk": "復元",
+    "restoreConfirmCancel": "キャンセル",
+    "restoreSuccess": "{{name}} がアクティブなペットに戻りました",
+    "restoreExpired": "14日間の復元期間が終了しました",
+    "anniversaryOptIn": "記念日を通知する",
+    "managementSection": "管理"
+  }
+}
