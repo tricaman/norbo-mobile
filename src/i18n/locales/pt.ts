@@ -264,6 +264,19 @@ const pt = {
     confirm: "deletar conta",
     mismatch: "email não corresponde",
   },
+  toolsDisclaimer: {
+    title: "aviso sobre ferramentas e calculadoras",
+    intro: "as ferramentas na seção serviços são uma ajuda útil, não um aconselhamento veterinário. leia e aceite antes de começar a usá-las.",
+    readLink: "ler o aviso completo",
+    summaryTitle: "em resumo",
+    point1: "os resultados são estimativas indicativas baseadas em fórmulas gerais e valores médios de referência.",
+    point2: "não são aconselhamento veterinário, diagnóstico ou prescrição.",
+    point3: "fale sempre com o seu veterinário sobre a saúde, alimentação ou bem-estar do seu animal.",
+    point4: "em uma emergência, contacte imediatamente o seu veterinário — não confie nas ferramentas.",
+    checkbox: "entendo que as ferramentas dão estimativas indicativas e não substituem um veterinário.",
+    continue: "continuar",
+    error: "não foi possível guardar a sua aceitação. tente novamente.",
+  },
   terms: {
     title: "termos de serviço",
     intro:

@@ -33,7 +33,10 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
 
   const age = formatPetAge(pet.birthDate, t);
   const speciesLabel =
-    pet.speciesLabelFreetext ?? t(`petForm.categories.${pet.category}`);
+    pet.speciesName ??
+    pet.speciesLabelFreetext ??
+    pet.subcategoryName ??
+    t(`petForm.categories.${pet.category}`);
 
   return (
     <NorboPressable

@@ -48,8 +48,13 @@ export interface Pet {
   ownerId: string;
   category: PetCategory;
   subcategoryId: string | null;
+  /** Resolved, localized name of the linked subcategory (the "kind"). */
+  subcategoryName: string | null;
   name: string;
   speciesId: string | null;
+  /** Resolved, localized name of the linked species/breed. Prefer this
+   *  over `speciesLabelFreetext` for display. */
+  speciesName: string | null;
   speciesLabelFreetext: string | null;
   photoUrl: string | null;
   birthDate: string | null;

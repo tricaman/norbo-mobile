@@ -263,6 +263,19 @@ const id = {
     confirm: "hapus akun",
     mismatch: "email tidak cocok",
   },
+  toolsDisclaimer: {
+    title: "penafian alat & kalkulator",
+    intro: "alat di bagian layanan adalah bantuan yang berguna, bukan saran dokter hewan. harap baca dan setujui sebelum mulai menggunakannya.",
+    readLink: "baca penafian lengkap",
+    summaryTitle: "singkatnya",
+    point1: "hasilnya adalah perkiraan indikatif berdasarkan rumus umum dan nilai rujukan rata-rata.",
+    point2: "ini bukan saran dokter hewan, diagnosis, atau resep.",
+    point3: "selalu bicarakan kesehatan, nutrisi, atau kesejahteraan hewanmu dengan dokter hewan.",
+    point4: "dalam keadaan darurat, segera hubungi dokter hewanmu — jangan mengandalkan alat.",
+    checkbox: "saya memahami bahwa alat memberikan perkiraan indikatif dan tidak menggantikan dokter hewan.",
+    continue: "lanjutkan",
+    error: "tidak dapat menyimpan persetujuanmu. silakan coba lagi.",
+  },
   terms: {
     title: "syarat layanan",
     intro:

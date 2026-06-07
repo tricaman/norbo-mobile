@@ -2,6 +2,7 @@ import { Screen } from "@/components/ui/Screen";
 import { ScreenHeader } from "@/components/ui/ScreenHeader";
 import { SettingsCard, SettingsRow } from "@/components/ui/SettingsRow";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
+import { legalUrl } from "@/constants/legal";
 import Constants from "expo-constants";
 import { Linking, Platform, ScrollView, Text, View } from "react-native";
 import { useRouter } from "expo-router";
@@ -9,9 +10,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
-const TERMS_URL =
-  "https://tricaman.github.io/norbo-policy/safety-standards.html";
-const PRIVACY_URL = "https://tricaman.github.io/norbo-policy/";
 const SUPPORT_EMAIL = "support@norbo.mariustrica.com";
 
 /**
@@ -24,7 +22,7 @@ const SUPPORT_EMAIL = "support@norbo.mariustrica.com";
  *  4. Info app (versione)
  */
 export default function SettingsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const appVersion = Constants.expoConfig?.version ?? "1.0.0";
@@ -77,12 +75,23 @@ export default function SettingsScreen() {
           <SettingsRow
             iconName="doc.text"
             label={t("settings.termsOfService")}
-            onPress={() => void Linking.openURL(TERMS_URL)}
+            onPress={() =>
+              void Linking.openURL(legalUrl("terms", i18n.language))
+            }
           />
           <SettingsRow
             iconName="hand.raised"
             label={t("settings.privacyPolicy")}
-            onPress={() => void Linking.openURL(PRIVACY_URL)}
+            onPress={() =>
+              void Linking.openURL(legalUrl("privacy", i18n.language))
+            }
+          />
+          <SettingsRow
+            iconName="slider.horizontal.3"
+            label={t("toolsDisclaimer.title")}
+            onPress={() =>
+              void Linking.openURL(legalUrl("tools-disclaimer", i18n.language))
+            }
           />
           <SettingsRow
             iconName="exclamationmark.bubble"

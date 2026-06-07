@@ -617,6 +617,19 @@ const en = {
     confirm: "delete account",
     mismatch: "email does not match",
   },
+  toolsDisclaimer: {
+    title: "tools & calculators disclaimer",
+    intro: "the tools in the services section are a helpful aid, not veterinary advice. please read and accept before you start using them.",
+    readLink: "read the full disclaimer",
+    summaryTitle: "in short",
+    point1: "results are indicative estimates based on general formulas and average reference values.",
+    point2: "they are not veterinary advice, a diagnosis, or a prescription.",
+    point3: "always talk to your vet about your pet's health, nutrition, or wellbeing.",
+    point4: "in an emergency, contact your vet right away — don't rely on the tools.",
+    checkbox: "i understand the tools give indicative estimates and don't replace a veterinarian.",
+    continue: "continue",
+    error: "couldn't save your acceptance. please try again.",
+  },
   terms: {
     title: "terms of service",
     intro:

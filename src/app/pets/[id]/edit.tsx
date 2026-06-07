@@ -107,7 +107,7 @@ function EditForm({ pet, petId }: { pet: Pet; petId: string }) {
   const [speciesInput, setSpeciesInput] = useState("");
   const [debouncedInput, setDebouncedInput] = useState("");
   const [speciesLabel, setSpeciesLabel] = useState(
-    pet.speciesLabelFreetext ?? "",
+    pet.speciesName ?? pet.speciesLabelFreetext ?? "",
   );
 
   useEffect(() => {

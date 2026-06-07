@@ -263,6 +263,19 @@ const tr = {
     confirm: "hesabı sil",
     mismatch: "e-posta eşleşmiyor",
   },
+  toolsDisclaimer: {
+    title: "araçlar ve hesaplayıcılar feragatnamesi",
+    intro: "hizmetler bölümündeki araçlar yararlı bir destektir, veteriner tavsiyesi değildir. kullanmaya başlamadan önce lütfen oku ve kabul et.",
+    readLink: "feragatnamenin tamamını oku",
+    summaryTitle: "kısaca",
+    point1: "sonuçlar genel formüllere ve ortalama referans değerlerine dayalı yaklaşık tahminlerdir.",
+    point2: "bunlar veteriner tavsiyesi, teşhis veya reçete değildir.",
+    point3: "evcil hayvanının sağlığı, beslenmesi veya refahı için her zaman veterinerine danış.",
+    point4: "acil durumda hemen veterinerinle iletişime geç — araçlara güvenme.",
+    checkbox: "araçların yaklaşık tahminler verdiğini ve veterineri yerine geçmediğini anlıyorum.",
+    continue: "devam et",
+    error: "kabulün kaydedilemedi. lütfen tekrar dene.",
+  },
   terms: {
     title: "hizmet şartları",
     intro:

@@ -37,6 +37,13 @@ export const authApi = {
   acceptTerms: () => api.post<AuthUser>("/auth/accept-terms"),
 
   /**
+   * Record the user's acceptance of the Tools & Calculators Disclaimer.
+   * Returns the updated own profile with toolsDisclaimerAcceptedAt set.
+   */
+  acceptToolsDisclaimer: () =>
+    api.post<AuthUser>("/auth/accept-tools-disclaimer"),
+
+  /**
    * Permanently delete the authenticated user's account.
    * The server verifies the provided email matches before deleting.
    */

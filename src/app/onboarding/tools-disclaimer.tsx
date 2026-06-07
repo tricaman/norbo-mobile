@@ -1,10 +1,8 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Screen } from "@/components/ui/Screen";
-import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useMutation } from "@/hooks/useMutation";
 import { authApi } from "@/services/auth.api";
-import { legalUrl } from "@/constants/legal";
 import { useAuthStore } from "@/stores/auth.store";
 import { extractError } from "@/utils/extract-error";
 import React, { useState } from "react";
@@ -13,18 +11,29 @@ import { Linking, ScrollView, Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 /**
- * OnboardingTermsScreen — blocking EULA acceptance step shown after the
- * first successful login (when user.termsAcceptedAt is null).
- *
- * Behaviour:
- * - Shows a TOS link, a zero-tolerance statement, and an unchecked checkbox.
- * - The continue button is disabled until the checkbox is ticked.
- * - On submit, POST /auth/accept-terms. On success, the store is
- *   updated and the root layout redirects the user to the main tabs.
- * - This screen has no back button: the user cannot bypass it.
+ * Builds the public URL of the full disclaimer document, hosted on the
+ * marketing site. The site only ships `it` and `en` — anything else falls
+ * back to English.
  */
-export default function OnboardingTermsScreen() {
-  const { t } = useTranslation();
+function disclaimerUrl(language: string): string {
+  const lang = language.toLowerCase().startsWith("it") ? "it" : "en";
+  return `https://norbo.app/${lang}/tools-disclaimer`;
+}
+
+/**
+ * OnboardingToolsDisclaimerScreen — blocking acceptance step shown right
+ * after the EULA (when user.toolsDisclaimerAcceptedAt is null).
+ *
+ * Behaviour mirrors the TOS screen:
+ * - Shows a short summary, a link to the full disclaimer, and an unchecked
+ *   checkbox.
+ * - The continue button is disabled until the checkbox is ticked.
+ * - On submit, POST /auth/accept-tools-disclaimer. On success the store is
+ *   updated and the root layout moves the user forward.
+ * - No back button: the user cannot bypass it.
+ */
+export default function OnboardingToolsDisclaimerScreen() {
+  const { t, i18n } = useTranslation();
   const { theme } = useUnistyles();
   const setUser = useAuthStore((s) => s.setUser);
   const user = useAuthStore((s) => s.user);
@@ -32,21 +41,29 @@ export default function OnboardingTermsScreen() {
   const [error, setError] = useState("");
 
   const { mutate, isPending } = useMutation({
-    mutationFn: () => authApi.acceptTerms(),
+    mutationFn: () => authApi.acceptToolsDisclaimer(),
     showErrorToast: false,
     onSuccess: (res) => {
-      // Backend returns the updated own profile (including termsAcceptedAt).
-      // Merge into existing store shape so AuthUser stays consistent.
       if (user) {
-        setUser({ ...user, termsAcceptedAt: res.data.termsAcceptedAt });
+        setUser({
+          ...user,
+          toolsDisclaimerAcceptedAt: res.data.toolsDisclaimerAcceptedAt,
+        });
       }
     },
     onError: (err) => {
-      setError(extractError(err) || t("terms.error"));
+      setError(extractError(err) || t("toolsDisclaimer.error"));
     },
   });
 
   const canContinue = accepted && !isPending;
+
+  const points = [
+    t("toolsDisclaimer.point1"),
+    t("toolsDisclaimer.point2"),
+    t("toolsDisclaimer.point3"),
+    t("toolsDisclaimer.point4"),
+  ];
 
   return (
     <Screen>
@@ -55,25 +72,33 @@ export default function OnboardingTermsScreen() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>{t("terms.title")}</Text>
-        <Text style={styles.intro}>{t("terms.intro")}</Text>
+        <Text style={styles.title}>{t("toolsDisclaimer.title")}</Text>
+        <Text style={styles.intro}>{t("toolsDisclaimer.intro")}</Text>
 
         <NorboPressable
           style={styles.linkRow}
           scale="row"
           haptic="light"
-          onPress={() => void Linking.openURL(TERMS_URL)}
+          onPress={() => void Linking.openURL(disclaimerUrl(i18n.language))}
         >
           <IconSymbol
             name="doc.text"
             size={18}
             tintColor={theme.colors.primary}
           />
-          <Text style={styles.linkText}>{t("terms.readLink")}</Text>
+          <Text style={styles.linkText}>{t("toolsDisclaimer.readLink")}</Text>
         </NorboPressable>
 
-        <View style={styles.warningCard}>
-          <Text style={styles.warningText}>{t("terms.zeroTolerance")}</Text>
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryTitle}>
+            {t("toolsDisclaimer.summaryTitle")}
+          </Text>
+          {points.map((point, i) => (
+            <View key={i} style={styles.pointRow}>
+              <Text style={styles.bullet}>•</Text>
+              <Text style={styles.pointText}>{point}</Text>
+            </View>
+          ))}
         </View>
 
         <NorboPressable
@@ -91,30 +116,31 @@ export default function OnboardingTermsScreen() {
               />
             ) : null}
           </View>
-          <Text style={styles.checkboxLabel}>{t("terms.checkbox")}</Text>
-        </NorboPressable>
-      </ScrollView>
-
-      {/* Bottom-anchored CTA — mirrors the login button placement so the
-          user always sees the primary action low on the screen. */}
-      <View style={styles.footer}>
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-        <NorboPressable
-          style={[styles.primaryBtn, !canContinue && styles.btnDisabled]}
-          scale="cta"
-          haptic="medium"
-          disabled={!canContinue}
-          onPress={() => {
-            setError("");
-            mutate();
-          }}
-        >
-          <Text style={styles.primaryBtnText}>
-            {isPending ? "..." : t("terms.continue")}
+          <Text style={styles.checkboxLabel}>
+            {t("toolsDisclaimer.checkbox")}
           </Text>
         </NorboPressable>
-      </View>
+        <View style={styles.spacer} />
+
+        <View style={styles.footer}>
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+          <NorboPressable
+            style={[styles.primaryBtn, !canContinue && styles.btnDisabled]}
+            scale="cta"
+            haptic="medium"
+            disabled={!canContinue}
+            onPress={() => {
+              setError("");
+              mutate();
+            }}
+          >
+            <Text style={styles.primaryBtnText}>
+              {isPending ? "..." : t("toolsDisclaimer.continue")}
+            </Text>
+          </NorboPressable>
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
@@ -124,15 +150,17 @@ const styles = StyleSheet.create((theme) => ({
     flex: 1,
   },
   scrollContent: {
+    flexGrow: 1,
     paddingHorizontal: theme.spacing["3xl"],
     paddingTop: theme.spacing["3xl"],
     paddingBottom: theme.spacing["2xl"],
     gap: theme.spacing.lg,
   },
+  spacer: {
+    flexGrow: 1,
+  },
   footer: {
-    paddingHorizontal: theme.spacing["3xl"],
-    paddingBottom: SCREEN_BOTTOM_PADDING,
-    paddingTop: theme.spacing.md,
+    paddingTop: theme.spacing.xl,
     gap: theme.spacing.md,
   },
   title: {
@@ -154,14 +182,30 @@ const styles = StyleSheet.create((theme) => ({
     color: theme.colors.primary,
     textDecorationLine: "underline",
   },
-  warningCard: {
+  summaryCard: {
     backgroundColor: theme.colors.surface,
     padding: theme.spacing.xl,
+    gap: theme.spacing.sm,
     ...theme.card,
   },
-  warningText: {
+  summaryTitle: {
+    ...theme.typography.subhead,
+    color: theme.colors.textPrimary,
+    marginBottom: theme.spacing.xs,
+  },
+  pointRow: {
+    flexDirection: "row",
+    gap: theme.spacing.sm,
+  },
+  bullet: {
+    ...theme.typography.footnote,
+    color: theme.colors.textSecondary,
+    lineHeight: 20,
+  },
+  pointText: {
     ...theme.typography.footnote,
     color: theme.colors.textPrimary,
+    flex: 1,
     lineHeight: 20,
   },
   checkboxRow: {

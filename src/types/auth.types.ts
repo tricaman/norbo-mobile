@@ -17,6 +17,12 @@ export interface AuthUser {
    * screen and blocks all other navigation while this is null.
    */
   termsAcceptedAt?: string | null;
+  /**
+   * ISO-8601 timestamp of the user's acceptance of the Tools & Calculators
+   * Disclaimer. Null until accepted — the app gates the user on the tools
+   * disclaimer onboarding screen (right after the EULA) while this is null.
+   */
+  toolsDisclaimerAcceptedAt?: string | null;
 
   // ── Identity & Access — preferences (mirrors backend OwnProfile) ─────
   notificationPreferences: NotificationPreferences;

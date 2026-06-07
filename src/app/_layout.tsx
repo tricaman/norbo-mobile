@@ -34,6 +34,9 @@ export default function RootLayout() {
   const hydrateOnboarding = useOnboardingStore((s) => s.hydrate);
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const termsAcceptedAt = useAuthStore((s) => s.user?.termsAcceptedAt);
+  const toolsDisclaimerAcceptedAt = useAuthStore(
+    (s) => s.user?.toolsDisclaimerAcceptedAt,
+  );
   const hasCompletedOnboarding = useOnboardingStore((s) => s.hasCompleted);
   const router = useRouter();
   const segments = useSegments();
@@ -95,6 +98,16 @@ export default function RootLayout() {
       return;
     }
 
+    // Authenticated + terms accepted but hasn't accepted the Tools &
+    // Calculators Disclaimer. Lock the user on that screen next — the
+    // Services-tab tools give indicative estimates, not veterinary advice.
+    if (!toolsDisclaimerAcceptedAt) {
+      if (segments[1] !== "tools-disclaimer") {
+        router.replace("/onboarding/tools-disclaimer");
+      }
+      return;
+    }
+
     // Authenticated + terms accepted but hasn't seen the post-signup
     // onboarding (welcome → theme → notifications). Skippable, but the
     // first time the user reaches this state we route them through it.
@@ -113,6 +126,7 @@ export default function RootLayout() {
   }, [
     isAuthed,
     termsAcceptedAt,
+    toolsDisclaimerAcceptedAt,
     hasCompletedOnboarding,
     segments,
     router,
@@ -188,6 +202,10 @@ function AppInner() {
       <Stack.Screen name="auth/callback" options={{ animation: "fade" }} />
       <Stack.Screen
         name="onboarding/terms"
+        options={{ animation: "fade", gestureEnabled: false }}
+      />
+      <Stack.Screen
+        name="onboarding/tools-disclaimer"
         options={{ animation: "fade", gestureEnabled: false }}
       />
       <Stack.Screen

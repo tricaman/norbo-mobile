@@ -264,6 +264,19 @@ const ro = {
     confirm: "sterge cont",
     mismatch: "email-ul nu se potriveste",
   },
+  toolsDisclaimer: {
+    title: "declarație privind instrumentele și calculatoarele",
+    intro: "instrumentele din secțiunea servicii sunt un ajutor util, nu un sfat veterinar. te rugăm să citești și să accepți înainte de a le folosi.",
+    readLink: "citește declarația completă",
+    summaryTitle: "pe scurt",
+    point1: "rezultatele sunt estimări orientative bazate pe formule generale și valori medii de referință.",
+    point2: "nu sunt sfat veterinar, diagnostic sau prescripție.",
+    point3: "discută întotdeauna cu medicul veterinar despre sănătatea, alimentația sau bunăstarea animalului tău.",
+    point4: "în caz de urgență, contactează imediat medicul veterinar — nu te baza pe instrumente.",
+    checkbox: "înțeleg că instrumentele oferă estimări orientative și nu înlocuiesc un medic veterinar.",
+    continue: "continuă",
+    error: "nu am putut salva acceptul tău. încearcă din nou.",
+  },
   terms: {
     title: "termeni de serviciu",
     intro:

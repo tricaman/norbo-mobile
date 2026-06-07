@@ -140,7 +140,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
 
   const isDeceased = pet.lifeStatus === LifeStatus.DECEASED;
   const meta = CATEGORY_META[pet.category];
-  const speciesLabel = pet.speciesLabelFreetext ?? null;
+  const speciesLabel = pet.speciesName ?? pet.speciesLabelFreetext ?? null;
 
   const age = formatPetAge(pet.birthDate, t) ?? "";
   const pillText = [

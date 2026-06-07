@@ -263,6 +263,19 @@ const de = {
     confirm: "konto löschen",
     mismatch: "e-mail stimmt nicht überein",
   },
+  toolsDisclaimer: {
+    title: "haftungsausschluss für tools & rechner",
+    intro: "die tools im bereich dienste sind eine hilfreiche unterstützung, kein tierärztlicher rat. bitte lies und akzeptiere, bevor du sie verwendest.",
+    readLink: "vollständigen haftungsausschluss lesen",
+    summaryTitle: "kurz gesagt",
+    point1: "die ergebnisse sind ungefähre schätzungen auf basis allgemeiner formeln und durchschnittlicher referenzwerte.",
+    point2: "sie sind kein tierärztlicher rat, keine diagnose und kein rezept.",
+    point3: "sprich für gesundheit, ernährung oder wohlbefinden deines tieres immer mit deinem tierarzt.",
+    point4: "im notfall kontaktiere sofort deinen tierarzt — verlass dich nicht auf die tools.",
+    checkbox: "ich verstehe, dass die tools nur richtwerte liefern und keinen tierarzt ersetzen.",
+    continue: "weiter",
+    error: "deine zustimmung konnte nicht gespeichert werden. bitte versuche es erneut.",
+  },
   terms: {
     title: "nutzungsbedingungen",
     intro:
