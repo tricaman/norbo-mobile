@@ -55,13 +55,13 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
               style={styles.photo}
               contentFit="cover"
             />
-          ) : null}
-
-          <PetCategoryIcon
-            category={pet.category}
-            size={88}
-            color="rgba(255,255,255,0.50)"
-          />
+          ) : (
+            <PetCategoryIcon
+              category={pet.category}
+              size={88}
+              color="rgba(255,255,255,0.50)"
+            />
+          )}
 
           {age ? (
             <View style={styles.ageBadge}>

@@ -104,7 +104,7 @@ eas build --profile production --platform all
 ## 6. Verifica build
 
 - [ ] L'app installata si chiama **norbo** (non "norbo (Dev)" né "norbo (Preview)")
-- [ ] Bundle id: `app.norbo` (no suffisso `.dev` / `.preview`)
+- [ ] Bundle id: `app.mariustrica.norbo` (no suffisso `.dev` / `.preview`)
 - [ ] Login funziona contro `api.norbo.app`
 - [ ] WebSocket si connette a `ws.norbo.app/ws`
 - [ ] Push notification arrivano (token FCM registrato sul progetto Firebase prod)
