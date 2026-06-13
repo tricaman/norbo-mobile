@@ -1,6 +1,7 @@
+import { Card } from "@/components/ui/Card";
 import { Divider } from "@/components/ui/Divider";
 import React from "react";
-import { StyleProp, Text, View, ViewStyle } from "react-native";
+import { StyleProp, Text, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface FormCardProps {
@@ -25,7 +26,7 @@ export function FormCard({
   const items = React.Children.toArray(children);
 
   return (
-    <View style={[styles.card, style]}>
+    <Card style={[styles.card, style]}>
       {label ? (
         <>
           <Text style={styles.label}>{label}</Text>
@@ -40,17 +41,15 @@ export function FormCard({
             </React.Fragment>
           ))
         : children}
-    </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
   card: {
-    backgroundColor: theme.colors.surface,
     paddingHorizontal: theme.spacing.xl,
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.sm,
-    ...theme.card,
   },
   label: {
     ...theme.typography.footnote,

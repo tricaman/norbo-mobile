@@ -1,4 +1,4 @@
-import { NorboPressable } from "@/components/CustomPressable";
+import { Card } from "@/components/ui/Card";
 import { PetCategoryIcon } from "@/components/pets/wizard/PetCategoryIcon";
 import { CATEGORY_META } from "@/components/pets/wizard/category-meta";
 import type { Pet } from "@/types/pet.types";
@@ -39,63 +39,56 @@ export function PetCard({ pet, onPress, style }: PetCardProps) {
     t(`petForm.categories.${pet.category}`);
 
   return (
-    <NorboPressable
-      scale="card"
-      haptic="light"
+    // Clips image/info to the rounded corners; PetCard keeps the larger
+    // `radius.xl` hero corner (vs the default card radius from the token).
+    <Card
       onPress={onPress}
-      style={[style]}
+      clip
+      style={[{ borderRadius: theme.radius.xl }, style]}
     >
-      {/* Inner view clips everything to rounded corners */}
-      <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
-        {/* ── Image area ──────────────────────────── */}
-        <View style={[styles.imageArea, { backgroundColor: meta.tint }]}>
-          {pet.photoUrl ? (
-            <Image
-              source={{ uri: pet.photoUrl }}
-              style={styles.photo}
-              contentFit="cover"
-            />
-          ) : (
-            <PetCategoryIcon
-              category={pet.category}
-              size={88}
-              color="rgba(255,255,255,0.50)"
-            />
-          )}
+      {/* ── Image area ──────────────────────────── */}
+      <View style={[styles.imageArea, { backgroundColor: meta.tint }]}>
+        {pet.photoUrl ? (
+          <Image
+            source={{ uri: pet.photoUrl }}
+            style={styles.photo}
+            contentFit="cover"
+          />
+        ) : (
+          <PetCategoryIcon
+            category={pet.category}
+            size={88}
+            color="rgba(255,255,255,0.50)"
+          />
+        )}
 
-          {age ? (
-            <View style={styles.ageBadge}>
-              <Text style={styles.ageBadgeText}>{age}</Text>
-            </View>
-          ) : null}
-        </View>
-
-        {/* ── Info area ───────────────────────────── */}
-        <View style={styles.infoArea}>
-          <Text
-            style={[styles.name, { color: theme.colors.textPrimary }]}
-            numberOfLines={1}
-          >
-            {pet.name}
-          </Text>
-          <Text
-            style={[styles.species, { color: theme.colors.textSecondary }]}
-            numberOfLines={1}
-          >
-            {speciesLabel}
-          </Text>
-        </View>
+        {age ? (
+          <View style={styles.ageBadge}>
+            <Text style={styles.ageBadgeText}>{age}</Text>
+          </View>
+        ) : null}
       </View>
-    </NorboPressable>
+
+      {/* ── Info area ───────────────────────────── */}
+      <View style={styles.infoArea}>
+        <Text
+          style={[styles.name, { color: theme.colors.textPrimary }]}
+          numberOfLines={1}
+        >
+          {pet.name}
+        </Text>
+        <Text
+          style={[styles.species, { color: theme.colors.textSecondary }]}
+          numberOfLines={1}
+        >
+          {speciesLabel}
+        </Text>
+      </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
-  card: {
-    overflow: "hidden",
-    ...theme.card,
-    borderRadius: theme.radius.xl,
-  },
   imageArea: {
     aspectRatio: 4 / 3,
     alignItems: "center",

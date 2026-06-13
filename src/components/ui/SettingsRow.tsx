@@ -1,4 +1,5 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import { Card } from "@/components/ui/Card";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import React from "react";
 import { StyleProp, Text, TextStyle, View } from "react-native";
@@ -91,7 +92,7 @@ export function SettingsCard({
   const defaultInset = 32 + theme.spacing.xl + theme.spacing.lg;
   const validChildren = React.Children.toArray(children);
   return (
-    <View style={styles.card}>
+    <Card clip>
       {title ? (
         <SectionLabel style={styles.cardTitle}>{title}</SectionLabel>
       ) : null}
@@ -108,16 +109,11 @@ export function SettingsCard({
           )}
         </React.Fragment>
       ))}
-    </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
-  card: {
-    backgroundColor: theme.colors.surface,
-    overflow: "hidden",
-    ...theme.card,
-  },
   cardTitle: {
     color: theme.colors.primary,
     paddingHorizontal: theme.spacing["2xl"],

@@ -22,6 +22,24 @@ const en = {
     settings: "settings",
   },
 
+  servicesHub: {
+    subtitle: "tools, picked for who lives with you",
+    forYourPets: "for your pets",
+    forEveryone: "for everyone",
+    worksWithoutProfile: "works without a profile",
+    forYourPet: "for your {{label}}",
+    toolCount_one: "{{count}} tool",
+    toolCount_other: "{{count}} tools",
+    prefilledFor: "prefilled for {{name}}",
+    allPets: "all pets",
+    categoryToolsTitle: "{{label}} tools",
+    prefilledTapToEdit: "prefilled · tap to edit",
+    selectPet: "select pet",
+    estimatesDisclaimer:
+      "estimates only — they don't replace your vet's advice",
+    empty: "no tools available yet",
+  },
+
   tools: {
     dogCalorieNeeds: {
       title: "dog calorie needs",

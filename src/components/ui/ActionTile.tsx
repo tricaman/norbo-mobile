@@ -1,4 +1,4 @@
-import { NorboPressable } from "@/components/CustomPressable";
+import { Card } from "@/components/ui/Card";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import React from "react";
 import { Text } from "react-native";
@@ -25,30 +25,23 @@ export function ActionTile({
     variant === "primary" ? theme.colors.primary : theme.colors.textSecondary;
 
   return (
-    <NorboPressable
-      style={styles.container}
-      scale="card"
-      haptic="light"
-      onPress={onPress}
-    >
+    <Card style={styles.container} onPress={onPress}>
       <IconSymbol name={symbolName} size={24} tintColor={iconColor} />
       <Text
         style={variant === "primary" ? styles.labelPrimary : styles.labelMuted}
       >
         {label}
       </Text>
-    </NorboPressable>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
     paddingVertical: theme.spacing.sm,
     paddingHorizontal: theme.spacing.xs,
     alignItems: "center",
-    ...theme.card,
     gap: theme.spacing.xs,
   },
   labelMuted: {

@@ -290,6 +290,10 @@ function AppInner() {
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen
+        name="tool/category/[category]"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
         name="tool/[toolId]"
         options={{ animation: "slide_from_right" }}
       />

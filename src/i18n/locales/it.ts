@@ -23,6 +23,24 @@ const it = {
     settings: "impostazioni",
   },
 
+  servicesHub: {
+    subtitle: "strumenti, scelti per chi vive con te",
+    forYourPets: "per i tuoi animali",
+    forEveryone: "per tutti",
+    worksWithoutProfile: "funziona senza profilo",
+    forYourPet: "per il tuo {{label}}",
+    toolCount_one: "{{count}} strumento",
+    toolCount_other: "{{count}} strumenti",
+    prefilledFor: "precompilato per {{name}}",
+    allPets: "tutti gli animali",
+    categoryToolsTitle: "strumenti {{label}}",
+    prefilledTapToEdit: "precompilato · tocca per cambiare",
+    selectPet: "scegli animale",
+    estimatesDisclaimer:
+      "solo stime — non sostituiscono il parere del veterinario",
+    empty: "ancora nessuno strumento disponibile",
+  },
+
   tools: {
     dogCalorieNeeds: {
       title: "fabbisogno calorico cane",
