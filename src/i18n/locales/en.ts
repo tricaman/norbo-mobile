@@ -40,6 +40,17 @@ const en = {
     empty: "no tools available yet",
   },
 
+  appUpdate: {
+    availableTitle: "update available",
+    availableBody:
+      "a newer version of norbo is ready, with the latest improvements and fixes.",
+    requiredTitle: "update required",
+    requiredBody:
+      "this version of norbo is no longer supported. update to the latest version to keep going.",
+    updateNow: "update now",
+    later: "later",
+  },
+
   tools: {
     dogCalorieNeeds: {
       title: "dog calorie needs",

@@ -41,6 +41,17 @@ const it = {
     empty: "ancora nessuno strumento disponibile",
   },
 
+  appUpdate: {
+    availableTitle: "aggiornamento disponibile",
+    availableBody:
+      "è pronta una nuova versione di norbo, con le ultime novità e correzioni.",
+    requiredTitle: "aggiornamento necessario",
+    requiredBody:
+      "questa versione di norbo non è più supportata. aggiorna all'ultima versione per continuare.",
+    updateNow: "aggiorna ora",
+    later: "più tardi",
+  },
+
   tools: {
     dogCalorieNeeds: {
       title: "fabbisogno calorico cane",

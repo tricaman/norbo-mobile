@@ -1,3 +1,4 @@
+import { UpdateGate } from "@/components/app/UpdateGate";
 import { ToastProvider } from "@/components/ui/ToastProvider";
 import "@/i18n/i18n";
 import {
@@ -192,12 +193,13 @@ function AppInner() {
   const { theme } = useUnistyles();
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        contentStyle: { backgroundColor: theme.colors.background },
-      }}
-    >
+    <UpdateGate>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: theme.colors.background },
+        }}
+      >
       <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
       <Stack.Screen name="auth/callback" options={{ animation: "fade" }} />
       <Stack.Screen
@@ -297,6 +299,7 @@ function AppInner() {
         name="tool/[toolId]"
         options={{ animation: "slide_from_right" }}
       />
-    </Stack>
+      </Stack>
+    </UpdateGate>
   );
 }

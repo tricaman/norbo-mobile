@@ -114,5 +114,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       projectId: "2025acad-99ed-4d79-a182-13f880bff48d",
     },
     appVariant: APP_VARIANT,
+    // Used by the update gate to build a fallback store URL when the backend
+    // doesn't return one (see src/utils/store-url.ts).
+    // TODO: set `appStoreId` to the numeric App Store id once the app is live.
+    appStoreId: "",
+    androidPackageId: BASE_BUNDLE_ID,
   },
 });
