@@ -9,8 +9,10 @@ import { api } from "./api";
 const base = (petId: string) => `/pets/${encodeURIComponent(petId)}/events`;
 
 export const petEventsApi = {
-  list: (petId: string, params?: { cursor?: string; limit?: number }) =>
-    api.get<PetEventTimeline>(base(petId), { params }),
+  list: (
+    petId: string,
+    params?: { cursor?: string; limit?: number; inBooklet?: boolean },
+  ) => api.get<PetEventTimeline>(base(petId), { params }),
 
   get: (petId: string, eventId: string) =>
     api.get<PetEvent>(`${base(petId)}/${encodeURIComponent(eventId)}`),

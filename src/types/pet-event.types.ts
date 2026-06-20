@@ -37,6 +37,7 @@ export interface PetEvent {
   mediaAssetIds: string[];
   extra: Record<string, unknown>;
   createReminder: boolean;
+  includeInBooklet: boolean;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
@@ -60,6 +61,7 @@ export interface CreatePetEventInput {
   mediaAssetIds?: string[];
   extra?: Record<string, unknown>;
   createReminder?: boolean;
+  includeInBooklet?: boolean;
 }
 
 export interface UpdatePetEventInput {
@@ -72,4 +74,5 @@ export interface UpdatePetEventInput {
   mediaAssetIds?: string[];
   extra?: Record<string, unknown>;
   createReminder?: boolean;
+  includeInBooklet?: boolean;
 }

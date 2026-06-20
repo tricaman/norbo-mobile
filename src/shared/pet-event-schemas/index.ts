@@ -354,6 +354,19 @@ export interface PetEventCapabilities {
   hasCost: boolean;
   canSchedule: boolean;
   defaultExpenseCategory: ExpenseCategory | null;
+  /**
+   * Whether the event type can be flagged as part of the pet's health
+   * booklet (libretto). Only medical event types are eligible — the
+   * EventForm shows the "add to booklet" toggle only when this is true.
+   */
+  bookletEligible: boolean;
+  /**
+   * Default value of the booklet toggle when creating an event of this
+   * type. MUST be `false` when `bookletEligible` is `false`. Medical
+   * events that naturally belong to the booklet (vaccinations, parasite
+   * treatments) default to `true`.
+   */
+  bookletDefault: boolean;
 }
 
 export const PET_EVENT_CAPABILITIES: Record<
@@ -364,66 +377,92 @@ export const PET_EVENT_CAPABILITIES: Record<
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.VET,
+    bookletEligible: true,
+    bookletDefault: true,
   },
   [PetEventType.VET_VISIT]: {
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.VET,
+    bookletEligible: true,
+    bookletDefault: false,
   },
   [PetEventType.PARASITE_TREATMENT]: {
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.VET,
+    bookletEligible: true,
+    bookletDefault: true,
   },
   [PetEventType.MEDICATION]: {
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.VET,
+    bookletEligible: true,
+    bookletDefault: false,
   },
   [PetEventType.GROOMING]: {
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.GROOMING,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.INSURANCE]: {
     hasCost: true,
     canSchedule: true,
     defaultExpenseCategory: ExpenseCategory.OTHER,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.FEEDING_LOG]: {
     hasCost: true,
     canSchedule: false,
     defaultExpenseCategory: ExpenseCategory.FOOD,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.WATER_CHANGE]: {
     hasCost: false,
     canSchedule: true,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.WEIGHT_RECORD]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.WATER_PARAMETERS]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.MOLT]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.NOTE]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
   [PetEventType.PASSING]: {
     hasCost: false,
     canSchedule: false,
     defaultExpenseCategory: null,
+    bookletEligible: false,
+    bookletDefault: false,
   },
 };
 
@@ -439,4 +478,12 @@ export function defaultExpenseCategoryFor(
   type: PetEventType,
 ): ExpenseCategory | null {
   return PET_EVENT_CAPABILITIES[type].defaultExpenseCategory;
+}
+
+export function eventBookletEligible(type: PetEventType): boolean {
+  return PET_EVENT_CAPABILITIES[type].bookletEligible;
+}
+
+export function eventBookletDefault(type: PetEventType): boolean {
+  return PET_EVENT_CAPABILITIES[type].bookletDefault;
 }

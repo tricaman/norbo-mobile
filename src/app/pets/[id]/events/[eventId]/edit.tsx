@@ -59,6 +59,7 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         : undefined,
       mediaAssetIds: event.mediaAssetIds,
       createReminder: event.createReminder,
+      includeInBooklet: event.includeInBooklet,
       vaccineName:
         typeof event.extra?.["vaccineName"] === "string"
           ? (event.extra["vaccineName"] as string)
@@ -91,6 +92,7 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         // that the user had previously turned off.
         createReminder:
           values.mode === "future" ? (values.createReminder ?? false) : false,
+        includeInBooklet: values.includeInBooklet ?? false,
         extra: buildExtra(values),
       }),
     showSuccessToast: true,

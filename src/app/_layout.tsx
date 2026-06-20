@@ -268,6 +268,10 @@ function AppInner() {
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen
+        name="pets/[id]/booklet/edit"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
         name="reminder/new"
         options={{ animation: "slide_from_right" }}
       />

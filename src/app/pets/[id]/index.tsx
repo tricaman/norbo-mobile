@@ -7,6 +7,7 @@ import { QueryBoundary } from "@/components/ui/QueryBoundary";
 
 import { queryClient } from "@/app/_layout";
 import { PetTimeline } from "@/components/health-timeline/PetTimeline";
+import { PetBookletTab } from "@/components/pets/booklet/PetBookletTab";
 import { PetExpensesTab } from "@/components/pets/expenses/PetExpensesTab";
 import { PetPhotosTab } from "@/components/pets/photos/PetPhotosTab";
 import { PetWeightTab } from "@/components/pets/weights/PetWeightTab";
@@ -38,7 +39,13 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
-type PetDetailTab = "timeline" | "photos" | "expenses" | "weight" | "care";
+type PetDetailTab =
+  | "timeline"
+  | "photos"
+  | "expenses"
+  | "weight"
+  | "booklet"
+  | "care";
 
 const HERO_HEIGHT = 280;
 const COLLAPSED_HERO_HEIGHT = 56;
@@ -244,6 +251,11 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       icon: "creditcard",
     },
     { key: "weight", label: t("petDetail.tabs.weight"), icon: "scalemass" },
+    {
+      key: "booklet",
+      label: t("petDetail.tabs.booklet"),
+      icon: "doc.text",
+    },
     { key: "care", label: t("petDetail.tabs.care"), icon: "heart" },
   ];
 
@@ -258,6 +270,7 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
       message: t("petDetail.expenses.empty"),
     },
     weight: { icon: "scalemass", message: t("petDetail.weight.empty") },
+    booklet: { icon: "doc.text", message: t("petDetail.booklet.registryEmpty") },
     care: { icon: "heart", message: t("petDetail.care.empty") },
   };
 
@@ -318,6 +331,12 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
           onScroll={scrollHandler}
           contentInsetTop={headerHeight}
         />
+      ) : activeTab === "booklet" ? (
+        <PetBookletTab
+          petId={petId}
+          onScroll={scrollHandler}
+          contentInsetTop={headerHeight}
+        />
       ) : (
         <Animated.ScrollView
           key={activeTab}
@@ -368,18 +387,18 @@ function PetDetailContent({ pet, petId }: { pet: Pet; petId: string }) {
                 contentFit="cover"
               />
             </Animated.View>
-          ) : null}
-
-          <Animated.View
-            style={[styles.heroIconWrapper, heroContentAnimatedStyle]}
-            pointerEvents="none"
-          >
-            <PetCategoryIcon
-              category={pet.category}
-              size={120}
-              color="rgba(255,255,255,0.20)"
-            />
-          </Animated.View>
+          ) : (
+            <Animated.View
+              style={[styles.heroIconWrapper, heroContentAnimatedStyle]}
+              pointerEvents="none"
+            >
+              <PetCategoryIcon
+                category={pet.category}
+                size={120}
+                color="rgba(255,255,255,0.20)"
+              />
+            </Animated.View>
+          )}
 
           <NorboPressable
             style={[styles.heroBtn, { top: insets.top + 10, left: 16 }]}

@@ -15,6 +15,8 @@ import { FormInput } from "@/components/ui/FormInput";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import {
+  eventBookletDefault,
+  eventBookletEligible,
   eventCanHaveCost,
   eventCanSchedule,
   PetEventType,
@@ -44,6 +46,7 @@ export const eventFormSchema = z
     mediaAssetIds: z.array(z.string()).max(MAX_ATTACHMENTS).optional(),
     createReminder: z.boolean().optional(),
     createExpense: z.boolean().optional(),
+    includeInBooklet: z.boolean().optional(),
     vaccineName: z.string().max(120).optional(),
     reason: z.string().max(500).optional(),
   })
@@ -139,6 +142,9 @@ export function EventForm({
   // must disappear entirely.
   const typeCanHaveCost = eventCanHaveCost(selectedType);
   const typeCanSchedule = eventCanSchedule(selectedType);
+  // Only medical event types (vaccination, parasite treatment, vet visit,
+  // medication) can be flagged as part of the health booklet.
+  const typeBookletEligible = eventBookletEligible(selectedType);
 
   // Auto-reset the expense toggle whenever cost becomes invalid OR the
   // selected event type cannot have a cost, so it can never be ON in an
@@ -155,6 +161,13 @@ export function EventForm({
       form.setValue("createReminder", false);
     }
   }, [typeCanSchedule, form]);
+
+  // A non-eligible type can never be tagged for the booklet.
+  useEffect(() => {
+    if (!typeBookletEligible) {
+      form.setValue("includeInBooklet", false);
+    }
+  }, [typeBookletEligible, form]);
 
   const typeEntries: Array<{ value: PetEventType; i18n: string; icon: string }> = [
     { value: PetEventType.VET_VISIT, i18n: "VET_VISIT", icon: "stethoscope" },
@@ -238,6 +251,9 @@ export function EventForm({
                   shouldDirty: true,
                   shouldTouch: true,
                 });
+                // Pre-select the booklet flag from the type's capability
+                // (ON for vaccinations / parasite treatments).
+                form.setValue("includeInBooklet", eventBookletDefault(type));
               }}
               title={t("eventForm.type")}
             />
@@ -361,6 +377,53 @@ export function EventForm({
                 name="reason"
                 placeholder={t("eventForm.reasonPlaceholder")}
                 returnKeyType="done"
+              />
+            </FormCard>
+          </>
+        ) : null}
+
+        {/* Booklet toggle — only for medical event types eligible for the
+            health booklet (vaccination, parasite treatment, vet visit,
+            medication). Pre-selected ON for vaccinations / treatments. */}
+        {typeBookletEligible ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.booklet")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <Controller
+                control={form.control}
+                name="includeInBooklet"
+                render={({ field }) => (
+                  <View style={styles.reminderRow}>
+                    <View style={styles.reminderText}>
+                      <Text
+                        style={[
+                          styles.reminderLabel,
+                          { color: theme.colors.textPrimary },
+                        ]}
+                      >
+                        {t("eventForm.addToBooklet")}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.reminderSubtitle,
+                          { color: theme.colors.textSecondary },
+                        ]}
+                      >
+                        {t("eventForm.addToBookletSubtitle")}
+                      </Text>
+                    </View>
+                    <Switch
+                      value={!!field.value}
+                      onValueChange={field.onChange}
+                      trackColor={{
+                        false: theme.colors.border,
+                        true: theme.colors.primary,
+                      }}
+                    />
+                  </View>
+                )}
               />
             </FormCard>
           </>

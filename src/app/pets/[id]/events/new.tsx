@@ -36,6 +36,9 @@ export default function NewEventScreen() {
       mediaAssetIds: [],
       createReminder: true,
       createExpense: false,
+      // Initial type (VET_VISIT) is booklet-eligible but OFF by default;
+      // the EventForm re-derives this from the capability on type change.
+      includeInBooklet: false,
       vaccineName: "",
       reason: "",
     },
@@ -63,6 +66,7 @@ export default function NewEventScreen() {
             : undefined,
         createReminder:
           values.mode === "future" ? (values.createReminder ?? true) : false,
+        includeInBooklet: values.includeInBooklet ?? false,
         extra: buildExtra(values),
       }),
     showSuccessToast: true,
