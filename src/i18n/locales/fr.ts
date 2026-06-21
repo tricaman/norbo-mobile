@@ -265,14 +265,20 @@ const fr = {
   },
   toolsDisclaimer: {
     title: "avertissement sur les outils et calculateurs",
-    intro: "les outils de la section services sont une aide pratique, pas un avis vétérinaire. merci de lire et d'accepter avant de les utiliser.",
+    intro:
+      "les outils de la section services sont une aide pratique, pas un avis vétérinaire. merci de lire et d'accepter avant de les utiliser.",
     readLink: "lire l'avertissement complet",
     summaryTitle: "en bref",
-    point1: "les résultats sont des estimations indicatives basées sur des formules générales et des valeurs moyennes de référence.",
-    point2: "ce ne sont pas un avis vétérinaire, un diagnostic ni une prescription.",
-    point3: "parlez toujours à votre vétérinaire de la santé, de l'alimentation ou du bien-être de votre animal.",
-    point4: "en cas d'urgence, contactez immédiatement votre vétérinaire — ne vous fiez pas aux outils.",
-    checkbox: "je comprends que les outils donnent des estimations indicatives et ne remplacent pas un vétérinaire.",
+    point1:
+      "les résultats sont des estimations indicatives basées sur des formules générales et des valeurs moyennes de référence.",
+    point2:
+      "ce ne sont pas un avis vétérinaire, un diagnostic ni une prescription.",
+    point3:
+      "parlez toujours à votre vétérinaire de la santé, de l'alimentation ou du bien-être de votre animal.",
+    point4:
+      "en cas d'urgence, contactez immédiatement votre vétérinaire — ne vous fiez pas aux outils.",
+    checkbox:
+      "je comprends que les outils donnent des estimations indicatives et ne remplacent pas un vétérinaire.",
     continue: "continuer",
     error: "impossible d'enregistrer votre acceptation. veuillez réessayer.",
   },
@@ -348,7 +354,8 @@ const fr = {
     namePlaceholder: "tapez un nom",
     nameTooShort: "entrez au moins une lettre",
     subcategoryTitle: "what kind?",
-    subcategorySubtitle: "pick the kind of animal so we can show the right options.",
+    subcategorySubtitle:
+      "pick the kind of animal so we can show the right options.",
     subcategoryPlaceholder: "search kind",
     subcategoryEmpty: "no results",
     speciesTitle: "race ou espèce ?",
@@ -459,6 +466,9 @@ const fr = {
     vaccineNamePlaceholder: "nom du vaccin",
     vetVisitDetails: "détails de la visite",
     reasonPlaceholder: "motif de la visite",
+    booklet: "carnet",
+    addToBooklet: "ajouter au carnet",
+    addToBookletSubtitle: "enregistrer cet événement dans le carnet de santé",
   },
   weightForm: {
     dateLabel: "date",
@@ -570,6 +580,7 @@ const fr = {
       expenses: "dépenses",
       weight: "poids",
       care: "soins",
+      booklet: "carnet",
     },
     stats: {
       weight: "poids",
@@ -629,6 +640,41 @@ const fr = {
     },
     care: {
       empty: "les conseils de soins arrivent bientôt",
+    },
+    booklet: {
+      identitySection: "détails d'identité",
+      registrySection: "registre de santé",
+      edit: "modifier",
+      fill: "remplir",
+      identityEmpty:
+        "ajoutez la puce, le passeport et d'autres détails du carnet",
+      identityEmptyHint: "appuyez pour remplir le carnet",
+      registryEmpty: "les vaccinations et traitements marqués apparaîtront ici",
+      saveSuccess: "carnet enregistré",
+      editTitle: "modifier le carnet",
+      placeholder: "optionnel",
+      allergiesPlaceholder: "séparez par une virgule",
+      vetSection: "vétérinaire de référence",
+      insuranceSection: "assurance",
+      healthSection: "données de santé",
+      fields: {
+        microchipNumber: "numéro de puce",
+        microchipImplantedAt: "date d'implantation de la puce",
+        microchipLocation: "emplacement de la puce",
+        tattooNumber: "numéro de tatouage",
+        passportNumber: "numéro de passeport",
+        registrationNumber: "numéro de registre",
+        pedigreeNumber: "numéro de pedigree",
+        vetName: "nom du vétérinaire",
+        vetClinic: "clinique",
+        vetPhone: "téléphone",
+        insuranceProvider: "assureur",
+        insurancePolicyNumber: "numéro de police",
+        bloodType: "groupe sanguin",
+        allergies: "allergies",
+        chronicConditions: "maladies chroniques",
+        notes: "notes",
+      },
     },
   },
   photoAlbums: {
@@ -768,6 +814,15 @@ const fr = {
         carrot: "Les carottes sont généralement sûres avec modération.",
         lily: "Les lys sont très toxiques pour les chats.",
         dairy: "De nombreux chats sont intolérants au lactose.",
+        pothos: "Le pothos provoque une irritation orale et des vomissements.",
+        ficus: "Le ficus peut provoquer une irritation et des maux d'estomac.",
+        oleander:
+          "Le laurier-rose est hautement toxique, même en petites quantités.",
+        monstera: "Le monstera irrite la bouche et le tube digestif.",
+        dieffenbachia:
+          "Le dieffenbachia provoque une sévère irritation buccale.",
+        sagoPalm: "Le palmier sagoutier est très toxique (foie).",
+        spiderPlant: "La chlorophytum est généralement sans danger.",
       },
     },
     bodyConditionScore: {
@@ -818,6 +873,203 @@ const fr = {
         over: "surpoids",
       },
     },
+    dogWaterIntake: {
+      weight: "poids",
+      result: "consommation d'eau",
+      daily: "eau par jour",
+      factorsTitle: "facteurs augmentant les besoins",
+      factors:
+        "température, activité, lactation, alimentation sèche ou humide.",
+      disclaimer:
+        "valeur indicative, ne remplace pas l'avis de votre vétérinaire.",
+    },
+    dogActivityGuide: {
+      size: "taille",
+      age: "tranche d'âge",
+      result: "activité recommandée",
+      minPerDay: "min/jour",
+      intensity: "intensité",
+      sizes: {
+        TOY: "jouet",
+        SMALL: "petite",
+        MEDIUM: "moyenne",
+        LARGE: "grande",
+        GIANT: "géante",
+      },
+      bands: {
+        PUPPY: "chiot",
+        ADULT: "adulte",
+        SENIOR: "senior",
+      },
+      intensities: {
+        LOW: "faible",
+        MODERATE: "modérée",
+        HIGH: "élevée",
+      },
+    },
+    puppyMilestoneTracker: {
+      noPuppies:
+        "disponible pour les chiens avec une date de naissance et de moins de 24 mois",
+      size: "taille",
+      weeks: "{{from}}–{{to}} semaines",
+      status: {
+        passed: "réalisée",
+        current: "en cours",
+        upcoming: "à venir",
+      },
+      m: {
+        eyesOpen: "ouverture des yeux",
+        socialization: "socialisation primaire",
+        milkTeeth: "dents de lait",
+        adultTeeth: "dents adultes",
+        sexualMaturity: "maturité sexuelle (indicative)",
+      },
+    },
+    dogIdealWeight: {
+      sex: "sexe",
+      male: "mâle",
+      female: "femelle",
+      unknownSex: "n/a",
+      idealRange: "poids idéal",
+      current: "actuel",
+      disclaimer:
+        "valeur indicative, ne remplace pas l'avis de votre vétérinaire.",
+      status: {
+        under: "insuffisance pondérale",
+        ideal: "dans la norme",
+        over: "surpoids",
+      },
+      breed: {
+        labradorRetriever: "Labrador Retriever",
+        germanShepherd: "Berger Allemand",
+        goldenRetriever: "Golden Retriever",
+        frenchBulldog: "Bouledogue Français",
+        chihuahua: "Chihuahua",
+        yorkshireTerrier: "Yorkshire Terrier",
+        borderCollie: "Border Collie",
+        poodle: "Caniche",
+      },
+      size: {
+        TOY: "taille jouet",
+        SMALL: "petite taille",
+        MEDIUM: "taille moyenne",
+        LARGE: "grande taille",
+        GIANT: "taille géante",
+      },
+    },
+    catLitterCalculator: {
+      cats: "nombre de chats",
+      result: "recommandé",
+      boxes: "bacs",
+      boxesUnit: "bacs",
+      rule: "Règle des n+1 : un bac par chat, plus un.",
+      minSize: "taille minimale",
+      notes: {
+        placement: "Placez-les dans des endroits calmes et séparés.",
+        cleaning:
+          "Retirez les agglomérats quotidiennement, lavez chaque semaine.",
+        size: "Le bac doit faire environ 1,5 fois la longueur du chat.",
+      },
+    },
+    catWetDryBalance: {
+      weight: "poids",
+      wetPercent: "% humide",
+      result: "ration recommandée",
+      target: "objectif calorique",
+      wetFood: "alimentation humide",
+      dryFood: "alimentation sèche",
+      disclaimer:
+        "valeurs indicatives, ne remplacent pas l'avis de votre vétérinaire.",
+    },
+    catWaterIntake: {
+      weight: "poids",
+      foodType: "aliment principal",
+      dry: "sec",
+      wet: "humide",
+      mixed: "mixte",
+      result: "besoins en eau",
+      total: "besoin total",
+      freeWater: "à ajouter comme eau libre",
+      disclaimer:
+        "valeurs indicatives, ne remplacent pas l'avis de votre vétérinaire.",
+      notes: {
+        fountain: "Une fontaine encourage de nombreux chats à boire.",
+        bowl: "Bol large, loin de la nourriture.",
+        separation: "Gardez l'eau et la litière dans des zones séparées.",
+      },
+    },
+    reminder: {
+      create: "créer un rappel de réapprovisionnement",
+      created: "rappel créé",
+    },
+    smallMammal: {
+      species: {
+        rabbit: "lapin",
+        hamster: "hamster",
+        "guinea-pig": "cochon d'Inde",
+        ferret: "furet",
+        chinchilla: "chinchilla",
+        generic: "générique",
+      },
+    },
+    safeTemperaturesSmall: {
+      safeRange: "plage de sécurité",
+      heatRisk: "risque de coup de chaleur",
+      torporRisk: "risque de torpeur/hibernation",
+      notes: {
+        heat: "En cas de chaleur, offrez de l'ombre, une ventilation et de l'eau fraîche.",
+        heatSensitive:
+          "Très sensible à la chaleur : évitez de dépasser le seuil.",
+        torpor:
+          "En dessous du seuil, il peut entrer en torpeur : dangereux si inattendu.",
+        cues: "Signes de détresse : apathie, respiration difficile, se cacher.",
+      },
+    },
+    smallMammalRation: {
+      weight: "poids",
+      result: "ration indicative",
+      hay: "foin",
+      pellet: "granulés",
+      veg: "légumes frais",
+      disclaimer:
+        "valeurs indicatives, ne remplacent pas l'avis de votre vétérinaire.",
+      notes: {
+        hayUnlimited: "toujours disponible",
+        hayNone: "pas nécessaire",
+        hayCheck: "vérifiez pour l'espèce",
+        rabbitHay: "Le foin est la base de l'alimentation du lapin.",
+        hamsterMix: "Mélange de graines de qualité + granulés.",
+        guineaVitC:
+          "Les cochons d'Inde ne synthétisent pas la vitamine C : offrez des légumes riches en vitamine C (ex : poivron).",
+        ferretCarnivore:
+          "Les furets sont des carnivores stricts : aliment spécifique riche en protéines.",
+        chinchillaDry: "Alimentation sèche et fibreuse ; évitez les sucres.",
+      },
+    },
+    smallMammalEnclosure: {
+      count: "nombre d'animaux",
+      result: "espace minimum",
+      floorArea: "surface au sol",
+      minHeight: "hauteur minimale",
+      notes: {
+        dig: "Fournissez de l'espace et du substrat pour creuser.",
+        tunnels: "Ajoutez des tunnels et des cachettes.",
+        wheel: "Roue pleine (pas à barreaux) pour les hamsters.",
+        companions: "Espèces sociales : gardez des compagnons compatibles.",
+        levels: "Plusieurs niveaux et plateformes pour grimper.",
+        dustBath: "Bain de poussière pour les chinchillas.",
+      },
+    },
+    rabbitHaySupply: {
+      weight: "poids du lapin",
+      currentStock: "stock actuel de foin",
+      result: "autonomie",
+      daysLeft: "jours restants",
+      days: "jours",
+      reorderDate: "date de réapprovisionnement",
+      disclaimer: "valeur indicative.",
+      reminderTitle: "Réapprovisionner le foin pour {{name}}",
+    },
   },
   careKnowledge: {
     reptile: {
@@ -860,6 +1112,33 @@ const fr = {
   avatar: {
     changePhoto: "changer la photo",
     removePhoto: "supprimer la photo",
+  },
+  servicesHub: {
+    subtitle: "outils adaptés à ceux qui vivent avec vous",
+    forYourPets: "pour vos animaux",
+    forEveryone: "pour tout le monde",
+    worksWithoutProfile: "fonctionne sans profil",
+    forYourPet: "pour votre {{label}}",
+    toolCount_one: "{{count}} outil",
+    toolCount_other: "{{count}} outils",
+    prefilledFor: "prérempli pour {{name}}",
+    allPets: "tous les animaux",
+    categoryToolsTitle: "outils {{label}}",
+    prefilledTapToEdit: "prérempli · appuyez pour modifier",
+    selectPet: "choisir un animal",
+    estimatesDisclaimer:
+      "estimation uniquement — elle ne remplace pas l'avis de votre vétérinaire",
+    empty: "aucun outil disponible pour le moment",
+  },
+  appUpdate: {
+    availableTitle: "mise à jour disponible",
+    availableBody:
+      "une version plus récente de norbo est prête, avec les dernières améliorations et corrections.",
+    requiredTitle: "mise à jour requise",
+    requiredBody:
+      "cette version de norbo n'est plus prise en charge. mettez à jour vers la dernière version pour continuer.",
+    updateNow: "mettre à jour",
+    later: "plus tard",
   },
 } as const;
 
