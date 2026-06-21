@@ -40,7 +40,10 @@ export function useAppVersion(): AppVersionGate {
 
   if (!data) return { level: "ok", latest: null, storeUrl: null };
 
-  const storeUrl = data.storeUrl ?? fallbackStoreUrl();
+  // `||` (not `??`) on purpose: the backend may return an empty string for a
+  // missing store URL, and that must fall back to the built one — `??` would
+  // only catch null/undefined and leave "", silently disabling the gate below.
+  const storeUrl = data.storeUrl || fallbackStoreUrl();
 
   // A prompt the user can't act on is worse than none. With no resolvable
   // store URL (e.g. iOS not on the App Store yet, so no id configured), keep
