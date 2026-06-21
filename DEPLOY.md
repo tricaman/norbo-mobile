@@ -2,7 +2,7 @@
 
 Guida operativa per produrre una release di produzione.
 
-Ultima versione **già caricata** su Play Console: **1.5.2** (Android `versionCode` 9).
+Ultima versione **già caricata** su Play Console: **1.5.3** (Android `versionCode` 10).
 iOS non ancora in produzione (`buildNumber` 1, lo gestiremo in futuro).
 
 > 🔴 **La prossima build DEVE incrementare le versioni.** I valori qui sopra sono già sullo
