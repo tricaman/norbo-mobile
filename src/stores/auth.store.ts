@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createMMKV } from "react-native-mmkv";
+import { detectDeviceLanguage } from "@/i18n/detect-language";
 import type { AuthUser } from "@/types/auth.types";
 import { DEFAULT_NOTIFICATION_PREFERENCES } from "@/types/preferences.schema";
 
@@ -15,7 +16,7 @@ function withPreferenceDefaults(user: AuthUser): AuthUser {
     ...user,
     notificationPreferences:
       user.notificationPreferences ?? DEFAULT_NOTIFICATION_PREFERENCES,
-    preferredLanguage: user.preferredLanguage ?? "it",
+    preferredLanguage: user.preferredLanguage ?? detectDeviceLanguage(),
     theme: user.theme ?? "system",
   };
 }

@@ -7,7 +7,24 @@
  */
 import { z } from "zod";
 
-export const SUPPORTED_LANGUAGES = ["it"] as const;
+export const SUPPORTED_LANGUAGES = [
+  "en",
+  "it",
+  "ar",
+  "de-DE",
+  "es-ES",
+  "fr-FR",
+  "hi-IN",
+  "id",
+  "ja-JP",
+  "pt-BR",
+  "ro",
+  "ru-RU",
+  "tr-TR",
+  "ur",
+  "bn-BD",
+  "zh-CN",
+] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 export const SUPPORTED_THEMES = ["light", "dark", "system"] as const;

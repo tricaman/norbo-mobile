@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { detectDeviceLanguage } from "./detect-language";
 import en from "./locales/en";
 import it from "./locales/it";
 import ar from "./locales/ar";
@@ -38,12 +39,13 @@ export const resources = {
   "zh-CN": { translation: zh },
 } as const;
 
-// Default locale is Italian (MVP single-locale per task spec). English
-// resources are kept as a future-proof fallback so adding new languages
-// is a no-refactor change.
+// Initialise to the device language so the very first render is already in
+// the user's language (no flash of Italian). The language store may override
+// this on hydration if the user previously picked a language in Settings.
+// `fallbackLng` is English — the international default — never Italian.
 i18n.use(initReactI18next).init({
-  lng: "it",
-  fallbackLng: "it",
+  lng: detectDeviceLanguage(),
+  fallbackLng: "en",
   defaultNS,
   resources,
   interpolation: { escapeValue: false },

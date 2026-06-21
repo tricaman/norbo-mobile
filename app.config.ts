@@ -87,6 +87,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "./plugins/withGradleMemory.js",
     "./plugins/withAndroidReleaseSigning.js",
     "expo-font",
+    "expo-localization",
     "@react-native-community/datetimepicker",
     [
       "expo-splash-screen",
