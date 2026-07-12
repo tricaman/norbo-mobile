@@ -144,6 +144,7 @@ const bn = {
     continueWithEmail: "ইমেল দিয়ে চলুন",
     tagline: "norbo এর নতুন অভিজ্ঞতা",
     signingIn: "সাইন ইন করছি...",
+    socialLoginFailed: "সাইন ইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন",
     or: "বা",
   },
   profile: {

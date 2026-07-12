@@ -144,6 +144,7 @@ const ur = {
     continueWithEmail: "ای میل کے ساتھ جاری رکھیں",
     tagline: "norbo کا نیا تجربہ",
     signingIn: "سائن ان کر رہے ہیں...",
+    socialLoginFailed: "سائن ان ناکام ہوگیا۔ دوبارہ کوشش کریں",
     or: "یا",
   },
   profile: {

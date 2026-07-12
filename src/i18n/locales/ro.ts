@@ -144,6 +144,7 @@ const ro = {
     continueWithEmail: "continuati cu email",
     tagline: "experienta noua norbo",
     signingIn: "se conecteaza...",
+    socialLoginFailed: "conectarea a esuat. incearca din nou",
     or: "sau",
   },
   profile: {

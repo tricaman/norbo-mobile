@@ -536,6 +536,7 @@ const it = {
     continueWithEmail: "continua con l'email",
     tagline: "la nuova esperienza norbo",
     signingIn: "accesso in corso...",
+    socialLoginFailed: "accesso non riuscito. riprova",
     or: "oppure",
   },
 

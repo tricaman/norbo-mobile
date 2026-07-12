@@ -144,6 +144,7 @@ const hi = {
     continueWithEmail: "ईमेल के साथ जारी रखें",
     tagline: "norbo का नया अनुभव",
     signingIn: "साइन इन कर रहे हैं...",
+    socialLoginFailed: "साइन इन विफल रहा। पुनः प्रयास करें",
     or: "या",
   },
   profile: {

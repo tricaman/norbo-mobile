@@ -143,6 +143,7 @@ const zh = {
     continueWithEmail: "使用电子邮件继续",
     tagline: "norbo 的新体验",
     signingIn: "正在登录...",
+    socialLoginFailed: "登录失败，请重试",
     or: "或者",
   },
   profile: {

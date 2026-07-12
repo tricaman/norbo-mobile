@@ -144,6 +144,7 @@ const es = {
     continueWithEmail: "continuar con correo electrónico",
     tagline: "la nueva experiencia de norbo",
     signingIn: "iniciando sesión...",
+    socialLoginFailed: "no se pudo iniciar sesión. inténtalo de nuevo",
     or: "o",
   },
   profile: {

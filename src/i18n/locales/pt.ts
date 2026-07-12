@@ -144,6 +144,7 @@ const pt = {
     continueWithEmail: "continuar com email",
     tagline: "a nova experiência norbo",
     signingIn: "entrando...",
+    socialLoginFailed: "falha ao entrar. tente novamente",
     or: "ou",
   },
   profile: {

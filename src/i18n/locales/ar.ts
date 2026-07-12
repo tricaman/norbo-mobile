@@ -143,6 +143,7 @@ const ar = {
     continueWithEmail: "متابعة مع البريد الإلكتروني",
     tagline: "تجربة norbo الجديدة",
     signingIn: "جاري تسجيل الدخول...",
+    socialLoginFailed: "فشل تسجيل الدخول. حاول مرة أخرى",
     or: "أو",
   },
   profile: {

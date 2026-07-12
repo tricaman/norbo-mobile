@@ -134,6 +134,15 @@ export default function RootLayout() {
     isReady,
   ]);
 
+  // 3b. Quando l'autenticazione cade, ferma subito le query in volo: i loro
+  // retry col token ormai vecchio non devono sopravvivere al logout e
+  // risolvere in 401 durante/dopo un nuovo login.
+  useEffect(() => {
+    if (!isAuthed) {
+      void queryClient.cancelQueries();
+    }
+  }, [isAuthed]);
+
   // 4. Deep-link dalla notifica che ha lanciato l'app (stato killed):
   // appena l'utente è autenticato e lo splash è terminato, naviga alla
   // schermata corrispondente se la notifica contiene un target.

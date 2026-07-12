@@ -144,6 +144,7 @@ const tr = {
     continueWithEmail: "e-posta ile devam et",
     tagline: "yeni norbo deneyimi",
     signingIn: "oturum açılıyor...",
+    socialLoginFailed: "oturum açılamadı. lütfen tekrar deneyin",
     or: "veya",
   },
   profile: {

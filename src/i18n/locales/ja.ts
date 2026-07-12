@@ -143,6 +143,7 @@ const ja = {
     continueWithEmail: "メールで続行",
     tagline: "新しい norbo エクスペリエンス",
     signingIn: "サインイン中...",
+    socialLoginFailed: "サインインに失敗しました。もう一度お試しください",
     or: "または",
   },
   profile: {

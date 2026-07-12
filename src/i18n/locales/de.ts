@@ -144,6 +144,7 @@ const de = {
     continueWithEmail: "fortfahren mit e-mail",
     tagline: "das neue norbo-erlebnis",
     signingIn: "melden Sie sich an...",
+    socialLoginFailed: "Anmeldung fehlgeschlagen. Bitte erneut versuchen",
     or: "oder",
   },
   profile: {

@@ -527,6 +527,7 @@ const en = {
     continueWithEmail: "continue with email",
     tagline: "the new norbo experience",
     signingIn: "signing in...",
+    socialLoginFailed: "sign-in failed. please try again",
     or: "or",
   },
   profile: {

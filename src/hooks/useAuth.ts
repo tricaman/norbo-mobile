@@ -7,11 +7,13 @@ import type { SocialProvider } from "@/types/auth.types";
 import { haptics } from "@/utils/haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export function useAuth() {
   const { setUser, setSessionToken, clearAuth } = useAuthStore();
+  const { t } = useTranslation();
 
   /**
    * After any successful login, fetch the current user.
@@ -61,13 +63,20 @@ export function useAuth() {
       // mobile HTTP client can authenticate (browser cookies aren't shared).
       const url = new URL(result.url);
       const sessionToken = url.searchParams.get("session_token");
-      if (sessionToken) {
-        setSessionToken(decodeURIComponent(sessionToken));
+      if (!sessionToken) {
+        // Failed OAuth callback: the backend redirects to the deep link
+        // with ?error=… and no token. Calling /auth/me now would just 401.
+        console.warn(
+          "[auth] social callback without session_token:",
+          url.searchParams.get("error"),
+        );
+        throw new Error(t("auth.socialLoginFailed"));
       }
+      setSessionToken(decodeURIComponent(sessionToken));
 
       await finalizeLogin();
     },
-    [finalizeLogin, setSessionToken],
+    [finalizeLogin, setSessionToken, t],
   );
 
   const signOut = useCallback(async () => {

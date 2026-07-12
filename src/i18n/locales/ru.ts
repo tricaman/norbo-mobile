@@ -143,6 +143,7 @@ const ru = {
     continueWithEmail: "продолжить с email",
     tagline: "новый опыт норбо",
     signingIn: "вход в систему...",
+    socialLoginFailed: "не удалось войти. попробуйте ещё раз",
     or: "или",
   },
   profile: {

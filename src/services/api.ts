@@ -35,7 +35,15 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      useAuthStore.getState().clearAuth();
+      // Only log out if the rejected request carried the *current* session
+      // token. Right after a re-login, in-flight requests sent with the
+      // old (or no) token can still resolve as 401 — those stragglers must
+      // not wipe the freshly created session.
+      const { sessionToken } = useAuthStore.getState();
+      const sentCookie = err.config?.headers?.Cookie as string | undefined;
+      if (sessionToken && sentCookie?.includes(sessionToken)) {
+        useAuthStore.getState().clearAuth();
+      }
     }
     return Promise.reject(err);
   },

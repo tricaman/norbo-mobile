@@ -144,6 +144,7 @@ const id = {
     continueWithEmail: "lanjutkan dengan email",
     tagline: "pengalaman norbo yang baru",
     signingIn: "sedang masuk...",
+    socialLoginFailed: "gagal masuk. silakan coba lagi",
     or: "atau",
   },
   profile: {

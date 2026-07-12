@@ -34,6 +34,11 @@ export default function AuthCallback() {
       try {
         if (params.session_token) {
           setSessionToken(decodeURIComponent(params.session_token));
+        } else if (!useAuthStore.getState().sessionToken) {
+          // Failed OAuth callback (deep link carries ?error=… instead of a
+          // token) and no session to fall back on: /auth/me would just 401.
+          router.replace("/(auth)");
+          return;
         }
         await completeSignIn();
         router.replace("/(tabs)");
