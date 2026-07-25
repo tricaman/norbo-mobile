@@ -60,6 +60,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundleIdentifier,
     buildNumber: "1",
     googleServicesFile: `./${firebaseDir}/GoogleService-Info.plist`,
+    // Adds the `com.apple.developer.applesignin` entitlement (["Default"]) at
+    // prebuild for every variant — required by the native Sign in with Apple
+    // sheet. The capability must also be enabled on each App ID in the Apple
+    // Developer portal (prod/.dev/.preview), or code signing will fail.
+    usesAppleSignIn: true,
   },
   android: {
     adaptiveIcon: {
@@ -78,6 +83,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     "expo-router",
     "expo-secure-store",
+    "expo-apple-authentication",
     "@react-native-firebase/app",
     "@react-native-firebase/messaging",
     "./plugins/withAndroidCleartext.js",
