@@ -518,6 +518,19 @@ const it = {
     deleteConfirmOk: "elimina",
     deleteConfirmCancel: "annulla",
   },
+  news: {
+    title: "novità",
+    entrySubtitle: "aggiornamenti e annunci",
+    empty: "ancora nessuna novità",
+    emptySubtitle: "gli annunci appariranno qui",
+    notFound: "questa novità non è più disponibile",
+    categories: {
+      PRODUCT: "prodotto",
+      CARE_TIP: "consiglio",
+      MAINTENANCE: "manutenzione",
+      GENERAL: "generale",
+    },
+  },
 
   auth: {
     signOut: "esci",

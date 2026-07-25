@@ -127,6 +127,19 @@ const ur = {
     deleteConfirmOk: "حذف کریں",
     deleteConfirmCancel: "منسوخ کریں",
   },
+  news: {
+    title: "خبریں",
+    entrySubtitle: "اپ ڈیٹس اور اعلانات",
+    empty: "ابھی کوئی خبر نہیں",
+    emptySubtitle: "اعلانات یہاں ظاہر ہوں گے",
+    notFound: "یہ خبر اب دستیاب نہیں ہے",
+    categories: {
+      PRODUCT: "پروڈکٹ",
+      CARE_TIP: "دیکھ بھال کا مشورہ",
+      MAINTENANCE: "دیکھ بھال",
+      GENERAL: "عام",
+    },
+  },
   auth: {
     signOut: "سائن آؤٹ کریں",
     otpTitle: "کوڈ درج کریں",

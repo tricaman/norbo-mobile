@@ -32,6 +32,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     "heart.fill": "heart",
     bell: "notifications-outline",
     "bell.fill": "notifications-sharp",
+    megaphone: "megaphone-outline",
     photo: "image-outline",
     scalemass: "barbell-outline",
 

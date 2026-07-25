@@ -127,6 +127,19 @@ const fr = {
     deleteConfirmOk: "supprimer",
     deleteConfirmCancel: "annuler",
   },
+  news: {
+    title: "actualités",
+    entrySubtitle: "mises à jour et annonces",
+    empty: "aucune actualité pour le moment",
+    emptySubtitle: "les annonces apparaîtront ici",
+    notFound: "cette actualité n'est plus disponible",
+    categories: {
+      PRODUCT: "produit",
+      CARE_TIP: "conseil",
+      MAINTENANCE: "maintenance",
+      GENERAL: "général",
+    },
+  },
   auth: {
     signOut: "se déconnecter",
     otpTitle: "entrez le code",

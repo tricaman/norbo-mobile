@@ -3,6 +3,7 @@ import { AUTH_CALLBACK_URL } from "@/constants/config";
 import { authApi } from "@/services/auth.api";
 import { unregisterPushToken } from "@/services/push-registration";
 import { useAuthStore } from "@/stores/auth.store";
+import { useNewsReadStore } from "@/stores/news-read.store";
 import type { SocialProvider } from "@/types/auth.types";
 import { haptics } from "@/utils/haptics";
 import * as WebBrowser from "expo-web-browser";
@@ -80,17 +81,29 @@ export function useAuth() {
   );
 
   const signOut = useCallback(async () => {
-    await unregisterPushToken();
-    await authApi.signOut();
-    clearAuth();
-    queryClient.clear();
-    haptics.light();
+    // Server-side sign-out + token cleanup are best-effort: if the session is
+    // already expired/revoked they 401, and the network can fail outright.
+    // Neither must block the local logout — otherwise a dead session traps the
+    // user in a "logged in" state with no way out (sign-out itself needs auth).
+    // So we always clear local state in `finally`, regardless of the outcome.
+    try {
+      await unregisterPushToken();
+      await authApi.signOut();
+    } catch (err) {
+      console.warn("[auth] signOut server call failed (clearing anyway):", err);
+    } finally {
+      clearAuth();
+      useNewsReadStore.getState().reset();
+      queryClient.clear();
+      haptics.light();
+    }
   }, [clearAuth]);
 
   const deleteAccount = useCallback(
     async (email: string) => {
       await authApi.deleteAccount(email);
       clearAuth();
+      useNewsReadStore.getState().reset();
       queryClient.clear();
     },
     [clearAuth],

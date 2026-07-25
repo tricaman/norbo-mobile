@@ -127,6 +127,19 @@ const pt = {
     deleteConfirmOk: "remover",
     deleteConfirmCancel: "cancelar",
   },
+  news: {
+    title: "novidades",
+    entrySubtitle: "atualizações e anúncios",
+    empty: "ainda sem novidades",
+    emptySubtitle: "os anúncios aparecerão aqui",
+    notFound: "esta novidade não está mais disponível",
+    categories: {
+      PRODUCT: "produto",
+      CARE_TIP: "dica de cuidado",
+      MAINTENANCE: "manutenção",
+      GENERAL: "geral",
+    },
+  },
   auth: {
     signOut: "sair",
     otpTitle: "inserir código",

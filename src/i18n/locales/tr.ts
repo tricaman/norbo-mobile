@@ -127,6 +127,19 @@ const tr = {
     deleteConfirmOk: "sil",
     deleteConfirmCancel: "iptal",
   },
+  news: {
+    title: "haberler",
+    entrySubtitle: "güncellemeler ve duyurular",
+    empty: "henüz haber yok",
+    emptySubtitle: "duyurular burada görünecek",
+    notFound: "bu haber artık mevcut değil",
+    categories: {
+      PRODUCT: "ürün",
+      CARE_TIP: "bakım ipucu",
+      MAINTENANCE: "bakım",
+      GENERAL: "genel",
+    },
+  },
   auth: {
     signOut: "oturumu kapat",
     otpTitle: "kodu girin",

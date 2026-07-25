@@ -511,6 +511,19 @@ const en = {
     deleteConfirmOk: "delete",
     deleteConfirmCancel: "cancel",
   },
+  news: {
+    title: "news",
+    entrySubtitle: "updates & announcements",
+    empty: "no news yet",
+    emptySubtitle: "announcements will appear here",
+    notFound: "this news is no longer available",
+    categories: {
+      PRODUCT: "product",
+      CARE_TIP: "care tip",
+      MAINTENANCE: "maintenance",
+      GENERAL: "general",
+    },
+  },
   auth: {
     signOut: "sign out",
     otpTitle: "enter code",

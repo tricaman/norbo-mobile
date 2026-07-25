@@ -127,6 +127,19 @@ const hi = {
     deleteConfirmOk: "हटाएँ",
     deleteConfirmCancel: "रद्द करें",
   },
+  news: {
+    title: "समाचार",
+    entrySubtitle: "अपडेट और घोषणाएँ",
+    empty: "अभी कोई समाचार नहीं",
+    emptySubtitle: "घोषणाएँ यहाँ दिखाई देंगी",
+    notFound: "यह समाचार अब उपलब्ध नहीं है",
+    categories: {
+      PRODUCT: "उत्पाद",
+      CARE_TIP: "देखभाल सुझाव",
+      MAINTENANCE: "रखरखाव",
+      GENERAL: "सामान्य",
+    },
+  },
   auth: {
     signOut: "साइन आउट",
     otpTitle: "कोड दर्ज करें",

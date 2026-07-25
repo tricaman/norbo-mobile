@@ -3,6 +3,7 @@ import { SettingsCard, SettingsRow } from "@/components/ui/SettingsRow";
 import { TabScreen } from "@/components/ui/TabScreen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useAuth } from "@/hooks/useAuth";
+import { useNewsUnread } from "@/hooks/useNews";
 import { usersApi } from "@/services/users.api";
 import { useAuthStore } from "@/stores/auth.store";
 import type { MediaAsset } from "@/types/media.types";
@@ -11,7 +12,7 @@ import { toast } from "@/utils/toast";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 /**
@@ -29,6 +30,7 @@ export default function ProfileScreen() {
   const user = useAuthStore((s) => s.user);
   const { signOut } = useAuth();
   const setUser = useAuthStore((s) => s.setUser);
+  const unread = useNewsUnread();
 
   const handleAvatarUploaded = async (asset: MediaAsset) => {
     const photoUrl = asset.thumbMdUrl ?? asset.originalUrl;
@@ -60,6 +62,34 @@ export default function ProfileScreen() {
             label={user?.name || t("common.tapToSet")}
             subtitle={t("profile.editNameSubtitle")}
             onPress={() => router.push("/settings/account/name")}
+          />
+        </SettingsCard>
+
+        <SettingsCard>
+          <SettingsRow
+            iconName="megaphone"
+            label={t("news.title")}
+            subtitle={t("news.entrySubtitle")}
+            onPress={() => router.push("/news" as never)}
+            right={
+              unread > 0 ? (
+                <View
+                  style={[
+                    styles.unreadPill,
+                    { backgroundColor: theme.colors.primary },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.unreadPillText,
+                      { color: theme.colors.textOnPrimary },
+                    ]}
+                  >
+                    {unread}
+                  </Text>
+                </View>
+              ) : undefined
+            }
           />
         </SettingsCard>
 
@@ -97,5 +127,16 @@ const styles = StyleSheet.create((theme) => ({
   avatarRow: {
     alignItems: "center",
     paddingVertical: theme.spacing.md,
+  },
+  unreadPill: {
+    borderRadius: theme.radius.pill,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    minWidth: 20,
+    alignItems: "center",
+  },
+  unreadPillText: {
+    ...theme.typography.caption,
+    fontWeight: "700",
   },
 }));

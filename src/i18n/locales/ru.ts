@@ -127,6 +127,19 @@ const ru = {
     deleteConfirmOk: "удалить",
     deleteConfirmCancel: "отмена",
   },
+  news: {
+    title: "новости",
+    entrySubtitle: "обновления и объявления",
+    empty: "новостей пока нет",
+    emptySubtitle: "объявления появятся здесь",
+    notFound: "эта новость больше недоступна",
+    categories: {
+      PRODUCT: "продукт",
+      CARE_TIP: "совет по уходу",
+      MAINTENANCE: "обслуживание",
+      GENERAL: "общее",
+    },
+  },
   auth: {
     signOut: "выход",
     otpTitle: "введите код",

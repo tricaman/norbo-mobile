@@ -127,6 +127,19 @@ const ar = {
     deleteConfirmOk: "حذف",
     deleteConfirmCancel: "إلغاء",
   },
+  news: {
+    title: "الأخبار",
+    entrySubtitle: "التحديثات والإعلانات",
+    empty: "لا توجد أخبار بعد",
+    emptySubtitle: "ستظهر الإعلانات هنا",
+    notFound: "لم يعد هذا الخبر متاحًا",
+    categories: {
+      PRODUCT: "منتج",
+      CARE_TIP: "نصيحة عناية",
+      MAINTENANCE: "صيانة",
+      GENERAL: "عام",
+    },
+  },
   auth: {
     signOut: "تسجيل الخروج",
     otpTitle: "أدخل الكود",

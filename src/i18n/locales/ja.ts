@@ -127,6 +127,19 @@ const ja = {
     deleteConfirmOk: "削除",
     deleteConfirmCancel: "キャンセル",
   },
+  news: {
+    title: "お知らせ",
+    entrySubtitle: "更新情報とお知らせ",
+    empty: "お知らせはまだありません",
+    emptySubtitle: "お知らせはここに表示されます",
+    notFound: "このお知らせは現在ご利用いただけません",
+    categories: {
+      PRODUCT: "製品",
+      CARE_TIP: "ケアのヒント",
+      MAINTENANCE: "メンテナンス",
+      GENERAL: "一般",
+    },
+  },
   auth: {
     signOut: "サインアウト",
     otpTitle: "コードを入力",

@@ -67,12 +67,59 @@ export async function initNotifications(): Promise<void> {
   });
 }
 
+/**
+ * Resolve the in-app deep-link route for a notification's data payload.
+ *
+ * Central routing table for every notification kind:
+ *   - reminders: identified by a `reminderId` (legacy shape, no `type`).
+ *   - news:      identified by `type === "news"` + a `newsId`.
+ * Returns `null` when the payload carries no navigable target.
+ *
+ * The returned value is an app route (e.g. `/news/abc`); callers that need a
+ * URL scheme build `norbo://<route without leading slash>` from it.
+ */
+function getNavTargetFromData(
+  data: Record<string, unknown> | undefined,
+): string | null {
+  if (!data) return null;
+
+  const reminderId = data["reminderId"];
+  if (typeof reminderId === "string" && reminderId) {
+    return `/reminder/${reminderId}`;
+  }
+
+  const newsId = data["newsId"];
+  if (data["type"] === "news" && typeof newsId === "string" && newsId) {
+    return `/news/${newsId}`;
+  }
+
+  return null;
+}
+
+/** Open the `norbo://` deep link for a nav route, if the payload has one. */
+async function openDeepLink(
+  data: Record<string, unknown> | undefined,
+): Promise<void> {
+  const route = getNavTargetFromData(data);
+  if (!route) return;
+  try {
+    await Linking.openURL(`norbo://${route.replace(/^\//, "")}`);
+  } catch (e) {
+    console.warn("[notifications] deep link failed:", e);
+  }
+}
+
 /** Display an FCM data-only payload via Notifee. */
 async function displayNotification(
   data: Record<string, string>,
 ): Promise<void> {
-  const title = data["title"] ?? "norbo";
-  const body = data["body"] ?? "";
+  // The worker injects `notifee_title` / `notifee_body` for data-only
+  // pushes (e.g. news). Reminders arrive with top-level `title` / `body`
+  // which the worker also mirrors into the `notifee_*` keys, so preferring
+  // `title`/`body` first keeps reminders working and news renders via the
+  // worker's keys.
+  const title = data["title"] ?? data["notifee_title"] ?? "norbo";
+  const body = data["body"] ?? data["notifee_body"] ?? "";
   const isReminder = data["action"] === "reminder";
 
   await notifee.displayNotification({
@@ -162,14 +209,7 @@ export function setupMessageHandlers(): void {
         if (detail.notification?.id) {
           await notifee.cancelNotification(detail.notification.id);
         }
-        const reminderId = detail.notification?.data?.["reminderId"];
-        if (typeof reminderId === "string" && reminderId) {
-          try {
-            await Linking.openURL(`norbo://reminder/${reminderId}`);
-          } catch (e) {
-            console.warn("[notifications] deep link failed:", e);
-          }
-        }
+        await openDeepLink(detail.notification?.data);
       }
     },
   );
@@ -188,11 +228,7 @@ export async function handleInitialNotification(): Promise<string | null> {
     const { id, data } = initial.notification;
     if (id) await notifee.cancelNotification(id);
 
-    const reminderId = data?.["reminderId"];
-    if (typeof reminderId === "string" && reminderId) {
-      return `/reminder/${reminderId}`;
-    }
-    return null;
+    return getNavTargetFromData(data);
   } catch (e) {
     console.warn("[notifications] handleInitialNotification failed:", e);
     return null;
@@ -228,6 +264,7 @@ export function registerBackgroundHandler(): void {
       if (detail.notification?.id) {
         await notifee.cancelNotification(detail.notification.id);
       }
+      await openDeepLink(detail.notification?.data);
     }
   });
 }

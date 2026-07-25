@@ -127,6 +127,19 @@ const id = {
     deleteConfirmOk: "hapus",
     deleteConfirmCancel: "batal",
   },
+  news: {
+    title: "berita",
+    entrySubtitle: "pembaruan & pengumuman",
+    empty: "belum ada berita",
+    emptySubtitle: "pengumuman akan muncul di sini",
+    notFound: "berita ini sudah tidak tersedia",
+    categories: {
+      PRODUCT: "produk",
+      CARE_TIP: "tips perawatan",
+      MAINTENANCE: "pemeliharaan",
+      GENERAL: "umum",
+    },
+  },
   auth: {
     signOut: "keluar",
     otpTitle: "masukkan kode",

@@ -127,6 +127,19 @@ const zh = {
     deleteConfirmOk: "删除",
     deleteConfirmCancel: "取消",
   },
+  news: {
+    title: "资讯",
+    entrySubtitle: "更新与公告",
+    empty: "暂无资讯",
+    emptySubtitle: "公告将显示在这里",
+    notFound: "该资讯已不再可用",
+    categories: {
+      PRODUCT: "产品",
+      CARE_TIP: "护理提示",
+      MAINTENANCE: "维护",
+      GENERAL: "综合",
+    },
+  },
   auth: {
     signOut: "登出",
     otpTitle: "输入代码",

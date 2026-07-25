@@ -127,6 +127,19 @@ const bn = {
     deleteConfirmOk: "মুছে ফেলুন",
     deleteConfirmCancel: "বাতিল করুন",
   },
+  news: {
+    title: "খবর",
+    entrySubtitle: "আপডেট ও ঘোষণা",
+    empty: "এখনও কোনো খবর নেই",
+    emptySubtitle: "ঘোষণা এখানে দেখা যাবে",
+    notFound: "এই খবরটি আর উপলব্ধ নেই",
+    categories: {
+      PRODUCT: "পণ্য",
+      CARE_TIP: "যত্নের টিপস",
+      MAINTENANCE: "রক্ষণাবেক্ষণ",
+      GENERAL: "সাধারণ",
+    },
+  },
   auth: {
     signOut: "সাইন আউট করুন",
     otpTitle: "কোড প্রবেশ করুন",

@@ -316,3 +316,38 @@ Auth screens: single AuthScreen component with internal view state (no stack nav
 Transitions via withSpring opacity animation.
 User data: persisted in MMKV for display only. Not used for auth decisions.
 Auth decisions based on session cookie validity (GET /auth/me → 401 = logged out).
+
+## NEWS / ANNOUNCEMENTS
+
+Global (not per-pet) news feed. Entry point is a `SettingsRow` in the Profile
+tab (`iconName="megaphone"`) that shows an unread pill; it routes to
+`/news` (list) → `/news/[id]` (detail). Reference slice = Expenses.
+
+- **Slice**: `src/services/news.api.ts` (`newsApi.list/get`) → `src/hooks/useNews.ts`
+  (`useNewsList`, `useNewsItem`, `useNewsUnread`) → `src/app/news/index.tsx` (list) +
+  `src/app/news/[id]/index.tsx` (detail) → `src/components/news/{NewsRow.tsx,
+  news-format.ts}`. Types in `src/types/news.types.ts` (re-export `NewsCategory`
+  from `@/shared/news-contract` — generated, DO NOT edit; UI/format code imports
+  the enum from `@/types/news.types`, never from `@/shared` directly).
+- **Read/unread is client-side** — `src/stores/news-read.store.ts`
+  (`createMMKV({ id: "norbo-news-read" })`, JSON id array). `useNewsItem` marks
+  an item read on open (via `useEffect`), so opening it clears the unread pill.
+  On sign-out AND account deletion, `useNewsReadStore.getState().reset()` runs
+  alongside the other store resets in `useAuth`.
+- **Category** (`PRODUCT | CARE_TIP | MAINTENANCE | GENERAL`) is cosmetic
+  (badge/icon) — colors/icons in `news-format.ts`, labels via i18n
+  `news.categories.*`. Added under a `news` block in all 16 locale files.
+
+### Push deep-link (`src/services/notifications.ts`) — the gotcha
+
+FCM is data-only; Notifee renders on-device. Routing goes through the single
+helper **`getNavTargetFromData(data)`** — the ONLY place that maps discriminators
+to a route (`reminderId → /reminder/:id`; `type === "news"` + `newsId →
+/news/:id`). It is wired into ALL press paths, which previously each read
+`reminderId` independently: foreground `onForegroundEvent` PRESS, background
+`onBackgroundEvent` PRESS (which used to only cancel — it now navigates too), and
+cold-start `handleInitialNotification`. When adding a new deep-linkable
+notification type, extend `getNavTargetFromData` — do NOT re-read `data` in the
+handlers. Title/body come from `data.title ?? data.notifee_title` (the worker
+injects `notifee_*` for data-only payloads); news reuses the `default` Android
+channel (no dedicated channel / iOS action category — it is read-only).

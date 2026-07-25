@@ -127,6 +127,19 @@ const ro = {
     deleteConfirmOk: "sterge",
     deleteConfirmCancel: "anuleaza",
   },
+  news: {
+    title: "noutati",
+    entrySubtitle: "actualizari si anunturi",
+    empty: "inca nu sunt noutati",
+    emptySubtitle: "anunturile vor aparea aici",
+    notFound: "aceasta stire nu mai este disponibila",
+    categories: {
+      PRODUCT: "produs",
+      CARE_TIP: "sfat de ingrijire",
+      MAINTENANCE: "intretinere",
+      GENERAL: "general",
+    },
+  },
   auth: {
     signOut: "deconectare",
     otpTitle: "introduceti codul",
