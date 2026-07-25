@@ -49,7 +49,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: appName,
   slug: "norbo",
-  version: "1.5.5",
+  version: "1.5.6",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "norbo",
@@ -68,7 +68,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 12,
+    versionCode: 13,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
   },
   web: {
