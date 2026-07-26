@@ -14,6 +14,9 @@ interface Props {
 export function SocialButton({ provider, onPress }: Props) {
   const { t } = useTranslation();
   const Icon = SOCIAL_ICON[provider];
+  // Provider names are proper nouns — capitalise them so the label reads
+  // "…Google", "…Facebook", "…Microsoft" instead of the lowercase key.
+  const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
   return (
     <NorboPressable
       style={styles.btn}
@@ -22,7 +25,9 @@ export function SocialButton({ provider, onPress }: Props) {
       onPress={onPress}
     >
       <Icon size={20} />
-      <Text style={styles.label}>{t("auth.continueWith", { provider })}</Text>
+      <Text style={styles.label}>
+        {t("auth.continueWith", { provider: providerName })}
+      </Text>
     </NorboPressable>
   );
 }
