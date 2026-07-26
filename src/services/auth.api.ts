@@ -1,4 +1,5 @@
 import type {
+  AppleNativeSignInPayload,
   AuthUser,
   OtpSendPayload,
   OtpVerifyPayload,
@@ -29,6 +30,17 @@ export const authApi = {
    */
   verifyOtp: (payload: OtpVerifyPayload) =>
     api.post<{ user: AuthUser }>("/auth/sign-in/email-otp", payload),
+
+  /**
+   * Native Sign in with Apple (iOS sheet). Sends the Apple identity token +
+   * RAW nonce; the backend verifies it and returns the session token in the
+   * body (the system browser cookie isn't shared with this axios client).
+   */
+  signInWithAppleNative: (payload: AppleNativeSignInPayload) =>
+    api.post<{ session_token: string; user: AuthUser }>(
+      "/auth/sign-in/apple-native",
+      payload,
+    ),
 
   /**
    * Record the user's acceptance of the Terms of Service (EULA).

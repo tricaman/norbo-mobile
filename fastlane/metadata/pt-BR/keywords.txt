@@ -1,0 +1,1 @@
+pet,cão,gato,lembrete,veterinário,vacina,saúde,peso,gastos,réptil,ave,peixe

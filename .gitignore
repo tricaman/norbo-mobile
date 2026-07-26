@@ -53,3 +53,16 @@ app-example
 # Non committati su git (contengono identificatori del progetto Firebase).
 # EAS build cloud li include comunque grazie a .easignore (sovrascrive .gitignore).
 firebase/
+
+# fastlane (store metadata upload) — versioniamo fastlane/metadata (i testi store),
+# ma NON i file generati né le credenziali. Le API key .p8/.json sono già coperte sopra.
+vendor/bundle/
+.bundle/
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/test_output/
+fastlane/README.md
+# credenziali Play (service account) e Apple — mai committare
+fastlane/*.json
+fastlane/google-play*.json
+fastlane/metadata/android/

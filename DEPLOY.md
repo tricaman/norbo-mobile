@@ -1,76 +1,198 @@
 # Deploy — norbo-mobile
 
-Guida operativa per produrre una release di produzione.
+Guida operativa per produrre una release (iOS TestFlight/App Store, Android Play Console).
 
-Ultima versione **già caricata** su Play Console: **1.5.5** (Android `versionCode` 12).
-iOS non ancora in produzione (`buildNumber` 1, lo gestiremo in futuro).
+---
 
-> 🔴 **La prossima build DEVE incrementare le versioni.** I valori qui sopra sono già sullo
-> store: un nuovo AAB/IPA con lo stesso `versionCode` / `buildNumber` viene **rifiutato come
-> duplicato** (build sprecata, ~16 min). Bumpa _prima_ di buildare — vedi **§2**, è il primo
-> passo ed è obbligatorio. Dopo ogni upload, aggiorna questa riga con i nuovi valori.
+## 0. Quadro generale — app, varianti, flusso
 
-> 🔴 **Trappola CNG — leggi prima di tutto.** Le cartelle `android/` e `ios/` sono in
-> `.gitignore` (Continuous Native Generation): vengono rigenerate da `expo prebuild` e
-> riflettono l'**ultima variante** con cui sono state generate, di default `development`
-> (bundle id con suffisso `.dev`, Firebase `firebase/dev/`). Una build di produzione lanciata
-> senza prima rigenerare i native in variante `production` produce un bundle `.dev`
-> **non pubblicabile**. Vedi **§2.1** — è obbligatorio.
+Ci sono **tre varianti** (controllate da `APP_VARIANT` in `app.config.ts`), ognuna con
+bundle id e app store diversi:
+
+| Variante       | `APP_VARIANT` | Bundle id                        | App su store                              | Uso                          |
+| -------------- | ------------- | -------------------------------- | ----------------------------------------- | ---------------------------- |
+| development    | `development` | `app.mariustrica.norbo.dev`      | —                                         | dev locale / dev client      |
+| **preview (UAT)** | `preview`  | `app.mariustrica.norbo.preview`  | **norbo (UAT)** · App Store id `6794883790` | test interni su TestFlight    |
+| **production** | `production`  | `app.mariustrica.norbo`          | **Norbo: animali e promemoria** · id `6794615057` | rilascio pubblico            |
+
+Preview e production usano **entrambe** il backend prod (`api.norbo.app`) e Firebase prod.
+Sono due **app Apple distinte**: un IPA `.preview` **non** è promuovibile all'app prod (bundle id
+diverso, firma diversa). UAT è un ambiente di test parallelo, non uno stadio della stessa build.
+
+### Flusso di rilascio consigliato
+
+```
+                    ┌─────────────────────────────────────────────┐
+   sviluppo  ─────► │ 1. UAT: fastlane ios beta → TestFlight (UAT) │  test funzionali interni
+                    └─────────────────────────────────────────────┘
+                                        │  quando la UAT è OK
+                                        ▼
+                    ┌──────────────────────────────────────────────────────┐
+   release   ─────► │ 2. PROD: fastlane ios prod → TestFlight (app prod)    │  stessa build che andrà live
+                    └──────────────────────────────────────────────────────┘
+                                        │  testi la build PROD in TestFlight
+                                        ▼
+                    ┌──────────────────────────────────────────────────────┐
+   store     ─────► │ 3. Submit for Review della STESSA build su ASC        │  nessun rebuild tra test e store
+                    └──────────────────────────────────────────────────────┘
+```
+
+> 🔵 **Punto chiave iOS.** L'app **prod** ha il suo canale TestFlight. Carichi lì l'IPA prod
+> (`fastlane ios prod`), lo testi in TestFlight, e quando è tutto in regola fai **Submit for
+> Review** di **quella stessa identica build** — nessuna nuova compilazione tra test e store.
+> `fastlane ios prod` **carica ma NON manda in review** (`skip_submission`): il submit è un
+> gesto manuale e deliberato su App Store Connect (vedi §7).
+
+---
+
+## ⚠️ Due trappole da conoscere prima di tutto
+
+> 🔴 **Bump versione obbligatorio.** Ogni nuova build DEVE incrementare `buildNumber` (iOS) /
+> `versionCode` (Android) rispetto all'**ultimo valore già sullo store per quella app**. La fonte
+> di verità è lo **store**, non `app.config.ts` (il file può essere avanti o indietro). Una build
+> con un numero già caricato viene **rifiutata come duplicato** → ~1h di build sprecata su iOS.
+> Vedi **§2**. **UAT e prod hanno numerazioni indipendenti** (app diverse).
+
+> 🔴 **Trappola CNG.** Le cartelle `android/` e `ios/` sono in `.gitignore` (Continuous Native
+> Generation): le rigenera `expo prebuild` e riflettono l'**ultima variante** con cui sono state
+> generate (default `development` = `.dev`). Buildare senza aver prima rigenerato i native nella
+> variante giusta produce un bundle della variante sbagliata. Il prebuild nella variante corretta
+> è **obbligatorio** prima di ogni build (§3.1 iOS, §4.1 Android).
 
 ---
 
 ## 1. Pre-flight
 
-- [ ] **Versione incrementata** in `app.config.ts` rispetto all'ultima caricata sullo store (vedi §2) — **obbligatorio, primo passo**
+- [ ] **Versione/buildNumber incrementati** in `app.config.ts` rispetto all'ultimo sullo store (§2)
 - [ ] Tutto committato su `main`
 - [ ] `pnpm install` aggiornato
 - [ ] Backend prod (`api.norbo.app`, `ws.norbo.app`) raggiungibili
-- [ ] `.env.prod` presente in root (vedi `.env.example` per la lista variabili)
-- [ ] File Firebase prod presenti:
+- [ ] File Firebase prod presenti (usati sia da preview che da production):
   - `firebase/prod/google-services.json`
   - `firebase/prod/GoogleService-Info.plist`
-- [ ] Keystore upload Android disponibile e variabili in `~/.gradle/gradle.properties` o passate via `-P`:
-  - `NORBO_UPLOAD_STORE_FILE`
-  - `NORBO_UPLOAD_STORE_PASSWORD`
-  - `NORBO_UPLOAD_KEY_ALIAS`
-  - `NORBO_UPLOAD_KEY_PASSWORD`
-    > Senza queste l'APK release viene firmato con la debug key (NON pubblicabile).
+- [ ] **iOS:** ASC API key presente (vedi §3.0)
+- [ ] **Android:** keystore upload + variabili `NORBO_UPLOAD_*` in `~/.gradle/gradle.properties`
+  (`NORBO_UPLOAD_STORE_FILE`, `_STORE_PASSWORD`, `_KEY_ALIAS`, `_KEY_PASSWORD`).
+  > Senza queste l'APK/AAB release viene firmato con la debug key (**NON pubblicabile**).
 
 ---
 
-## 2. Bump versione — OBBLIGATORIO, primo passo di ogni release
+## 2. Bump versione — primo passo di ogni release
 
-> 🔴 **Incrementa SEMPRE le versioni PRIMA di buildare. Mai buildare sui valori correnti.**
-> I valori in `app.config.ts` rappresentano l'ultima release **già caricata** sullo store
-> (il commit di bump precede la build): un AAB/IPA con lo stesso `versionCode` / `buildNumber`
-> viene **rifiutato come duplicato** → build sprecata (~16 min). Il bump è il **primo** passo,
-> **non** un'attività post-deploy.
+> 🔴 Incrementa **PRIMA** di buildare, rispetto allo **store** (non al file).
 
-`app.config.ts` è la **fonte di verità** per le versioni. Incrementa lì (valori **monotoni crescenti**):
+**Controlla l'ultimo valore sullo store** per l'app che stai per buildare:
 
-- `version` (semver visibile all'utente, sia iOS che Android)
-- `android.versionCode` (int, **+1 per ogni upload Play Store**) ← obbligatorio per la build Android
-- `ios.buildNumber` (string, **+1 per ogni upload TestFlight/App Store**) ← quando gestiremo iOS
+- iOS UAT   → App Store Connect → app "norbo (UAT)" → TestFlight → ultimo `buildNumber`.
+- iOS PROD  → App Store Connect → app prod → TestFlight/App Store → ultimo `buildNumber`.
+- Android   → Play Console → track attivo → ultimo `versionCode`.
 
-> Es. dopo `1.5.2` / `versionCode` 9 → `version` `1.5.3`, `versionCode` 10 (e `buildNumber` se iOS).
-> Aggiorna anche la riga "Ultima versione" in cima a questo file con i nuovi valori.
+Puoi leggerli anche via API (comodo, niente login web) — vedi §9.
+
+Poi incrementa in `app.config.ts` (valori **monotoni crescenti**):
+
+- `version` — semver visibile all'utente (iOS + Android)
+- `ios.buildNumber` (string) — **= ultimo `buildNumber` sullo store di quell'app + 1**
+- `android.versionCode` (int) — **= ultimo `versionCode` sullo store + 1**
+
+> ⚠️ `buildNumber` iOS è **per-app**: UAT e prod hanno cronologie separate. Se UAT è al build 5 e
+> prod è al build 2, per una nuova prod parti da 3, non da 6. Guarda sempre lo store dell'app target.
 
 > Non editare a mano `android/app/build.gradle` / `ios/*.pbxproj`: vengono **rigenerati** dal
-> prebuild (§2.1) a partire da `app.config.ts`. Ogni modifica manuale ai native va persa.
+> prebuild a partire da `app.config.ts`.
 
-### 2.1 Prebuild produzione — OBBLIGATORIO prima di ogni build prod
+---
 
-I native sono gitignored e di default in variante `development`. Rigenerali in `production`:
+## 3. iOS — build & upload su TestFlight (fastlane)
+
+### 3.0 Prerequisiti iOS (una tantum)
+
+- **fastlane** installato: `brew install fastlane` (isolato dal ruby di sistema 2.6).
+- **ASC API key** in `fastlane/`:
+  - `fastlane/AuthKey_279X5Y7X6H.p8` (la chiave privata, **gitignored**)
+  - `fastlane/asc_api_key.json` (key_id / issuer_id / `key_filepath` → punta al .p8, **gitignored**)
+- Certificato **Apple Distribution** + provisioning profile: **li crea fastlane** al primo run
+  (`cert` + `sigh` via API key). Nessun setup manuale in Xcode.
+- **CocoaPods** gira con locale UTF-8: esporta `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` prima di
+  `pod install` (senza, CocoaPods 1.16 su ruby 4 dà `Encoding::CompatibilityError`).
+
+> EAS build/submit **non è utilizzabile**: il `projectId` in `app.config.ts` dà `Entity not
+> authorized` per l'account corrente. Usiamo la build locale + fastlane descritta qui.
+
+### 3.1 Prebuild iOS nella variante giusta — OBBLIGATORIO
+
+```bash
+# UAT / preview:
+APP_VARIANT=preview npx expo prebuild --platform ios --clean --no-install
+# PROD / production:
+APP_VARIANT=production npx expo prebuild --platform ios --clean --no-install
+```
+
+Il nome del progetto Xcode dipende dalla variante:
+`norboPreview.xcodeproj` (preview) oppure `norbo.xcodeproj` (production).
+
+Poi installa i pod (crea il `.xcworkspace`):
+
+```bash
+cd ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install
+```
+
+Verifica lo stato **prima** di buildare:
+
+```bash
+# bundle id atteso (.preview per UAT, senza suffisso per prod):
+grep "PRODUCT_BUNDLE_IDENTIFIER" ios/*.xcodeproj/project.pbxproj | grep -v Tests | sort -u
+# nome app: "norbo (Preview)" (UAT) oppure "norbo" (prod)
+/usr/libexec/PlistBuddy -c "Print :CFBundleDisplayName" ios/*/Info.plist
+# buildNumber = quello bumpato in app.config.ts
+/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" ios/*/Info.plist
+```
+
+### 3.2 Build + upload
+
+Esporta le var prod (vengono **inlinate nel bundle JS**: senza, l'app punterebbe a `localhost`
+perché `.env` ha `APP_VARIANT=development` e URL locali), poi lancia il lane:
+
+```bash
+export APP_VARIANT=preview      # oppure production, coerente col prebuild di §3.1
+export EXPO_PUBLIC_API_URL=https://api.norbo.app
+export EXPO_PUBLIC_WS_URL=wss://ws.norbo.app/ws
+export EXPO_PUBLIC_AUTH_CALLBACK_SCHEME=norbo
+
+fastlane ios beta    # UAT  → app norbo (UAT),  bundle .preview
+# oppure
+fastlane ios prod    # PROD → app prod,          bundle .norbo
+```
+
+Il lane fa tutto: `cert` → `sigh` → firma manuale nel pbxproj → `build_app` → `upload_to_testflight`.
+
+> ⏱️ La compilazione RN è lunga (**~55 min** su questa macchina: Skia, SVG, Reanimated, Firebase).
+> È normale. L'upload vero e proprio dura ~1-2 min. `skip_waiting_for_build_processing: true`
+> evita di restare appesi in attesa del processing lato Apple.
+
+Output IPA: `build/norbo-preview.ipa` o `build/norbo-prod.ipa` (+ dSYM zip).
+
+Entrambi i lane usano `skip_submission: true` → la build **compare in TestFlight** ma **non**
+viene mandata in review.
+
+### 3.3 Note di firma
+
+- Il primo run crea **un** certificato Apple Distribution (limite Apple: 2-3 per account). Viene
+  riusato per tutte le build successive, UAT e prod.
+- Il provisioning profile è per-bundle: fastlane ne crea uno per `.preview` e uno per `.norbo`.
+- Se cambi Mac o revochi il cert, `cert`+`sigh` li rigenerano al run successivo.
+
+---
+
+## 4. Android — build (locale) & upload su Play Console
+
+### 4.1 Prebuild produzione — OBBLIGATORIO
 
 ```bash
 APP_VARIANT=production npx expo prebuild --platform android --clean --no-install
 ```
 
-- `APP_VARIANT=production` → bundle id `app.mariustrica.norbo` (senza `.dev`), Firebase `firebase/prod/`, `versionCode`/`versionName` presi da `app.config.ts`. **Va passato esplicitamente sulla riga di comando**: expo carica `.env` da solo durante il prebuild, ma una var già esportata nell'env vince, quindi il prefisso `APP_VARIANT=production` ha la precedenza.
-- `--clean` → cancella e rigenera `android/` da zero (evita residui della variante dev precedente).
-- Le custom plugin (`plugins/with*.js`) vengono riapplicate automaticamente (notifiche, Notifee, firma release, cleartext, ecc.).
-
-Verifica subito lo stato prod **prima** di buildare:
+Verifica:
 
 ```bash
 grep -E "namespace|applicationId|versionCode|versionName" android/app/build.gradle
@@ -79,43 +201,11 @@ diff android/app/google-services.json firebase/prod/google-services.json
 #   → nessun output = identico al prod
 ```
 
-Tag git consigliato a fine release:
+### 4.2 Build AAB (per Play Console)
 
-```bash
-git tag v1.2.1 && git push origin v1.2.1
-```
-
----
-
-## 3. Build Android (locale)
-
-> ✅ **Prerequisito:** aver eseguito **§2.1** (prebuild produzione). Senza, buildi un bundle `.dev`.
->
-> `set -a && source .env.prod && set +a` esporta `APP_VARIANT=production` + gli URL prod
-> (`api.norbo.app` / `ws.norbo.app`), che vengono **inlinati nel bundle JS** proprio in questo
-> step. La firma release scatta automaticamente perché le 4 var `NORBO_UPLOAD_*` sono in
-> `~/.gradle/gradle.properties` (se mancano → firma debug, **non pubblicabile**).
->
-> Nota: `cd android && ./gradlew …` oppure, senza cambiare cartella, `./android/gradlew -p android …`.
-
-### APK (per distribuzione interna / sideload)
-
-```bash
-set -a && source .env.prod && set +a
-cd android && ./gradlew assembleRelease
-```
-
-Output: `android/app/build/outputs/apk/release/norbo-<versionName>-<versionCode>-release.apk`
-
-Es: `norbo-1.2.1-2-release.apk`.
-
-Install su device collegato (`adb devices`):
-
-```bash
-adb install -r android/app/build/outputs/apk/release/norbo-1.2.1-2-release.apk
-```
-
-### AAB (per Google Play Console)
+`set -a && source .env.prod && set +a` esporta `APP_VARIANT=production` + gli URL prod
+(inlinati nel bundle JS). La firma release scatta se le 4 var `NORBO_UPLOAD_*` sono in
+`~/.gradle/gradle.properties`.
 
 ```bash
 set -a && source .env.prod && set +a
@@ -124,92 +214,97 @@ cd android && ./gradlew bundleRelease
 
 Output: `android/app/build/outputs/bundle/release/app-release.aab` → upload su Play Console.
 
-Verifica la firma dell'AAB (deve essere la upload key, **non** `androiddebugkey`):
+Verifica firma (deve essere la upload key, **non** `androiddebugkey`):
 
 ```bash
-# estrai il certificato e controlla l'owner/alias
 unzip -p android/app/build/outputs/bundle/release/app-release.aab META-INF/*.RSA \
   | keytool -printcert | grep -E "Owner|Alias|CN="
 ```
 
-> Build lunga: per seguirla dal vivo redirigi su file e usa `tail -f`, es.
-> `./android/gradlew -p android bundleRelease 2>&1 | tee /tmp/norbo-aab-build.log`
-> poi in un altro terminale `tail -f /tmp/norbo-aab-build.log`.
+APK per sideload/test interno: `./gradlew assembleRelease` →
+`android/app/build/outputs/apk/release/norbo-<versionName>-<versionCode>-release.apk`
+(nome univoco grazie al blocco `applicationVariants.all` in `android/app/build.gradle`).
+
+> Build lunga: `./android/gradlew -p android bundleRelease 2>&1 | tee /tmp/norbo-aab.log`
+> e in un altro terminale `tail -f /tmp/norbo-aab.log`.
 
 ---
 
-## 4. Build iOS (locale, opzionale)
+## 5. Verifica build
 
-```bash
-set -a && source .env.prod && set +a
-APP_VARIANT=production npx expo run:ios --configuration Release
-```
+**iOS UAT** (app norbo UAT):
+- [ ] App si chiama **norbo (Preview)**, bundle `app.mariustrica.norbo.preview`
+- [ ] Punta a `api.norbo.app` / `ws.norbo.app` (non localhost)
 
-Per archive da inviare a TestFlight/App Store: aprire `ios/norbo.xcworkspace` in Xcode → scheme `norbo` → Product → Archive → Distribute App.
-
----
-
-## 5. Build EAS (cloud, alternativa)
-
-> ⚠️ **Al momento non utilizzabile con l'account loggato.** Il `projectId` in
-> `app.config.ts` (`extra.eas.projectId`) restituisce `Entity not authorized` per l'utente
-> corrente (`eas project:info` / `eas build:list` falliscono). Finché l'accesso al progetto EAS
-> non viene sistemato, usa la **build locale (§2.1 + §3)**. Lo `eas submit` (§7) ha lo stesso problema.
-
-Profile `production` in `eas.json` ha già env e `APP_VARIANT=production` configurati.
-
-```bash
-eas build --profile production --platform android   # AAB
-eas build --profile production --platform ios       # IPA
-eas build --profile production --platform all
-```
+**iOS PROD / Android prod:**
+- [ ] App si chiama **norbo** (non "Dev"/"Preview"), bundle `app.mariustrica.norbo` (no suffisso)
+- [ ] Login contro `api.norbo.app`, WebSocket `ws.norbo.app/ws`
+- [ ] Push notification arrivano (token FCM su Firebase prod)
 
 ---
 
-## 6. Verifica build
+## 6. Test in TestFlight (UAT e PROD)
 
-- [ ] L'app installata si chiama **norbo** (non "norbo (Dev)" né "norbo (Preview)")
-- [ ] Bundle id: `app.mariustrica.norbo` (no suffisso `.dev` / `.preview`)
-- [ ] Login funziona contro `api.norbo.app`
-- [ ] WebSocket si connette a `ws.norbo.app/ws`
-- [ ] Push notification arrivano (token FCM registrato sul progetto Firebase prod)
+Dopo l'upload, la build passa in **Processing** lato Apple (~5-15 min) poi diventa **VALID**.
+
+- **UAT:** App Store Connect → norbo (UAT) → TestFlight → aggiungi tester (interni o gruppo) →
+  testa i flussi funzionali.
+- **PROD:** stessa cosa sull'app prod. Qui stai testando **la build che andrà live**: valida
+  tutto (login, notifiche, pagamenti, ecc.) su questa esatta build.
+
+> Al primo test TestFlight ti chiederà le info **conformità export** (crittografia): di solito
+> una risposta sì/no una tantum per build.
 
 ---
 
-## 7. Submit
+## 7. Submit in review (solo PROD, dopo il test)
 
-### Google Play
+Quando la build **prod** in TestFlight è validata:
 
-```bash
-eas submit --platform android --latest   # se la build è EAS
-```
+**App Store Connect** → app prod → sezione **App Store** → seleziona **la stessa build** testata →
+compila metadati/release notes → **Add for Review** / **Submit for Review**.
 
-oppure upload manuale dell'AAB su Play Console → Internal testing → promote.
+> È la **stessa identica build** già su TestFlight: nessun rebuild, nessun cambio di bit tra ciò
+> che hai testato e ciò che va in review. Questo è il valore del flusso: testi ⇒ submitti l'uguale.
 
-### App Store
+**Android:** Play Console → track (Internal/Closed testing → Production) → carica/promuovi l'AAB →
+compila release notes → rollout.
 
-```bash
-eas submit --platform ios --latest
-```
-
-oppure Xcode → Organizer → Distribute App → App Store Connect.
+> I metadati testuali dello store (descrizioni, keyword) stanno in `fastlane/metadata/` e si
+> possono caricare con `fastlane deliver` (config in `fastlane/Deliverfile`, `skip_binary_upload`).
 
 ---
 
 ## 8. Post-deploy
 
-- [ ] Tag git `v<version>` pushato
-- [ ] Release notes su Play Console / App Store Connect
-- [ ] Aggiorna la riga **"Ultima versione"** in cima a questo file con i valori appena caricati
+- [ ] Tag git: `git tag v<version> && git push origin v<version>`
+- [ ] Release notes su App Store Connect / Play Console
+- [ ] Verifica che lo store mostri il nuovo `buildNumber`/`versionCode` (nuovo riferimento per il
+      prossimo bump)
 
-> Il bump alla versione successiva **non si fa qui**: si fa in **§2**, subito prima della prossima
-> build. Così la fonte di verità riflette sempre ciò che è realmente sullo store ed eviti di
-> buildare su un `versionCode` già caricato.
+> Questo file **non** tiene traccia dell'ultima versione: lo fa lo **store** (fonte di verità).
+> Il prossimo bump si fa in §2 guardando lo store, non un numero mantenuto qui a mano.
 
 ---
 
-## Naming output
+## 9. Utility — leggere lo store via API (senza login web)
 
-L'APK release viene rinominato automaticamente in `norbo-<versionName>-<versionCode>-release.apk`
-grazie al blocco `applicationVariants.all` in `android/app/build.gradle`.
-Ogni release ha quindi un nome **univoco** legato a `versionName + versionCode`.
+Utile per il bump (§2): l'ultimo buildNumber di ogni app, letto con l'ASC API key.
+
+```bash
+cd norbo-mobile
+GEM_PATH=/usr/local/Cellar/fastlane/2.237.0/libexec /usr/local/bin/ruby -e '
+require "spaceship"
+key = Spaceship::ConnectAPI::Token.create(
+  key_id:"279X5Y7X6H", issuer_id:"ce6e95bf-2366-4e78-abc5-cbb0162caba4",
+  filepath: File.expand_path("fastlane/AuthKey_279X5Y7X6H.p8"))
+Spaceship::ConnectAPI.token = key
+{"UAT"=>"6794883790","PROD"=>"6794615057"}.each do |name,id|
+  builds = Spaceship::ConnectAPI::Build.all(app_id: id, limit: 5)
+  last = builds.map { |b| b.version.to_i }.max
+  puts "#{name}: ultimo buildNumber = #{last || "(nessuna build)"}"
+end
+'
+```
+
+App id: **UAT** `6794883790` · **PROD** `6794615057` · Team `XFS75S4BYM`.

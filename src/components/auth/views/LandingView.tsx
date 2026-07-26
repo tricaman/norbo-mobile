@@ -6,11 +6,16 @@ import type {
   SocialProvider,
 } from "@/types/auth.types";
 import { extractError } from "@/utils/extract-error";
+import * as AppleAuthentication from "expo-apple-authentication";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Platform, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import {
+  StyleSheet,
+  UnistylesRuntime,
+  useUnistyles,
+} from "react-native-unistyles";
 import { ErrorMessage } from "../ErrorMessage";
 import { SocialButton } from "../SocialButton";
 import { NorboLogo } from "@/components/NorboLogo";
@@ -22,7 +27,7 @@ interface Props {
 export function LandingView({ onNavigate }: Props) {
   const { theme } = useUnistyles();
   const { t } = useTranslation();
-  const { signInWithSocial } = useAuth();
+  const { signInWithSocial, signInWithAppleNative } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,6 +42,25 @@ export function LandingView({ onNavigate }: Props) {
       setLoading(false);
     }
   };
+
+  const handleAppleNative = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      await signInWithAppleNative();
+    } catch (err) {
+      setError(extractError(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Apple's HIG wants the button to contrast the background: black on light,
+  // white on dark. App Store §4.8 also requires it above the other providers.
+  const appleButtonStyle =
+    UnistylesRuntime.colorScheme === "dark"
+      ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+      : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -59,6 +83,19 @@ export function LandingView({ onNavigate }: Props) {
             </View>
           ) : (
             <>
+              {/* Sign in with Apple — native sheet, iOS only, above the other
+                  providers per App Store §4.8 / Apple HIG. */}
+              {Platform.OS === "ios" && (
+                <AppleAuthentication.AppleAuthenticationButton
+                  buttonType={
+                    AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                  }
+                  buttonStyle={appleButtonStyle}
+                  cornerRadius={theme.radius.md}
+                  style={styles.appleButton}
+                  onPress={handleAppleNative}
+                />
+              )}
               <SocialButton
                 provider="google"
                 onPress={() => handleSocial("google")}
@@ -134,6 +171,12 @@ const styles = StyleSheet.create((theme) => ({
   social: {
     gap: theme.spacing.sm,
     marginBottom: theme.spacing.xl,
+  },
+  // The native Apple button needs an explicit height; match the other social
+  // buttons (paddingVertical lg on ~20px content ≈ 54px tall).
+  appleButton: {
+    height: 54,
+    width: "100%" as const,
   },
   divider: {
     flexDirection: "row" as const,

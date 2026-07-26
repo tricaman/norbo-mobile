@@ -40,11 +40,26 @@ export interface OtpVerifyPayload {
   otp: string;
 }
 
-export type SocialProvider = "google" | "facebook" | "microsoft";
+export type SocialProvider = "google" | "facebook" | "microsoft" | "apple";
 
 export interface SocialSignInPayload {
   provider: SocialProvider;
   callbackURL: string;
+}
+
+/**
+ * Payload for the native Sign in with Apple flow (iOS sheet).
+ *
+ * `nonce` is the RAW nonce — the native sheet was given its SHA-256 hash, and
+ * the backend forwards the raw value to BetterAuth (which re-hashes it). Apple
+ * returns `name`/`email` only on the FIRST consent, so both are optional and
+ * sent only when present, to seed the user on initial sign-up.
+ */
+export interface AppleNativeSignInPayload {
+  identityToken: string;
+  nonce: string;
+  name?: { firstName?: string | null; lastName?: string | null };
+  email?: string | null;
 }
 
 export interface SocialSignInResponse {

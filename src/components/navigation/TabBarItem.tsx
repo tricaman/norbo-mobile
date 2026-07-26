@@ -93,7 +93,7 @@ const styles = StyleSheet.create((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: theme.spacing.xs,
-    gap: 2,
+    gap: theme.spacing.xs / 2,
   },
   labelText: {
     ...theme.typography.caption,

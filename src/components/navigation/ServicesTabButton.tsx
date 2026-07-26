@@ -15,6 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import { scaleSize } from "@/theme/tokens";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -24,9 +25,9 @@ interface ServicesTabButtonProps {
   onLongPress: () => void;
 }
 
-export const CIRCLE_SIZE = 58;
-const LOGO_SIZE = 40;
-export const LIFT = 18;
+export const CIRCLE_SIZE = scaleSize(58);
+const LOGO_SIZE = scaleSize(40);
+export const LIFT = scaleSize(18);
 
 /**
  * ServicesTabButton — the elevated, centered tab in the FloatingTabBar.

@@ -1,5 +1,6 @@
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { springs } from "@/hooks/useSpring";
+import { scaleSize } from "@/theme/tokens";
 import React, { useEffect } from "react";
 import Animated, {
   useAnimatedStyle,
@@ -69,7 +70,7 @@ export function TabIcon({
     <Animated.View style={animatedStyle}>
       <IconSymbol
         name={isActive ? icon.filled : icon.sf}
-        size={24}
+        size={scaleSize(24)}
         tintColor={color}
       />
     </Animated.View>
