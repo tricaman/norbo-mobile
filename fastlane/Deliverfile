@@ -1,0 +1,19 @@
+# Deliverfile — opzioni per `fastlane deliver` (upload metadati su App Store Connect).
+#
+# Autenticazione via App Store Connect API Key (.p8), niente login 2FA interattivo.
+# La key è gitignorata (fastlane/AuthKey_*.p8). Key ID / Issuer ID sono identificatori
+# pubblici, non segreti; il segreto è solo il contenuto del .p8.
+
+api_key_path("fastlane/asc_api_key.json")  # JSON con key_id/issuer_id/key_filepath
+
+# --- Comportamento upload ---
+submit_for_review(false)   # NON invia in review: popola solo la scheda
+force(true)                # niente prompt interattivo di conferma HTML preview
+skip_screenshots(true)     # gli screenshot li carica l'utente dopo, a mano
+skip_binary_upload(true)   # carichiamo SOLO metadati testuali, non il binario
+skip_app_version_update(false)
+
+# precheck fa dei controlli extra (es. menzioni di altri brand); teniamolo attivo
+run_precheck_before_submit(false)  # non serve: non stiamo submittando
+
+metadata_path("./fastlane/metadata")

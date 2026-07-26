@@ -1,0 +1,1 @@
+animale,cane,gatto,promemoria,veterinario,vaccino,salute,peso,spese,cura,rettile,pesci

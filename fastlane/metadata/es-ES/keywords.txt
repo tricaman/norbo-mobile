@@ -1,0 +1,1 @@
+mascota,perro,gato,recordatorio,veterinario,vacuna,salud,peso,gastos,reptil,ave,peces

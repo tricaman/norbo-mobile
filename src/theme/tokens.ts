@@ -1,44 +1,79 @@
+import { Platform } from "react-native";
+import * as Device from "expo-device";
+
+/**
+ * Global UI scale factor.
+ *
+ * The base token values below are tuned for the iPhone (iOS point sizes:
+ * 17pt body, etc.). On the much larger iPad canvas the very same absolute
+ * point sizes read as cramped and small, so we scale every size-bearing
+ * token (typography, spacing, radius, avatars, mono type) up by one factor.
+ *
+ * This is THE single global knob for "everything looks too small / too big
+ * on tablet": change `TABLET_SCALE` and the whole app rescales, because every
+ * component reads its sizes from these tokens via the theme.
+ *
+ * `Platform.isPad` is synchronous and available on the very first render
+ * (no flash). `Device.deviceType` covers Android tablets as a fallback.
+ */
+const TABLET_SCALE = 1.3;
+
+const isTablet =
+  (Platform.OS === "ios" && Platform.isPad) ||
+  Device.deviceType === Device.DeviceType.TABLET;
+
+export const uiScale = isTablet ? TABLET_SCALE : 1;
+
+/** Scale a numeric token by the global UI scale, rounded to avoid blurry
+ *  half-pixel text metrics on native. Exported as `scaleSize` for the few
+ *  places that carry a one-off pixel dimension not covered by a named token
+ *  (e.g. the tab-bar icon/logo sizes) — route those through here so they grow
+ *  on tablet together with everything else. */
+const s = (n: number) => Math.round(n * uiScale);
+
+export const scaleSize = s;
+
 export const hairline = 0.5;
 
 export const avatarSize = {
-  sm: 40,
-  md: 46,
-  lg: 48,
-  xl: 92,
+  sm: s(40),
+  md: s(46),
+  lg: s(48),
+  xl: s(92),
 } as const;
 
 export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  "2xl": 24,
-  "3xl": 16,
-  "4xl": 40,
-  "5xl": 48,
+  xs: s(4),
+  sm: s(8),
+  md: s(12),
+  lg: s(16),
+  xl: s(20),
+  "2xl": s(24),
+  "3xl": s(16),
+  "4xl": s(40),
+  "5xl": s(48),
 } as const;
 
 export const radius = {
-  xs: 6,
-  sm: 10,
-  md: 14,
-  lg: 20,
-  xl: 28,
+  xs: s(6),
+  sm: s(10),
+  md: s(14),
+  lg: s(20),
+  xl: s(28),
   pill: 100,
 } as const;
 
 export const typography = {
-  display: { fontSize: 34, fontWeight: "400" as const, lineHeight: 41 },
-  title1: { fontSize: 28, fontWeight: "500" as const, lineHeight: 34 },
-  title2: { fontSize: 22, fontWeight: "500" as const, lineHeight: 28 },
-  body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
-  subhead: { fontSize: 15, fontWeight: "500" as const, lineHeight: 20 },
-  footnote: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
+  display: { fontSize: s(34), fontWeight: "400" as const, lineHeight: s(41) },
+  title1: { fontSize: s(28), fontWeight: "500" as const, lineHeight: s(34) },
+  title2: { fontSize: s(22), fontWeight: "500" as const, lineHeight: s(28) },
+  body: { fontSize: s(17), fontWeight: "400" as const, lineHeight: s(22) },
+  subhead: { fontSize: s(15), fontWeight: "500" as const, lineHeight: s(20) },
+  footnote: { fontSize: s(13), fontWeight: "400" as const, lineHeight: s(18) },
   caption: {
-    fontSize: 11,
+    fontSize: s(11),
     fontWeight: "600" as const,
-    lineHeight: 13,
+    lineHeight: s(13),
     letterSpacing: 0.08,
     textTransform: "uppercase" as const,
   },
@@ -68,43 +103,43 @@ export const pressScale = {
 export const monoTypography = {
   displayMono: {
     fontFamily: "DMMono-Regular",
-    fontSize: 38,
+    fontSize: s(38),
     fontWeight: "400" as const,
-    lineHeight: 46,
+    lineHeight: s(46),
     letterSpacing: 10,
   },
   timestampMono: {
     fontFamily: "DMMono-Regular",
-    fontSize: 10,
+    fontSize: s(10),
     fontWeight: "400" as const,
-    lineHeight: 14,
+    lineHeight: s(14),
   },
   codeMono: {
     fontFamily: "DMMono-Medium",
-    fontSize: 13,
+    fontSize: s(13),
     fontWeight: "500" as const,
-    lineHeight: 18,
+    lineHeight: s(18),
     letterSpacing: 0.5,
   },
   captionMono: {
     fontFamily: "DMMono-Regular",
-    fontSize: 11,
+    fontSize: s(11),
     fontWeight: "400" as const,
-    lineHeight: 14,
+    lineHeight: s(14),
     letterSpacing: 2,
   },
   labelMono: {
     fontFamily: "DMMono-Medium",
-    fontSize: 15,
+    fontSize: s(15),
     fontWeight: "500" as const,
-    lineHeight: 20,
+    lineHeight: s(20),
     letterSpacing: 1,
   },
   ttlMono: {
     fontFamily: "DMMono-Medium",
-    fontSize: 11,
+    fontSize: s(11),
     fontWeight: "500" as const,
-    lineHeight: 14,
+    lineHeight: s(14),
     letterSpacing: 0.5,
   },
 } as const;

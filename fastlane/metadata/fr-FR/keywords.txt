@@ -1,0 +1,1 @@
+animal,chien,chat,rappel,vétérinaire,vaccin,santé,poids,dépenses,reptile,oiseau,poisson

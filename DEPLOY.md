@@ -2,13 +2,19 @@
 
 Guida operativa per produrre una release di produzione.
 
-Ultima versione **già caricata** su Play Console: **1.5.5** (Android `versionCode` 12).
-iOS non ancora in produzione (`buildNumber` 1, lo gestiremo in futuro).
-
-> 🔴 **La prossima build DEVE incrementare le versioni.** I valori qui sopra sono già sullo
-> store: un nuovo AAB/IPA con lo stesso `versionCode` / `buildNumber` viene **rifiutato come
-> duplicato** (build sprecata, ~16 min). Bumpa _prima_ di buildare — vedi **§2**, è il primo
-> passo ed è obbligatorio. Dopo ogni upload, aggiorna questa riga con i nuovi valori.
+> 🔴 **La prossima build DEVE incrementare le versioni rispetto a quelle già sullo store.**
+> Questo file **non** riporta il numero dell'ultima release: la fonte di verità è lo **store**
+> (Play Console → Internal testing / track attivo per Android; TestFlight/App Store Connect per
+> iOS). Prima di ogni build **guarda lì** qual è l'ultimo `versionCode` / `buildNumber` caricato
+> e incrementa a partire da quello in `app.config.ts`. Un nuovo AAB/IPA con lo stesso
+> `versionCode` / `buildNumber` viene **rifiutato come duplicato** (build sprecata, ~16 min).
+> Bumpa _prima_ di buildare — vedi **§2**, è il primo passo ed è obbligatorio.
+>
+> ⚠️ **Non fidarti dei valori correnti in `app.config.ts`**: potrebbero essere già stati
+> caricati sullo store da una release precedente (il file può essere avanti rispetto a ciò che
+> hai effettivamente pubblicato). Confronta **sempre** con lo store, non con il file.
+>
+> iOS non ancora in produzione (`buildNumber` lo gestiremo in futuro).
 
 > 🔴 **Trappola CNG — leggi prima di tutto.** Le cartelle `android/` e `ios/` sono in
 > `.gitignore` (Continuous Native Generation): vengono rigenerate da `expo prebuild` e
@@ -40,20 +46,26 @@ iOS non ancora in produzione (`buildNumber` 1, lo gestiremo in futuro).
 
 ## 2. Bump versione — OBBLIGATORIO, primo passo di ogni release
 
-> 🔴 **Incrementa SEMPRE le versioni PRIMA di buildare. Mai buildare sui valori correnti.**
-> I valori in `app.config.ts` rappresentano l'ultima release **già caricata** sullo store
-> (il commit di bump precede la build): un AAB/IPA con lo stesso `versionCode` / `buildNumber`
-> viene **rifiutato come duplicato** → build sprecata (~16 min). Il bump è il **primo** passo,
-> **non** un'attività post-deploy.
+> 🔴 **Incrementa SEMPRE le versioni PRIMA di buildare, rispetto a quelle sullo store.**
+> La fonte di verità di "cosa è già caricato" è lo **store**, non `app.config.ts`: il file può
+> essere avanti (bump già committato ma mai pubblicato) o indietro. Un AAB/IPA con un
+> `versionCode` / `buildNumber` **già presente sullo store** viene **rifiutato come duplicato**
+> → build sprecata (~16 min). Il bump è il **primo** passo, **non** un'attività post-deploy.
 
-`app.config.ts` è la **fonte di verità** per le versioni. Incrementa lì (valori **monotoni crescenti**):
+**Prima di incrementare, controlla lo store** e prendi l'ultimo valore realmente caricato:
+
+- Android → Play Console → track attivo (Internal testing / Production): ultimo `versionCode`.
+- iOS → App Store Connect / TestFlight: ultimo `buildNumber` (quando gestiremo iOS).
+
+Poi incrementa in `app.config.ts` (dove **scrivi** il nuovo valore; valori **monotoni crescenti**):
 
 - `version` (semver visibile all'utente, sia iOS che Android)
-- `android.versionCode` (int, **+1 per ogni upload Play Store**) ← obbligatorio per la build Android
-- `ios.buildNumber` (string, **+1 per ogni upload TestFlight/App Store**) ← quando gestiremo iOS
+- `android.versionCode` (int, **= ultimo `versionCode` sullo store + 1**) ← obbligatorio per la build Android
+- `ios.buildNumber` (string, **= ultimo `buildNumber` sullo store + 1**) ← quando gestiremo iOS
 
-> Es. dopo `1.5.2` / `versionCode` 9 → `version` `1.5.3`, `versionCode` 10 (e `buildNumber` se iOS).
-> Aggiorna anche la riga "Ultima versione" in cima a questo file con i nuovi valori.
+> Es. se sullo store l'ultimo è `versionCode` 9 (`version` `1.5.2`) → in `app.config.ts` metti
+> `version` `1.5.3`, `versionCode` 10 (e `buildNumber` se iOS). Se `app.config.ts` fosse già
+> più avanti dello store, incrementa comunque **rispetto allo store**, non al file.
 
 > Non editare a mano `android/app/build.gradle` / `ios/*.pbxproj`: vengono **rigenerati** dal
 > prebuild (§2.1) a partire da `app.config.ts`. Ogni modifica manuale ai native va persa.
@@ -200,11 +212,12 @@ oppure Xcode → Organizer → Distribute App → App Store Connect.
 
 - [ ] Tag git `v<version>` pushato
 - [ ] Release notes su Play Console / App Store Connect
-- [ ] Aggiorna la riga **"Ultima versione"** in cima a questo file con i valori appena caricati
+- [ ] Verifica che lo store mostri il `versionCode` / `buildNumber` appena caricato (diventa il nuovo riferimento per il prossimo bump)
 
-> Il bump alla versione successiva **non si fa qui**: si fa in **§2**, subito prima della prossima
-> build. Così la fonte di verità riflette sempre ciò che è realmente sullo store ed eviti di
-> buildare su un `versionCode` già caricato.
+> **Questo file non tiene traccia dell'ultima versione**: lo fa lo **store**, che è la fonte di
+> verità. Il bump alla release successiva **non si fa qui**: si fa in **§2**, subito prima della
+> prossima build, guardando l'ultimo valore sullo store ed incrementando quello. Così eviti di
+> buildare su un `versionCode` già caricato senza dover mantenere un numero a mano in questo doc.
 
 ---
 

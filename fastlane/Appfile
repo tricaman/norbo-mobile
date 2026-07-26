@@ -1,0 +1,16 @@
+# Appfile — identifica app e team per i tool fastlane (deliver / supply).
+# Valori sensibili (Apple ID, Team ID) sono qui in chiaro ma l'Appfile NON
+# contiene chiavi private; la .p8 è a parte e gitignorata.
+
+app_identifier("app.mariustrica.norbo")   # Bundle ID production (senza .dev)
+apple_id("tricabit@gmail.com")            # Apple ID dell'account Developer
+
+itc_team_id("XFS75S4BYM")                 # Team ID App Store Connect
+team_id("XFS75S4BYM")                     # Team ID Apple Developer (stesso)
+
+# --- Android (per `fastlane supply`, export metadati da Play Store) ---
+# Il package Android è lo stesso bundle id.
+for_platform :android do
+  package_name("app.mariustrica.norbo")
+  # json_key_file impostato via CLI/env al momento dell'export (service account).
+end
