@@ -65,6 +65,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // sheet. The capability must also be enabled on each App ID in the Apple
     // Developer portal (prod/.dev/.preview), or code signing will fail.
     usesAppleSignIn: true,
+    infoPlist: {
+      // Export compliance: l'app usa solo crittografia standard di sistema
+      // (HTTPS/TLS, Apple Sign In, Firebase) → esente dai requisiti di
+      // documentazione export. Dichiararlo qui evita il popup "Documentazione
+      // relativa alla crittografia dell'app" a ogni upload su TestFlight/App Store.
+      ITSAppUsesNonExemptEncryption: false,
+    },
   },
   android: {
     adaptiveIcon: {

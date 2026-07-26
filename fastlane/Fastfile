@@ -1,0 +1,126 @@
+# Fastfile — build + upload iOS su TestFlight per norbo-mobile.
+#
+# Due lane, un unico flusso condiviso (build_and_upload):
+#
+#   fastlane ios beta   → variante PREVIEW → app "norbo (UAT)" (bundle .preview)
+#   fastlane ios prod    → variante PRODUCTION → app prod        (bundle .norbo)
+#
+# ENTRAMBI i lane si limitano a CARICARE la build su TestFlight (skip_submission).
+# NON mandano in review. Il "Submit for Review" della build PROD, dopo averla
+# testata in TestFlight, si fa a mano su App Store Connect (o con un lane apposito).
+#
+# PRIMA di ogni lane vanno rigenerati i native iOS nella variante giusta:
+#
+#   # UAT / preview:
+#   APP_VARIANT=preview npx expo prebuild --platform ios --clean --no-install
+#   (cd ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install)
+#
+#   # PROD / production:
+#   APP_VARIANT=production npx expo prebuild --platform ios --clean --no-install
+#   (cd ios && LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install)
+#
+# Vedi DEPLOY.md per il flusso completo (bump versione, env, verifiche).
+#
+# Autenticazione: App Store Connect API Key (.p8) via fastlane/asc_api_key.json.
+# Nessun login Apple ID interattivo / 2FA.
+
+default_platform(:ios)
+
+TEAM_ID = "XFS75S4BYM"
+
+# Il nome dello scheme/target/xcodeproj che `expo prebuild` genera dipende dal
+# `name` della variante in app.config.ts:
+#   - preview     → "norbo (Preview)" → target "norboPreview"
+#   - production → "norbo"            → target "norbo"
+VARIANTS = {
+  preview: {
+    scheme:    "norboPreview",
+    bundle_id: "app.mariustrica.norbo.preview",
+    app_id:    "6794883790",                       # norbo (UAT)
+    ipa_name:  "norbo-preview.ipa",
+  },
+  production: {
+    scheme:    "norbo",
+    bundle_id: "app.mariustrica.norbo",
+    app_id:    "6794615057",                       # Norbo: animali e promemoria (PROD)
+    ipa_name:  "norbo-prod.ipa",
+  },
+}
+
+platform :ios do
+  desc "Build variante PREVIEW (UAT) e carica su TestFlight (norbo UAT)"
+  lane :beta do
+    build_and_upload(VARIANTS[:preview])
+  end
+
+  desc "Build variante PRODUCTION e carica su TestFlight (app prod, NON manda in review)"
+  lane :prod do
+    build_and_upload(VARIANTS[:production])
+  end
+end
+
+# Flusso condiviso: firma → build → upload su TestFlight.
+def build_and_upload(v)
+  scheme    = v[:scheme]
+  bundle_id = v[:bundle_id]
+  workspace = "ios/#{scheme}.xcworkspace"
+  xcodeproj = "ios/#{scheme}.xcodeproj"
+  profile_name = "#{bundle_id} AppStore"
+
+  api_key = app_store_connect_api_key(
+    key_id:       "279X5Y7X6H",
+    issuer_id:    "ce6e95bf-2366-4e78-abc5-cbb0162caba4",
+    key_filepath: "fastlane/AuthKey_279X5Y7X6H.p8",
+    duration:     1200,
+    in_house:     false,
+  )
+
+  # Certificato Distribution + provisioning profile per il bundle, creati/scaricati
+  # via API key (nessun login interattivo). Riusati se già esistono.
+  cert(api_key: api_key)
+  sigh(
+    api_key: api_key,
+    app_identifier: bundle_id,
+    force: true,
+  )
+
+  # Il progetto generato da `expo prebuild` non imposta DEVELOPMENT_TEAM né lo
+  # stile di firma: xcodebuild fallirebbe con "requires a development team".
+  # Scriviamo i build settings di firma direttamente nel pbxproj (manual signing
+  # col profilo creato da sigh) invece che via xcargs — così evitiamo problemi di
+  # quoting con lo spazio nel nome del profilo.
+  update_code_signing_settings(
+    path: xcodeproj,
+    use_automatic_signing: false,
+    team_id: TEAM_ID,
+    targets: [scheme],
+    bundle_identifier: bundle_id,
+    code_sign_identity: "Apple Distribution",
+    profile_name: profile_name,
+  )
+
+  build_app(
+    workspace: workspace,
+    scheme: scheme,
+    configuration: "Release",
+    export_method: "app-store",
+    output_directory: "build",
+    output_name: v[:ipa_name],
+    clean: true,
+    export_options: {
+      method: "app-store",
+      signingStyle: "manual",
+      teamID: TEAM_ID,
+      provisioningProfiles: {
+        bundle_id => profile_name,
+      },
+    },
+  )
+
+  upload_to_testflight(
+    api_key: api_key,
+    app_identifier: bundle_id,
+    skip_submission: true,                    # carica su TestFlight, NON manda in review
+    skip_waiting_for_build_processing: true,  # non resta appeso ~10 min in attesa
+  )
+end
