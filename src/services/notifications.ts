@@ -4,8 +4,10 @@ import notifee, {
   EventType,
 } from "@notifee/react-native";
 import {
+  getInitialNotification,
   getMessaging,
   onMessage,
+  onNotificationOpenedApp,
   onTokenRefresh,
   setBackgroundMessageHandler,
 } from "@react-native-firebase/messaging";
@@ -214,6 +216,20 @@ export function setupMessageHandlers(): void {
     },
   );
   _fgUnsubscribers.push(unsubForeground);
+
+  // iOS: notifications delivered while the app is in background/killed are
+  // displayed by the OS itself (from the `aps.alert` the worker sends), NOT by
+  // Notifee — so their tap is reported by RN Firebase, not by Notifee's events.
+  // Route it through the same table so tapping a news push opens the article,
+  // matching Android. On Android these pushes are data-only (Notifee-rendered),
+  // so this never fires there — no double handling.
+  const unsubOpened = onNotificationOpenedApp(
+    getMessaging(),
+    async (remoteMessage) => {
+      await openDeepLink(remoteMessage?.data);
+    },
+  );
+  _fgUnsubscribers.push(unsubOpened);
 }
 
 /**
@@ -222,13 +238,25 @@ export function setupMessageHandlers(): void {
  */
 export async function handleInitialNotification(): Promise<string | null> {
   try {
+    // Notifee-rendered notifications (Android; iOS foreground) that cold-started
+    // the app.
     const initial = await notifee.getInitialNotification();
-    if (!initial?.notification) return null;
+    if (initial?.notification) {
+      const { id, data } = initial.notification;
+      if (id) await notifee.cancelNotification(id);
+      const route = getNavTargetFromData(data);
+      if (route) return route;
+    }
 
-    const { id, data } = initial.notification;
-    if (id) await notifee.cancelNotification(id);
+    // iOS: a notification the OS displayed itself (background/killed, from
+    // `aps.alert`) is not a Notifee notification, so a cold-start tap surfaces
+    // through RN Firebase instead. Android data-only pushes never reach here.
+    const fcmInitial = await getInitialNotification(getMessaging());
+    if (fcmInitial?.data) {
+      return getNavTargetFromData(fcmInitial.data);
+    }
 
-    return getNavTargetFromData(data);
+    return null;
   } catch (e) {
     console.warn("[notifications] handleInitialNotification failed:", e);
     return null;

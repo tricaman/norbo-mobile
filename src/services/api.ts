@@ -4,7 +4,14 @@ import { useLanguageStore } from "@/stores/language.store";
 
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3000",
-  withCredentials: true,
+  // Auth is driven entirely by the manual Cookie header set in the request
+  // interceptor below. We must NOT also let the native HTTP stack (CFNetwork
+  // on iOS) attach its own cookie store: after an Apple/OAuth sign-in it holds
+  // a `session_data` cookie whose value it concatenates onto ours with a
+  // comma, producing a malformed Cookie header that BetterAuth can't parse
+  // (→ intermittent 401 on /auth/me). Disabling credentials keeps a single,
+  // well-formed Cookie header under our control.
+  withCredentials: false,
   timeout: 10_000,
   headers: { "Content-Type": "application/json" },
 });
