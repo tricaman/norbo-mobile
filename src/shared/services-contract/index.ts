@@ -283,6 +283,33 @@ export const reptileEnvironmentGuideInput = z.object({
   profileId: z.string().min(1).max(64),
 });
 
+/**
+ * `dog-friendly-places` — a map of dog parks and dog-friendly places.
+ *
+ * The input is the user's LAYER SELECTION only. Map coordinates are
+ * deliberately NOT part of this schema: persisted tool inputs are synced to
+ * the server, and we do not store users' locations. The kind enum mirrors
+ * the Prisma `PlaceKind` (duplicated, not imported — the contract is
+ * framework-free by design).
+ */
+export const dogFriendlyPlacesInput = z.object({
+  kinds: z
+    .array(
+      z.enum([
+        'DOG_PARK',
+        'DOG_BEACH',
+        'DOG_FRIENDLY_VENUE',
+        'DOG_GREEN_AREA',
+        'DOG_TRAIL',
+        'VETERINARY',
+        'PET_SHOP',
+        'PET_GROOMING',
+      ]),
+    )
+    .min(1)
+    .max(8),
+});
+
 // ── Contract registry ─────────────────────────────────────────────────────────
 
 /**
@@ -400,6 +427,11 @@ export const SERVICE_TOOL_CONTRACTS = {
     id: 'rabbit-hay-supply',
     schemaVersion: 1,
     inputSchema: rabbitHaySupplyInput,
+  },
+  'dog-friendly-places': {
+    id: 'dog-friendly-places',
+    schemaVersion: 1,
+    inputSchema: dogFriendlyPlacesInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

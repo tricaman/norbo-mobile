@@ -96,6 +96,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       // il `setBackgroundMessageHandler` di RN Firebase gira davvero (richiesto
       // dalla documentazione RN Firebase per le push iOS).
       UIBackgroundModes: ["remote-notification"],
+      // Posizione (tool "luoghi dog friendly"): richiesta SOLO when-in-use,
+      // on-demand dal FAB "vicino a me" — mai al mount, mai in background.
+      // Duplicata qui oltre che nel plugin expo-location: greppabile nel repo
+      // e sopravvive al prebuild (ios/ è CNG e rigenerato).
+      // NON aggiungere NSLocationAlwaysAndWhenInUseUsageDescription: un
+      // permesso dichiarato ma mai richiesto attira scrutinio in App Review.
+      NSLocationWhenInUseUsageDescription:
+        "norbo uses your location to show dog parks and dog-friendly places near you.",
     },
   },
   android: {
@@ -107,6 +115,20 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     package: bundleIdentifier,
     versionCode: 14,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
+    // Google Maps SDK key (tool "luoghi dog friendly") — SOLO Android: iOS usa
+    // Apple Maps (PROVIDER_DEFAULT) e non richiede chiavi. ECCEZIONE alla
+    // regola "nessuna chiave di terze parti nel bundle client": la Maps SDK
+    // richiede la chiave nell'AndroidManifest. Una chiave in un APK è SEMPRE
+    // estraibile → si mitiga con le restrizioni, mai con la segretezza:
+    // in Google Cloud Console limitarla per package (app.mariustrica.norbo,
+    // .dev, .preview) + SHA-1, e alla sola API "Maps SDK for Android".
+    // Il nome NON ha il prefisso EXPO_PUBLIC_ apposta: quel prefisso la
+    // inlinerebbe anche nel bundle JS. app.config.ts gira in Node al prebuild,
+    // quindi legge una env var normale e la chiave finisce solo nel manifest.
+    // In EAS: `eas secret:create --name ANDROID_MAPS_API_KEY`; in locale: .env.
+    config: {
+      googleMaps: { apiKey: process.env.ANDROID_MAPS_API_KEY ?? "" },
+    },
   },
   web: {
     output: "static",
@@ -125,6 +147,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "./plugins/withAdiRegistration.js",
     "./plugins/withGradleMemory.js",
     "./plugins/withAndroidReleaseSigning.js",
+    [
+      "expo-location",
+      {
+        locationWhenInUsePermission:
+          "norbo uses your location to show dog parks and dog-friendly places near you.",
+        isIosBackgroundLocationEnabled: false,
+        isAndroidBackgroundLocationEnabled: false,
+        isAndroidForegroundServiceEnabled: false,
+      },
+    ],
     "expo-font",
     "expo-localization",
     "@react-native-community/datetimepicker",

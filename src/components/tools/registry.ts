@@ -132,6 +132,12 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/RabbitHaySupplyTool"),
       true,
     ),
+    // Persists the layer selection only — the input schema deliberately
+    // contains no coordinates (persisted inputs sync to the server).
+    "dog-friendly-places": defineLazyTool<"dog-friendly-places">(
+      () => import("./impl/DogFriendlyPlacesTool"),
+      true,
+    ),
   };
 
 /** The tool ids this app build can render — the local side of the intersection. */
