@@ -57,6 +57,29 @@ platform :ios do
   lane :prod do
     build_and_upload(VARIANTS[:production])
   end
+
+  desc "Carica i metadati testuali (descrizioni, keyword, note di versione) su App Store Connect"
+  lane :metadata do
+    # NB: si passa `api_key` esplicitamente. Il `deliver` da CLI userebbe
+    # `api_key_path` del Deliverfile, che però pretende il PEM inline nel campo
+    # `key` del JSON e fallisce con "missing field(s): key" (il nostro JSON usa
+    # `key_filepath`). Autenticando qui come i lane beta/prod il segreto resta
+    # solo nel .p8.
+    deliver(api_key: asc_api_key)
+  end
+end
+
+# Token App Store Connect via API Key (.p8) — niente login Apple ID / 2FA.
+# Unico punto in cui vivono key_id e issuer_id (identificatori pubblici); il
+# segreto è solo il contenuto del .p8, gitignorato.
+def asc_api_key
+  app_store_connect_api_key(
+    key_id:       "279X5Y7X6H",
+    issuer_id:    "ce6e95bf-2366-4e78-abc5-cbb0162caba4",
+    key_filepath: "fastlane/AuthKey_279X5Y7X6H.p8",
+    duration:     1200,
+    in_house:     false,
+  )
 end
 
 # Flusso condiviso: firma → build → upload su TestFlight.
@@ -67,13 +90,7 @@ def build_and_upload(v)
   xcodeproj = "ios/#{scheme}.xcodeproj"
   profile_name = "#{bundle_id} AppStore"
 
-  api_key = app_store_connect_api_key(
-    key_id:       "279X5Y7X6H",
-    issuer_id:    "ce6e95bf-2366-4e78-abc5-cbb0162caba4",
-    key_filepath: "fastlane/AuthKey_279X5Y7X6H.p8",
-    duration:     1200,
-    in_house:     false,
-  )
+  api_key = asc_api_key
 
   # Certificato Distribution + provisioning profile per il bundle, creati/scaricati
   # via API key (nessun login interattivo). Riusati se già esistono.

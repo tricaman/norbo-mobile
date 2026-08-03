@@ -113,8 +113,17 @@ Poi incrementa in `app.config.ts` (valori **monotoni crescenti**):
   - `fastlane/asc_api_key.json` (key_id / issuer_id / `key_filepath` → punta al .p8, **gitignored**)
 - Certificato **Apple Distribution** + provisioning profile: **li crea fastlane** al primo run
   (`cert` + `sigh` via API key). Nessun setup manuale in Xcode.
-- **CocoaPods** gira con locale UTF-8: esporta `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` prima di
-  `pod install` (senza, CocoaPods 1.16 su ruby 4 dà `Encoding::CompatibilityError`).
+- **Locale UTF-8 obbligatorio per TUTTA la sessione di build**, non solo per `pod install`:
+  esporta `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` **una volta** e riusa quella shell fino
+  all'upload. Su questa macchina il default è `LANG=""` / `LC_CTYPE="C"`, e ruby eredita
+  `Encoding.default_external = US-ASCII`. Ne muoiono **due** tool distinti:
+  - `pod install` → `Encoding::CompatibilityError` (CocoaPods 1.16 su ruby 4);
+  - `fastlane ios beta|prod` → **xcpretty** va in `invalid byte sequence in US-ASCII
+    (ArgumentError)` al primo byte non-ASCII emesso da xcodebuild (~10 s dopo l'inizio
+    dell'archive). Siccome gym lancia la pipeline con `set -o pipefail`, l'esito è
+    **fallimento anche se xcodebuild avrebbe compilato bene** — e te ne accorgi solo alla
+    fine. Sintomo: log di gym congelato a un orario fisso mentre `fastlane` risulta ancora
+    "vivo". Verifica rapida: `ruby -e 'puts Encoding.default_external'` → deve dire `UTF-8`.
 
 > EAS build/submit **non è utilizzabile**: il `projectId` in `app.config.ts` dà `Entity not
 > authorized` per l'account corrente. Usiamo la build locale + fastlane descritta qui.
@@ -270,8 +279,22 @@ compila metadati/release notes → **Add for Review** / **Submit for Review**.
 **Android:** Play Console → track (Internal/Closed testing → Production) → carica/promuovi l'AAB →
 compila release notes → rollout.
 
-> I metadati testuali dello store (descrizioni, keyword) stanno in `fastlane/metadata/` e si
-> possono caricare con `fastlane deliver` (config in `fastlane/Deliverfile`, `skip_binary_upload`).
+> I metadati testuali dello store (descrizioni, keyword, **note di versione**) stanno in
+> `fastlane/metadata/<locale>/` e si caricano con **`fastlane ios metadata`** (config in
+> `fastlane/Deliverfile`, `skip_binary_upload`).
+>
+> ⚠️ **Non** usare `fastlane deliver` da CLI: fallirebbe con *"API key JSON is missing
+> field(s): key"*. `Token.from_json_file` pretende il PEM **inline** nel campo `key` del
+> JSON, mentre il nostro `asc_api_key.json` usa `key_filepath`. Il lane `ios metadata`
+> aggira il problema passando `api_key:` con la stessa helper dei lane di build.
+>
+> ⚠️ `deliver` carica **tutti** i file presenti in `fastlane/metadata/`, non solo quelli
+> che hai cambiato: se i file locali sono stale, sovrascrive descrizioni e keyword già
+> pubblicate. Prima di lanciarlo verifica che locale e ASC coincidano.
+>
+> **Note di versione obbligatorie.** ASC rifiuta l'invio in review se `release_notes.txt`
+> manca anche in una sola delle localizzazioni attive (oggi 16). L'errore in console
+> elenca solo le prime lingue e sembra parziale: controlla sempre tutte.
 
 ---
 

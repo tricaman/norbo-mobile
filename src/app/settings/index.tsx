@@ -10,7 +10,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native-unistyles";
 
-const SUPPORT_EMAIL = "support@norbo.mariustrica.com";
+// Casella brandizzata: NON ha una mailbox propria, è un inoltro verso
+// l'indirizzo che riceve davvero (trica.assistance.apps@gmail.com). Se l'inoltro
+// viene rimosso, le richieste di supporto spariscono senza errore — non cambiare
+// questo valore senza verificare che l'inoltro sia attivo.
+const SUPPORT_EMAIL = "support@norbo.app";
 
 /**
  * Settings hub — raggruppa tutte le impostazioni dell'app.

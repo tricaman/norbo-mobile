@@ -1,0 +1,9 @@
+Nouveautés de cette version :
+
+• Notifications fiables : les rappels de vaccins, d'antiparasitaires et de visites arrivent au bon moment, et vous pouvez les marquer comme faits directement depuis la notification.
+• Connexion avec Apple : entrez en un geste, sans créer de mot de passe.
+• Carnet de santé : vaccins, traitements et documents toujours à portée de main.
+• Section Actualités : mises à jour et conseils de soin, ouverts directement depuis la notification.
+• Dépenses plus claires : découvrez ce que vous dépensez par animal et par catégorie.
+• Plus de langues : l'application suit automatiquement la langue de votre appareil.
+• Corrections de stabilité et améliorations de l'interface.

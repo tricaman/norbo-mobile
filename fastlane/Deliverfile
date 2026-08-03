@@ -4,7 +4,13 @@
 # La key è gitignorata (fastlane/AuthKey_*.p8). Key ID / Issuer ID sono identificatori
 # pubblici, non segreti; il segreto è solo il contenuto del .p8.
 
-api_key_path("fastlane/asc_api_key.json")  # JSON con key_id/issuer_id/key_filepath
+# NB: NON usare `api_key_path` qui. `Spaceship::ConnectAPI::Token.from_json_file`
+# pretende il PEM inline nel campo `key` del JSON e ignora `key_filepath`: un
+# `fastlane deliver` da CLI fallisce con "API key JSON is missing field(s): key".
+# L'autenticazione arriva dal lane `ios metadata`, che passa `api_key:` usando la
+# stessa helper dei lane di build — così il segreto resta solo nel .p8.
+#
+#   fastlane ios metadata
 
 # --- Comportamento upload ---
 submit_for_review(false)   # NON invia in review: popola solo la scheda

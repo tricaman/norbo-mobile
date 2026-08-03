@@ -1,0 +1,9 @@
+Novidades desta versão:
+
+• Notificações pontuais: os lembretes de vacinas, antiparasitários e consultas chegam na hora certa, e você pode marcá-los como feitos direto pela notificação.
+• Login com Apple: entre com um toque, sem criar senha.
+• Carteira de saúde: vacinas, tratamentos e documentos sempre à mão.
+• Seção Novidades: atualizações e dicas de cuidado, abrindo direto pela notificação.
+• Despesas mais claras: veja quanto você gasta por animal e por categoria.
+• Mais idiomas: o app segue automaticamente o idioma do seu aparelho.
+• Correções de estabilidade e melhorias na interface.
