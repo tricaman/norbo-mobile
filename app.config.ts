@@ -45,6 +45,13 @@ const appName = IS_DEV
 //  progetto Firebase prod così i token FCM sono validi sull'app reale.)
 const firebaseDir = IS_PROD || IS_PREVIEW ? "firebase/prod" : "firebase/dev";
 
+// APNs environment per l'entitlement `aps-environment` (vedi ios.entitlements).
+// Le build che spediamo (preview → TestFlight UAT, production → App Store) sono
+// firmate con profili AppStore, che portano `aps-environment: production`: il
+// valore qui DEVE combaciare o la firma fallisce. Le build development locali
+// usano un profilo di sviluppo → sandbox APNs.
+const apsEnvironment = IS_DEV ? "development" : "production";
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: appName,
@@ -58,19 +65,37 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     icon: "./assets/images/icon.png",
     supportsTablet: true,
     bundleIdentifier,
-    buildNumber: "1",
+    // Build 1 (1.6.0) è su TestFlight prod ma spedita SENZA l'entitlement
+    // aps-environment → nessuna push su iPhone. La 2 è la prima con il fix.
+    buildNumber: "2",
     googleServicesFile: `./${firebaseDir}/GoogleService-Info.plist`,
     // Adds the `com.apple.developer.applesignin` entitlement (["Default"]) at
     // prebuild for every variant — required by the native Sign in with Apple
     // sheet. The capability must also be enabled on each App ID in the Apple
     // Developer portal (prod/.dev/.preview), or code signing will fail.
     usesAppleSignIn: true,
+    // Push Notifications capability. SENZA questo entitlement iOS rifiuta
+    // `registerForRemoteNotifications()` ("no valid aps-environment entitlement
+    // string found for application"): il device non riceve mai un token APNs,
+    // quindi `getAPNSToken()` torna null e `registerPushToken()` esce senza
+    // registrare nulla → zero token IOS a backend → nessuna push sugli iPhone.
+    // È esattamente ciò che è successo in prod: 0 token IOS contro 27 ANDROID.
+    // `ios/` è gitignored e rigenerato da `expo prebuild` (CNG), quindi
+    // l'entitlements file va dichiarato QUI: modificarlo a mano non sopravvive.
+    // Il plugin di @react-native-firebase/messaging NON lo aggiunge da sé.
+    entitlements: {
+      "aps-environment": apsEnvironment,
+    },
     infoPlist: {
       // Export compliance: l'app usa solo crittografia standard di sistema
       // (HTTPS/TLS, Apple Sign In, Firebase) → esente dai requisiti di
       // documentazione export. Dichiararlo qui evita il popup "Documentazione
       // relativa alla crittografia dell'app" a ogni upload su TestFlight/App Store.
       ITSAppUsesNonExemptEncryption: false,
+      // Consente a iOS di risvegliare l'app per i messaggi in background, così
+      // il `setBackgroundMessageHandler` di RN Firebase gira davvero (richiesto
+      // dalla documentazione RN Firebase per le push iOS).
+      UIBackgroundModes: ["remote-notification"],
     },
   },
   android: {
