@@ -13,6 +13,10 @@ import {
 } from "@react-native-firebase/messaging";
 import { addDays } from "date-fns";
 import { Linking, Platform } from "react-native";
+import {
+  CAMPAIGN_DATA_TYPE,
+  resolveCampaignTarget,
+} from "./campaign-targets";
 import { registerPushToken } from "./push-registration";
 import { remindersApi } from "./reminders.api";
 
@@ -73,6 +77,8 @@ export async function initNotifications(): Promise<void> {
  * Resolve the in-app deep-link route for a notification's data payload.
  *
  * Central routing table for every notification kind:
+ *   - campaigns: `type === "campaign"` + a symbolic `target` whose params
+ *                were resolved per recipient server-side (campaign-targets.ts).
  *   - reminders: identified by a `reminderId` (legacy shape, no `type`).
  *   - news:      identified by `type === "news"` + a `newsId`.
  * Returns `null` when the payload carries no navigable target.
@@ -84,6 +90,13 @@ export function getNavTargetFromData(
   data: Record<string, unknown> | undefined,
 ): string | null {
   if (!data) return null;
+
+  // Checked first: campaign payloads are self-describing, and a campaign
+  // linking to a news item also carries `newsId`. Dispatching on the exact
+  // discriminator up front keeps both kinds unambiguous.
+  if (data["type"] === CAMPAIGN_DATA_TYPE) {
+    return resolveCampaignTarget(data);
+  }
 
   const reminderId = data["reminderId"];
   if (typeof reminderId === "string" && reminderId) {
