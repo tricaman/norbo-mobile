@@ -26,10 +26,20 @@ export const authApi = {
   sendOtp: (payload: OtpSendPayload) => api.post("/auth/otp/send", payload),
 
   /**
-   * Verify OTP. On success, backend sets session cookie.
+   * Verify OTP. On success the backend returns the signed session cookie value
+   * in the body as `session_token` (same hand-off as Apple-native below). The
+   * caller MUST store it: this axios client runs with `withCredentials: false`,
+   * so the Set-Cookie on this response is never kept and auth travels only
+   * through the manual Cookie header built from the store (see services/api.ts).
+   *
+   * Not to be confused with BetterAuth's own `token` field, also present in the
+   * body — that's the bare token without the signature the backend validates.
    */
   verifyOtp: (payload: OtpVerifyPayload) =>
-    api.post<{ user: AuthUser }>("/auth/sign-in/email-otp", payload),
+    api.post<{ session_token: string; user: AuthUser }>(
+      "/auth/sign-in/email-otp",
+      payload,
+    ),
 
   /**
    * Native Sign in with Apple (iOS sheet). Sends the Apple identity token +

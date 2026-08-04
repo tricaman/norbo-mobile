@@ -1075,7 +1075,7 @@ const es = {
       disclaimer: "valor indicativo.",
       reminderTitle: "Reponer heno para {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "parque canino",
         DOG_BEACH: "playa para perros",

@@ -1,8 +1,11 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import { KIND_META } from "@/components/tools/places/kind-meta";
+import {
+  getKindMeta,
+  supportsOutdoorAmenities,
+} from "@/components/tools/places/kind-meta";
 import { useMutation, type ApiError } from "@/hooks/useMutation";
 import { placesApi, type SubmitPlaceInput } from "@/services/places.api";
-import { PLACE_KINDS, type PlaceKind } from "@/types/place.types";
+import type { PlaceKind } from "@/types/place.types";
 import { toast } from "@/utils/toast";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
@@ -20,6 +23,8 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface AddPlaceSheetProps {
   visible: boolean;
+  /** The kinds this tool exposes; the first is the pre-selected default. */
+  allowedKinds: PlaceKind[];
   /** Proposed position = the map center when the sheet was opened. */
   lat: number;
   lng: number;
@@ -32,10 +37,10 @@ interface AmenityToggle {
 }
 
 const AMENITIES: AmenityToggle[] = [
-  { key: "fenced", labelKey: "tools.dogFriendlyPlaces.detail.fenced" },
-  { key: "offLeash", labelKey: "tools.dogFriendlyPlaces.detail.offLeash" },
-  { key: "hasWater", labelKey: "tools.dogFriendlyPlaces.detail.water" },
-  { key: "lit", labelKey: "tools.dogFriendlyPlaces.detail.lit" },
+  { key: "fenced", labelKey: "tools.places.detail.fenced" },
+  { key: "offLeash", labelKey: "tools.places.detail.offLeash" },
+  { key: "hasWater", labelKey: "tools.places.detail.water" },
+  { key: "lit", labelKey: "tools.places.detail.lit" },
 ];
 
 /**
@@ -44,11 +49,17 @@ const AMENITIES: AmenityToggle[] = [
  * spot by panning, then fills kind + name + amenity toggles. Submissions are
  * PENDING until approved (moderation-first) — the success toast says so.
  */
-export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps) {
+export function AddPlaceSheet({
+  visible,
+  allowedKinds,
+  lat,
+  lng,
+  onClose,
+}: AddPlaceSheetProps) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
 
-  const [kind, setKind] = React.useState<PlaceKind>("DOG_PARK");
+  const [kind, setKind] = React.useState<PlaceKind>(allowedKinds[0]);
   const [name, setName] = React.useState("");
   const [amenities, setAmenities] = React.useState<
     Partial<Record<AmenityToggle["key"], boolean>>
@@ -60,7 +71,7 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
     onSuccess: () => {
       toast.show({
         type: "success",
-        title: t("tools.dogFriendlyPlaces.addPlace.submitted"),
+        title: t("tools.places.addPlace.submitted"),
       });
       setName("");
       setAmenities({});
@@ -72,9 +83,9 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
         type: "error",
         title:
           code === "PLC003"
-            ? t("tools.dogFriendlyPlaces.addPlace.duplicate")
+            ? t("tools.places.addPlace.duplicate")
             : code === "PLC004"
-              ? t("tools.dogFriendlyPlaces.addPlace.limit")
+              ? t("tools.places.addPlace.limit")
               : t("common.failedToSave"),
       });
     },
@@ -87,16 +98,21 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
   }
 
   function onSubmit() {
+    // Only assert what the user actually toggled on; unknown stays null.
+    // Indoor kinds never carry outdoor flags, even if toggled before the
+    // kind was switched.
+    const outdoor = supportsOutdoorAmenities(kind);
+    const flag = (key: AmenityToggle["key"]) =>
+      outdoor && amenities[key] ? true : null;
     submit.mutate({
       kind,
       name: name.trim(),
       lat,
       lng,
-      // Only assert what the user actually toggled on; unknown stays null.
-      fenced: amenities.fenced ? true : null,
-      offLeash: amenities.offLeash ? true : null,
-      hasWater: amenities.hasWater ? true : null,
-      lit: amenities.lit ? true : null,
+      fenced: flag("fenced"),
+      offLeash: flag("offLeash"),
+      hasWater: flag("hasWater"),
+      lit: flag("lit"),
     });
   }
 
@@ -111,10 +127,10 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
         <Pressable style={styles.backdropTap} onPress={onClose} />
         <View style={styles.sheet}>
           <Text style={styles.title}>
-            {t("tools.dogFriendlyPlaces.addPlace.title")}
+            {t("tools.places.addPlace.title")}
           </Text>
           <Text style={styles.hint}>
-            {t("tools.dogFriendlyPlaces.addPlace.positionHint")}{" "}
+            {t("tools.places.addPlace.positionHint")}{" "}
             <Text style={styles.mono}>
               {lat.toFixed(5)}, {lng.toFixed(5)}
             </Text>
@@ -126,8 +142,9 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
             contentContainerStyle={styles.kindRow}
             style={styles.kindScroll}
           >
-            {PLACE_KINDS.map((k) => {
+            {allowedKinds.map((k) => {
               const active = k === kind;
+              const meta = getKindMeta(k);
               return (
                 <NorboPressable
                   key={k}
@@ -146,7 +163,7 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
                   >
                     <MaterialCommunityIcons
                       name={
-                        KIND_META[k].icon as React.ComponentProps<
+                        meta.icon as React.ComponentProps<
                           typeof MaterialCommunityIcons
                         >["name"]
                       }
@@ -163,7 +180,9 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
                         active && { color: theme.colors.textOnPrimary },
                       ]}
                     >
-                      {t(KIND_META[k].labelKey as never)}
+                      {meta.labelKey
+                        ? t(meta.labelKey as never)
+                        : k.toLowerCase()}
                     </Text>
                   </View>
                 </NorboPressable>
@@ -173,7 +192,7 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
 
           <TextInput
             style={styles.input}
-            placeholder={t("tools.dogFriendlyPlaces.addPlace.namePlaceholder")}
+            placeholder={t("tools.places.addPlace.namePlaceholder")}
             placeholderTextColor={theme.colors.textTertiary}
             value={name}
             onChangeText={setName}
@@ -181,7 +200,7 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
           />
 
           <View style={styles.amenityRow}>
-            {AMENITIES.map((a) => {
+            {(supportsOutdoorAmenities(kind) ? AMENITIES : []).map((a) => {
               const active = Boolean(amenities[a.key]);
               return (
                 <NorboPressable
@@ -224,12 +243,12 @@ export function AddPlaceSheet({ visible, lat, lng, onClose }: AddPlaceSheetProps
               <ActivityIndicator color={theme.colors.textOnPrimary} />
             ) : (
               <Text style={styles.submitLabel}>
-                {t("tools.dogFriendlyPlaces.addPlace.submit")}
+                {t("tools.places.addPlace.submit")}
               </Text>
             )}
           </NorboPressable>
           <Text style={styles.moderationNote}>
-            {t("tools.dogFriendlyPlaces.addPlace.moderationNote")}
+            {t("tools.places.addPlace.moderationNote")}
           </Text>
         </View>
       </View>

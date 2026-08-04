@@ -1073,7 +1073,7 @@ const id = {
       disclaimer: "nilai indikatif.",
       reminderTitle: "Pesan ulang jerami untuk {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "taman anjing",
         DOG_BEACH: "pantai ramah anjing",

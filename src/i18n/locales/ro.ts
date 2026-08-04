@@ -1071,7 +1071,7 @@ const ro = {
       disclaimer: "valoare orientativă.",
       reminderTitle: "Recomandă fân pentru {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "parc pentru câini",
         DOG_BEACH: "plajă pentru câini",

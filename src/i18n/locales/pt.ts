@@ -1073,7 +1073,7 @@ const pt = {
       disclaimer: "valor indicativo.",
       reminderTitle: "Repor feno para {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "parque para cães",
         DOG_BEACH: "praia para cães",

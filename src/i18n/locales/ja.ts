@@ -1059,7 +1059,7 @@ const ja = {
       disclaimer: "目安の値です。",
       reminderTitle: "{{name}}の乾草を再注文",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "ドッグラン",
         DOG_BEACH: "犬OKビーチ",

@@ -386,7 +386,7 @@ const en = {
       disclaimer: "indicative value.",
       reminderTitle: "Reorder hay for {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "dog park",
         DOG_BEACH: "dog beach",

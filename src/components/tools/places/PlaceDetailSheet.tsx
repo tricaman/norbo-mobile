@@ -1,5 +1,8 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import { KIND_META } from "@/components/tools/places/kind-meta";
+import {
+  fallbackKindLabel,
+  getKindMeta,
+} from "@/components/tools/places/kind-meta";
 import { usePlace } from "@/hooks/usePlaces";
 import type { PlaceDetail } from "@/types/place.types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -52,24 +55,32 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
   const amenities: string[] = [];
   if (place) {
     if (place.fenced === true)
-      amenities.push(t("tools.dogFriendlyPlaces.detail.fenced"));
+      amenities.push(t("tools.places.detail.fenced"));
     if (place.offLeash === true)
-      amenities.push(t("tools.dogFriendlyPlaces.detail.offLeash"));
+      amenities.push(t("tools.places.detail.offLeash"));
     if (place.hasWater === true)
-      amenities.push(t("tools.dogFriendlyPlaces.detail.water"));
+      amenities.push(t("tools.places.detail.water"));
     if (place.lit === true)
-      amenities.push(t("tools.dogFriendlyPlaces.detail.lit"));
+      amenities.push(t("tools.places.detail.lit"));
     if (place.surface)
       amenities.push(
-        `${t("tools.dogFriendlyPlaces.detail.surface")}: ${place.surface}`,
+        `${t("tools.places.detail.surface")}: ${place.surface}`,
       );
     if (place.dogAccess === "leashed" || place.dogAccess === "outside")
       amenities.push(
-        t(`tools.dogFriendlyPlaces.detail.dogAccess.${place.dogAccess}`),
+        t(`tools.places.detail.dogAccess.${place.dogAccess}`),
       );
     if (place.lengthKm != null)
       amenities.push(`${place.lengthKm} km`);
   }
+
+  // Version-skew safe: unknown kinds fall back to a readable string.
+  const kindMeta = place ? getKindMeta(place.kind) : null;
+  const kindLabel = kindMeta?.labelKey
+    ? t(kindMeta.labelKey as never)
+    : place
+      ? fallbackKindLabel(place.kind)
+      : "";
 
   const address = place
     ? [
@@ -100,7 +111,7 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
                 <View style={styles.kindIcon}>
                   <MaterialCommunityIcons
                     name={
-                      KIND_META[place.kind].icon as React.ComponentProps<
+                      getKindMeta(place.kind).icon as React.ComponentProps<
                         typeof MaterialCommunityIcons
                       >["name"]
                     }
@@ -110,10 +121,10 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
                 </View>
                 <View style={styles.headerText}>
                   <Text style={styles.title} numberOfLines={2}>
-                    {place.name ?? t(KIND_META[place.kind].labelKey as never)}
+                    {place.name ?? kindLabel}
                   </Text>
                   <Text style={styles.subtitle} numberOfLines={1}>
-                    {t(KIND_META[place.kind].labelKey as never)}
+                    {kindLabel}
                     {address ? ` · ${address}` : ""}
                   </Text>
                 </View>
@@ -129,7 +140,7 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
 
               {place.openingHours ? (
                 <Text style={styles.meta}>
-                  {t("tools.dogFriendlyPlaces.detail.openingHours")}:{" "}
+                  {t("tools.places.detail.openingHours")}:{" "}
                   {place.openingHours}
                 </Text>
               ) : null}
@@ -150,7 +161,7 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
                     color={theme.colors.textOnPrimary}
                   />
                   <Text style={styles.actionPrimaryLabel}>
-                    {t("tools.dogFriendlyPlaces.actions.openInMaps")}
+                    {t("tools.places.actions.openInMaps")}
                   </Text>
                 </NorboPressable>
                 {place.website ? (
@@ -166,7 +177,7 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
                       color={theme.colors.textSecondary}
                     />
                     <Text style={styles.actionLabel}>
-                      {t("tools.dogFriendlyPlaces.detail.website")}
+                      {t("tools.places.detail.website")}
                     </Text>
                   </NorboPressable>
                 ) : null}
@@ -183,14 +194,14 @@ export function PlaceDetailSheet({ placeId, onClose }: PlaceDetailSheetProps) {
                       color={theme.colors.textSecondary}
                     />
                     <Text style={styles.actionLabel}>
-                      {t("tools.dogFriendlyPlaces.actions.reportIssue")}
+                      {t("tools.places.actions.reportIssue")}
                     </Text>
                   </NorboPressable>
                 ) : null}
               </View>
 
               <Text style={styles.disclaimer}>
-                {t("tools.dogFriendlyPlaces.dataDisclaimer")}
+                {t("tools.places.dataDisclaimer")}
               </Text>
             </>
           )}

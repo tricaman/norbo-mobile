@@ -1,4 +1,4 @@
-import { KIND_META } from "@/components/tools/places/kind-meta";
+import { getKindMeta } from "@/components/tools/places/kind-meta";
 import type { PlaceKind } from "@/types/place.types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
@@ -40,7 +40,7 @@ function PlaceMarkerInner({
       <View style={styles.pin}>
         <MaterialCommunityIcons
           name={
-            KIND_META[kind].icon as React.ComponentProps<
+            getKindMeta(kind).icon as React.ComponentProps<
               typeof MaterialCommunityIcons
             >["name"]
           }

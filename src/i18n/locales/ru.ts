@@ -1065,7 +1065,7 @@ const ru = {
       disclaimer: "ориентировочное значение.",
       reminderTitle: "Заказать сено для {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "площадка для собак",
         DOG_BEACH: "пляж для собак",

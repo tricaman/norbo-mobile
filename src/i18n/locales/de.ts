@@ -1076,7 +1076,7 @@ const de = {
       disclaimer: "Richtwert.",
       reminderTitle: "Heu für {{name}} nachbestellen",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "hundewiese",
         DOG_BEACH: "hundestrand",

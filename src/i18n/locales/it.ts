@@ -392,7 +392,7 @@ const it = {
       disclaimer: "valore indicativo.",
       reminderTitle: "Riacquisto fieno per {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "area di sgambamento",
         DOG_BEACH: "spiaggia per cani",

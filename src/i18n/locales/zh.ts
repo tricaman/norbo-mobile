@@ -1047,7 +1047,7 @@ const zh = {
       disclaimer: "参考值。",
       reminderTitle: "为{{name}}补货干草",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "狗公园",
         DOG_BEACH: "宠物犬海滩",

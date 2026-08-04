@@ -1056,7 +1056,7 @@ const ar = {
       disclaimer: "قيمة إرشادية.",
       reminderTitle: "أعد طلب القش لـ {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "حديقة كلاب",
         DOG_BEACH: "شاطئ للكلاب",

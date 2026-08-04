@@ -10,27 +10,27 @@ export const KIND_META: Record<
   PlaceKind,
   { icon: string; labelKey: string }
 > = {
-  DOG_PARK: { icon: "dog-side", labelKey: "tools.dogFriendlyPlaces.kind.DOG_PARK" },
-  DOG_BEACH: { icon: "beach", labelKey: "tools.dogFriendlyPlaces.kind.DOG_BEACH" },
+  DOG_PARK: { icon: "dog-side", labelKey: "tools.places.kind.DOG_PARK" },
+  DOG_BEACH: { icon: "beach", labelKey: "tools.places.kind.DOG_BEACH" },
   DOG_FRIENDLY_VENUE: {
     icon: "silverware-fork-knife",
-    labelKey: "tools.dogFriendlyPlaces.kind.DOG_FRIENDLY_VENUE",
+    labelKey: "tools.places.kind.DOG_FRIENDLY_VENUE",
   },
-  DOG_GREEN_AREA: { icon: "tree", labelKey: "tools.dogFriendlyPlaces.kind.DOG_GREEN_AREA" },
-  DOG_TRAIL: { icon: "hiking", labelKey: "tools.dogFriendlyPlaces.kind.DOG_TRAIL" },
-  VETERINARY: { icon: "medical-bag", labelKey: "tools.dogFriendlyPlaces.kind.VETERINARY" },
-  PET_SHOP: { icon: "paw", labelKey: "tools.dogFriendlyPlaces.kind.PET_SHOP" },
+  DOG_GREEN_AREA: { icon: "tree", labelKey: "tools.places.kind.DOG_GREEN_AREA" },
+  DOG_TRAIL: { icon: "hiking", labelKey: "tools.places.kind.DOG_TRAIL" },
+  VETERINARY: { icon: "medical-bag", labelKey: "tools.places.kind.VETERINARY" },
+  PET_SHOP: { icon: "paw", labelKey: "tools.places.kind.PET_SHOP" },
   PET_GROOMING: {
     icon: "content-cut",
-    labelKey: "tools.dogFriendlyPlaces.kind.PET_GROOMING",
+    labelKey: "tools.places.kind.PET_GROOMING",
   },
   ANIMAL_SHELTER: {
     icon: "home-heart",
-    labelKey: "tools.dogFriendlyPlaces.kind.ANIMAL_SHELTER",
+    labelKey: "tools.places.kind.ANIMAL_SHELTER",
   },
   ANIMAL_BOARDING: {
     icon: "bed-outline",
-    labelKey: "tools.dogFriendlyPlaces.kind.ANIMAL_BOARDING",
+    labelKey: "tools.places.kind.ANIMAL_BOARDING",
   },
 };
 
@@ -57,5 +57,35 @@ export const CAT_KINDS: PlaceKind[] = [
   "ANIMAL_BOARDING",
 ];
 
-/** @deprecated alias kept for the dog tool's existing import. */
-export const DEFAULT_KINDS = DOG_KINDS;
+/**
+ * Kinds for which the outdoor amenity flags (fenced / off-leash / water /
+ * lit) are meaningful. On a vet or a boarding facility they are noise, so
+ * the submission form hides them.
+ */
+const OUTDOOR_KINDS = new Set<PlaceKind>([
+  "DOG_PARK",
+  "DOG_BEACH",
+  "DOG_GREEN_AREA",
+  "DOG_TRAIL",
+]);
+
+export function supportsOutdoorAmenities(kind: PlaceKind): boolean {
+  return OUTDOOR_KINDS.has(kind);
+}
+
+/**
+ * Version-skew hardening: a newer server may serve kind values this build
+ * doesn't know (e.g. via the detail endpoint after a reclassification).
+ * Always deref KIND_META through this helper — a bare KIND_META[kind] throws
+ * on unknown kinds.
+ */
+export function getKindMeta(kind: string): { icon: string; labelKey: string | null } {
+  return (KIND_META as Record<string, { icon: string; labelKey: string }>)[
+    kind
+  ] ?? { icon: "paw", labelKey: null };
+}
+
+/** Human fallback when the label key is unknown to this build. */
+export function fallbackKindLabel(kind: string): string {
+  return kind.toLowerCase().replace(/_/g, " ");
+}

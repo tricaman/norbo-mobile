@@ -1,6 +1,6 @@
 import { NorboPressable } from "@/components/CustomPressable";
-import { KIND_META } from "@/components/tools/places/kind-meta";
-import { PLACE_KINDS, type PlaceKind } from "@/types/place.types";
+import { getKindMeta } from "@/components/tools/places/kind-meta";
+import type { PlaceKind } from "@/types/place.types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface PlaceKindFilterBarProps {
+  /** The kinds this tool exposes — chips render in this order. */
+  allowedKinds: PlaceKind[];
   value: PlaceKind[];
   onChange: (kinds: PlaceKind[]) => void;
 }
@@ -19,7 +21,11 @@ interface PlaceKindFilterBarProps {
  * component. The last active chip cannot be turned off (the contract requires
  * ≥1 kind).
  */
-export function PlaceKindFilterBar({ value, onChange }: PlaceKindFilterBarProps) {
+export function PlaceKindFilterBar({
+  allowedKinds,
+  value,
+  onChange,
+}: PlaceKindFilterBarProps) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const selected = new Set(value);
@@ -40,8 +46,9 @@ export function PlaceKindFilterBar({ value, onChange }: PlaceKindFilterBarProps)
       contentContainerStyle={styles.content}
       style={styles.bar}
     >
-      {PLACE_KINDS.map((kind) => {
+      {allowedKinds.map((kind) => {
         const isSelected = selected.has(kind);
+        const meta = getKindMeta(kind);
         return (
           <NorboPressable
             key={kind}
@@ -64,7 +71,7 @@ export function PlaceKindFilterBar({ value, onChange }: PlaceKindFilterBarProps)
             >
               <MaterialCommunityIcons
                 name={
-                  KIND_META[kind].icon as React.ComponentProps<
+                  meta.icon as React.ComponentProps<
                     typeof MaterialCommunityIcons
                   >["name"]
                 }
@@ -86,7 +93,7 @@ export function PlaceKindFilterBar({ value, onChange }: PlaceKindFilterBarProps)
                 ]}
                 numberOfLines={1}
               >
-                {t(KIND_META[kind].labelKey as never)}
+                {meta.labelKey ? t(meta.labelKey as never) : kind.toLowerCase()}
               </Text>
             </View>
           </NorboPressable>

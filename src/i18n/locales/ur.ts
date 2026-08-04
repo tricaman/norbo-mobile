@@ -1067,7 +1067,7 @@ const ur = {
       disclaimer: "اشاراتی قدر۔",
       reminderTitle: "{{name}} کے لیے گھاس کی دوبارہ ترتیب",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "ڈاگ پارک",
         DOG_BEACH: "کتوں کا ساحل",

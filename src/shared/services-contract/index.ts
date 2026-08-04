@@ -304,10 +304,36 @@ export const dogFriendlyPlacesInput = z.object({
         'VETERINARY',
         'PET_SHOP',
         'PET_GROOMING',
+        'ANIMAL_SHELTER',
+        'ANIMAL_BOARDING',
       ]),
     )
     .min(1)
-    .max(8),
+    .max(10),
+});
+// NOTE: ANIMAL_SHELTER/ANIMAL_BOARDING were added by WIDENING the enum with
+// NO schemaVersion bump — deliberate: widening keeps every previously saved
+// selection valid (compat is a strict version-equality check + Zod parse at
+// save time only), while a bump would discard all users' saved layers.
+
+/**
+ * `cat-places` — the cat-owner variant of the places map. Same engine and
+ * rules as `dog-friendly-places` (layer selection only, NO coordinates);
+ * the kind set is what OSM data actually supports for cats.
+ */
+export const catPlacesInput = z.object({
+  kinds: z
+    .array(
+      z.enum([
+        'VETERINARY',
+        'PET_SHOP',
+        'PET_GROOMING',
+        'ANIMAL_SHELTER',
+        'ANIMAL_BOARDING',
+      ]),
+    )
+    .min(1)
+    .max(5),
 });
 
 // ── Contract registry ─────────────────────────────────────────────────────────
@@ -432,6 +458,11 @@ export const SERVICE_TOOL_CONTRACTS = {
     id: 'dog-friendly-places',
     schemaVersion: 1,
     inputSchema: dogFriendlyPlacesInput,
+  },
+  'cat-places': {
+    id: 'cat-places',
+    schemaVersion: 1,
+    inputSchema: catPlacesInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

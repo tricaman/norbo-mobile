@@ -1073,7 +1073,7 @@ const hi = {
       disclaimer: "संकेतात्मक मान।",
       reminderTitle: "{{name}} के लिए घास का पुनः ऑर्डर",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "डॉग पार्क",
         DOG_BEACH: "डॉग बीच",

@@ -27,9 +27,27 @@ export function useAuth() {
     haptics.success();
   }, [setUser]);
 
-  const verifyOtp = useCallback(async (email: string, otp: string) => {
-    await authApi.verifyOtp({ email, otp });
-  }, []);
+  const verifyOtp = useCallback(
+    async (email: string, otp: string) => {
+      const res = await authApi.verifyOtp({ email, otp });
+
+      // Store the session token exactly like the social/Apple flows do. The
+      // axios client sets `withCredentials: false`, so the Set-Cookie on this
+      // response is dropped by the native stack: without persisting the token
+      // here the very next call (`/auth/me` in completeSignIn) goes out with no
+      // Cookie header and 401s — which surfaces on the OTP screen as if the
+      // code itself had been rejected.
+      //
+      // A 200 without a token means the backend contract changed; fail loudly
+      // rather than letting it degrade into a confusing 401. The message is the
+      // provider-neutral "sign-in failed, please try again" in every locale.
+      if (!res.data.session_token) {
+        throw new Error(t("auth.socialLoginFailed"));
+      }
+      setSessionToken(res.data.session_token);
+    },
+    [setSessionToken, t],
+  );
 
   const completeSignIn = useCallback(async () => {
     await finalizeLogin();

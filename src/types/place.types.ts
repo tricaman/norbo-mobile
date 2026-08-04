@@ -5,7 +5,7 @@
  *
  * Place names are proper nouns from OSM and arrive untranslated; `kind` and
  * `dogAccess` are closed sets localized client-side under
- * `tools.dogFriendlyPlaces.*`.
+ * `tools.places.*`.
  */
 
 export const PLACE_KINDS = [

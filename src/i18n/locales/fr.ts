@@ -1084,7 +1084,7 @@ const fr = {
       disclaimer: "valeur indicative.",
       reminderTitle: "Réapprovisionner le foin pour {{name}}",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "parc canin",
         DOG_BEACH: "plage pour chiens",

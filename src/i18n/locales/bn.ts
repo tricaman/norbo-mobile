@@ -1071,7 +1071,7 @@ const bn = {
       disclaimer: "সূচক মান।",
       reminderTitle: "{{name}}-এর জন্য খড় পুনরায় অর্ডার করুন",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "ডগ পার্ক",
         DOG_BEACH: "কুকুরের সৈকত",

@@ -1068,7 +1068,7 @@ const tr = {
       disclaimer: "gösterge niteliğindedir.",
       reminderTitle: "{{name}} için saman siparişini yenile",
     },
-    dogFriendlyPlaces: {
+    places: {
       kind: {
         DOG_PARK: "köpek parkı",
         DOG_BEACH: "köpek plajı",
