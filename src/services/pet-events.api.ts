@@ -34,18 +34,4 @@ export const petEventsApi = {
   delete: (petId: string, eventId: string) =>
     api.delete(`${base(petId)}/${encodeURIComponent(eventId)}`),
 
-  /**
-   * Cross-pet feed of the authenticated user's upcoming SCHEDULED
-   * events, ordered by `scheduledFor` ascending. Powers the home
-   * screen "next things to do" section.
-   */
-  listUpcoming: (params?: { limit?: number }) =>
-    api.get<PetEvent[]>("/me/events/upcoming", { params }),
-
-  /**
-   * Cross-pet feed of every SCHEDULED event the user owns, ordered by
-   * `scheduledFor` ascending (overdue first). Powers the dedicated
-   * Reminder tab; client groups/filters locally.
-   */
-  listReminders: () => api.get<PetEvent[]>("/me/events/reminders"),
 } as const;

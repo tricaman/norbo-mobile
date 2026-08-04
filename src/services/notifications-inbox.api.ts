@@ -7,4 +7,5 @@ export const notificationsInboxApi = {
     api.get<{ count: number }>("/me/notifications/unread-count"),
   markRead: (id: string) =>
     api.patch<void>(`/me/notifications/${encodeURIComponent(id)}/read`),
+  markAllRead: () => api.patch<void>("/me/notifications/read-all"),
 } as const;

@@ -11,15 +11,16 @@ const ur = {
     comingSoon: "جلد آرہا ہے",
     back: "واپس",
     cancel: "منسوخ کریں",
+    viewAll: "سب دیکھیں",
   },
   tabs: {
     home: "ہوم",
     profile: "پروفائل",
     pets: "پالتو جانور",
-    reminders: "یادداشتیں",
     services: "خدمات",
     expenses: "اخراجات",
     settings: "ترتیبات",
+    notifications: "اطلاعات",
   },
   expenses: {
     title: "اخراجات",
@@ -144,6 +145,7 @@ const ur = {
     title: "اطلاعات",
     empty: "ابھی کوئی اطلاع نہیں",
     emptySubtitle: "اطلاعات یہاں ظاہر ہوں گی",
+    markAllRead: "سب نشان زد کریں",
   },
   auth: {
     signOut: "سائن آؤٹ کریں",
@@ -1087,7 +1089,8 @@ const ur = {
       },
       nearMe: "میرے قریب",
       zoomIn: "تمام مقامات دیکھنے کے لیے نقشہ قریب کریں",
-      locationRationale: "ہم آپ کا مقام صرف قریبی مقامات پر نقشہ مرکوز کرنے کے لیے استعمال کرتے ہیں۔ یہ کبھی محفوظ یا شیئر نہیں ہوتا۔",
+      locationRationale:
+        "ہم آپ کا مقام صرف قریبی مقامات پر نقشہ مرکوز کرنے کے لیے استعمال کرتے ہیں۔ یہ کبھی محفوظ یا شیئر نہیں ہوتا۔",
       locationDenied: "مقام دستیاب نہیں — ترتیبات میں فعال کریں",
       detail: {
         fenced: "باڑ بند",
@@ -1106,7 +1109,8 @@ const ur = {
         openInMaps: "نقشوں میں کھولیں",
         reportIssue: "مسئلے کی اطلاع دیں",
       },
-      dataDisclaimer: "openstreetmap کمیونٹی ڈیٹا — نامکمل یا پرانا ہو سکتا ہے۔",
+      dataDisclaimer:
+        "openstreetmap کمیونٹی ڈیٹا — نامکمل یا پرانا ہو سکتا ہے۔",
       addPlace: {
         title: "جگہ شامل کریں",
         positionHint: "جگہ نقشے کے مرکز میں شامل ہوگی:",
@@ -1163,7 +1167,6 @@ const ur = {
     removePhoto: "تصویر ہٹائیں",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "پریمیم · مفت",
       NEW: "نیا",

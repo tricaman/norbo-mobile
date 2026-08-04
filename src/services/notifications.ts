@@ -177,8 +177,17 @@ async function handleReminderAction(detail: {
 
 let _fgUnsubscribers: (() => void)[] = [];
 
+export interface MessageHandlerOptions {
+  /**
+   * Called when a push lands while the app is in the foreground. The caller
+   * owns the cache: this module stays free of react-query, which also keeps
+   * it importable from `_layout` without an import cycle.
+   */
+  onForegroundMessage?: () => void;
+}
+
 /** Wire foreground FCM + Notifee handlers. Idempotent. */
-export function setupMessageHandlers(): void {
+export function setupMessageHandlers(opts: MessageHandlerOptions = {}): void {
   for (const unsub of _fgUnsubscribers) {
     try {
       unsub();
@@ -191,6 +200,10 @@ export function setupMessageHandlers(): void {
   const unsubMessage = onMessage(getMessaging(), async (remoteMessage) => {
     if (!remoteMessage.data) return;
     const data = remoteMessage.data as Record<string, string>;
+    // The inbox row was written server-side when the push was delivered, so
+    // let the caller refresh the list and the tab badge — neither polls, and
+    // the `(tabs)` layout stays mounted, so nothing else would move it.
+    opts.onForegroundMessage?.();
     try {
       await displayNotification(data);
     } catch (e) {

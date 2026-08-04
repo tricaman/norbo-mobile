@@ -11,15 +11,16 @@ const ru = {
     comingSoon: "скоро",
     back: "назад",
     cancel: "отмена",
+    viewAll: "показать все",
   },
   tabs: {
     home: "главная",
     profile: "профиль",
     pets: "питомцы",
-    reminders: "напоминания",
     services: "услуги",
     expenses: "расходы",
     settings: "настройки",
+    notifications: "уведомления",
   },
   expenses: {
     title: "расходы",
@@ -144,6 +145,7 @@ const ru = {
     title: "уведомления",
     empty: "уведомлений пока нет",
     emptySubtitle: "уведомления появятся здесь",
+    markAllRead: "отметить все",
   },
   auth: {
     signOut: "выход",
@@ -1085,7 +1087,8 @@ const ru = {
       },
       nearMe: "рядом со мной",
       zoomIn: "приблизьте карту, чтобы увидеть все места",
-      locationRationale: "мы используем вашу геопозицию только чтобы показать места рядом с вами. она никогда не сохраняется и не передаётся.",
+      locationRationale:
+        "мы используем вашу геопозицию только чтобы показать места рядом с вами. она никогда не сохраняется и не передаётся.",
       locationDenied: "геопозиция недоступна — включите её в настройках",
       detail: {
         fenced: "огорожено",
@@ -1104,7 +1107,8 @@ const ru = {
         openInMaps: "открыть в картах",
         reportIssue: "сообщить о проблеме",
       },
-      dataDisclaimer: "данные сообщества openstreetmap — могут быть неполными или устаревшими.",
+      dataDisclaimer:
+        "данные сообщества openstreetmap — могут быть неполными или устаревшими.",
       addPlace: {
         title: "добавить место",
         positionHint: "место будет добавлено в центре карты:",
@@ -1160,7 +1164,6 @@ const ru = {
     removePhoto: "удалить фото",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "премиум · бесплатно",
       NEW: "новое",

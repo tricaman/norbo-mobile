@@ -1,7 +1,7 @@
 import { springs } from "@/hooks/useSpring";
 import { haptics } from "@/utils/haptics";
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
@@ -18,6 +18,8 @@ interface TabBarItemProps {
   isActive: boolean;
   onPress: () => void;
   onLongPress: () => void;
+  /** Unread count overlaid on the icon. Hidden when absent or zero. */
+  badge?: number;
 }
 
 export function TabBarItem({
@@ -26,6 +28,7 @@ export function TabBarItem({
   isActive,
   onPress,
   onLongPress,
+  badge,
 }: TabBarItemProps) {
   const { theme } = useUnistyles();
   const scale = useSharedValue(1);
@@ -64,12 +67,31 @@ export function TabBarItem({
   return (
     <GestureDetector gesture={composed}>
       <Animated.View style={[styles.item, containerStyle]}>
-        <TabIcon
-          routeName={routeName}
-          isActive={isActive}
-          activeColor={theme.colors.primary}
-          inactiveColor={theme.colors.textTertiary}
-        />
+        {/* The badge sits beside TabIcon, not inside it: TabIcon springs to
+            1.3x on activation and the badge must not scale with it. */}
+        <View style={styles.iconSlot}>
+          <TabIcon
+            routeName={routeName}
+            isActive={isActive}
+            activeColor={theme.colors.primary}
+            inactiveColor={theme.colors.textTertiary}
+          />
+          {badge && badge > 0 ? (
+            <View
+              style={[styles.badge, { backgroundColor: theme.colors.primary }]}
+            >
+              <Text
+                style={[
+                  styles.badgeText,
+                  { color: theme.colors.textOnPrimary },
+                ]}
+                numberOfLines={1}
+              >
+                {badge > 99 ? "99+" : badge}
+              </Text>
+            </View>
+          ) : null}
+        </View>
         <Text
           style={[
             styles.labelText,
@@ -79,6 +101,7 @@ export function TabBarItem({
                 : theme.colors.textTertiary,
             },
           ]}
+          numberOfLines={1}
         >
           {label.toLowerCase()}
         </Text>
@@ -94,6 +117,25 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: "center",
     paddingVertical: theme.spacing.xs,
     gap: theme.spacing.xs / 2,
+  },
+  iconSlot: {
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    top: -4,
+    right: -10,
+    borderRadius: theme.radius.pill,
+    paddingHorizontal: 4,
+    minWidth: 16,
+    height: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    fontSize: 10,
+    lineHeight: 12,
+    fontWeight: "700",
   },
   labelText: {
     ...theme.typography.caption,

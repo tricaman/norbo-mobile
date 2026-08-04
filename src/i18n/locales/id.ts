@@ -11,15 +11,16 @@ const id = {
     comingSoon: "segera hadir",
     back: "kembali",
     cancel: "batal",
+    viewAll: "lihat semua",
   },
   tabs: {
     home: "beranda",
     profile: "profil",
     pets: "hewan peliharaan",
-    reminders: "pengingat",
     services: "layanan",
     expenses: "pengeluaran",
     settings: "pengaturan",
+    notifications: "peringatan",
   },
   expenses: {
     title: "pengeluaran",
@@ -144,6 +145,7 @@ const id = {
     title: "notifikasi",
     empty: "belum ada notifikasi",
     emptySubtitle: "notifikasi akan muncul di sini",
+    markAllRead: "tandai semua",
   },
   auth: {
     signOut: "keluar",
@@ -1093,7 +1095,8 @@ const id = {
       },
       nearMe: "di dekat saya",
       zoomIn: "perbesar peta untuk melihat semua tempat",
-      locationRationale: "kami menggunakan lokasimu hanya untuk memusatkan peta pada tempat di dekatmu. tidak pernah disimpan atau dibagikan.",
+      locationRationale:
+        "kami menggunakan lokasimu hanya untuk memusatkan peta pada tempat di dekatmu. tidak pernah disimpan atau dibagikan.",
       locationDenied: "lokasi tidak tersedia — aktifkan di pengaturan",
       detail: {
         fenced: "berpagar",
@@ -1112,7 +1115,8 @@ const id = {
         openInMaps: "buka di peta",
         reportIssue: "laporkan masalah",
       },
-      dataDisclaimer: "data komunitas openstreetmap — mungkin tidak lengkap atau kedaluwarsa.",
+      dataDisclaimer:
+        "data komunitas openstreetmap — mungkin tidak lengkap atau kedaluwarsa.",
       addPlace: {
         title: "tambah tempat",
         positionHint: "tempat akan ditambahkan di tengah peta:",
@@ -1168,7 +1172,6 @@ const id = {
     removePhoto: "hapus foto",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · gratis",
       NEW: "baru",

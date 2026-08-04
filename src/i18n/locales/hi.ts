@@ -11,15 +11,16 @@ const hi = {
     comingSoon: "जल्द आ रहा है",
     back: "वापस",
     cancel: "रद्द करें",
+    viewAll: "सभी देखें",
   },
   tabs: {
     home: "होम",
     profile: "प्रोफ़ाइल",
     pets: "पालतू जानवर",
-    reminders: "रिमाइंडर",
     services: "सेवाएँ",
     expenses: "खर्च",
     settings: "सेटिंग्स",
+    notifications: "सूचनाएँ",
   },
   expenses: {
     title: "खर्च",
@@ -144,6 +145,7 @@ const hi = {
     title: "सूचनाएँ",
     empty: "अभी कोई सूचना नहीं",
     emptySubtitle: "सूचनाएँ यहाँ दिखाई देंगी",
+    markAllRead: "सभी पढ़े हुए चिह्नित करें",
   },
   auth: {
     signOut: "साइन आउट",
@@ -1093,7 +1095,8 @@ const hi = {
       },
       nearMe: "मेरे पास",
       zoomIn: "सभी स्थान देखने के लिए नक्शा ज़ूम करें",
-      locationRationale: "हम आपकी लोकेशन का उपयोग केवल आस-पास के स्थानों पर नक्शा केंद्रित करने के लिए करते हैं। यह कभी सहेजी या साझा नहीं की जाती।",
+      locationRationale:
+        "हम आपकी लोकेशन का उपयोग केवल आस-पास के स्थानों पर नक्शा केंद्रित करने के लिए करते हैं। यह कभी सहेजी या साझा नहीं की जाती।",
       locationDenied: "लोकेशन उपलब्ध नहीं — सेटिंग्स में चालू करें",
       detail: {
         fenced: "बाड़बंद",
@@ -1112,7 +1115,8 @@ const hi = {
         openInMaps: "मैप्स में खोलें",
         reportIssue: "समस्या बताएं",
       },
-      dataDisclaimer: "openstreetmap समुदाय का डेटा — अधूरा या पुराना हो सकता है।",
+      dataDisclaimer:
+        "openstreetmap समुदाय का डेटा — अधूरा या पुराना हो सकता है।",
       addPlace: {
         title: "स्थान जोड़ें",
         positionHint: "स्थान नक्शे के केंद्र में जोड़ा जाएगा:",
@@ -1121,7 +1125,8 @@ const hi = {
         submitted: "धन्यवाद! समीक्षा के बाद स्थान दिखेगा",
         duplicate: "पास में ऐसा स्थान पहले से मौजूद है",
         limit: "दैनिक सीमा पूरी हुई, कल कोशिश करें",
-        moderationNote: "नक्शे पर दिखने से पहले प्रविष्टियों की समीक्षा होती है।",
+        moderationNote:
+          "नक्शे पर दिखने से पहले प्रविष्टियों की समीक्षा होती है।",
       },
     },
   },
@@ -1168,7 +1173,6 @@ const hi = {
     removePhoto: "फ़ोटो हटाएँ",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "प्रीमियम · मुफ़्त",
       NEW: "नया",

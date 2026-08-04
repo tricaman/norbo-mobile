@@ -160,16 +160,26 @@ export default function RootLayout() {
   useEffect(() => {
     if (!isReady || !isAuthed) return;
 
+    // Refreshes the inbox list and the tab badge. Neither query polls and
+    // `(tabs)` stays mounted for the whole session, so they only move when
+    // something invalidates them explicitly.
+    const refreshNotifications = () => {
+      void queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    };
+
     // Full bootstrap (permission + channels + categories + token + onTokenRefresh).
     void initNotifications();
     // Foreground FCM/Notifee event handlers (idempotent).
-    setupMessageHandlers();
+    setupMessageHandlers({ onForegroundMessage: refreshNotifications });
 
     // Re-register the token whenever the app comes back to the foreground
     // so lastSeenAt stays fresh and server-side invalidation is recovered.
+    // Also refresh the inbox: pushes that arrived while backgrounded were
+    // persisted server-side, and nothing else would move the tab badge.
     const sub = AppState.addEventListener("change", (next) => {
       if (appStateRef.current !== "active" && next === "active") {
         void registerPushToken();
+        refreshNotifications();
       }
       appStateRef.current = next;
     });
@@ -313,7 +323,7 @@ function AppInner() {
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen
-        name="notifications/index"
+        name="reminders/index"
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen

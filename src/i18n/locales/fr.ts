@@ -11,15 +11,16 @@ const fr = {
     comingSoon: "bientôt disponible",
     back: "retour",
     cancel: "annuler",
+    viewAll: "tout voir",
   },
   tabs: {
     home: "accueil",
     profile: "profil",
     pets: "animaux",
-    reminders: "rappels",
     services: "services",
     expenses: "dépenses",
     settings: "paramètres",
+    notifications: "alertes",
   },
   expenses: {
     title: "dépenses",
@@ -144,6 +145,7 @@ const fr = {
     title: "notifications",
     empty: "aucune notification pour le moment",
     emptySubtitle: "les notifications apparaîtront ici",
+    markAllRead: "tout marquer",
   },
   auth: {
     signOut: "se déconnecter",
@@ -1104,7 +1106,8 @@ const fr = {
       },
       nearMe: "près de moi",
       zoomIn: "zoomez pour voir tous les lieux",
-      locationRationale: "nous utilisons votre position uniquement pour centrer la carte sur les lieux proches. elle n'est jamais enregistrée ni partagée.",
+      locationRationale:
+        "nous utilisons votre position uniquement pour centrer la carte sur les lieux proches. elle n'est jamais enregistrée ni partagée.",
       locationDenied: "position indisponible — activez-la dans les réglages",
       detail: {
         fenced: "clôturé",
@@ -1123,7 +1126,8 @@ const fr = {
         openInMaps: "ouvrir dans plans",
         reportIssue: "signaler un problème",
       },
-      dataDisclaimer: "données de la communauté openstreetmap — parfois incomplètes ou obsolètes.",
+      dataDisclaimer:
+        "données de la communauté openstreetmap — parfois incomplètes ou obsolètes.",
       addPlace: {
         title: "ajouter un lieu",
         positionHint: "le lieu sera ajouté au centre de la carte :",
@@ -1132,7 +1136,8 @@ const fr = {
         submitted: "merci ! le lieu apparaîtra après validation",
         duplicate: "un lieu similaire existe déjà à proximité",
         limit: "limite quotidienne atteinte, réessayez demain",
-        moderationNote: "les contributions sont vérifiées avant d'apparaître sur la carte.",
+        moderationNote:
+          "les contributions sont vérifiées avant d'apparaître sur la carte.",
       },
     },
   },
@@ -1179,7 +1184,6 @@ const fr = {
     removePhoto: "supprimer la photo",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · gratuit",
       NEW: "nouveau",

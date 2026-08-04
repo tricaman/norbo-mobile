@@ -11,15 +11,16 @@ const bn = {
     comingSoon: "শীঘ্রই আসছে",
     back: "ফিরে যান",
     cancel: "বাতিল",
+    viewAll: "সব দেখুন",
   },
   tabs: {
     home: "বাড়ি",
     profile: "প্রোফাইল",
     pets: "পোষা প্রাণী",
-    reminders: "অনুস্মারক",
     services: "পরিষেবা",
     expenses: "খরচ",
     settings: "সেটিংস",
+    notifications: "সতর্কতা",
   },
   expenses: {
     title: "খরচ",
@@ -144,6 +145,7 @@ const bn = {
     title: "বিজ্ঞপ্তি",
     empty: "এখনও কোনো বিজ্ঞপ্তি নেই",
     emptySubtitle: "বিজ্ঞপ্তি এখানে দেখা যাবে",
+    markAllRead: "সব দেখা হয়েছে",
   },
   auth: {
     signOut: "সাইন আউট করুন",
@@ -1091,7 +1093,8 @@ const bn = {
       },
       nearMe: "আমার কাছে",
       zoomIn: "সব স্থান দেখতে মানচিত্র জুম করুন",
-      locationRationale: "আমরা আপনার অবস্থান শুধু কাছের স্থানে মানচিত্র কেন্দ্র করতে ব্যবহার করি। এটি কখনো সংরক্ষণ বা শেয়ার হয় না।",
+      locationRationale:
+        "আমরা আপনার অবস্থান শুধু কাছের স্থানে মানচিত্র কেন্দ্র করতে ব্যবহার করি। এটি কখনো সংরক্ষণ বা শেয়ার হয় না।",
       locationDenied: "অবস্থান অনুপলব্ধ — সেটিংসে চালু করুন",
       detail: {
         fenced: "বেড়া দেওয়া",
@@ -1110,7 +1113,8 @@ const bn = {
         openInMaps: "মানচিত্রে খুলুন",
         reportIssue: "সমস্যা জানান",
       },
-      dataDisclaimer: "openstreetmap কমিউনিটির তথ্য — অসম্পূর্ণ বা পুরনো হতে পারে।",
+      dataDisclaimer:
+        "openstreetmap কমিউনিটির তথ্য — অসম্পূর্ণ বা পুরনো হতে পারে।",
       addPlace: {
         title: "স্থান যোগ করুন",
         positionHint: "স্থানটি মানচিত্রের কেন্দ্রে যোগ হবে:",
@@ -1166,7 +1170,6 @@ const bn = {
     removePhoto: "ছবি সরান",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "প্রিমিয়াম · ফ্রি",
       NEW: "নতুন",

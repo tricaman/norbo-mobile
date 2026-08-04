@@ -81,6 +81,11 @@ export function FloatingTabBar({
             <TabBarItem
               key={route.key}
               routeName={route.name}
+              badge={
+                typeof options.tabBarBadge === "number"
+                  ? options.tabBarBadge
+                  : undefined
+              }
               label={(options.tabBarLabel as string) ?? route.name}
               isActive={isActive}
               onPress={onPress}

@@ -11,15 +11,16 @@ const es = {
     comingSoon: "próximamente",
     back: "atrás",
     cancel: "cancelar",
+    viewAll: "ver todo",
   },
   tabs: {
     home: "inicio",
     profile: "perfil",
     pets: "mascotas",
-    reminders: "recordatorios",
     services: "servicios",
     expenses: "gastos",
     settings: "configuración",
+    notifications: "alertas",
   },
   expenses: {
     title: "gastos",
@@ -144,6 +145,7 @@ const es = {
     title: "notificaciones",
     empty: "aún no hay notificaciones",
     emptySubtitle: "las notificaciones aparecerán aquí",
+    markAllRead: "marcar todo",
   },
   auth: {
     signOut: "cerrar sesión",
@@ -1095,7 +1097,8 @@ const es = {
       },
       nearMe: "cerca de mí",
       zoomIn: "acerca el mapa para ver todos los lugares",
-      locationRationale: "usamos tu ubicación solo para centrar el mapa en lugares cercanos. nunca se guarda ni se comparte.",
+      locationRationale:
+        "usamos tu ubicación solo para centrar el mapa en lugares cercanos. nunca se guarda ni se comparte.",
       locationDenied: "ubicación no disponible — actívala en ajustes",
       detail: {
         fenced: "vallado",
@@ -1114,7 +1117,8 @@ const es = {
         openInMaps: "abrir en mapas",
         reportIssue: "informar de un problema",
       },
-      dataDisclaimer: "datos de la comunidad de openstreetmap — pueden estar incompletos o desactualizados.",
+      dataDisclaimer:
+        "datos de la comunidad de openstreetmap — pueden estar incompletos o desactualizados.",
       addPlace: {
         title: "añadir un lugar",
         positionHint: "el lugar se añadirá en el centro del mapa:",
@@ -1170,7 +1174,6 @@ const es = {
     removePhoto: "eliminar foto",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · gratis",
       NEW: "nuevo",

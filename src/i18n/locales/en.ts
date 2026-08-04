@@ -11,12 +11,13 @@ const en = {
     back: "back",
     cancel: "cancel",
     select: "select",
+    viewAll: "view all",
   },
   tabs: {
     home: "home",
     profile: "profile",
     pets: "pets",
-    reminders: "reminders",
+    notifications: "alerts",
     services: "services",
     expenses: "expenses",
     settings: "settings",
@@ -580,6 +581,7 @@ const en = {
     title: "notifications",
     empty: "no notifications yet",
     emptySubtitle: "notifications will appear here",
+    markAllRead: "mark all",
   },
   auth: {
     signOut: "sign out",

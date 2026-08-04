@@ -38,7 +38,14 @@ export interface Reminder {
   deletedAt: string | null;
 }
 
-export type ReminderFilter = 'today' | 'next7days' | 'overdue' | 'upcoming' | 'all';
+export type ReminderFilter =
+  | 'today'
+  | 'next7days'
+  | 'overdue'
+  | 'upcoming'
+  /** PENDING with no upper bound, overdue-first; powers the home section. */
+  | 'pending'
+  | 'all';
 
 export interface ReminderListResponse {
   rows: Reminder[];

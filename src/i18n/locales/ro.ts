@@ -11,15 +11,16 @@ const ro = {
     comingSoon: "în curând",
     back: "înapoi",
     cancel: "anulează",
+    viewAll: "vezi toate",
   },
   tabs: {
     home: "acasă",
     profile: "profil",
     pets: "animale de companie",
-    reminders: "reamintiri",
     services: "servicii",
     expenses: "cheltuieli",
     settings: "setări",
+    notifications: "alerte",
   },
   expenses: {
     title: "cheltuieli",
@@ -144,6 +145,7 @@ const ro = {
     title: "notificari",
     empty: "inca nu sunt notificari",
     emptySubtitle: "notificarile vor aparea aici",
+    markAllRead: "marcare totală",
   },
   auth: {
     signOut: "deconectare",
@@ -1091,7 +1093,8 @@ const ro = {
       },
       nearMe: "lângă mine",
       zoomIn: "mărește harta pentru a vedea toate locurile",
-      locationRationale: "folosim locația ta doar pentru a centra harta pe locurile din apropiere. nu este niciodată stocată sau partajată.",
+      locationRationale:
+        "folosim locația ta doar pentru a centra harta pe locurile din apropiere. nu este niciodată stocată sau partajată.",
       locationDenied: "locație indisponibilă — activeaz-o din setări",
       detail: {
         fenced: "împrejmuit",
@@ -1110,7 +1113,8 @@ const ro = {
         openInMaps: "deschide în hărți",
         reportIssue: "raportează o problemă",
       },
-      dataDisclaimer: "date din comunitatea openstreetmap — pot fi incomplete sau învechite.",
+      dataDisclaimer:
+        "date din comunitatea openstreetmap — pot fi incomplete sau învechite.",
       addPlace: {
         title: "adaugă un loc",
         positionHint: "locul va fi adăugat în centrul hărții:",
@@ -1119,7 +1123,8 @@ const ro = {
         submitted: "mulțumim! locul va apărea după verificare",
         duplicate: "există deja un loc similar în apropiere",
         limit: "limita zilnică a fost atinsă, încearcă mâine",
-        moderationNote: "contribuțiile sunt verificate înainte de a apărea pe hartă.",
+        moderationNote:
+          "contribuțiile sunt verificate înainte de a apărea pe hartă.",
       },
     },
   },
@@ -1166,7 +1171,6 @@ const ro = {
     removePhoto: "elimină fotografia",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · gratuit",
       NEW: "nou",

@@ -1,6 +1,6 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { HomeGreeting } from "@/components/home/HomeGreeting";
-import { UpcomingEventsSection } from "@/components/home/UpcomingEventsSection";
+import { HomeRemindersSection } from "@/components/home/HomeRemindersSection";
 import { PetCard } from "@/components/pets/PetCard";
 import { PetsEmptyHero } from "@/components/pets/PetsEmptyHero";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -67,7 +67,8 @@ export default function HomeScreen() {
   const handleRefresh = React.useCallback(async () => {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: ["pets"] }),
-      queryClient.invalidateQueries({ queryKey: ["upcoming-events"] }),
+      queryClient.invalidateQueries({ queryKey: ["reminders"] }),
+      queryClient.invalidateQueries({ queryKey: ["notifications"] }),
     ]);
   }, [queryClient]);
 
@@ -140,12 +141,13 @@ export default function HomeScreen() {
                     />
                   </NorboPressable>
                 )}
-                <UpcomingEventsSection
-                  pets={pets}
-                  onPressEvent={(event) => router.push(`/pets/${event.petId}`)}
-                />
               </>
             )}
+
+            {/* Outside the empty-pets branch on purpose: reminders can be
+                petless (admin, supplies, custom), so they must stay visible
+                to someone who hasn't added a pet yet. */}
+            <HomeRemindersSection pets={pets} />
           </ScrollView>
         )}
       </QueryBoundary>

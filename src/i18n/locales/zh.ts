@@ -11,15 +11,16 @@ const zh = {
     comingSoon: "即将推出",
     back: "返回",
     cancel: "取消",
+    viewAll: "查看全部",
   },
   tabs: {
     home: "首页",
     profile: "个人资料",
     pets: "宠物",
-    reminders: "提醒",
     services: "服务",
     expenses: "费用",
     settings: "设置",
+    notifications: "提醒",
   },
   expenses: {
     title: "费用",
@@ -144,6 +145,7 @@ const zh = {
     title: "通知",
     empty: "暂无通知",
     emptySubtitle: "通知将显示在这里",
+    markAllRead: "全部标记",
   },
   auth: {
     signOut: "登出",
@@ -1067,7 +1069,8 @@ const zh = {
       },
       nearMe: "附近",
       zoomIn: "放大地图查看所有地点",
-      locationRationale: "我们仅使用您的位置将地图定位到附近的地点，绝不会保存或分享。",
+      locationRationale:
+        "我们仅使用您的位置将地图定位到附近的地点，绝不会保存或分享。",
       locationDenied: "位置不可用 — 请在设置中开启",
       detail: {
         fenced: "有围栏",
@@ -1142,7 +1145,6 @@ const zh = {
     removePhoto: "移除照片",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "高级 · 免费",
       NEW: "新",

@@ -1,9 +1,13 @@
 import { FloatingTabBar } from "@/components/navigation/FloatingTabBar";
+import { useNotificationsUnreadCount } from "@/hooks/useNotificationsInbox";
 import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 export default function TabsLayout() {
   const { t } = useTranslation();
+  // Drives the bell badge. Safe here: `(tabs)` only mounts once authed, and
+  // QueryClientProvider wraps the whole stack.
+  const unread = useNotificationsUnreadCount().data ?? 0;
 
   return (
     <Tabs
@@ -20,10 +24,11 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="reminders"
+        name="notifications"
         options={{
-          title: t("tabs.reminders"),
-          tabBarLabel: t("tabs.reminders"),
+          title: t("tabs.notifications"),
+          tabBarLabel: t("tabs.notifications"),
+          tabBarBadge: unread > 0 ? unread : undefined,
         }}
       />
       <Tabs.Screen

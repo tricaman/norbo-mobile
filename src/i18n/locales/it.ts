@@ -11,13 +11,14 @@ const it = {
     back: "indietro",
     cancel: "annulla",
     select: "seleziona",
+    viewAll: "vedi tutti",
   },
 
   tabs: {
     home: "home",
     profile: "profilo",
     pets: "animali",
-    reminders: "reminder",
+    notifications: "notifiche",
     services: "servizi",
     expenses: "spese",
     settings: "impostazioni",
@@ -587,6 +588,7 @@ const it = {
     title: "notifiche",
     empty: "ancora nessuna notifica",
     emptySubtitle: "le notifiche appariranno qui",
+    markAllRead: "segna tutte",
   },
 
   auth: {

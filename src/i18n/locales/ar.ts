@@ -11,15 +11,16 @@ const ar = {
     comingSoon: "قريباً",
     back: "رجوع",
     cancel: "إلغاء",
+    viewAll: "عرض الكل",
   },
   tabs: {
     home: "الرئيسية",
     profile: "الملف الشخصي",
     pets: "الحيوانات الأليفة",
-    reminders: "التذكيرات",
     services: "الخدمات",
     expenses: "المصروفات",
     settings: "الإعدادات",
+    notifications: "التنبيهات",
   },
   expenses: {
     title: "المصروفات",
@@ -144,6 +145,7 @@ const ar = {
     title: "الإشعارات",
     empty: "لا توجد إشعارات بعد",
     emptySubtitle: "ستظهر الإشعارات هنا",
+    markAllRead: "تحديد الكل كمقروء",
   },
   auth: {
     signOut: "تسجيل الخروج",
@@ -1076,7 +1078,8 @@ const ar = {
       },
       nearMe: "بالقرب مني",
       zoomIn: "قرّب الخريطة لرؤية كل الأماكن",
-      locationRationale: "نستخدم موقعك فقط لتوسيط الخريطة على الأماكن القريبة منك. لا يُحفظ أو يُشارك أبداً.",
+      locationRationale:
+        "نستخدم موقعك فقط لتوسيط الخريطة على الأماكن القريبة منك. لا يُحفظ أو يُشارك أبداً.",
       locationDenied: "الموقع غير متاح — فعّله من الإعدادات",
       detail: {
         fenced: "مسيّج",
@@ -1151,7 +1154,6 @@ const ar = {
     removePhoto: "إزالة الصورة",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "بريميوم · مجانًا",
       NEW: "جديد",

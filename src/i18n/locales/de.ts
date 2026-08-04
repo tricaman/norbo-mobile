@@ -11,15 +11,16 @@ const de = {
     comingSoon: "bald verfügbar",
     back: "zurück",
     cancel: "abbrechen",
+    viewAll: "alle ansehen",
   },
   tabs: {
     home: "startseite",
     profile: "profil",
     pets: "haustiere",
-    reminders: "erinnerungen",
     services: "dienste",
     expenses: "ausgaben",
     settings: "einstellungen",
+    notifications: "Meldungen",
   },
   expenses: {
     title: "ausgaben",
@@ -144,6 +145,7 @@ const de = {
     title: "benachrichtigungen",
     empty: "noch keine benachrichtigungen",
     emptySubtitle: "benachrichtigungen erscheinen hier",
+    markAllRead: "alles als gelesen markieren",
   },
   auth: {
     signOut: "abmelden",
@@ -1096,8 +1098,10 @@ const de = {
       },
       nearMe: "in meiner nähe",
       zoomIn: "heranzoomen, um alle orte zu sehen",
-      locationRationale: "wir nutzen deinen standort nur, um die karte auf orte in deiner nähe zu zentrieren. er wird nie gespeichert oder geteilt.",
-      locationDenied: "standort nicht verfügbar — in den einstellungen aktivieren",
+      locationRationale:
+        "wir nutzen deinen standort nur, um die karte auf orte in deiner nähe zu zentrieren. er wird nie gespeichert oder geteilt.",
+      locationDenied:
+        "standort nicht verfügbar — in den einstellungen aktivieren",
       detail: {
         fenced: "eingezäunt",
         offLeash: "ohne leine",
@@ -1115,7 +1119,8 @@ const de = {
         openInMaps: "in karten öffnen",
         reportIssue: "problem melden",
       },
-      dataDisclaimer: "community-daten von openstreetmap — können unvollständig oder veraltet sein.",
+      dataDisclaimer:
+        "community-daten von openstreetmap — können unvollständig oder veraltet sein.",
       addPlace: {
         title: "ort hinzufügen",
         positionHint: "der ort wird in der kartenmitte hinzugefügt:",
@@ -1124,7 +1129,8 @@ const de = {
         submitted: "danke! der ort erscheint nach der prüfung",
         duplicate: "in der nähe existiert bereits ein ähnlicher ort",
         limit: "tageslimit erreicht, versuche es morgen",
-        moderationNote: "einsendungen werden vor der anzeige auf der karte geprüft.",
+        moderationNote:
+          "einsendungen werden vor der anzeige auf der karte geprüft.",
       },
     },
   },
@@ -1171,7 +1177,6 @@ const de = {
     removePhoto: "foto entfernen",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · kostenlos",
       NEW: "neu",

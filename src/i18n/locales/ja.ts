@@ -11,15 +11,16 @@ const ja = {
     comingSoon: "近日公開",
     back: "戻る",
     cancel: "キャンセル",
+    viewAll: "すべて表示",
   },
   tabs: {
     home: "ホーム",
     profile: "プロフィール",
     pets: "ペット",
-    reminders: "リマインダー",
     services: "サービス",
     expenses: "経費",
     settings: "設定",
+    notifications: "アラート",
   },
   expenses: {
     title: "経費",
@@ -144,6 +145,7 @@ const ja = {
     title: "通知",
     empty: "通知はまだありません",
     emptySubtitle: "通知はここに表示されます",
+    markAllRead: "すべて既読にする",
   },
   auth: {
     signOut: "サインアウト",
@@ -1079,7 +1081,8 @@ const ja = {
       },
       nearMe: "近くを表示",
       zoomIn: "すべての場所を見るには拡大してください",
-      locationRationale: "位置情報は近くの場所に地図を合わせるためだけに使います。保存や共有は一切しません。",
+      locationRationale:
+        "位置情報は近くの場所に地図を合わせるためだけに使います。保存や共有は一切しません。",
       locationDenied: "位置情報が利用できません — 設定で有効にしてください",
       detail: {
         fenced: "柵あり",
@@ -1098,7 +1101,8 @@ const ja = {
         openInMaps: "マップで開く",
         reportIssue: "問題を報告",
       },
-      dataDisclaimer: "openstreetmapコミュニティのデータ — 不完全または古い場合があります。",
+      dataDisclaimer:
+        "openstreetmapコミュニティのデータ — 不完全または古い場合があります。",
       addPlace: {
         title: "場所を追加",
         positionHint: "場所は地図の中心に追加されます：",
@@ -1154,7 +1158,6 @@ const ja = {
     removePhoto: "写真を削除",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "プレミアム · 無料",
       NEW: "新着",

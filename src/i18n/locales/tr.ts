@@ -11,15 +11,16 @@ const tr = {
     comingSoon: "yakında",
     back: "geri",
     cancel: "iptal",
+    viewAll: "tümünü gör",
   },
   tabs: {
     home: "anasayfa",
     profile: "profil",
     pets: "evcil hayvanlar",
-    reminders: "hatırlatmalar",
     services: "hizmetler",
     expenses: "harcamalar",
     settings: "ayarlar",
+    notifications: "uyarılar",
   },
   expenses: {
     title: "harcamalar",
@@ -144,6 +145,7 @@ const tr = {
     title: "bildirimler",
     empty: "henüz bildirim yok",
     emptySubtitle: "bildirimler burada görünecek",
+    markAllRead: "tümünü işaretle",
   },
   auth: {
     signOut: "oturumu kapat",
@@ -1088,7 +1090,8 @@ const tr = {
       },
       nearMe: "yakınımda",
       zoomIn: "tüm yerleri görmek için yakınlaştırın",
-      locationRationale: "konumunuzu yalnızca haritayı yakınınızdaki yerlere odaklamak için kullanırız. asla saklanmaz veya paylaşılmaz.",
+      locationRationale:
+        "konumunuzu yalnızca haritayı yakınınızdaki yerlere odaklamak için kullanırız. asla saklanmaz veya paylaşılmaz.",
       locationDenied: "konum kullanılamıyor — ayarlardan etkinleştirin",
       detail: {
         fenced: "çitli",
@@ -1107,7 +1110,8 @@ const tr = {
         openInMaps: "haritalarda aç",
         reportIssue: "sorun bildir",
       },
-      dataDisclaimer: "openstreetmap topluluk verileri — eksik veya güncel olmayabilir.",
+      dataDisclaimer:
+        "openstreetmap topluluk verileri — eksik veya güncel olmayabilir.",
       addPlace: {
         title: "yer ekle",
         positionHint: "yer, haritanın merkezine eklenecek:",
@@ -1163,7 +1167,6 @@ const tr = {
     removePhoto: "fotoğrafı kaldır",
   },
   servicesHub: {
-    // Editorial badges on a tool row (BADGE_META label keys).
     badge: {
       PREMIUM_FREE: "premium · ücretsiz",
       NEW: "yeni",
