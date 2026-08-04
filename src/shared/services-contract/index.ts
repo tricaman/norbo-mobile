@@ -317,11 +317,13 @@ export const dogFriendlyPlacesInput = z.object({
 // save time only), while a bump would discard all users' saved layers.
 
 /**
- * `cat-places` — the cat-owner variant of the places map. Same engine and
- * rules as `dog-friendly-places` (layer selection only, NO coordinates);
- * the kind set is what OSM data actually supports for cats.
+ * `pet-places` — the species-neutral variant of the places map: the pet
+ * SERVICES every owner needs (vets, shops, grooming, shelters, boarding),
+ * with no species framing. Same engine and rules as `dog-friendly-places`
+ * (layer selection only, NO coordinates); `dog-friendly-places` adds the
+ * dog-only layers (parks, beaches, trails, dog-friendly venues) on top.
  */
-export const catPlacesInput = z.object({
+export const petPlacesInput = z.object({
   kinds: z
     .array(
       z.enum([
@@ -459,10 +461,10 @@ export const SERVICE_TOOL_CONTRACTS = {
     schemaVersion: 1,
     inputSchema: dogFriendlyPlacesInput,
   },
-  'cat-places': {
-    id: 'cat-places',
+  'pet-places': {
+    id: 'pet-places',
     schemaVersion: 1,
-    inputSchema: catPlacesInput,
+    inputSchema: petPlacesInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

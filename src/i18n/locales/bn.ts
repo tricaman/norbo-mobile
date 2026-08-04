@@ -1161,6 +1161,12 @@ const bn = {
     removePhoto: "ছবি সরান",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "প্রিমিয়াম · ফ্রি",
+      NEW: "নতুন",
+      BETA: "বিটা",
+    },
     subtitle: "টুল, আপনার যার সাথে থাকেন তার জন্য বাছাইকৃত",
     forYourPets: "আপনার পোষ্যের জন্য",
     forEveryone: "সবার জন্য",

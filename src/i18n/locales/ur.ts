@@ -1158,6 +1158,12 @@ const ur = {
     removePhoto: "تصویر ہٹائیں",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "پریمیم · مفت",
+      NEW: "نیا",
+      BETA: "بیٹا",
+    },
     subtitle: "اوزار، آپ کے ساتھ رہنے والے کے لیے چنے گئے",
     forYourPets: "آپ کے پالتو جانوروں کے لیے",
     forEveryone: "سب کے لیے",

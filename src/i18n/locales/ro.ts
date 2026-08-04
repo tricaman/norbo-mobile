@@ -1161,6 +1161,12 @@ const ro = {
     removePhoto: "elimină fotografia",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · gratuit",
+      NEW: "nou",
+      BETA: "beta",
+    },
     subtitle: "unelte, alese pentru cine locuiește cu tine",
     forYourPets: "pentru animalele tale",
     forEveryone: "pentru toată lumea",

@@ -139,8 +139,8 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/DogFriendlyPlacesTool"),
       true,
     ),
-    "cat-places": defineLazyTool<"cat-places">(
-      () => import("./impl/CatPlacesTool"),
+    "pet-places": defineLazyTool<"pet-places">(
+      () => import("./impl/PetPlacesTool"),
       true,
     ),
   };

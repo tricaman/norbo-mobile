@@ -1163,6 +1163,12 @@ const hi = {
     removePhoto: "फ़ोटो हटाएँ",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "प्रीमियम · मुफ़्त",
+      NEW: "नया",
+      BETA: "बीटा",
+    },
     subtitle: "आपके साथ रहने वालों के लिए चुने गए उपकरण",
     forYourPets: "अपने पालतू जानवरों के लिए",
     forEveryone: "सभी के लिए",

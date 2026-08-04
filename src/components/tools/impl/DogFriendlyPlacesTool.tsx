@@ -9,7 +9,10 @@ type Inputs = ServiceToolInput<"dog-friendly-places">;
 /**
  * DogFriendlyPlacesTool — thin wrapper over the shared PlacesMapView
  * (the CatPlantToxicityTool precedent: same view, different tool id + kind
- * set). The persisted input is the LAYER SELECTION ONLY — never coordinates.
+ * set). The dog SUPERSET: the dog-only layers (parks, beaches, trails,
+ * dog-friendly venues) plus the shared service layers of `pet-places`, so a
+ * dog owner needs one map only. The persisted input is the LAYER SELECTION
+ * ONLY — never coordinates.
  */
 const DogFriendlyPlacesTool: ToolComponent<"dog-friendly-places"> = ({
   initialInputs,

@@ -23,6 +23,12 @@ const en = {
   },
 
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · free",
+      NEW: "new",
+      BETA: "beta",
+    },
     subtitle: "tools, picked for who lives with you",
     forYourPets: "for your pets",
     forEveryone: "for everyone",

@@ -1137,6 +1137,12 @@ const zh = {
     removePhoto: "移除照片",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "高级 · 免费",
+      NEW: "新",
+      BETA: "测试版",
+    },
     subtitle: "专为您的生活伴侣设计的工具",
     forYourPets: "为您的宠物",
     forEveryone: "为所有人",

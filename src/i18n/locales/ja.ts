@@ -1149,6 +1149,12 @@ const ja = {
     removePhoto: "写真を削除",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "プレミアム · 無料",
+      NEW: "新着",
+      BETA: "ベータ",
+    },
     subtitle: "あなたと暮らす子に合わせたツール",
     forYourPets: "ペット向け",
     forEveryone: "すべての方向け",

@@ -1146,6 +1146,12 @@ const ar = {
     removePhoto: "إزالة الصورة",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "بريميوم · مجانًا",
+      NEW: "جديد",
+      BETA: "بيتا",
+    },
     subtitle: "أدوات، منتقاة لمن يعيش معك",
     forYourPets: "لحيواناتك الأليفة",
     forEveryone: "للجميع",

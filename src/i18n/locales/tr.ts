@@ -1158,6 +1158,12 @@ const tr = {
     removePhoto: "fotoğrafı kaldır",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · ücretsiz",
+      NEW: "yeni",
+      BETA: "beta",
+    },
     subtitle: "seninle yaşayanlara özel araçlar",
     forYourPets: "evcil hayvanların için",
     forEveryone: "herkes için",

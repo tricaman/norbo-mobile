@@ -1166,6 +1166,12 @@ const de = {
     removePhoto: "foto entfernen",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · kostenlos",
+      NEW: "neu",
+      BETA: "beta",
+    },
     subtitle: "Werkzeuge, ausgewählt für deine Mitbewohner",
     forYourPets: "für deine Haustiere",
     forEveryone: "für alle",

@@ -34,13 +34,12 @@ export const KIND_META: Record<
   },
 };
 
-/** Layers of the DOG tool (all on by default). */
-export const DOG_KINDS: PlaceKind[] = [
-  "DOG_PARK",
-  "DOG_BEACH",
-  "DOG_FRIENDLY_VENUE",
-  "DOG_GREEN_AREA",
-  "DOG_TRAIL",
+/**
+ * Layers of the SPECIES-NEUTRAL tool (`pet-places`): the pet services every
+ * owner needs, whatever animal they live with. Nothing here mentions a
+ * species — that is what makes the tool public to all owners.
+ */
+export const PET_SERVICE_KINDS: PlaceKind[] = [
   "VETERINARY",
   "PET_SHOP",
   "PET_GROOMING",
@@ -48,13 +47,23 @@ export const DOG_KINDS: PlaceKind[] = [
   "ANIMAL_BOARDING",
 ];
 
-/** Layers of the CAT tool: what OSM data actually supports for cats. */
-export const CAT_KINDS: PlaceKind[] = [
-  "VETERINARY",
-  "PET_SHOP",
-  "PET_GROOMING",
-  "ANIMAL_SHELTER",
-  "ANIMAL_BOARDING",
+/** The dog-only layers — places that exist BECAUSE the animal is a dog. */
+export const DOG_ONLY_KINDS: PlaceKind[] = [
+  "DOG_PARK",
+  "DOG_BEACH",
+  "DOG_FRIENDLY_VENUE",
+  "DOG_GREEN_AREA",
+  "DOG_TRAIL",
+];
+
+/**
+ * Layers of the DOG tool (`dog-friendly-places`, all on by default): the
+ * superset — dog-only layers PLUS the shared services, so a dog owner still
+ * gets one single map instead of hopping between two tools.
+ */
+export const DOG_KINDS: PlaceKind[] = [
+  ...DOG_ONLY_KINDS,
+  ...PET_SERVICE_KINDS,
 ];
 
 /**

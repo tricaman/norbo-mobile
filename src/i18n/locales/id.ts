@@ -1163,6 +1163,12 @@ const id = {
     removePhoto: "hapus foto",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · gratis",
+      NEW: "baru",
+      BETA: "beta",
+    },
     subtitle: "alat yang dipilih untuk yang tinggal bersamamu",
     forYourPets: "untuk hewanmu",
     forEveryone: "untuk semua orang",

@@ -76,6 +76,9 @@ export default function ToolScreen(): React.JSX.Element {
 
   return (
     <Screen>
+      {/* No badge chip here on purpose: the header title is centered with
+          flex:1 on a single line, so a right-slot chip truncates longer tool
+          names. The badge lives on ToolRow, where discovery happens. */}
       <ScreenHeader title={meta?.title ?? rawToolId} />
       <PremiumGate locked={meta?.locked ?? false}>
         <Suspense fallback={<ToolLoading />}>

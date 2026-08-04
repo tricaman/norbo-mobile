@@ -1155,6 +1155,12 @@ const ru = {
     removePhoto: "удалить фото",
   },
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "премиум · бесплатно",
+      NEW: "новое",
+      BETA: "бета",
+    },
     subtitle: "инструменты, подобранные для тех, кто живёт с вами",
     forYourPets: "для ваших питомцев",
     forEveryone: "для всех",

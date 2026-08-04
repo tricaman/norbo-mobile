@@ -11,12 +11,23 @@ import type { PetCategory } from "@/types/pet.types";
  * (Accept-Language) by the backend — no client-side i18n key lookup. `id` is
  * the single key shared with the contract and the frontend registry.
  */
+/**
+ * ToolBadge — editorial highlight served with a tool, ORTHOGONAL to
+ * `isPremium`/`locked` (the paywall). `PREMIUM_FREE` marks a flagship,
+ * premium-grade tool that is free for everyone. Mirrors the DB enum; a newer
+ * server may serve a value this build doesn't know, so always resolve it
+ * through `getToolBadgeMeta()` (never index a map directly).
+ */
+export type ToolBadge = "PREMIUM_FREE" | "NEW" | "BETA";
+
 export interface ToolMetadata {
   id: ServiceToolId;
   categories: PetCategory[];
   /** Shown regardless of the user's pet categories (even with no pets). */
   crossSpecies: boolean;
   isPremium: boolean;
+  /** Display-only highlight, or null. Never gates access. */
+  badge: ToolBadge | null;
   /**
    * Authoritative, server-computed premium gate for the current user
    * (`isPremium && !entitled`). The client trusts this rather than deciding

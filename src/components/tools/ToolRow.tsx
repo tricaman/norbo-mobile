@@ -1,4 +1,5 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import { ToolBadgeChip } from "@/components/tools/ToolBadgeChip";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import type { ToolMetadata } from "@/types/tool.types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -46,10 +47,11 @@ interface ToolRowProps {
 }
 
 /**
- * ToolRow — a single tool entry: cover, localized title/description, an
- * optional `right` slot, the premium chip, and a chevron. Used both inside the
- * Services "for everyone" card and on the per-category tools screen. Meant to
- * sit inside a `Card` (the surface/divider chrome is the parent's job).
+ * ToolRow — a single tool entry: cover, localized title/description with its
+ * optional editorial badge, an optional `right` slot, the premium chip, and a
+ * chevron. Used both inside the Services "for everyone" card and on the
+ * per-category tools screen. Meant to sit inside a `Card` (the surface/divider
+ * chrome is the parent's job).
  */
 export function ToolRow({ tool, onPress, right }: ToolRowProps): React.JSX.Element {
   const { theme } = useUnistyles();
@@ -62,9 +64,14 @@ export function ToolRow({ tool, onPress, right }: ToolRowProps): React.JSX.Eleme
     >
       <ToolCover tool={tool} />
       <View style={styles.rowContent}>
-        <Text style={styles.title} numberOfLines={1}>
-          {tool.title}
-        </Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.title} numberOfLines={1}>
+            {tool.title}
+          </Text>
+          {/* Editorial highlight (e.g. "premium · free"); renders nothing
+              when the tool has no badge. */}
+          <ToolBadgeChip badge={tool.badge} />
+        </View>
         <Text style={styles.caption} numberOfLines={2}>
           {tool.description}
         </Text>
@@ -105,10 +112,16 @@ const styles = StyleSheet.create((theme) => ({
     backgroundColor: theme.colors.primarySoft,
   },
   rowContent: { flex: 1, gap: 2 },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.sm,
+  },
   title: {
     ...theme.typography.subhead,
     color: theme.colors.textPrimary,
     textTransform: "lowercase",
+    flexShrink: 1,
   },
   caption: {
     ...theme.typography.footnote,

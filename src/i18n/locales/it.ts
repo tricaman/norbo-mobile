@@ -24,6 +24,12 @@ const it = {
   },
 
   servicesHub: {
+    // Editorial badges on a tool row (BADGE_META label keys).
+    badge: {
+      PREMIUM_FREE: "premium · gratis",
+      NEW: "novità",
+      BETA: "beta",
+    },
     subtitle: "strumenti, scelti per chi vive con te",
     forYourPets: "per i tuoi animali",
     forEveryone: "per tutti",

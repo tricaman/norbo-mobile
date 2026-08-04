@@ -47,8 +47,9 @@ export interface PlacesMapViewProps {
 
 /**
  * PlacesMapView — the species-agnostic places map engine, shared by
- * `dog-friendly-places` and `cat-places` (the FoodPlantToxicityView /
- * CatPlantToxicityTool precedent: same view, different tool id + kind set).
+ * `pet-places` (services only, every owner) and `dog-friendly-places` (the dog
+ * superset) — the FoodPlantToxicityView / CatPlantToxicityTool precedent: same
+ * view, different tool id + kind set.
  *
  * Everything species-specific enters via props; persistence/premium/telemetry
  * stay in the loader + thin tool wrappers, keeping tools pure.
