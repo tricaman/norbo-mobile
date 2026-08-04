@@ -140,6 +140,11 @@ const ro = {
       GENERAL: "general",
     },
   },
+  notificationsInbox: {
+    title: "notificari",
+    empty: "inca nu sunt notificari",
+    emptySubtitle: "notificarile vor aparea aici",
+  },
   auth: {
     signOut: "deconectare",
     otpTitle: "introduceti codul",

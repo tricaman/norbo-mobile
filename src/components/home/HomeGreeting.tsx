@@ -1,12 +1,15 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useNotificationsUnreadCount } from "@/hooks/useNotificationsInbox";
 import { petEventsApi } from "@/services/pet-events.api";
 import { useAuthStore } from "@/stores/auth.store";
 import { useQuery } from "@tanstack/react-query";
 import { isToday, parseISO } from "date-fns";
+import { useRouter } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface HomeGreetingProps {
@@ -24,7 +27,9 @@ interface HomeGreetingProps {
 export function HomeGreeting({ onPressAdd }: HomeGreetingProps) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
+  const router = useRouter();
   const user = useAuthStore((s) => s.user);
+  const unread = useNotificationsUnreadCount().data ?? 0;
 
   const query = useQuery({
     queryKey: ["upcoming-events"],
@@ -57,29 +62,83 @@ export function HomeGreeting({ onPressAdd }: HomeGreetingProps) {
       title={greeting}
       subtitle={subtitle}
       right={
-        <NorboPressable
-          style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
-          scale="row"
-          haptic="medium"
-          onPress={onPressAdd}
-        >
-          <IconSymbol
-            name="plus"
-            size={18}
-            tintColor={theme.colors.textOnPrimary}
-          />
-        </NorboPressable>
+        <View style={styles.actions}>
+          <NorboPressable
+            style={[styles.iconBtn, { backgroundColor: theme.colors.surface2 }]}
+            scale="row"
+            haptic="light"
+            onPress={() => router.push("/notifications")}
+          >
+            <IconSymbol
+              name={unread > 0 ? "bell.fill" : "bell"}
+              size={18}
+              tintColor={theme.colors.textPrimary}
+            />
+            {unread > 0 ? (
+              <View
+                style={[styles.badge, { backgroundColor: theme.colors.primary }]}
+              >
+                <Text
+                  style={[styles.badgeText, { color: theme.colors.textOnPrimary }]}
+                  numberOfLines={1}
+                >
+                  {unread}
+                </Text>
+              </View>
+            ) : null}
+          </NorboPressable>
+          <NorboPressable
+            style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
+            scale="row"
+            haptic="medium"
+            onPress={onPressAdd}
+          >
+            <IconSymbol
+              name="plus"
+              size={18}
+              tintColor={theme.colors.textOnPrimary}
+            />
+          </NorboPressable>
+        </View>
       }
     />
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
+  actions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.sm,
+  },
   addBtn: {
     width: 38,
     height: 38,
     borderRadius: 19,
     alignItems: "center",
     justifyContent: "center",
+  },
+  iconBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badge: {
+    position: "absolute",
+    top: 2,
+    right: 2,
+    borderRadius: theme.radius.pill,
+    paddingHorizontal: 4,
+    minWidth: 16,
+    height: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    fontSize: 10,
+    lineHeight: 12,
+    fontWeight: "700",
   },
 }));

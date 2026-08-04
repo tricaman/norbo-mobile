@@ -80,7 +80,7 @@ export async function initNotifications(): Promise<void> {
  * The returned value is an app route (e.g. `/news/abc`); callers that need a
  * URL scheme build `norbo://<route without leading slash>` from it.
  */
-function getNavTargetFromData(
+export function getNavTargetFromData(
   data: Record<string, unknown> | undefined,
 ): string | null {
   if (!data) return null;

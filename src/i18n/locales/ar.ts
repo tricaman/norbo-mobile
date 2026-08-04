@@ -140,6 +140,11 @@ const ar = {
       GENERAL: "عام",
     },
   },
+  notificationsInbox: {
+    title: "الإشعارات",
+    empty: "لا توجد إشعارات بعد",
+    emptySubtitle: "ستظهر الإشعارات هنا",
+  },
   auth: {
     signOut: "تسجيل الخروج",
     otpTitle: "أدخل الكود",

@@ -140,6 +140,11 @@ const zh = {
       GENERAL: "综合",
     },
   },
+  notificationsInbox: {
+    title: "通知",
+    empty: "暂无通知",
+    emptySubtitle: "通知将显示在这里",
+  },
   auth: {
     signOut: "登出",
     otpTitle: "输入代码",

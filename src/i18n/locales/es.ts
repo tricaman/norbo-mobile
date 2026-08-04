@@ -140,6 +140,11 @@ const es = {
       GENERAL: "general",
     },
   },
+  notificationsInbox: {
+    title: "notificaciones",
+    empty: "aún no hay notificaciones",
+    emptySubtitle: "las notificaciones aparecerán aquí",
+  },
   auth: {
     signOut: "cerrar sesión",
     otpTitle: "ingrese el código",

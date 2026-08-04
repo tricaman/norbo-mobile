@@ -140,6 +140,11 @@ const ur = {
       GENERAL: "عام",
     },
   },
+  notificationsInbox: {
+    title: "اطلاعات",
+    empty: "ابھی کوئی اطلاع نہیں",
+    emptySubtitle: "اطلاعات یہاں ظاہر ہوں گی",
+  },
   auth: {
     signOut: "سائن آؤٹ کریں",
     otpTitle: "کوڈ درج کریں",

@@ -140,6 +140,11 @@ const de = {
       GENERAL: "allgemein",
     },
   },
+  notificationsInbox: {
+    title: "benachrichtigungen",
+    empty: "noch keine benachrichtigungen",
+    emptySubtitle: "benachrichtigungen erscheinen hier",
+  },
   auth: {
     signOut: "abmelden",
     otpTitle: "code eingeben",

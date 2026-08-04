@@ -140,6 +140,11 @@ const hi = {
       GENERAL: "सामान्य",
     },
   },
+  notificationsInbox: {
+    title: "सूचनाएँ",
+    empty: "अभी कोई सूचना नहीं",
+    emptySubtitle: "सूचनाएँ यहाँ दिखाई देंगी",
+  },
   auth: {
     signOut: "साइन आउट",
     otpTitle: "कोड दर्ज करें",

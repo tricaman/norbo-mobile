@@ -140,6 +140,11 @@ const tr = {
       GENERAL: "genel",
     },
   },
+  notificationsInbox: {
+    title: "bildirimler",
+    empty: "henüz bildirim yok",
+    emptySubtitle: "bildirimler burada görünecek",
+  },
   auth: {
     signOut: "oturumu kapat",
     otpTitle: "kodu girin",

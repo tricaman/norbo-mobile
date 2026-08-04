@@ -140,6 +140,11 @@ const id = {
       GENERAL: "umum",
     },
   },
+  notificationsInbox: {
+    title: "notifikasi",
+    empty: "belum ada notifikasi",
+    emptySubtitle: "notifikasi akan muncul di sini",
+  },
   auth: {
     signOut: "keluar",
     otpTitle: "masukkan kode",

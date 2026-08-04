@@ -576,6 +576,11 @@ const en = {
       GENERAL: "general",
     },
   },
+  notificationsInbox: {
+    title: "notifications",
+    empty: "no notifications yet",
+    emptySubtitle: "notifications will appear here",
+  },
   auth: {
     signOut: "sign out",
     otpTitle: "enter code",

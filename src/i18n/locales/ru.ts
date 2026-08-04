@@ -140,6 +140,11 @@ const ru = {
       GENERAL: "общее",
     },
   },
+  notificationsInbox: {
+    title: "уведомления",
+    empty: "уведомлений пока нет",
+    emptySubtitle: "уведомления появятся здесь",
+  },
   auth: {
     signOut: "выход",
     otpTitle: "введите код",

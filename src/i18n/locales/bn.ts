@@ -140,6 +140,11 @@ const bn = {
       GENERAL: "সাধারণ",
     },
   },
+  notificationsInbox: {
+    title: "বিজ্ঞপ্তি",
+    empty: "এখনও কোনো বিজ্ঞপ্তি নেই",
+    emptySubtitle: "বিজ্ঞপ্তি এখানে দেখা যাবে",
+  },
   auth: {
     signOut: "সাইন আউট করুন",
     otpTitle: "কোড প্রবেশ করুন",

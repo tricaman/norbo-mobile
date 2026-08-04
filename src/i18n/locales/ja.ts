@@ -140,6 +140,11 @@ const ja = {
       GENERAL: "一般",
     },
   },
+  notificationsInbox: {
+    title: "通知",
+    empty: "通知はまだありません",
+    emptySubtitle: "通知はここに表示されます",
+  },
   auth: {
     signOut: "サインアウト",
     otpTitle: "コードを入力",

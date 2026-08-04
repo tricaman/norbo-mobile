@@ -583,6 +583,11 @@ const it = {
       GENERAL: "generale",
     },
   },
+  notificationsInbox: {
+    title: "notifiche",
+    empty: "ancora nessuna notifica",
+    emptySubtitle: "le notifiche appariranno qui",
+  },
 
   auth: {
     signOut: "esci",
