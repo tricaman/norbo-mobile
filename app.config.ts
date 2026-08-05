@@ -56,7 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: appName,
   slug: "norbo",
-  version: "1.6.0",
+  version: "1.7.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "norbo",
@@ -65,9 +65,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     icon: "./assets/images/icon.png",
     supportsTablet: true,
     bundleIdentifier,
-    // Build 1 (1.6.0) è su TestFlight prod ma spedita SENZA l'entitlement
-    // aps-environment → nessuna push su iPhone. La 2 è la prima con il fix.
-    buildNumber: "2",
+    // Numerazione PER-APP e indipendente da UAT: la fonte di verità è lo store
+    // dell'app prod, non questo file. Ultimo su TestFlight prod: 2 (1.6.0).
+    buildNumber: "3",
     googleServicesFile: `./${firebaseDir}/GoogleService-Info.plist`,
     // Adds the `com.apple.developer.applesignin` entitlement (["Default"]) at
     // prebuild for every variant — required by the native Sign in with Apple
@@ -113,7 +113,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 14,
+    versionCode: 16,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
     // Google Maps SDK key (tool "luoghi dog friendly") — SOLO Android: iOS usa
     // Apple Maps (PROVIDER_DEFAULT) e non richiede chiavi. ECCEZIONE alla
