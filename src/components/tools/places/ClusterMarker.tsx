@@ -19,10 +19,23 @@ function ClusterMarkerInner({
   longitude,
   onPress,
 }: ClusterMarkerProps) {
+  // react-native-maps rasterizes a custom marker ONCE when tracksViewChanges
+  // is false. On Android that first snapshot can happen before the child
+  // Text has laid out, leaving an empty bubble with no number in it.
+  // Tracking for a beat and then freezing keeps the FPS win (no per-frame
+  // re-raster) while guaranteeing the count is actually captured.
+  // Keyed on `count` so a re-clustered bubble re-renders its new number.
+  const [tracks, setTracks] = React.useState(true);
+  React.useEffect(() => {
+    setTracks(true);
+    const id = setTimeout(() => setTracks(false), 400);
+    return () => clearTimeout(id);
+  }, [count]);
+
   return (
     <Marker
       coordinate={{ latitude, longitude }}
-      tracksViewChanges={false}
+      tracksViewChanges={tracks}
       anchor={{ x: 0.5, y: 0.5 }}
       onPress={() => onPress(clusterId, latitude, longitude)}
     >

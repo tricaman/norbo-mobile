@@ -1117,6 +1117,14 @@ const id = {
       },
       dataDisclaimer:
         "data komunitas openstreetmap — mungkin tidak lengkap atau kedaluwarsa.",
+      search: {
+        placeholder: "cari tempat atau alamat",
+        sectionPlaces: "tempat",
+        sectionAddresses: "alamat",
+        cityCount: "{{count}} tempat",
+        empty: "tidak ada hasil — coba nama kotanya",
+        degraded: "pencarian alamat tidak tersedia — hanya tempat kami",
+      },
       addPlace: {
         title: "tambah tempat",
         positionHint: "tempat akan ditambahkan di tengah peta:",

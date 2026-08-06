@@ -434,6 +434,14 @@ const it = {
         reportIssue: "segnala un problema",
       },
       dataDisclaimer: "dati della community openstreetmap — possono essere incompleti o non aggiornati.",
+      search: {
+        placeholder: "cerca un luogo o un indirizzo",
+        sectionPlaces: "luoghi",
+        sectionAddresses: "indirizzi",
+        cityCount: "{{count}} luoghi",
+        empty: "nessun risultato — prova con il nome del comune",
+        degraded: "ricerca indirizzi non disponibile — mostriamo solo i nostri luoghi",
+      },
       addPlace: {
         title: "aggiungi un luogo",
         positionHint: "il luogo sarà aggiunto al centro della mappa:",

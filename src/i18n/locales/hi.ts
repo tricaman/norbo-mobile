@@ -1117,6 +1117,14 @@ const hi = {
       },
       dataDisclaimer:
         "openstreetmap समुदाय का डेटा — अधूरा या पुराना हो सकता है।",
+      search: {
+        placeholder: "स्थान या पता खोजें",
+        sectionPlaces: "स्थान",
+        sectionAddresses: "पते",
+        cityCount: "{{count}} स्थान",
+        empty: "कोई परिणाम नहीं — शहर का नाम आज़माएं",
+        degraded: "पता खोज उपलब्ध नहीं — केवल हमारे स्थान",
+      },
       addPlace: {
         title: "स्थान जोड़ें",
         positionHint: "स्थान नक्शे के केंद्र में जोड़ा जाएगा:",

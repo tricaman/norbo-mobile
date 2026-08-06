@@ -1111,6 +1111,14 @@ const ur = {
       },
       dataDisclaimer:
         "openstreetmap کمیونٹی ڈیٹا — نامکمل یا پرانا ہو سکتا ہے۔",
+      search: {
+        placeholder: "جگہ یا پتہ تلاش کریں",
+        sectionPlaces: "مقامات",
+        sectionAddresses: "پتے",
+        cityCount: "{{count}} مقامات",
+        empty: "کوئی نتیجہ نہیں — شہر کا نام آزمائیں",
+        degraded: "پتہ تلاش دستیاب نہیں — صرف ہمارے مقامات",
+      },
       addPlace: {
         title: "جگہ شامل کریں",
         positionHint: "جگہ نقشے کے مرکز میں شامل ہوگی:",

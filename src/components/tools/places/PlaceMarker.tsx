@@ -30,10 +30,19 @@ function PlaceMarkerInner({
   onPress,
 }: PlaceMarkerProps) {
   const { theme } = useUnistyles();
+  // Track for one beat, then freeze — see ClusterMarker for the full
+  // reasoning. Without this the pin can rasterize before its icon glyph has
+  // laid out, leaving an empty circle.
+  const [tracks, setTracks] = React.useState(true);
+  React.useEffect(() => {
+    const t = setTimeout(() => setTracks(false), 400);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <Marker
       coordinate={{ latitude, longitude }}
-      tracksViewChanges={false}
+      tracksViewChanges={tracks}
       anchor={{ x: 0.5, y: 0.5 }}
       onPress={() => onPress(id)}
     >

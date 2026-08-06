@@ -4,6 +4,12 @@ import { ClusterMarker } from "@/components/tools/places/ClusterMarker";
 import { PlaceDetailSheet } from "@/components/tools/places/PlaceDetailSheet";
 import { PlaceKindFilterBar } from "@/components/tools/places/PlaceKindFilterBar";
 import { PlaceMarker } from "@/components/tools/places/PlaceMarker";
+import { PlaceSearchBar } from "@/components/tools/places/PlaceSearchBar";
+import {
+  PlaceSearchResults,
+  type SearchTarget,
+} from "@/components/tools/places/PlaceSearchResults";
+import { useAddressSearch } from "@/components/tools/places/useAddressSearch";
 import { useClusters } from "@/components/tools/places/useClusters";
 import { useDebouncedRegion } from "@/components/tools/places/useDebouncedRegion";
 import { useUserLocation } from "@/components/tools/places/useUserLocation";
@@ -19,7 +25,7 @@ import { toast } from "@/utils/toast";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Linking, Text, View } from "react-native";
+import { Alert, Keyboard, Linking, Text, View } from "react-native";
 import MapView, { Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
@@ -102,6 +108,35 @@ export function PlacesMapView({
 
   const location = useUserLocation();
 
+  // Search. The map center is passed as a tiebreaker so "veterinario" ranks
+  // nearby vets first; it is never used as a filter.
+  const search = useAddressSearch(kinds, {
+    lat: region.latitude,
+    lng: region.longitude,
+  });
+  const searchOpen =
+    search.status !== "idle" &&
+    (search.cities.length > 0 ||
+      search.places.length > 0 ||
+      search.addresses.length > 0 ||
+      search.status === "done" ||
+      search.status === "degraded");
+
+  function dismissSearch() {
+    Keyboard.dismiss();
+    search.clear();
+  }
+
+  function onPickSearchResult(target: SearchTarget) {
+    // Clearing before animating kills the dropdown without a flash, and
+    // stops it reopening on the next render (the SpeciesStep discipline).
+    search.clear();
+    Keyboard.dismiss();
+    animateTo(target.lat, target.lng, target.spanDeg);
+    // No refetch needed here: animateToRegion settles into
+    // onRegionChangeComplete, which drives the debounced nearby query.
+  }
+
   function animateTo(latitude: number, longitude: number, delta: number) {
     mapRef.current?.animateToRegion(
       { latitude, longitude, latitudeDelta: delta, longitudeDelta: delta },
@@ -167,6 +202,7 @@ export function PlacesMapView({
         showsMyLocationButton={false}
         toolbarEnabled={false}
         onRegionChangeComplete={setRegion}
+        onPress={dismissSearch}
       >
         {clusters.map((c) => {
           const [lng, lat] = c.geometry.coordinates;
@@ -205,11 +241,36 @@ export function PlacesMapView({
         ) : null}
       </MapView>
 
-      <PlaceKindFilterBar
-        allowedKinds={allowedKinds}
-        value={kinds}
-        onChange={setKinds}
-      />
+      {/* Single absolute column for everything that floats at the top.
+          `box-none` is load-bearing: without it this full-width container
+          would swallow map pans in its empty gaps. */}
+      <View style={styles.topOverlay} pointerEvents="box-none">
+        <View style={styles.inset}>
+          <PlaceSearchBar
+            value={search.query}
+            onChangeText={search.setQuery}
+            onSubmit={() => void search.submit()}
+            onClear={search.clear}
+            loading={search.status === "loading"}
+          />
+        </View>
+        <PlaceKindFilterBar
+          allowedKinds={allowedKinds}
+          value={kinds}
+          onChange={setKinds}
+        />
+        {searchOpen ? (
+          <View style={styles.inset}>
+            <PlaceSearchResults
+              cities={search.cities}
+              places={search.places}
+              addresses={search.addresses}
+              status={search.status}
+              onPick={onPickSearchResult}
+            />
+          </View>
+        ) : null}
+      </View>
 
       {/* ODbL: attribution must be visible on the map surface. */}
       <View style={styles.attribution}>
@@ -273,6 +334,19 @@ export function PlacesMapView({
 
 const styles = StyleSheet.create((theme) => ({
   root: { flex: 1 },
+  // No horizontal padding here: the chip row scrolls edge-to-edge and would
+  // be clipped by it. The inset lives on the search bar and results panel.
+  topOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingTop: theme.spacing.sm,
+    gap: theme.spacing.sm,
+  },
+  inset: {
+    marginHorizontal: theme.spacing.lg,
+  },
   attribution: {
     position: "absolute",
     bottom: theme.spacing.sm,

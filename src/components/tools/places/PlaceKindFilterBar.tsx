@@ -104,11 +104,9 @@ export function PlaceKindFilterBar({
 }
 
 const styles = StyleSheet.create((theme) => ({
+  // Positioning is the parent's job: PlacesMapView stacks this under the
+  // search bar in a single absolute column, so this must stay in flow.
   bar: {
-    position: "absolute",
-    top: theme.spacing.sm,
-    left: 0,
-    right: 0,
     flexGrow: 0,
   },
   content: {

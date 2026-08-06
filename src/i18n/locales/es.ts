@@ -1119,6 +1119,14 @@ const es = {
       },
       dataDisclaimer:
         "datos de la comunidad de openstreetmap — pueden estar incompletos o desactualizados.",
+      search: {
+        placeholder: "busca un lugar o una dirección",
+        sectionPlaces: "lugares",
+        sectionAddresses: "direcciones",
+        cityCount: "{{count}} lugares",
+        empty: "sin resultados — prueba con el nombre del municipio",
+        degraded: "búsqueda de direcciones no disponible — solo nuestros lugares",
+      },
       addPlace: {
         title: "añadir un lugar",
         positionHint: "el lugar se añadirá en el centro del mapa:",

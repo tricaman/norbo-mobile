@@ -1128,6 +1128,14 @@ const fr = {
       },
       dataDisclaimer:
         "données de la communauté openstreetmap — parfois incomplètes ou obsolètes.",
+      search: {
+        placeholder: "rechercher un lieu ou une adresse",
+        sectionPlaces: "lieux",
+        sectionAddresses: "adresses",
+        cityCount: "{{count}} lieux",
+        empty: "aucun résultat — essayez le nom de la commune",
+        degraded: "recherche d'adresses indisponible — seulement nos lieux",
+      },
       addPlace: {
         title: "ajouter un lieu",
         positionHint: "le lieu sera ajouté au centre de la carte :",

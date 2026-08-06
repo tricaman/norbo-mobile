@@ -1099,6 +1099,14 @@ const ar = {
         reportIssue: "الإبلاغ عن مشكلة",
       },
       dataDisclaimer: "بيانات مجتمع openstreetmap — قد تكون ناقصة أو قديمة.",
+      search: {
+        placeholder: "ابحث عن مكان أو عنوان",
+        sectionPlaces: "أماكن",
+        sectionAddresses: "عناوين",
+        cityCount: "{{count}} مكان",
+        empty: "لا نتائج — جرّب اسم المدينة",
+        degraded: "البحث عن العناوين غير متاح — نعرض أماكننا فقط",
+      },
       addPlace: {
         title: "أضف مكاناً",
         positionHint: "سيُضاف المكان في منتصف الخريطة:",

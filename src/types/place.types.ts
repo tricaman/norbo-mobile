@@ -50,6 +50,47 @@ export interface PlacesNearbyResponse {
   attribution: string;
 }
 
+/**
+ * A search result. `spanDeg` is how wide the map should be after jumping —
+ * every result type carries it (a shop zooms in tight, a city fits its own
+ * spread, a geocoded address uses Google's viewport), so the map has ONE
+ * way to move regardless of where the result came from.
+ */
+export interface PlaceSearchHit {
+  id: string;
+  kind: PlaceKind;
+  name: string;
+  city: string | null;
+  lat: number;
+  lng: number;
+  spanDeg: number;
+}
+
+export interface CitySearchHit {
+  city: string;
+  region: string | null;
+  lat: number;
+  lng: number;
+  /** How many of our places sit there — shown as the subtitle. */
+  count: number;
+  spanDeg: number;
+}
+
+export interface PlaceSearchResponse {
+  places: PlaceSearchHit[];
+  cities: CitySearchHit[];
+  /** False = our data didn't answer well; the client may try a geocoder. */
+  confident: boolean;
+}
+
+/** A geocoded address (Apple on iOS, Google proxy on Android). */
+export interface GeocodeResult {
+  formattedAddress: string;
+  lat: number;
+  lng: number;
+  spanDeg: number;
+}
+
 /** Everything the detail sheet renders — the /places/:id projection. */
 export interface PlaceDetail {
   id: string;

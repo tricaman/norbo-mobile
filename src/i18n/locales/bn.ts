@@ -1115,6 +1115,14 @@ const bn = {
       },
       dataDisclaimer:
         "openstreetmap কমিউনিটির তথ্য — অসম্পূর্ণ বা পুরনো হতে পারে।",
+      search: {
+        placeholder: "স্থান বা ঠিকানা খুঁজুন",
+        sectionPlaces: "স্থান",
+        sectionAddresses: "ঠিকানা",
+        cityCount: "{{count}}টি স্থান",
+        empty: "কোনো ফল নেই — শহরের নাম চেষ্টা করুন",
+        degraded: "ঠিকানা অনুসন্ধান অনুপলব্ধ — শুধু আমাদের স্থান",
+      },
       addPlace: {
         title: "স্থান যোগ করুন",
         positionHint: "স্থানটি মানচিত্রের কেন্দ্রে যোগ হবে:",

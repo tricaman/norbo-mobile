@@ -1115,6 +1115,14 @@ const ro = {
       },
       dataDisclaimer:
         "date din comunitatea openstreetmap — pot fi incomplete sau învechite.",
+      search: {
+        placeholder: "caută un loc sau o adresă",
+        sectionPlaces: "locuri",
+        sectionAddresses: "adrese",
+        cityCount: "{{count}} locuri",
+        empty: "niciun rezultat — încearcă numele localității",
+        degraded: "căutarea adreselor indisponibilă — doar locurile noastre",
+      },
       addPlace: {
         title: "adaugă un loc",
         positionHint: "locul va fi adăugat în centrul hărții:",

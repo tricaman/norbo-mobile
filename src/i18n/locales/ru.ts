@@ -1109,6 +1109,14 @@ const ru = {
       },
       dataDisclaimer:
         "данные сообщества openstreetmap — могут быть неполными или устаревшими.",
+      search: {
+        placeholder: "поиск места или адреса",
+        sectionPlaces: "места",
+        sectionAddresses: "адреса",
+        cityCount: "{{count}} мест",
+        empty: "ничего не найдено — попробуйте название города",
+        degraded: "поиск адресов недоступен — показываем только наши места",
+      },
       addPlace: {
         title: "добавить место",
         positionHint: "место будет добавлено в центре карты:",

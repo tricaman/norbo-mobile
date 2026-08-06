@@ -1103,6 +1103,14 @@ const ja = {
       },
       dataDisclaimer:
         "openstreetmapコミュニティのデータ — 不完全または古い場合があります。",
+      search: {
+        placeholder: "場所や住所を検索",
+        sectionPlaces: "スポット",
+        sectionAddresses: "住所",
+        cityCount: "{{count}}件",
+        empty: "該当なし — 市町村名でお試しください",
+        degraded: "住所検索は利用できません — 登録スポットのみ表示",
+      },
       addPlace: {
         title: "場所を追加",
         positionHint: "場所は地図の中心に追加されます：",

@@ -1090,6 +1090,14 @@ const zh = {
         reportIssue: "报告问题",
       },
       dataDisclaimer: "openstreetmap 社区数据 — 可能不完整或过时。",
+      search: {
+        placeholder: "搜索地点或地址",
+        sectionPlaces: "地点",
+        sectionAddresses: "地址",
+        cityCount: "{{count}} 个地点",
+        empty: "没有结果 — 试试城市名称",
+        degraded: "地址搜索不可用 — 仅显示我们的地点",
+      },
       addPlace: {
         title: "添加地点",
         positionHint: "地点将添加在地图中心：",

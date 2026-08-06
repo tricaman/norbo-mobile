@@ -1121,6 +1121,14 @@ const de = {
       },
       dataDisclaimer:
         "community-daten von openstreetmap — können unvollständig oder veraltet sein.",
+      search: {
+        placeholder: "ort oder adresse suchen",
+        sectionPlaces: "orte",
+        sectionAddresses: "adressen",
+        cityCount: "{{count}} orte",
+        empty: "keine treffer — versuche den namen der stadt",
+        degraded: "adresssuche nicht verfügbar — nur unsere orte",
+      },
       addPlace: {
         title: "ort hinzufügen",
         positionHint: "der ort wird in der kartenmitte hinzugefügt:",

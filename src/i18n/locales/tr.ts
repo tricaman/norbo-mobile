@@ -1112,6 +1112,14 @@ const tr = {
       },
       dataDisclaimer:
         "openstreetmap topluluk verileri — eksik veya güncel olmayabilir.",
+      search: {
+        placeholder: "yer veya adres ara",
+        sectionPlaces: "yerler",
+        sectionAddresses: "adresler",
+        cityCount: "{{count}} yer",
+        empty: "sonuç yok — şehir adını deneyin",
+        degraded: "adres arama kullanılamıyor — yalnızca kendi yerlerimiz",
+      },
       addPlace: {
         title: "yer ekle",
         positionHint: "yer, haritanın merkezine eklenecek:",

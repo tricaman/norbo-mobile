@@ -428,6 +428,14 @@ const en = {
         reportIssue: "report an issue",
       },
       dataDisclaimer: "community data from openstreetmap — may be incomplete or out of date.",
+      search: {
+        placeholder: "search a place or address",
+        sectionPlaces: "places",
+        sectionAddresses: "addresses",
+        cityCount: "{{count}} places",
+        empty: "no results — try the name of the town",
+        degraded: "address search unavailable — showing our places only",
+      },
       addPlace: {
         title: "add a place",
         positionHint: "the place will be added at the map center:",
