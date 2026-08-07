@@ -416,6 +416,8 @@ const en = {
       },
       nearMe: "near me",
       zoomIn: "zoom in to see all places",
+      // Android ONLY: on iOS no message may precede the system prompt (App
+      // Review 5.1.1(iv)); the "why" lives in Info.plist.
       locationRationale: "we use your location only to center the map on places near you. it is never stored or shared.",
       locationDenied: "location unavailable — enable it in settings",
       detail: {

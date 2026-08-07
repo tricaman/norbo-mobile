@@ -25,7 +25,7 @@ import { toast } from "@/utils/toast";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Keyboard, Linking, Text, View } from "react-native";
+import { Alert, Keyboard, Linking, Platform, Text, View } from "react-native";
 import MapView, { Polyline, PROVIDER_DEFAULT } from "react-native-maps";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
@@ -175,20 +175,24 @@ export function PlacesMapView({
         });
       }
     };
-    if (location.granted) {
+    // iOS: MAI un messaggio custom prima del prompt di sistema. App Review ha
+    // rifiutato la 1.8.0 (build 4) il 2026-08-07 per guideline 5.1.1(iv): un
+    // dialog che permette di rimandare la richiesta con "annulla" è una
+    // violazione — dopo il messaggio l'utente DEVE arrivare al prompt. Il
+    // "perché" sta in NSLocationWhenInUseUsageDescription (app.config.ts), che
+    // iOS mostra dentro il prompt stesso; il tap sul FAB "vicino a me" è già
+    // l'intento esplicito. Non reintrodurre una rationale qui, nemmeno con un
+    // solo bottone.
+    if (location.granted || Platform.OS === "ios") {
       await locate();
       return;
     }
-    // Rationale BEFORE the system prompt (Apple HIG; materially improves
-    // grant rates). Never auto-prompted on mount.
-    Alert.alert(
-      t("tools.places.nearMe"),
-      t("tools.places.locationRationale"),
-      [
-        { text: t("common.cancel"), style: "cancel" },
-        { text: t("common.continue"), onPress: () => void locate() },
-      ],
-    );
+    // Android: il prompt di sistema non mostra alcuna motivazione e le policy
+    // Play raccomandano una rationale in-context prima della richiesta.
+    Alert.alert(t("tools.places.nearMe"), t("tools.places.locationRationale"), [
+      { text: t("common.cancel"), style: "cancel" },
+      { text: t("common.continue"), onPress: () => void locate() },
+    ]);
   }
 
   return (

@@ -422,6 +422,8 @@ const it = {
       },
       nearMe: "vicino a me",
       zoomIn: "avvicina la mappa per vedere tutti i luoghi",
+      // SOLO Android: su iOS nessun messaggio può precedere il prompt di
+      // sistema (App Review 5.1.1(iv)), il "perché" sta in Info.plist.
       locationRationale: "usiamo la tua posizione solo per centrare la mappa sui luoghi vicino a te. non viene mai salvata né condivisa.",
       locationDenied: "posizione non disponibile — attivala nelle impostazioni",
       detail: {

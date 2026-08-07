@@ -66,8 +66,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     bundleIdentifier,
     // Numerazione PER-APP e indipendente da UAT: la fonte di verità è lo store
-    // dell'app prod, non questo file. Ultimo su TestFlight prod: 2 (1.6.0).
-    buildNumber: "4",
+    // dell'app prod, non questo file. Ultimo su TestFlight prod: 4 (1.8.0,
+    // rifiutata in review per 5.1.1(iv) — vedi PlacesMapView).
+    buildNumber: "5",
     googleServicesFile: `./${firebaseDir}/GoogleService-Info.plist`,
     // Adds the `com.apple.developer.applesignin` entitlement (["Default"]) at
     // prebuild for every variant — required by the native Sign in with Apple

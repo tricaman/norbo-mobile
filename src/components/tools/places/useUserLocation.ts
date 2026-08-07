@@ -6,7 +6,9 @@ import React from "react";
  *
  * Rules (the feature is won or lost here):
  * - NEVER auto-prompts on mount — `request()` is called from the "near me"
- *   FAB, after the in-app rationale.
+ *   FAB. Su iOS il tap porta DIRETTAMENTE al prompt di sistema: nessun
+ *   messaggio custom prima (guideline 5.1.1(iv), vedi PlacesMapView).
+ *   La rationale in-app resta solo su Android.
  * - Granted → last-known position first (instant recenter), then a Balanced
  *   `getCurrentPositionAsync` refine. NEVER `watchPositionAsync` — needless
  *   battery drain for a static map.
