@@ -1210,6 +1210,14 @@ const pt = {
       "esta versão do norbo não é mais suportada. atualize para a versão mais recente para continuar.",
     updateNow: "atualizar agora",
     later: "mais tarde",
+    downloadingTitle: "atualizando...",
+    downloadingBody: "baixando a versão mais recente. mantenha o app aberto.",
+    readyTitle: "atualização pronta",
+    readyBody: "reinicie o app para concluir a instalação.",
+    restartNow: "reiniciar agora",
+    failedTitle: "falha na atualização",
+    failedBody: "algo deu errado durante a atualização. tente novamente.",
+    retry: "tentar novamente",
   },
 } as const;
 

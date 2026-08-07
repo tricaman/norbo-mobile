@@ -1222,6 +1222,14 @@ const fr = {
       "cette version de norbo n'est plus prise en charge. mettez à jour vers la dernière version pour continuer.",
     updateNow: "mettre à jour",
     later: "plus tard",
+    downloadingTitle: "mise à jour...",
+    downloadingBody: "téléchargement de la dernière version. garde l'app ouverte.",
+    readyTitle: "mise à jour prête",
+    readyBody: "redémarre l'app pour terminer l'installation.",
+    restartNow: "redémarrer",
+    failedTitle: "échec de la mise à jour",
+    failedBody: "un problème est survenu pendant la mise à jour. réessaie.",
+    retry: "réessayer",
   },
 } as const;
 

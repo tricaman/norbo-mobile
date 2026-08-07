@@ -1196,6 +1196,14 @@ const ja = {
       "このバージョンのnorboはサポートされていません。続けるには最新バージョンにアップデートしてください。",
     updateNow: "今すぐアップデート",
     later: "後で",
+    downloadingTitle: "更新中...",
+    downloadingBody: "最新バージョンをダウンロードしています。アプリを開いたままにしてください。",
+    readyTitle: "更新の準備ができました",
+    readyBody: "インストールを完了するにはアプリを再起動してください。",
+    restartNow: "今すぐ再起動",
+    failedTitle: "更新に失敗しました",
+    failedBody: "更新中に問題が発生しました。もう一度お試しください。",
+    retry: "再試行",
   },
 } as const;
 

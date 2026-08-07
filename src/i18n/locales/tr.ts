@@ -1204,6 +1204,14 @@ const tr = {
       "bu norbo sürümü artık desteklenmiyor. devam etmek için en son sürüme güncelleyin.",
     updateNow: "şimdi güncelle",
     later: "daha sonra",
+    downloadingTitle: "güncelleniyor...",
+    downloadingBody: "en son sürüm indiriliyor. uygulamayı açık tut.",
+    readyTitle: "güncelleme hazır",
+    readyBody: "kurulumu tamamlamak için uygulamayı yeniden başlat.",
+    restartNow: "şimdi yeniden başlat",
+    failedTitle: "güncelleme başarısız",
+    failedBody: "güncelleme sırasında bir şeyler ters gitti. lütfen tekrar dene.",
+    retry: "tekrar dene",
   },
 } as const;
 

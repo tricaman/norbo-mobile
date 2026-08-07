@@ -1208,6 +1208,14 @@ const ro = {
       "această versiune a norbo nu mai este suportată. actualizați la cea mai recentă versiune pentru a continua.",
     updateNow: "actualizează acum",
     later: "mai târziu",
+    downloadingTitle: "se actualizează...",
+    downloadingBody: "se descarcă ultima versiune. ține aplicația deschisă.",
+    readyTitle: "actualizare gata",
+    readyBody: "repornește aplicația pentru a finaliza instalarea.",
+    restartNow: "repornește acum",
+    failedTitle: "actualizare eșuată",
+    failedBody: "ceva n-a mers bine în timpul actualizării. încearcă din nou.",
+    retry: "încearcă din nou",
   },
 } as const;
 

@@ -1212,6 +1212,14 @@ const es = {
       "esta versión de norbo ya no es compatible. actualiza a la última versión para continuar.",
     updateNow: "actualizar ahora",
     later: "más tarde",
+    downloadingTitle: "actualizando...",
+    downloadingBody: "descargando la última versión. mantén la app abierta.",
+    readyTitle: "actualización lista",
+    readyBody: "reinicia la app para terminar la instalación.",
+    restartNow: "reiniciar ahora",
+    failedTitle: "error de actualización",
+    failedBody: "algo salió mal durante la actualización. inténtalo de nuevo.",
+    retry: "reintentar",
   },
 } as const;
 

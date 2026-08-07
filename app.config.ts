@@ -187,9 +187,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     appVariant: APP_VARIANT,
     // Used by the update gate to build a fallback store URL when the backend
-    // doesn't return one (see src/utils/store-url.ts).
-    // TODO: set `appStoreId` to the numeric App Store id once the app is live.
-    appStoreId: "",
+    // doesn't return one (see src/utils/store-url.ts). This is the PROD app id
+    // ("Norbo: animali e promemoria"); the .dev/.preview variants have their
+    // own listings, but they're internal builds that never need a store CTA.
+    appStoreId: "6794615057",
     androidPackageId: BASE_BUNDLE_ID,
   },
 });

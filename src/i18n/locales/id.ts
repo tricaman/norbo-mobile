@@ -1210,6 +1210,14 @@ const id = {
       "versi norbo ini tidak lagi didukung. perbarui ke versi terbaru untuk melanjutkan.",
     updateNow: "perbarui sekarang",
     later: "nanti",
+    downloadingTitle: "memperbarui...",
+    downloadingBody: "sedang mengunduh versi terbaru. biarkan aplikasi tetap terbuka.",
+    readyTitle: "pembaruan siap",
+    readyBody: "mulai ulang aplikasi untuk menyelesaikan pemasangan.",
+    restartNow: "mulai ulang sekarang",
+    failedTitle: "pembaruan gagal",
+    failedBody: "ada yang tidak beres saat pembaruan. silakan coba lagi.",
+    retry: "coba lagi",
   },
 } as const;
 

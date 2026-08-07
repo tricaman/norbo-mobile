@@ -1180,6 +1180,14 @@ const zh = {
     requiredBody: "此版本的 norbo 不再受支持。请更新至最新版本以继续使用。",
     updateNow: "立即更新",
     later: "稍后",
+    downloadingTitle: "更新中...",
+    downloadingBody: "正在下载最新版本，请保持应用打开。",
+    readyTitle: "更新已就绪",
+    readyBody: "重启应用以完成安装。",
+    restartNow: "立即重启",
+    failedTitle: "更新失败",
+    failedBody: "更新过程中出了点问题，请重试。",
+    retry: "重试",
   },
 } as const;
 

@@ -87,6 +87,8 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     scissors: "cut-outline",
     "drop.fill": "water",
     "arrow.triangle.2.circlepath": "refresh",
+    "arrow.down.circle": "arrow-down-circle",
+    "exclamationmark.triangle": "warning-outline",
     "leaf.fill": "leaf",
     "fork.knife": "restaurant-outline",
     "pill.fill": "flask-outline",

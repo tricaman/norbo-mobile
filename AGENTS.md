@@ -353,3 +353,44 @@ notification type, extend `getNavTargetFromData` — do NOT re-read `data` in th
 handlers. Title/body come from `data.title ?? data.notifee_title` (the worker
 injects `notifee_*` for data-only payloads); news reuses the `default` Android
 channel (no dedicated channel / iOS action category — it is read-only).
+
+## IN-APP UPDATE
+
+Android updates itself WITHOUT leaving the app (Google Play Core via
+`sp-react-native-in-app-updates`); iOS can't — Apple exposes no in-app update
+API — so there the CTA opens the App Store page.
+
+- **Slice**: `src/services/app-version.api.ts` (`GET /app/version`) +
+  `src/services/in-app-updates.ts` (Play Core wrapper) → `src/hooks/useAppVersion.ts`
+  → `src/components/app/UpdateGate.tsx` (mounted once in `app/_layout.tsx`) +
+  `src/components/app/UpdateHeaderButton.tsx`. Ephemeral state in
+  `src/stores/app-update.store.ts`; copy under `appUpdate.*` in all 16 locales.
+- **Two sources, two jobs.** The backend owns WHETHER a newer version exists
+  (`latest`, read live from App Store + Play by norbo-api) and whether this one
+  is too old (`minSupported`, env-only). Play Core owns HOW to install it, and
+  only on Android: `checkPlayUpdate` answers "can THIS device update in-app
+  right now?" — false for sideloaded APKs (our `internal`/`preview` builds) and
+  during a staged rollout that hasn't reached the device. Detection ORs the two;
+  the blocking gate additionally requires something installable, because a
+  forced screen whose button leads nowhere is a dead end.
+- **No popup.** `UpdateGate` publishes `available` to the store; the header icon
+  (`UpdateHeaderButton`, silent otherwise) is mounted in `TabHeader` and in
+  `HomeGreeting` (the home tab renders its own header) and opens a compact card.
+  Optional updates use Play FLEXIBLE — background download, our own progress
+  bar, then "restart now" → `completeFlexibleUpdate()`. Forced ones use Play
+  IMMEDIATE, which draws its own full-screen UI and restarts by itself.
+- **`startUpdate` resolves when Play's consent dialog is LAUNCHED**, not when the
+  user answers. A cancel is reported ONLY through `addIntentSelectionListener`
+  (as a *string* status, hence the `Number(result)` coercion) — without it the
+  card would stay stuck at 0% in a phase where it can't be closed.
+- Everything is FAIL-OPEN: a missing native module or an unreachable store
+  degrades to "no update", and a Play flow that refuses to start falls back to
+  the store page. The app is never blocked by a check that couldn't run.
+- **Needs a native rebuild**: the library is autolinked (it also pulls
+  `react-native-device-info` + `react-native-siren` as transitive native deps),
+  so builds made before it was added will never show the in-app flow — they
+  update through the store page like today. Play Core only works for an app
+  actually installed from Play: to test the real flow, use an internal-testing
+  track build, not a sideloaded APK.
+- **Local testing**: `EXPO_PUBLIC_APP_UPDATE_DEV_LEVEL=available|required` in
+  `.env` forces the level and simulates the download (no store involved).

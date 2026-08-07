@@ -1,3 +1,4 @@
+import { UpdateHeaderButton } from "@/components/app/UpdateHeaderButton";
 import { NorboPressable } from "@/components/CustomPressable";
 import { PageTitle } from "@/components/ui/PageTitle";
 import { IconSymbol } from "@/components/ui/IconSymbol";
@@ -6,6 +7,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { View } from "react-native";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface HomeGreetingProps {
@@ -56,24 +58,35 @@ export function HomeGreeting({ onPressAdd }: HomeGreetingProps) {
       title={greeting}
       subtitle={subtitle}
       right={
-        <NorboPressable
-          style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
-          scale="row"
-          haptic="medium"
-          onPress={onPressAdd}
-        >
-          <IconSymbol
-            name="plus"
-            size={18}
-            tintColor={theme.colors.textOnPrimary}
-          />
-        </NorboPressable>
+        // The home tab renders its own header, so the update icon (silent
+        // unless an update is available — see `UpdateGate`) is mounted here
+        // too, next to "add pet", to match every other tab root.
+        <View style={styles.actions}>
+          <UpdateHeaderButton />
+          <NorboPressable
+            style={[styles.addBtn, { backgroundColor: theme.colors.primary }]}
+            scale="row"
+            haptic="medium"
+            onPress={onPressAdd}
+          >
+            <IconSymbol
+              name="plus"
+              size={18}
+              tintColor={theme.colors.textOnPrimary}
+            />
+          </NorboPressable>
+        </View>
       }
     />
   );
 }
 
 const styles = StyleSheet.create((theme) => ({
+  actions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: theme.spacing.sm,
+  },
   addBtn: {
     width: 38,
     height: 38,
