@@ -60,6 +60,7 @@ const ICON_MAP: Record<string, React.ComponentProps<typeof Ionicons>["name"]> =
     pawprint: "paw-outline",
     "pawprint.fill": "paw-sharp",
     "plus.circle.fill": "add-circle",
+    "minus.circle.fill": "remove-circle",
     plus: "add",
     pencil: "pencil",
     "ellipsis.horizontal": "ellipsis-horizontal",

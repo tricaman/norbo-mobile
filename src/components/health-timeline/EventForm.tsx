@@ -49,6 +49,9 @@ export const eventFormSchema = z
     includeInBooklet: z.boolean().optional(),
     vaccineName: z.string().max(120).optional(),
     reason: z.string().max(500).optional(),
+    productName: z.string().max(120).optional(),
+    treatmentType: z.enum(["INTERNAL", "EXTERNAL", "BOTH"]).optional(),
+    medicineName: z.string().max(120).optional(),
   })
   .superRefine((v, ctx) => {
     if (v.mode === "past" && !v.occurredAt) {
@@ -106,6 +109,18 @@ export function buildExtra(
     const reason = values.reason?.trim();
     if (!reason) return undefined;
     return { reason };
+  }
+  if (values.type === PetEventType.PARASITE_TREATMENT) {
+    const extra: Record<string, unknown> = {};
+    const productName = values.productName?.trim();
+    if (productName) extra.productName = productName;
+    if (values.treatmentType) extra.treatmentType = values.treatmentType;
+    return Object.keys(extra).length > 0 ? extra : undefined;
+  }
+  if (values.type === PetEventType.MEDICATION) {
+    const medicineName = values.medicineName?.trim();
+    if (!medicineName) return undefined;
+    return { medicineName };
   }
   return undefined;
 }
@@ -210,6 +225,17 @@ export function EventForm({
         value: "future",
         label: t("eventForm.mode_future"),
       },
+    ],
+    [t],
+  );
+
+  const treatmentTypeOptions = useMemo<
+    ChipOption<EventFormValues["treatmentType"]>[]
+  >(
+    () => [
+      { value: "INTERNAL", label: t("eventForm.treatmentType_INTERNAL") },
+      { value: "EXTERNAL", label: t("eventForm.treatmentType_EXTERNAL") },
+      { value: "BOTH", label: t("eventForm.treatmentType_BOTH") },
     ],
     [t],
   );
@@ -376,6 +402,58 @@ export function EventForm({
               <FormInput
                 name="reason"
                 placeholder={t("eventForm.reasonPlaceholder")}
+                returnKeyType="done"
+              />
+            </FormCard>
+          </>
+        ) : null}
+
+        {/* Parasite treatment-specific fields. All optional: the backend
+            schema tolerates an empty extra so a bare title+date reminder
+            (e.g. "mettere antipulci") is a valid treatment event. */}
+        {selectedType === PetEventType.PARASITE_TREATMENT ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.parasiteDetails")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <FormInput
+                name="productName"
+                placeholder={t("eventForm.productNamePlaceholder")}
+                returnKeyType="done"
+              />
+            </FormCard>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.treatmentType")}
+            </SectionLabel>
+            <Controller
+              control={form.control}
+              name="treatmentType"
+              render={({ field }) => (
+                <ChipSelector
+                  options={treatmentTypeOptions}
+                  value={field.value}
+                  // treatmentType is optional: tapping the selected chip
+                  // deselects it back to "none".
+                  onChange={(v) =>
+                    field.onChange(v === field.value ? undefined : v)
+                  }
+                />
+              )}
+            />
+          </>
+        ) : null}
+
+        {/* Medication-specific fields — optional, same rationale. */}
+        {selectedType === PetEventType.MEDICATION ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("eventForm.medicationDetails")}
+            </SectionLabel>
+            <FormCard style={styles.card}>
+              <FormInput
+                name="medicineName"
+                placeholder={t("eventForm.medicineNamePlaceholder")}
                 returnKeyType="done"
               />
             </FormCard>

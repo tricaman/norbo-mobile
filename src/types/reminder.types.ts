@@ -19,6 +19,16 @@ export interface NotificationConfig {
   time: string;
 }
 
+/**
+ * Recurrence rule (server: reminder-engine/domain/reminder-recurrence.ts).
+ * MONTHLY|YEARLY with an optional interval (MONTHLY + 3 = every 3 months).
+ * Completing a recurring reminder makes the API spawn the next occurrence.
+ */
+export interface ReminderRecurrence {
+  freq: 'MONTHLY' | 'YEARLY';
+  interval?: number;
+}
+
 export interface Reminder {
   id: string;
   petId: string | null;
@@ -28,7 +38,7 @@ export interface Reminder {
   title: string;
   description: string | null;
   dueAt: string;
-  recurrence: Record<string, unknown> | null;
+  recurrence: ReminderRecurrence | null;
   status: ReminderStatus;
   completedAt: string | null;
   snoozedUntil: string | null;

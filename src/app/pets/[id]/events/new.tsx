@@ -41,6 +41,9 @@ export default function NewEventScreen() {
       includeInBooklet: false,
       vaccineName: "",
       reason: "",
+      productName: "",
+      treatmentType: undefined,
+      medicineName: "",
     },
   });
 

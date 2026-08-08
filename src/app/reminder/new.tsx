@@ -24,6 +24,8 @@ export default function NewReminderScreen(): React.JSX.Element {
       subjectType: ReminderSubjectType.CUSTOM,
       title: "",
       description: null,
+      repeat: "NONE",
+      intervalMonths: 1,
     },
   });
 
@@ -34,6 +36,12 @@ export default function NewReminderScreen(): React.JSX.Element {
         title: values.title,
         description: values.description ?? null,
         dueAt: values.dueAt.toISOString(),
+        recurrence:
+          values.repeat === "NONE"
+            ? null
+            : values.repeat === "MONTHLY"
+              ? { freq: "MONTHLY", interval: values.intervalMonths }
+              : { freq: "YEARLY" },
       }),
     showSuccessToast: true,
     successMessage: t("reminderForm.saveNew"),

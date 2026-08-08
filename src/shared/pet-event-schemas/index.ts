@@ -1,3 +1,7 @@
+// ⚠️  AUTO-GENERATED — DO NOT EDIT.
+// Source of truth: norbo-api/src/shared/pet-event-schemas/index.ts
+// Regenerate with `pnpm sync:contracts` in norbo-api.
+
 /**
  * pet-event-schemas — shared Zod schemas for PetEvent polymorphic payload.
  *
@@ -9,31 +13,31 @@
  * Usage on the backend  : ZodValidationPipe(PetEventExtraSchemaByType[type])
  * Usage on the mobile   : zodResolver(buildEventFormSchema(type))
  */
-import { z } from "zod";
-import type { ZodType } from "zod";
+import { z } from 'zod';
+import type { ZodType } from 'zod';
 
 // ── Enums ─────────────────────────────────────────────────────────────────────
 
 export enum PetEventType {
-  VACCINATION = "VACCINATION",
-  VET_VISIT = "VET_VISIT",
-  PARASITE_TREATMENT = "PARASITE_TREATMENT",
-  GROOMING = "GROOMING",
-  WEIGHT_RECORD = "WEIGHT_RECORD",
-  WATER_PARAMETERS = "WATER_PARAMETERS",
-  WATER_CHANGE = "WATER_CHANGE",
-  MOLT = "MOLT",
-  FEEDING_LOG = "FEEDING_LOG",
-  MEDICATION = "MEDICATION",
-  NOTE = "NOTE",
-  INSURANCE = "INSURANCE",
-  PASSING = "PASSING",
+  VACCINATION = 'VACCINATION',
+  VET_VISIT = 'VET_VISIT',
+  PARASITE_TREATMENT = 'PARASITE_TREATMENT',
+  GROOMING = 'GROOMING',
+  WEIGHT_RECORD = 'WEIGHT_RECORD',
+  WATER_PARAMETERS = 'WATER_PARAMETERS',
+  WATER_CHANGE = 'WATER_CHANGE',
+  MOLT = 'MOLT',
+  FEEDING_LOG = 'FEEDING_LOG',
+  MEDICATION = 'MEDICATION',
+  NOTE = 'NOTE',
+  INSURANCE = 'INSURANCE',
+  PASSING = 'PASSING',
 }
 
 export enum PetEventStatus {
-  SCHEDULED = "SCHEDULED",
-  OCCURRED = "OCCURRED",
-  CANCELLED = "CANCELLED",
+  SCHEDULED = 'SCHEDULED',
+  OCCURRED = 'OCCURRED',
+  CANCELLED = 'CANCELLED',
 }
 
 /**
@@ -44,11 +48,11 @@ export enum PetEventStatus {
  * VACCINATION, VET_VISIT, PARASITE_TREATMENT, MEDICATION → VET).
  */
 export enum ExpenseCategory {
-  VET = "VET",
-  FOOD = "FOOD",
-  ACCESSORIES = "ACCESSORIES",
-  GROOMING = "GROOMING",
-  OTHER = "OTHER",
+  VET = 'VET',
+  FOOD = 'FOOD',
+  ACCESSORIES = 'ACCESSORIES',
+  GROOMING = 'GROOMING',
+  OTHER = 'OTHER',
 }
 
 /**
@@ -56,17 +60,17 @@ export enum ExpenseCategory {
  * Must be kept in sync with `PetCategory` in `pet.entity.ts`.
  */
 export enum PetCategory {
-  MAMMAL_DOG = "MAMMAL_DOG",
-  MAMMAL_CAT = "MAMMAL_CAT",
-  MAMMAL_SMALL = "MAMMAL_SMALL",
-  BIRD = "BIRD",
-  FISH_FRESHWATER = "FISH_FRESHWATER",
-  FISH_SALTWATER = "FISH_SALTWATER",
-  REPTILE = "REPTILE",
-  AMPHIBIAN = "AMPHIBIAN",
-  INVERTEBRATE = "INVERTEBRATE",
-  EQUINE = "EQUINE",
-  FARM = "FARM",
+  MAMMAL_DOG = 'MAMMAL_DOG',
+  MAMMAL_CAT = 'MAMMAL_CAT',
+  MAMMAL_SMALL = 'MAMMAL_SMALL',
+  BIRD = 'BIRD',
+  FISH_FRESHWATER = 'FISH_FRESHWATER',
+  FISH_SALTWATER = 'FISH_SALTWATER',
+  REPTILE = 'REPTILE',
+  AMPHIBIAN = 'AMPHIBIAN',
+  INVERTEBRATE = 'INVERTEBRATE',
+  EQUINE = 'EQUINE',
+  FARM = 'FARM',
 }
 
 // ── Type-specific extra schemas ───────────────────────────────────────────────
@@ -88,9 +92,12 @@ export const VetVisitExtraSchema = z.object({
 });
 export type VetVisitExtra = z.infer<typeof VetVisitExtraSchema>;
 
+// `productName` / `treatmentType` are optional: the mobile EventForm lets
+// users log a treatment with just title + date (e.g. a quick reminder), so
+// requiring them here would reject every payload the app can produce.
 export const ParasiteTreatmentExtraSchema = z.object({
-  productName: z.string().min(1).max(120),
-  treatmentType: z.enum(["INTERNAL", "EXTERNAL", "BOTH"]),
+  productName: z.string().min(1).max(120).optional(),
+  treatmentType: z.enum(['INTERNAL', 'EXTERNAL', 'BOTH']).optional(),
   nextDueDate: z.coerce.date().optional(),
   vetName: z.string().max(120).optional(),
 });
@@ -148,8 +155,9 @@ export const FeedingLogExtraSchema = z.object({
 });
 export type FeedingLogExtra = z.infer<typeof FeedingLogExtraSchema>;
 
+// `medicineName` optional for the same reason as ParasiteTreatment above.
 export const MedicationExtraSchema = z.object({
-  medicineName: z.string().min(1).max(120),
+  medicineName: z.string().min(1).max(120).optional(),
   dosage: z.string().max(120).optional(),
   frequency: z.string().max(120).optional(),
   durationDays: z.number().int().positive().optional(),
@@ -157,8 +165,10 @@ export const MedicationExtraSchema = z.object({
 });
 export type MedicationExtra = z.infer<typeof MedicationExtraSchema>;
 
+// `content` optional: the note body lives in the event's generic
+// `description` field; the EventForm never populated `extra.content`.
 export const NoteExtraSchema = z.object({
-  content: z.string().min(1).max(5000),
+  content: z.string().min(1).max(5000).optional(),
 });
 export type NoteExtra = z.infer<typeof NoteExtraSchema>;
 
@@ -345,10 +355,10 @@ export const EVENT_TYPES_BY_CATEGORY: Record<PetCategory, PetEventType[]> = {
  * when an Expense is generated from this event type. It MUST be `null`
  * iff `hasCost` is `false`.
  *
- * Single source of truth used by:
+ * This map is the single source of truth used by:
  *  - the EventForm UI (gating cost / reminder / "create expense" sections)
- *  - the expense creation flow (default category pre-fill)
- *  - the reminder engine listener on the API side
+ *  - the expense creation flow (default category pre-fill, validation)
+ *  - the reminder engine listener (skip schedule for non-schedulable types)
  */
 export interface PetEventCapabilities {
   hasCost: boolean;

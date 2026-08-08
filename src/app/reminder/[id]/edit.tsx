@@ -46,6 +46,11 @@ function EditForm({ reminder }: { reminder: Reminder }): React.JSX.Element {
       dueAt: parseISO(reminder.dueAt),
       title: reminder.title,
       description: reminder.description ?? null,
+      repeat: reminder.recurrence?.freq ?? "NONE",
+      intervalMonths:
+        reminder.recurrence?.freq === "MONTHLY"
+          ? (reminder.recurrence.interval ?? 1)
+          : 1,
     },
   });
 
@@ -55,6 +60,16 @@ function EditForm({ reminder }: { reminder: Reminder }): React.JSX.Element {
         title: values.title,
         description: values.description ?? null,
         dueAt: values.dueAt.toISOString(),
+        // Event-linked reminders never carry a rule (API rejects it and
+        // the form hides the chips) — omit the field entirely for them.
+        recurrence:
+          reminder.subjectRef !== null
+            ? undefined
+            : values.repeat === "NONE"
+              ? null
+              : values.repeat === "MONTHLY"
+                ? { freq: "MONTHLY", interval: values.intervalMonths }
+                : { freq: "YEARLY" },
       }),
     showSuccessToast: true,
     successMessage: t("reminderForm.saveEdit"),
@@ -76,6 +91,7 @@ function EditForm({ reminder }: { reminder: Reminder }): React.JSX.Element {
         submitLabel={t("reminderForm.saveEdit")}
         onSubmit={(values) => { mutate(values); }}
         disableSubjectTypeChange
+        showRepeat={reminder.subjectRef === null}
       />
     </>
   );

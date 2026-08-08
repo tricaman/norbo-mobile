@@ -987,6 +987,14 @@ const it = {
     vaccineNamePlaceholder: "nome vaccino",
     vetVisitDetails: "dettagli visita",
     reasonPlaceholder: "motivo della visita",
+    parasiteDetails: "dettagli antiparassitario",
+    productNamePlaceholder: "nome prodotto (opzionale)",
+    treatmentType: "tipo di trattamento (opzionale)",
+    treatmentType_INTERNAL: "interno",
+    treatmentType_EXTERNAL: "esterno",
+    treatmentType_BOTH: "entrambi",
+    medicationDetails: "dettagli farmaco",
+    medicineNamePlaceholder: "nome farmaco (opzionale)",
   },
 
   weightForm: {
@@ -1037,6 +1045,12 @@ const it = {
     descriptionPlaceholder: "note (opzionale)",
     saveNew: "crea promemoria",
     saveEdit: "salva modifiche",
+    repeat: "ripetizione",
+    repeat_NONE: "una tantum",
+    repeat_MONTHLY: "ogni mese",
+    repeat_YEARLY: "ogni anno",
+    everyNMonths_one: "ogni mese",
+    everyNMonths_other: "ogni {{count}} mesi",
   },
 
   reminderDetail: {

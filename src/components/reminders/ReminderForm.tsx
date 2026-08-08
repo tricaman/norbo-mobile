@@ -1,4 +1,5 @@
 import { NorboPressable } from "@/components/CustomPressable";
+import { ChipSelector, type ChipOption } from "@/components/ui/ChipSelector";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import {
   SingleSelectSheet,
@@ -11,9 +12,14 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { ReminderSubjectType } from "@/types/reminder.types";
 import React, { useMemo } from "react";
-import { Controller, FormProvider, type UseFormReturn } from "react-hook-form";
+import {
+  Controller,
+  FormProvider,
+  useWatch,
+  type UseFormReturn,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { z } from "zod";
@@ -23,6 +29,12 @@ export const reminderFormSchema = z.object({
   dueAt: z.date(),
   title: z.string().min(1, "required").max(120),
   description: z.string().max(2000).nullable().optional(),
+  // "NONE" = one-shot; mapped to recurrence null/{freq} in the screens.
+  repeat: z.enum(["NONE", "MONTHLY", "YEARLY"]),
+  // Only meaningful when repeat === "MONTHLY" (e.g. antiparassitario every
+  // 3 months); ignored otherwise. Range mirrors the server's
+  // reminderRecurrenceSchema (1-24).
+  intervalMonths: z.number().int().min(1).max(24),
 });
 
 export type ReminderFormValues = z.infer<typeof reminderFormSchema>;
@@ -33,6 +45,11 @@ interface ReminderFormProps {
   submitLabel: string;
   onSubmit: (values: ReminderFormValues) => void;
   disableSubjectTypeChange?: boolean;
+  /**
+   * Hidden for event-linked reminders (subjectRef != null): the API
+   * rejects recurrence on those — the event flow owns their lifecycle.
+   */
+  showRepeat?: boolean;
 }
 
 export function ReminderForm({
@@ -41,10 +58,17 @@ export function ReminderForm({
   submitLabel,
   onSubmit,
   disableSubjectTypeChange = false,
+  showRepeat = true,
 }: ReminderFormProps): React.JSX.Element {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const insets = useSafeAreaInsets();
+
+  const repeat = useWatch({ control: form.control, name: "repeat" });
+  const intervalMonths = useWatch({
+    control: form.control,
+    name: "intervalMonths",
+  });
 
   const subjectTypeEntries: Array<{ value: ReminderSubjectType; i18n: string; icon: string }> = [
     { value: ReminderSubjectType.HEALTH_EVENT, i18n: "HEALTH_EVENT", icon: "bell.fill" },
@@ -65,6 +89,15 @@ export function ReminderForm({
         ),
       })),
     [t, theme],
+  );
+
+  const repeatOptions = useMemo<ChipOption<ReminderFormValues["repeat"]>[]>(
+    () => [
+      { value: "NONE", label: t("reminderForm.repeat_NONE") },
+      { value: "MONTHLY", label: t("reminderForm.repeat_MONTHLY") },
+      { value: "YEARLY", label: t("reminderForm.repeat_YEARLY") },
+    ],
+    [t],
   );
 
   const handleSubmit = form.handleSubmit(onSubmit);
@@ -117,6 +150,87 @@ export function ReminderForm({
             )}
           />
         </FormCard>
+
+        {/* Recurrence — for recurring treatments (antipulci, filaria,
+            richiami annuali). Completing a recurring reminder makes the
+            API spawn the next occurrence automatically. */}
+        {showRepeat ? (
+          <>
+            <SectionLabel style={styles.sectionLabel}>
+              {t("reminderForm.repeat")}
+            </SectionLabel>
+            <Controller
+              control={form.control}
+              name="repeat"
+              render={({ field }) => (
+                <ChipSelector
+                  options={repeatOptions}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+
+            {/* Month-interval stepper — only for MONTHLY (antipulci ogni 2/3/4
+                mesi, filaria, ecc.). YEARLY has no interval control in v1. */}
+            {repeat === "MONTHLY" ? (
+              <FormCard style={styles.card}>
+                <View style={styles.stepperRow}>
+                  <NorboPressable
+                    haptic="light"
+                    disabled={intervalMonths <= 1}
+                    onPress={() => {
+                      form.setValue(
+                        "intervalMonths",
+                        Math.max(1, intervalMonths - 1),
+                        { shouldDirty: true },
+                      );
+                    }}
+                  >
+                    <IconSymbol
+                      name="minus.circle.fill"
+                      size={26}
+                      tintColor={
+                        intervalMonths <= 1
+                          ? theme.colors.textTertiary
+                          : theme.colors.primary
+                      }
+                    />
+                  </NorboPressable>
+                  <Text
+                    style={[
+                      styles.stepperLabel,
+                      { color: theme.colors.textPrimary },
+                    ]}
+                  >
+                    {t("reminderForm.everyNMonths", { count: intervalMonths })}
+                  </Text>
+                  <NorboPressable
+                    haptic="light"
+                    disabled={intervalMonths >= 24}
+                    onPress={() => {
+                      form.setValue(
+                        "intervalMonths",
+                        Math.min(24, intervalMonths + 1),
+                        { shouldDirty: true },
+                      );
+                    }}
+                  >
+                    <IconSymbol
+                      name="plus.circle.fill"
+                      size={26}
+                      tintColor={
+                        intervalMonths >= 24
+                          ? theme.colors.textTertiary
+                          : theme.colors.primary
+                      }
+                    />
+                  </NorboPressable>
+                </View>
+              </FormCard>
+            ) : null}
+          </>
+        ) : null}
 
         <SectionLabel style={styles.sectionLabel}>
           {t("reminderForm.details")}
@@ -183,5 +297,18 @@ const styles = StyleSheet.create((theme) => ({
   submitLabel: {
     ...theme.typography.subhead,
     fontWeight: "700",
+  },
+  stepperRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: theme.spacing.lg,
+    paddingVertical: theme.spacing.xs,
+  },
+  stepperLabel: {
+    ...theme.typography.subhead,
+    fontWeight: "600",
+    minWidth: 110,
+    textAlign: "center",
   },
 }));

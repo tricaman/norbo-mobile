@@ -1,4 +1,4 @@
-import type { Reminder, ReminderFilter, ReminderListResponse, ReminderSubjectType } from '@/types/reminder.types';
+import type { Reminder, ReminderFilter, ReminderListResponse, ReminderRecurrence, ReminderSubjectType } from '@/types/reminder.types';
 import { api } from './api';
 
 export interface CreateReminderInput {
@@ -8,6 +8,7 @@ export interface CreateReminderInput {
   description?: string | null;
   dueAt: string;
   notificationConfig?: { offsets: number[]; time: string };
+  recurrence?: ReminderRecurrence | null;
 }
 
 export const remindersApi = {
@@ -30,7 +31,12 @@ export const remindersApi = {
 
   update: (
     id: string,
-    data: { title?: string; description?: string | null; dueAt?: string },
+    data: {
+      title?: string;
+      description?: string | null;
+      dueAt?: string;
+      recurrence?: ReminderRecurrence | null;
+    },
   ) => api.patch<Reminder>(`/reminders/${encodeURIComponent(id)}`, data),
 
   delete: (id: string) =>

@@ -241,6 +241,34 @@ function ReminderDetail({
             </Text>
           </View>
 
+          {reminder.recurrence ? (
+            <>
+              <View style={styles.separator} />
+              <View style={styles.metaRow}>
+                <Text
+                  style={[
+                    styles.fieldLabel,
+                    { color: theme.colors.textTertiary },
+                  ]}
+                >
+                  {t("reminderForm.repeat").toUpperCase()}
+                </Text>
+                <Text
+                  style={[
+                    styles.metaValue,
+                    { color: theme.colors.textPrimary },
+                  ]}
+                >
+                  {reminder.recurrence.freq === "MONTHLY"
+                    ? t("reminderForm.everyNMonths", {
+                        count: reminder.recurrence.interval ?? 1,
+                      })
+                    : t("reminderForm.repeat_YEARLY")}
+                </Text>
+              </View>
+            </>
+          ) : null}
+
           <View style={styles.separator} />
 
           <View style={styles.metaRow}>

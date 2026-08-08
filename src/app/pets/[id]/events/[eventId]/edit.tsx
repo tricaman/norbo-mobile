@@ -68,6 +68,20 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         typeof event.extra?.["reason"] === "string"
           ? (event.extra["reason"] as string)
           : "",
+      productName:
+        typeof event.extra?.["productName"] === "string"
+          ? (event.extra["productName"] as string)
+          : "",
+      treatmentType:
+        event.extra?.["treatmentType"] === "INTERNAL" ||
+        event.extra?.["treatmentType"] === "EXTERNAL" ||
+        event.extra?.["treatmentType"] === "BOTH"
+          ? (event.extra["treatmentType"] as "INTERNAL" | "EXTERNAL" | "BOTH")
+          : undefined,
+      medicineName:
+        typeof event.extra?.["medicineName"] === "string"
+          ? (event.extra["medicineName"] as string)
+          : "",
     },
   });
 
@@ -93,7 +107,10 @@ function EditForm({ petId, event }: { petId: string; event: PetEvent }) {
         createReminder:
           values.mode === "future" ? (values.createReminder ?? false) : false,
         includeInBooklet: values.includeInBooklet ?? false,
-        extra: buildExtra(values),
+        // `?? {}`: the update DTO treats a MISSING extra as "keep stored
+        // value", so clearing the optional parasite/medication fields must
+        // send an explicit empty object to actually wipe them server-side.
+        extra: buildExtra(values) ?? {},
       }),
     showSuccessToast: true,
     successMessage: t("eventForm.saveEdit"),

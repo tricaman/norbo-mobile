@@ -124,6 +124,25 @@ Poi incrementa in `app.config.ts` (valori **monotoni crescenti**):
     **fallimento anche se xcodebuild avrebbe compilato bene** — e te ne accorgi solo alla
     fine. Sintomo: log di gym congelato a un orario fisso mentre `fastlane` risulta ancora
     "vivo". Verifica rapida: `ruby -e 'puts Encoding.default_external'` → deve dire `UTF-8`.
+- **Portachiavi sbloccato per `codesign`**, altrimenti la build si appende in silenzio.
+  Durante `PhaseScriptExecution [CP] Embed Pods Frameworks` macOS può aprire un dialog
+  **SecurityAgent** che chiede l'accesso alla chiave `Apple Distribution`: xcodebuild resta
+  in attesa **senza timeout**, anche per ore. Costato 46 min il 2026-08-07.
+  **Attenzione: il sintomo "log di gym congelato" è identico a quello UTF-8 qui sopra**, ma
+  la causa è opposta. Si distinguono così:
+
+  ```bash
+  pgrep -fl "codesign|SecurityAgent"     # se compaiono entrambi → è il portachiavi
+  ps -o etime=,%cpu= -p <pid-xcodebuild> # 0.0% CPU = attesa, non lentezza
+  ```
+
+  Sblocco immediato: clicca **"Consenti sempre"** sul dialog — la build **riprende dal punto
+  esatto**, niente ricompilazione. Prevenzione una tantum (la password la digiti tu):
+
+  ```bash
+  security set-key-partition-list -S apple-tool:,apple:,codesign: -s \
+    -k <password-del-login> ~/Library/Keychains/login.keychain-db
+  ```
 
 > EAS build/submit **non è utilizzabile**: il `projectId` in `app.config.ts` dà `Entity not
 > authorized` per l'account corrente. Usiamo la build locale + fastlane descritta qui.
