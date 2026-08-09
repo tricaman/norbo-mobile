@@ -1256,11 +1256,25 @@ const pt = {
     unit: {
       days: "dias",
       count: "vezes",
+      days_one: "dia",
+      days_other: "dias",
+      count_one: "vez",
+      count_other: "vezes",
+      places_one: "lugar",
+      places_other: "lugares",
+      pets_one: "animal",
+      pets_other: "animais",
+      reminders_one: "lembrete",
+      reminders_other: "lembretes",
+      expenses_one: "despesa",
+      expenses_other: "despesas",
     },
     celebration: {
       title: "novo emblema!",
       cta: "continuar",
     },
+    unlockedOn: "desbloqueado em {{date}}",
+    notYet: "ainda não desbloqueado",
   },
 } as const;
 

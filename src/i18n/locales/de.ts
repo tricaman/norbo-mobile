@@ -1262,11 +1262,25 @@ const de = {
     unit: {
       days: "Tage",
       count: "Mal",
+      days_one: "Tag",
+      days_other: "Tage",
+      count_one: "Mal",
+      count_other: "Male",
+      places_one: "Ort",
+      places_other: "Orte",
+      pets_one: "Haustier",
+      pets_other: "Haustiere",
+      reminders_one: "Erinnerung",
+      reminders_other: "Erinnerungen",
+      expenses_one: "Ausgabe",
+      expenses_other: "Ausgaben",
     },
     celebration: {
       title: "neues Abzeichen!",
       cta: "weiter",
     },
+    unlockedOn: "freigeschaltet am {{date}}",
+    notYet: "noch nicht freigeschaltet",
   },
 } as const;
 

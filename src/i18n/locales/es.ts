@@ -1259,11 +1259,25 @@ const es = {
     unit: {
       days: "días",
       count: "veces",
+      days_one: "día",
+      days_other: "días",
+      count_one: "vez",
+      count_other: "veces",
+      places_one: "lugar",
+      places_other: "lugares",
+      pets_one: "mascota",
+      pets_other: "mascotas",
+      reminders_one: "recordatorio",
+      reminders_other: "recordatorios",
+      expenses_one: "gasto",
+      expenses_other: "gastos",
     },
     celebration: {
       title: "¡nueva insignia!",
       cta: "continuar",
     },
+    unlockedOn: "desbloqueado el {{date}}",
+    notYet: "aún no desbloqueado",
   },
 } as const;
 

@@ -1251,11 +1251,25 @@ const ur = {
     unit: {
       days: "دن",
       count: "مرتبہ",
+      days_one: "دن",
+      days_other: "دن",
+      count_one: "بار",
+      count_other: "بار",
+      places_one: "جگہ",
+      places_other: "جگہیں",
+      pets_one: "پالتو جانور",
+      pets_other: "پالتو جانور",
+      reminders_one: "یاد دہانی",
+      reminders_other: "یاد دہانیاں",
+      expenses_one: "خرچہ",
+      expenses_other: "خرچے",
     },
     celebration: {
       title: "نیا بیج!",
       cta: "جاری رکھیں",
     },
+    unlockedOn: "تاریخ {{date}} کو کھلا",
+    notYet: "ابھی نہیں کھلا",
   },
 } as const;
 

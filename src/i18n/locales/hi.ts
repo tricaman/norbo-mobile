@@ -1257,11 +1257,25 @@ const hi = {
     unit: {
       days: "दिन",
       count: "बार",
+      days_one: "दिन",
+      days_other: "दिन",
+      count_one: "बार",
+      count_other: "बार",
+      places_one: "स्थान",
+      places_other: "स्थान",
+      pets_one: "पालतू",
+      pets_other: "पालतू",
+      reminders_one: "अनुस्मारक",
+      reminders_other: "अनुस्मारक",
+      expenses_one: "खर्च",
+      expenses_other: "खर्च",
     },
     celebration: {
       title: "नया बैज!",
       cta: "जारी रखें",
     },
+    unlockedOn: "{{date}} को अनलॉक हुआ",
+    notYet: "अभी तक अनलॉक नहीं हुआ",
   },
 } as const;
 

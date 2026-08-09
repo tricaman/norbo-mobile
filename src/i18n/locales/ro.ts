@@ -1254,11 +1254,25 @@ const ro = {
     unit: {
       days: "zile",
       count: "ori",
+      days_one: "zi",
+      days_other: "zile",
+      count_one: "dată",
+      count_other: "dăți",
+      places_one: "loc",
+      places_other: "locuri",
+      pets_one: "animal",
+      pets_other: "animale",
+      reminders_one: "memento",
+      reminders_other: "mementouri",
+      expenses_one: "cheltuială",
+      expenses_other: "cheltuieli",
     },
     celebration: {
       title: "insignă nouă!",
       cta: "continuă",
     },
+    unlockedOn: "deblocat pe {{date}}",
+    notYet: "nu este încă deblocat",
   },
 } as const;
 

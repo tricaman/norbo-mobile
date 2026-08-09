@@ -11,13 +11,23 @@ interface TierLadderProps {
   unit: MetricUnit;
 }
 
-function TierRow({ tier, unit }: { tier: BadgeTierView; unit: MetricUnit }) {
+function TierRow({
+  tier,
+  unit,
+  showRequirement,
+}: {
+  tier: BadgeTierView;
+  unit: MetricUnit;
+  showRequirement: boolean;
+}) {
   const { t } = useTranslation();
   const { theme } = useUnistyles();
   const colors = useRarityColors(tier.rarity);
-  // `as never` is the repo's escape hatch for a dynamic i18n key; the extra
-  // `as string` keeps the value usable as an interpolation param.
-  const unitLabel = t(`badges.unit.${unit}` as never) as string;
+  // `as never` is the repo's escape hatch for a dynamic i18n key; `count` also
+  // drives i18next pluralisation, so "1 luogo" / "25 luoghi" both read right.
+  const unitLabel = t(`badges.unit.${unit}` as never, {
+    count: tier.threshold,
+  }) as string;
 
   return (
     <View style={[styles.row, !tier.unlocked && styles.rowLocked]}>
@@ -46,12 +56,14 @@ function TierRow({ tier, unit }: { tier: BadgeTierView; unit: MetricUnit }) {
           </Text>
         </View>
         <Text style={styles.rowDescription}>{tier.description}</Text>
-        <Text style={styles.requirement}>
-          {t("badges.requirement", {
-            value: String(tier.threshold),
-            unit: unitLabel,
-          })}
-        </Text>
+        {showRequirement ? (
+          <Text style={styles.requirement}>
+            {t("badges.requirement", {
+              value: String(tier.threshold),
+              unit: unitLabel,
+            })}
+          </Text>
+        ) : null}
       </View>
     </View>
   );
@@ -65,10 +77,20 @@ function TierRow({ tier, unit }: { tier: BadgeTierView; unit: MetricUnit }) {
  * behind a spoiler.
  */
 export function TierLadder({ tiers, unit }: TierLadderProps) {
+  // A one-shot badge is done or not done — "needs 1 reminder" next to a row
+  // that already says "First reminder" is noise. Same for a threshold of 0,
+  // which is not a requirement at all but an immediate unlock.
+  const oneShot = tiers.length === 1;
+
   return (
     <View style={styles.ladder}>
       {tiers.map((tier) => (
-        <TierRow key={tier.level} tier={tier} unit={unit} />
+        <TierRow
+          key={tier.level}
+          tier={tier}
+          unit={unit}
+          showRequirement={!oneShot && tier.threshold > 0}
+        />
       ))}
     </View>
   );

@@ -1257,11 +1257,25 @@ const id = {
     unit: {
       days: "hari",
       count: "kali",
+      days_one: "hari",
+      days_other: "hari",
+      count_one: "kali",
+      count_other: "kali",
+      places_one: "tempat",
+      places_other: "tempat",
+      pets_one: "hewan",
+      pets_other: "hewan",
+      reminders_one: "pengingat",
+      reminders_other: "pengingat",
+      expenses_one: "pengeluaran",
+      expenses_other: "pengeluaran",
     },
     celebration: {
       title: "lencana baru!",
       cta: "lanjut",
     },
+    unlockedOn: "terbuka pada {{date}}",
+    notYet: "belum terbuka",
   },
 } as const;
 

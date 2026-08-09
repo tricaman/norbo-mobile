@@ -1254,11 +1254,25 @@ const bn = {
     unit: {
       days: "দিন",
       count: "বার",
+      days_one: "দিন",
+      days_other: "দিন",
+      count_one: "বার",
+      count_other: "বার",
+      places_one: "স্থান",
+      places_other: "স্থান",
+      pets_one: "পোষা প্রাণী",
+      pets_other: "পোষা প্রাণী",
+      reminders_one: "মনে করিয়ে দেওয়া",
+      reminders_other: "মনে করিয়ে দেওয়া",
+      expenses_one: "ব্যয়",
+      expenses_other: "ব্যয়",
     },
     celebration: {
       title: "নতুন ব্যাজ!",
       cta: "চালিয়ে যান",
     },
+    unlockedOn: "{{date}}-এ আনলক করা হয়েছে",
+    notYet: "এখনো আনলক করা হয়নি",
   },
 } as const;
 

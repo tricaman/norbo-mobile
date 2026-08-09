@@ -34,8 +34,13 @@ export function BadgeDetailSheet({ badgeId, onClose }: BadgeDetailSheetProps) {
 
   const unlocked = (badge?.currentLevel ?? 0) > 0;
   const atTop = badge != null && badge.nextThreshold === null;
+  // A single-tier badge is a yes/no achievement: a "0 / 1" counter and a bar
+  // that only ever reads 0% or 100% add nothing the tier row does not say.
+  const oneShot = badge != null && badge.maxLevel === 1;
   const unitLabel = badge
-    ? (t(`badges.unit.${badge.unit}` as never) as string)
+    ? (t(`badges.unit.${badge.unit}` as never, {
+        count: badge.nextThreshold ?? badge.currentValue,
+      }) as string)
     : "";
 
   return (
@@ -81,34 +86,38 @@ export function BadgeDetailSheet({ badgeId, onClose }: BadgeDetailSheetProps) {
                     {badge.title}
                   </Text>
                   <Text style={styles.subtitle}>
-                    {unlocked
-                      ? `${t("badges.currentTier")}: ${badge.currentTierTitle ?? ""}`
-                      : t("badges.locked")}
+                    {!unlocked
+                      ? t(oneShot ? "badges.notYet" : "badges.locked")
+                      : oneShot
+                        ? (badge.currentTierTitle ?? "")
+                        : `${t("badges.currentTier")}: ${badge.currentTierTitle ?? ""}`}
                   </Text>
                 </View>
               </View>
 
               <Text style={styles.description}>{badge.description}</Text>
 
-              <View style={styles.progressBlock}>
-                <View style={styles.progressLabels}>
-                  <Text style={styles.progressLabel}>
-                    {atTop
-                      ? t("badges.maxTier")
-                      : t("badges.nextTier")}
-                  </Text>
-                  {!atTop ? (
-                    <Text style={[styles.progressValue, { color: colors.fg }]}>
-                      {t("badges.progress", {
-                        current: String(badge.currentValue),
-                        target: String(badge.nextThreshold ?? 0),
-                        unit: unitLabel,
-                      })}
+              {oneShot ? null : (
+                <View style={styles.progressBlock}>
+                  <View style={styles.progressLabels}>
+                    <Text style={styles.progressLabel}>
+                      {atTop ? t("badges.maxTier") : t("badges.nextTier")}
                     </Text>
-                  ) : null}
+                    {!atTop ? (
+                      <Text
+                        style={[styles.progressValue, { color: colors.fg }]}
+                      >
+                        {t("badges.progress", {
+                          current: String(badge.currentValue),
+                          target: String(badge.nextThreshold ?? 0),
+                          unit: unitLabel,
+                        })}
+                      </Text>
+                    ) : null}
+                  </View>
+                  <ProgressBar value={badge.progress} color={colors.fg} />
                 </View>
-                <ProgressBar value={badge.progress} color={colors.fg} />
-              </View>
+              )}
 
               <View style={styles.hintBlock}>
                 <Text style={styles.hintLabel}>{t("badges.howToUnlock")}</Text>

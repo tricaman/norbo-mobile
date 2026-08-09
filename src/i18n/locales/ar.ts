@@ -1236,11 +1236,25 @@ const ar = {
     unit: {
       days: "أيام",
       count: "مرات",
+      days_one: "يوم",
+      days_other: "أيام",
+      count_one: "مرة",
+      count_other: "مرات",
+      places_one: "مكان",
+      places_other: "أماكن",
+      pets_one: "حيوان أليف",
+      pets_other: "حيوانات أليفة",
+      reminders_one: "تذكير",
+      reminders_other: "تذكير",
+      expenses_one: "مصروف",
+      expenses_other: "مصاريف",
     },
     celebration: {
       title: "شارة جديدة!",
       cta: "متابعة",
     },
+    unlockedOn: "تم فتحه في {{date}}",
+    notYet: "لم يتم فتحه بعد",
   },
 } as const;
 

@@ -1243,11 +1243,25 @@ const ja = {
     unit: {
       days: "日",
       count: "回",
+      days_one: "日",
+      days_other: "日",
+      count_one: "回",
+      count_other: "回",
+      places_one: "場所",
+      places_other: "場所",
+      pets_one: "ペット",
+      pets_other: "ペット",
+      reminders_one: "リマインダー",
+      reminders_other: "リマインダー",
+      expenses_one: "支出",
+      expenses_other: "支出",
     },
     celebration: {
       title: "新しいバッジ獲得！",
       cta: "続ける",
     },
+    unlockedOn: "{{date}}に解除",
+    notYet: "未解除",
   },
 } as const;
 

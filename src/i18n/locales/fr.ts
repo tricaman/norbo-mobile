@@ -1269,11 +1269,25 @@ const fr = {
     unit: {
       days: "jours",
       count: "fois",
+      days_one: "jour",
+      days_other: "jours",
+      count_one: "fois",
+      count_other: "fois",
+      places_one: "endroit",
+      places_other: "endroits",
+      pets_one: "animal",
+      pets_other: "animaux",
+      reminders_one: "rappel",
+      reminders_other: "rappels",
+      expenses_one: "dépense",
+      expenses_other: "dépenses",
     },
     celebration: {
       title: "nouveau badge !",
       cta: "continuer",
     },
+    unlockedOn: "débloqué le {{date}}",
+    notYet: "pas encore débloqué",
   },
 } as const;
 

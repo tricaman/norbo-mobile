@@ -1251,11 +1251,25 @@ const tr = {
     unit: {
       days: "gün",
       count: "kez",
+      days_one: "gün",
+      days_other: "gün",
+      count_one: "kez",
+      count_other: "kez",
+      places_one: "yer",
+      places_other: "yer",
+      pets_one: "evcil hayvan",
+      pets_other: "evcil hayvan",
+      reminders_one: "hatırlatma",
+      reminders_other: "hatırlatma",
+      expenses_one: "harcama",
+      expenses_other: "harcama",
     },
     celebration: {
       title: "yeni rozet!",
       cta: "devam et",
     },
+    unlockedOn: "{{date}} tarihinde açıldı",
+    notYet: "henüz açılmadı",
   },
 } as const;
 

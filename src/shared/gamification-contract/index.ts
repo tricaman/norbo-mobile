@@ -35,9 +35,18 @@ export const badgeRaritySchema = z.enum(BADGE_RARITIES);
 // ── Metric units ─────────────────────────────────────────────────────
 // What `currentValue` / `nextThreshold` are counted in. Supplied by the
 // metric provider (code), never by the badge row, and localized
-// client-side against a closed set.
+// client-side against a closed set — so the copy reads "25 places", not
+// "25 times". Adding a unit costs one entry here plus its singular/plural
+// forms in the app's locale files; `count` stays as the generic fallback.
 
-export const METRIC_UNITS = ['days', 'count'] as const;
+export const METRIC_UNITS = [
+  'days',
+  'count',
+  'places',
+  'pets',
+  'reminders',
+  'expenses',
+] as const;
 export type MetricUnit = (typeof METRIC_UNITS)[number];
 export const metricUnitSchema = z.enum(METRIC_UNITS);
 

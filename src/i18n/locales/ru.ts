@@ -1248,11 +1248,25 @@ const ru = {
     unit: {
       days: "дней",
       count: "раз",
+      days_one: "день",
+      days_other: "дней",
+      count_one: "раз",
+      count_other: "раз",
+      places_one: "место",
+      places_other: "места",
+      pets_one: "питомец",
+      pets_other: "питомцы",
+      reminders_one: "напоминание",
+      reminders_other: "напоминания",
+      expenses_one: "расход",
+      expenses_other: "расходы",
     },
     celebration: {
       title: "новый значок!",
       cta: "продолжить",
     },
+    unlockedOn: "открыто {{date}}",
+    notYet: "ещё не открыто",
   },
 } as const;
 

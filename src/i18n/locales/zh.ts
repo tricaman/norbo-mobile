@@ -1226,11 +1226,25 @@ const zh = {
     unit: {
       days: "天",
       count: "次",
+      days_one: "天",
+      days_other: "天",
+      count_one: "次",
+      count_other: "次",
+      places_one: "个地方",
+      places_other: "个地方",
+      pets_one: "只宠物",
+      pets_other: "只宠物",
+      reminders_one: "条提醒",
+      reminders_other: "条提醒",
+      expenses_one: "笔支出",
+      expenses_other: "笔支出",
     },
     celebration: {
       title: "新徽章！",
       cta: "继续",
     },
+    unlockedOn: "在{{date}}解锁",
+    notYet: "尚未解锁",
   },
 } as const;
 
