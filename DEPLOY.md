@@ -66,7 +66,9 @@ diverso, firma diversa). UAT è un ambiente di test parallelo, non uno stadio de
 - [ ] **Versione/buildNumber incrementati** in `app.config.ts` rispetto all'ultimo sullo store (§2)
 - [ ] Tutto committato su `main`
 - [ ] `pnpm install` aggiornato
-- [ ] Backend prod (`api.norbo.app`, `ws.norbo.app`) raggiungibili
+- [ ] Backend prod (`api.norbo.app`) raggiungibile
+- [ ] Le feature della release sono **già deployate lato API prod**: l'app va live prima
+      che tu te ne accorga, e una feature senza il suo endpoint è rotta per tutti
 - [ ] File Firebase prod presenti (usati sia da preview che da production):
   - `firebase/prod/google-services.json`
   - `firebase/prod/GoogleService-Info.plist`
@@ -216,8 +218,14 @@ viene mandata in review.
 
 ### 4.1 Prebuild produzione — OBBLIGATORIO
 
+> 🔴 Serve **tutto** `.env.prod`, non solo `APP_VARIANT`. `ANDROID_MAPS_API_KEY` viene
+> letta da `app.config.ts` **in Node, al prebuild**, e iniettata nel manifest. Con il solo
+> `APP_VARIANT=production` la chiave diventa `""`, il build riesce lo stesso e la mappa
+> "luoghi dog friendly" arriva sullo store **rotta, senza nessun errore**.
+
 ```bash
-APP_VARIANT=production npx expo prebuild --platform android --clean --no-install
+set -a && source .env.prod && set +a
+npx expo prebuild --platform android --clean --no-install
 ```
 
 Verifica:
@@ -227,6 +235,8 @@ grep -E "namespace|applicationId|versionCode|versionName" android/app/build.grad
 #   → app.mariustrica.norbo (NO .dev), versionCode/versionName attesi
 diff android/app/google-services.json firebase/prod/google-services.json
 #   → nessun output = identico al prod
+grep -c "com.google.android.geo.API_KEY" android/app/src/main/AndroidManifest.xml
+#   → 1, e il valore deve iniziare con AIza (non vuoto)
 ```
 
 ### 4.2 Build AAB (per Play Console)
@@ -262,12 +272,26 @@ APK per sideload/test interno: `./gradlew assembleRelease` →
 
 **iOS UAT** (app norbo UAT):
 - [ ] App si chiama **norbo (Preview)**, bundle `app.mariustrica.norbo.preview`
-- [ ] Punta a `api.norbo.app` / `ws.norbo.app` (non localhost)
+- [ ] Punta a `api.norbo.app` (non localhost)
 
 **iOS PROD / Android prod:**
 - [ ] App si chiama **norbo** (non "Dev"/"Preview"), bundle `app.mariustrica.norbo` (no suffisso)
-- [ ] Login contro `api.norbo.app`, WebSocket `ws.norbo.app/ws`
+- [ ] Login contro `api.norbo.app`
 - [ ] Push notification arrivano (token FCM su Firebase prod)
+
+> Verifica l'URL **dentro l'artefatto**, non solo nella shell. Il bundle JS è bytecode
+> Hermes: `grep` semplice dà falsi negativi, serve `grep -a` o `strings`.
+>
+> ```bash
+> # iOS:      unzip -q build/norbo-prod.ipa -d /tmp/ipa && JS=/tmp/ipa/Payload/norbo.app/main.jsbundle
+> # Android:  unzip -p android/app/build/outputs/bundle/release/app-release.aab \
+> #             base/assets/index.android.bundle > /tmp/js.bundle && JS=/tmp/js.bundle
+> grep -a -c -F "api.norbo.app" "$JS"   # ≥1 = env inlinata davvero
+> ```
+>
+> ⚠️ `EXPO_PUBLIC_WS_URL` è **morta**: nessun file sotto `src/` la legge e non esiste
+> alcun client WebSocket nell'app. Resta solo in `eas.json`. Non cercarla nel bundle:
+> l'assenza è corretta, non un errore di build.
 
 ---
 

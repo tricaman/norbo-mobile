@@ -1,9 +1,6 @@
 What's new in this version:
 
-• Reliable notifications: reminders for vaccines, parasite treatments and vet visits arrive right on time, and you can mark them done straight from the notification.
-• Sign in with Apple: get in with one tap, no password to create.
-• Health record: vaccines, treatments and documents always within reach.
-• News section: updates and care tips, opening directly from the notification.
-• Clearer expenses: see what you spend per pet and per category.
-• More languages: the app follows your device language automatically.
+• Recurring reminders: repeat every month or every year, or at intervals of several months. When you mark a reminder as done, the next one is created automatically.
+• Parasite treatment details: add the product name and the treatment type (internal, external or both).
+• Medication details: record the medicine name in your pet's health record events.
 • Stability fixes and interface improvements.

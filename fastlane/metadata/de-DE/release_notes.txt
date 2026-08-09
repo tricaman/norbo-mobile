@@ -1,9 +1,6 @@
 Neu in dieser Version:
 
-• Zuverlässige Benachrichtigungen: Erinnerungen für Impfungen, Parasitenschutz und Tierarztbesuche kommen pünktlich an, und du kannst sie direkt aus der Mitteilung als erledigt markieren.
-• Mit Apple anmelden: mit einem Tippen einsteigen, ohne Passwort.
-• Gesundheitsheft: Impfungen, Behandlungen und Dokumente immer griffbereit.
-• Bereich Neuigkeiten: Updates und Pflegetipps, direkt aus der Mitteilung geöffnet.
-• Klarere Ausgaben: sieh, was du pro Tier und pro Kategorie ausgibst.
-• Mehr Sprachen: die App folgt automatisch der Sprache deines Geräts.
+• Wiederkehrende Erinnerungen: Wiederholung jeden Monat oder jedes Jahr, auch im Abstand mehrerer Monate. Wenn du eine Erinnerung als erledigt markierst, wird die nächste automatisch erstellt.
+• Details zur Parasitenbehandlung: Produktname und Art der Behandlung (innerlich, äußerlich oder beides) hinzufügen.
+• Medikamenten-Details: Name des Medikaments in den Einträgen des Gesundheitshefts festhalten.
 • Stabilitätskorrekturen und Verbesserungen der Oberfläche.

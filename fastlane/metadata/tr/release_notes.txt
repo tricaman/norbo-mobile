@@ -1,9 +1,6 @@
 Bu sürümdeki yenilikler:
 
-• Zamanında bildirimler: aşı, parazit tedavisi ve veteriner ziyaretleri için hatırlatmalar tam zamanında gelir; bildirimin üzerinden doğrudan "yapıldı" olarak işaretleyebilirsiniz.
-• Apple ile oturum aç: parola oluşturmadan tek dokunuşla girin.
-• Sağlık karnesi: aşılar, tedaviler ve belgeler her zaman elinizin altında.
-• Yenilikler bölümü: güncellemeler ve bakım ipuçları, bildirimden doğrudan açılır.
-• Daha net harcamalar: her hayvan ve her kategori için ne kadar harcadığınızı görün.
-• Daha fazla dil: uygulama cihazınızın dilini otomatik olarak izler.
+• Tekrarlayan hatırlatıcılar: her ay veya her yıl tekrarlayın, birkaç ayda bir de olabilir. Bir hatırlatıcıyı tamamlandı olarak işaretlediğinizde bir sonraki otomatik oluşturulur.
+• Parazit tedavisi detayları: ürün adını ve tedavi türünü (iç, dış veya her ikisi) ekleyin.
+• İlaç detayları: sağlık karnesi kayıtlarına ilacın adını not edin.
 • Kararlılık düzeltmeleri ve arayüz iyileştirmeleri.

@@ -1,9 +1,6 @@
 Yang baru di versi ini:
 
-• Notifikasi tepat waktu: pengingat vaksin, obat parasit, dan kunjungan dokter hewan datang pada saat yang tepat, dan bisa ditandai selesai langsung dari notifikasi.
-• Masuk dengan Apple: masuk dengan sekali ketuk, tanpa membuat kata sandi.
-• Buku kesehatan: vaksin, perawatan, dan dokumen selalu dalam jangkauan.
-• Bagian Berita: pembaruan dan tips perawatan, terbuka langsung dari notifikasi.
-• Pengeluaran lebih jelas: lihat berapa yang Anda keluarkan per hewan dan per kategori.
-• Lebih banyak bahasa: aplikasi mengikuti bahasa perangkat Anda secara otomatis.
+• Pengingat berulang: ulangi setiap bulan atau setiap tahun, juga setiap beberapa bulan. Saat pengingat ditandai selesai, pengingat berikutnya dibuat otomatis.
+• Detail antiparasit: tambahkan nama produk dan jenis perawatan (internal, eksternal, atau keduanya).
+• Detail obat: catat nama obat pada catatan buku kesehatan.
 • Perbaikan stabilitas dan peningkatan antarmuka.

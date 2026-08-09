@@ -1,9 +1,6 @@
 Novità di questa versione:
 
-• Notifiche puntuali: i promemoria per vaccini, antiparassitari e visite arrivano al momento giusto, e puoi segnare "fatto" direttamente dalla notifica.
-• Accedi con Apple: entra con un tap, senza creare una password.
-• Libretto sanitario: vaccini, trattamenti e documenti sempre a portata di mano.
-• Sezione Novità: aggiornamenti e consigli sulla cura, con apertura diretta dalla notifica.
-• Spese più chiare: scopri quanto spendi per ogni animale e per categoria.
-• Più lingue: l'app segue automaticamente la lingua del tuo dispositivo.
+• Promemoria ricorrenti: imposta una ripetizione ogni mese o ogni anno, anche a intervalli di più mesi. Quando segni il promemoria come fatto, il successivo viene creato in automatico.
+• Dettagli antiparassitario: aggiungi il nome del prodotto e il tipo di trattamento (interno, esterno o entrambi).
+• Dettagli farmaco: annota il nome del farmaco negli eventi del libretto sanitario.
 • Correzioni di stabilità e miglioramenti all'interfaccia.

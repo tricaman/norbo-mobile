@@ -1,9 +1,6 @@
 Noutăți în această versiune:
 
-• Notificări punctuale: mementourile pentru vaccinuri, antiparazitare și vizite ajung la momentul potrivit, iar le poți marca drept efectuate direct din notificare.
-• Autentificare cu Apple: intri dintr-o singură atingere, fără să creezi o parolă.
-• Carnet de sănătate: vaccinuri, tratamente și documente mereu la îndemână.
-• Secțiunea Noutăți: actualizări și sfaturi de îngrijire, deschise direct din notificare.
-• Cheltuieli mai clare: află cât cheltuiești pentru fiecare animal și pe categorii.
-• Mai multe limbi: aplicația urmează automat limba dispozitivului tău.
+• Memento-uri recurente: repetare în fiecare lună sau în fiecare an, inclusiv la câteva luni. Când marchezi un memento ca finalizat, următorul este creat automat.
+• Detalii antiparazitar: adaugă numele produsului și tipul tratamentului (intern, extern sau ambele).
+• Detalii medicament: notează numele medicamentului în evenimentele din carnetul de sănătate.
 • Corecții de stabilitate și îmbunătățiri ale interfeței.

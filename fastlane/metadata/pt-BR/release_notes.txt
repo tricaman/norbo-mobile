@@ -1,9 +1,6 @@
 Novidades desta versão:
 
-• Notificações pontuais: os lembretes de vacinas, antiparasitários e consultas chegam na hora certa, e você pode marcá-los como feitos direto pela notificação.
-• Login com Apple: entre com um toque, sem criar senha.
-• Carteira de saúde: vacinas, tratamentos e documentos sempre à mão.
-• Seção Novidades: atualizações e dicas de cuidado, abrindo direto pela notificação.
-• Despesas mais claras: veja quanto você gasta por animal e por categoria.
-• Mais idiomas: o app segue automaticamente o idioma do seu aparelho.
+• Lembretes recorrentes: repita todo mês ou todo ano, também a cada alguns meses. Quando você marca um lembrete como feito, o próximo é criado automaticamente.
+• Detalhes do antiparasitário: adicione o nome do produto e o tipo de tratamento (interno, externo ou ambos).
+• Detalhes do medicamento: registre o nome do medicamento nos eventos da carteira de saúde.
 • Correções de estabilidade e melhorias na interface.

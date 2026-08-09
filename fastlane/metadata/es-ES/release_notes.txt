@@ -1,9 +1,6 @@
 Novedades de esta versión:
 
-• Notificaciones puntuales: los recordatorios de vacunas, antiparasitarios y visitas llegan en el momento justo, y puedes marcarlos como hechos desde la propia notificación.
-• Iniciar sesión con Apple: entra con un toque, sin crear contraseña.
-• Cartilla sanitaria: vacunas, tratamientos y documentos siempre a mano.
-• Sección Novedades: actualizaciones y consejos de cuidado, que se abren directamente desde la notificación.
-• Gastos más claros: descubre cuánto gastas por animal y por categoría.
-• Más idiomas: la app sigue automáticamente el idioma de tu dispositivo.
+• Recordatorios periódicos: repite cada mes o cada año, también con intervalos de varios meses. Cuando marcas un recordatorio como hecho, el siguiente se crea automáticamente.
+• Detalles del antiparasitario: añade el nombre del producto y el tipo de tratamiento (interno, externo o ambos).
+• Detalles del medicamento: anota el nombre del medicamento en los eventos de la cartilla sanitaria.
 • Correcciones de estabilidad y mejoras en la interfaz.
