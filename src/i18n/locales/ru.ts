@@ -259,6 +259,8 @@ const ru = {
     disclaimer:
       "настоящие уведомления появятся в следующих обновлениях. пока мы только сохраняем твои настройки.",
     saveError: "не удалось сохранить, попробуй ещё раз",
+    achievements: "достижения",
+    achievementsSubtitle: "когда вы открываете новый уровень значка",
   },
   editInfo: {
     title: "учетная запись",
@@ -1224,6 +1226,33 @@ const ru = {
     failedTitle: "не удалось обновить",
     failedBody: "что-то пошло не так при обновлении. попробуйте снова.",
     retry: "повторить",
+  },
+  badges: {
+    title: "значки",
+    entrySubtitle: "ваши достижения",
+    empty: "пока нет значков",
+    emptySubtitle: "ваши достижения появятся здесь",
+    locked: "закрыто",
+    currentTier: "текущий уровень",
+    nextTier: "следующий уровень",
+    maxTier: "достигнут высший уровень",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "нужно {{value}} {{unit}}",
+    howToUnlock: "как получить",
+    rarity: {
+      COMMON: "обычный",
+      RARE: "редкий",
+      EPIC: "эпический",
+      LEGENDARY: "легендарный",
+    },
+    unit: {
+      days: "дней",
+      count: "раз",
+    },
+    celebration: {
+      title: "новый значок!",
+      cta: "продолжить",
+    },
   },
 } as const;
 

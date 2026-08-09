@@ -99,6 +99,7 @@ NEVER reimplement these patterns inline. Use the primitive:
 - `QueryBoundary` — wraps a `UseQueryResult` and handles pending/error/empty/success states declaratively. Children is a render function `(data) => ReactNode`. Override `LoadingComponent`, `ErrorComponent`, `EmptyComponent` or `isEmpty` as needed. Only for TanStack Query (`useQuery`) — not for Zustand-backed data.
 - `AvatarRow` — shared layout primitive for avatar + two-row content (title left, `titleRight?` slot, `subtitle?` ReactNode, `subtitleRight?` slot, optional `hint?` third line). Used by `ContactRow` and `ConversationRow`. `title` is always styled (subhead + textPrimary + lowercase); subtitle/hint are ReactNode so callers own their text style. `style?` overrides row padding/margin.
 - `DateField` — themed wrapper around `@react-native-community/datetimepicker`. Exposes a `Date | null` value + `onChange(Date)` API; uses iOS `display="compact"` (small chip with popover) and the imperative `DateTimePickerAndroid.open()` on Android behind a themed pressable. Never use the raw `DateTimePicker` component in screens — always go through `DateField`. Callers convert to/from ISO strings themselves (see `BirthDateStep`).
+- `ProgressBar` — flat progress track (`value` 0..1, `color`, optional `trackColor`/`height`). Clamps its own input; used by the badge tile and the badge detail sheet. No Skia, no SVG.
 
 Layout tokens: `theme.hairline` (0.5), `theme.avatarSize.{sm,md,lg,xl}`. Always prefer these over literals.
 
@@ -394,3 +395,39 @@ API — so there the CTA opens the App Store page.
   track build, not a sideloaded APK.
 - **Local testing**: `EXPO_PUBLIC_APP_UPDATE_DEV_LEVEL=available|required` in
   `.env` forces the level and simulates the download (no store involved).
+
+## BADGES / GAMIFICATION
+
+Entry point: profile tab → `/badges` (`src/app/badges/index.tsx`, registered in
+`src/app/_layout.tsx`). ONE route only — the detail is a bottom sheet
+(`BadgeDetailSheet`, the `PlaceDetailSheet` pattern), so the deep link
+`/badges?badgeId=…` just seeds the screen's selection state.
+
+- **All badge copy comes from the server, already localized.** Titles,
+  descriptions, tier names and the "how to earn it" hint arrive resolved from
+  `Accept-Language` — they are deliberately NOT in `src/i18n/`. Only the screen
+  chrome (`badges.*`: rarity names, units, progress template, celebration copy)
+  lives there, so fixing a badge typo does not need a store release.
+- **Rarity is a global scale** (`COMMON | RARE | EPIC | LEGENDARY`) driving
+  colour via `src/components/badges/rarity-meta.ts` — the version-skew-safe
+  `getToolBadgeMeta` pattern: unknown values resolve to the neutral look instead
+  of crashing. It is orthogonal to a tier's *title*, which is per-badge and
+  server-owned. `glow` (EPIC/LEGENDARY only) turns on `NorboPressable`'s
+  `premium` Skia halo — if everything glows, nothing does.
+- **Locked tiles keep their title readable** and only swap the glyph for a
+  padlock. A badge whose name you cannot read is not a goal, it is a grey
+  square. Same rule in the sheet: tiers ahead stay visible, just dimmed.
+- **Celebration queue.** Every unacknowledged level is its own overlay, oldest
+  first (a user who jumps two tiers sees both). `queryClient.invalidateQueries`
+  must fire **only once the queue is drained** — refetching mid-queue rebuilds
+  `pending` from fresher data and silently drops the celebrations still owed.
+- `useBadgeUnseen()` powers the accent pill on the profile row; it is derived
+  from the badge list, so no extra store and no possible disagreement with the
+  screen.
+- `useMarkBadgeSeen()` is deliberately silent (no haptic, no toast, no error
+  surface): it is UI bookkeeping, and a lost call costs one modal shown twice.
+- Numeric i18n interpolation must be stringified (`String(value)`) — the typed
+  `t()` rejects numbers.
+- The `achievements` toggle in `src/app/settings/notifications.tsx` opts out of
+  unlock pushes. `src/types/preferences.schema.ts` is a hand-kept mirror of the
+  API's `preferences.schema.ts` — change both together.

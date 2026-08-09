@@ -260,6 +260,8 @@ const hi = {
     disclaimer:
       "वास्तविक सूचनाएं अगले अपडेट में आएंगी। अभी हम केवल आपकी प्राथमिकताएँ सहेज रहे हैं।",
     saveError: "सहेज नहीं सका, पुनः प्रयास करें",
+    achievements: "मील के पत्थर",
+    achievementsSubtitle: "जब आप नया बैज स्तर अनलॉक करते हैं",
   },
   editInfo: {
     title: "खाता",
@@ -1233,6 +1235,33 @@ const hi = {
     failedTitle: "अपडेट विफल",
     failedBody: "अपडेट के दौरान कुछ गड़बड़ हो गई। कृपया फिर से प्रयास करें।",
     retry: "फिर से प्रयास करें",
+  },
+  badges: {
+    title: "बैज",
+    entrySubtitle: "आपके मील के पत्थर",
+    empty: "अभी कोई बैज नहीं",
+    emptySubtitle: "आपके मील के पत्थर यहाँ दिखेंगे",
+    locked: "लॉक्ड",
+    currentTier: "वर्तमान स्तर",
+    nextTier: "अगला स्तर",
+    maxTier: "शीर्ष स्तर प्राप्त",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "चाहिए {{value}} {{unit}}",
+    howToUnlock: "कैसे प्राप्त करें",
+    rarity: {
+      COMMON: "सामान्य",
+      RARE: "दुर्लभ",
+      EPIC: "महाकाव्य",
+      LEGENDARY: "पौराणिक",
+    },
+    unit: {
+      days: "दिन",
+      count: "बार",
+    },
+    celebration: {
+      title: "नया बैज!",
+      cta: "जारी रखें",
+    },
   },
 } as const;
 

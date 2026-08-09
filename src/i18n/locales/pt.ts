@@ -261,6 +261,8 @@ const pt = {
     disclaimer:
       "notificações reais chegarão nas próximas atualizações. por enquanto estamos só salvando suas preferências.",
     saveError: "falha ao salvar, tente de novo",
+    achievements: "conquistas",
+    achievementsSubtitle: "quando você desbloquear um novo nível de emblema",
   },
   editInfo: {
     title: "conta",
@@ -1232,6 +1234,33 @@ const pt = {
     failedTitle: "falha na atualização",
     failedBody: "algo deu errado durante a atualização. tente novamente.",
     retry: "tentar novamente",
+  },
+  badges: {
+    title: "emblemas",
+    entrySubtitle: "suas conquistas",
+    empty: "nenhum emblema ainda",
+    emptySubtitle: "suas conquistas aparecerão aqui",
+    locked: "bloqueado",
+    currentTier: "nível atual",
+    nextTier: "próximo nível",
+    maxTier: "nível máximo atingido",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "precisa de {{value}} {{unit}}",
+    howToUnlock: "como ganhar",
+    rarity: {
+      COMMON: "comum",
+      RARE: "raro",
+      EPIC: "épico",
+      LEGENDARY: "lendário",
+    },
+    unit: {
+      days: "dias",
+      count: "vezes",
+    },
+    celebration: {
+      title: "novo emblema!",
+      cta: "continuar",
+    },
   },
 } as const;
 

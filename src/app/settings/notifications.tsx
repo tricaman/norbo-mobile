@@ -96,6 +96,21 @@ export default function NotificationsScreen() {
               />
             }
           />
+          <SettingsRow
+            iconName="rosette"
+            label={t("notifications.achievements")}
+            subtitle={t("notifications.achievementsSubtitle")}
+            right={
+              <Switch
+                value={prefs.achievements}
+                onValueChange={(v) => persist({ ...prefs, achievements: v })}
+                trackColor={{
+                  false: theme.colors.border,
+                  true: theme.colors.primary,
+                }}
+              />
+            }
+          />
         </SettingsCard>
 
         <SettingsCard

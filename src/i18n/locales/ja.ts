@@ -258,6 +258,8 @@ const ja = {
     disclaimer:
       "実際の通知は今後のアップデートで届きます。現在は設定のみ保存しています。",
     saveError: "保存に失敗しました、もう一度お試しください",
+    achievements: "マイルストーン",
+    achievementsSubtitle: "新しいバッジのティアを解除したとき",
   },
   editInfo: {
     title: "アカウント",
@@ -1211,13 +1213,41 @@ const ja = {
     updateNow: "今すぐアップデート",
     later: "後で",
     downloadingTitle: "更新中...",
-    downloadingBody: "最新バージョンをダウンロードしています。アプリを開いたままにしてください。",
+    downloadingBody:
+      "最新バージョンをダウンロードしています。アプリを開いたままにしてください。",
     readyTitle: "更新の準備ができました",
     readyBody: "インストールを完了するにはアプリを再起動してください。",
     restartNow: "今すぐ再起動",
     failedTitle: "更新に失敗しました",
     failedBody: "更新中に問題が発生しました。もう一度お試しください。",
     retry: "再試行",
+  },
+  badges: {
+    title: "バッジ",
+    entrySubtitle: "達成状況",
+    empty: "まだバッジはありません",
+    emptySubtitle: "達成状況がここに表示されます",
+    locked: "ロック中",
+    currentTier: "現在のティア",
+    nextTier: "次のティア",
+    maxTier: "最高ティア達成",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "{{value}}{{unit}}必要",
+    howToUnlock: "獲得方法",
+    rarity: {
+      COMMON: "コモン",
+      RARE: "レア",
+      EPIC: "エピック",
+      LEGENDARY: "レジェンダリー",
+    },
+    unit: {
+      days: "日",
+      count: "回",
+    },
+    celebration: {
+      title: "新しいバッジ獲得！",
+      cta: "続ける",
+    },
   },
 } as const;
 

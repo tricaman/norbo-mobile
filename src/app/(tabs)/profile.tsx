@@ -3,6 +3,7 @@ import { SettingsCard, SettingsRow } from "@/components/ui/SettingsRow";
 import { TabScreen } from "@/components/ui/TabScreen";
 import { SCREEN_BOTTOM_PADDING } from "@/constants/layout";
 import { useAuth } from "@/hooks/useAuth";
+import { useBadgeUnseen } from "@/hooks/useBadges";
 import { useNewsUnread } from "@/hooks/useNews";
 import { usersApi } from "@/services/users.api";
 import { useAuthStore } from "@/stores/auth.store";
@@ -20,8 +21,10 @@ import { StyleSheet, useUnistyles } from "react-native-unistyles";
  *
  * Layout:
  *  1. Profilo (avatar + nome + email)
- *  2. CTA impostazioni → /settings
- *  3. Sign out
+ *  2. News
+ *  3. Badge (pill accent = sblocchi non ancora celebrati)
+ *  4. CTA impostazioni → /settings
+ *  5. Sign out
  */
 export default function ProfileScreen() {
   const { t } = useTranslation();
@@ -31,6 +34,7 @@ export default function ProfileScreen() {
   const { signOut } = useAuth();
   const setUser = useAuthStore((s) => s.setUser);
   const unread = useNewsUnread();
+  const unseenBadges = useBadgeUnseen();
 
   const handleAvatarUploaded = async (asset: MediaAsset) => {
     const photoUrl = asset.thumbMdUrl ?? asset.originalUrl;
@@ -86,6 +90,34 @@ export default function ProfileScreen() {
                     ]}
                   >
                     {unread}
+                  </Text>
+                </View>
+              ) : undefined
+            }
+          />
+        </SettingsCard>
+
+        <SettingsCard>
+          <SettingsRow
+            iconName="rosette"
+            label={t("badges.title")}
+            subtitle={t("badges.entrySubtitle")}
+            onPress={() => router.push("/badges" as never)}
+            right={
+              unseenBadges > 0 ? (
+                <View
+                  style={[
+                    styles.unreadPill,
+                    { backgroundColor: theme.colors.accent },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.unreadPillText,
+                      { color: theme.colors.textOnPrimary },
+                    ]}
+                  >
+                    {unseenBadges}
                   </Text>
                 </View>
               ) : undefined

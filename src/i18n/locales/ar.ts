@@ -258,6 +258,8 @@ const ar = {
     disclaimer:
       "ستصل الإشعارات الفعلية في التحديثات القادمة. حالياً نحفظ تفضيلاتك فقط.",
     saveError: "فشل الحفظ، أعد المحاولة",
+    achievements: "الإنجازات",
+    achievementsSubtitle: "عندما تفتح مستوى شارة جديد",
   },
   editInfo: {
     title: "الحساب",
@@ -1212,6 +1214,33 @@ const ar = {
     failedTitle: "فشل التحديث",
     failedBody: "حدث خطأ ما أثناء التحديث. يرجى المحاولة مرة أخرى.",
     retry: "أعد المحاولة",
+  },
+  badges: {
+    title: "الشارات",
+    entrySubtitle: "إنجازاتك",
+    empty: "لا توجد شارات بعد",
+    emptySubtitle: "ستظهر إنجازاتك هنا",
+    locked: "مقفلة",
+    currentTier: "المستوى الحالي",
+    nextTier: "المستوى التالي",
+    maxTier: "تم الوصول إلى أعلى مستوى",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "يتطلب {{value}} {{unit}}",
+    howToUnlock: "كيفية الحصول عليها",
+    rarity: {
+      COMMON: "شائعة",
+      RARE: "نادرة",
+      EPIC: "ملحمية",
+      LEGENDARY: "أسطورية",
+    },
+    unit: {
+      days: "أيام",
+      count: "مرات",
+    },
+    celebration: {
+      title: "شارة جديدة!",
+      cta: "متابعة",
+    },
   },
 } as const;
 

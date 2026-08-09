@@ -257,6 +257,8 @@ const zh = {
     quietHoursEnd: "到",
     disclaimer: "真实的通知将在后续更新中提供。目前只保存你的偏好设置。",
     saveError: "保存失败，请重试",
+    achievements: "里程碑",
+    achievementsSubtitle: "当你解锁新徽章等级时",
   },
   editInfo: {
     title: "帐户",
@@ -1202,6 +1204,33 @@ const zh = {
     failedTitle: "更新失败",
     failedBody: "更新过程中出了点问题，请重试。",
     retry: "重试",
+  },
+  badges: {
+    title: "徽章",
+    entrySubtitle: "你的里程碑",
+    empty: "暂无徽章",
+    emptySubtitle: "你的里程碑将在这里显示",
+    locked: "已锁定",
+    currentTier: "当前等级",
+    nextTier: "下一等级",
+    maxTier: "已达最高等级",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "需要 {{value}} {{unit}}",
+    howToUnlock: "如何获得",
+    rarity: {
+      COMMON: "普通",
+      RARE: "稀有",
+      EPIC: "史诗",
+      LEGENDARY: "传说",
+    },
+    unit: {
+      days: "天",
+      count: "次",
+    },
+    celebration: {
+      title: "新徽章！",
+      cta: "继续",
+    },
   },
 } as const;
 

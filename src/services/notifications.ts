@@ -11,6 +11,7 @@ import {
   onTokenRefresh,
   setBackgroundMessageHandler,
 } from "@react-native-firebase/messaging";
+import { BADGE_DATA_TYPE } from "@/shared/gamification-contract";
 import { addDays } from "date-fns";
 import { Linking, Platform } from "react-native";
 import {
@@ -81,6 +82,7 @@ export async function initNotifications(): Promise<void> {
  *                were resolved per recipient server-side (campaign-targets.ts).
  *   - reminders: identified by a `reminderId` (legacy shape, no `type`).
  *   - news:      identified by `type === "news"` + a `newsId`.
+ *   - badges:    identified by `type === "badge"` + a `badgeId`.
  * Returns `null` when the payload carries no navigable target.
  *
  * The returned value is an app route (e.g. `/news/abc`); callers that need a
@@ -106,6 +108,17 @@ export function getNavTargetFromData(
   const newsId = data["newsId"];
   if (data["type"] === "news" && typeof newsId === "string" && newsId) {
     return `/news/${newsId}`;
+  }
+
+  // Badge unlocks. The detail is a sheet, not a route, so the target is the
+  // grid screen with the badge pre-selected via a query param.
+  const badgeId = data["badgeId"];
+  if (
+    data["type"] === BADGE_DATA_TYPE &&
+    typeof badgeId === "string" &&
+    badgeId
+  ) {
+    return `/badges?badgeId=${encodeURIComponent(badgeId)}`;
   }
 
   return null;

@@ -260,6 +260,8 @@ const fr = {
     disclaimer:
       "les vraies notifications arriveront dans les prochaines mises à jour. pour l'instant nous sauvegardons seulement tes préférences.",
     saveError: "échec de l'enregistrement, réessaye",
+    achievements: "étapes clés",
+    achievementsSubtitle: "quand vous débloquez un nouveau niveau de badge",
   },
   editInfo: {
     title: "compte",
@@ -1237,13 +1239,41 @@ const fr = {
     updateNow: "mettre à jour",
     later: "plus tard",
     downloadingTitle: "mise à jour...",
-    downloadingBody: "téléchargement de la dernière version. garde l'app ouverte.",
+    downloadingBody:
+      "téléchargement de la dernière version. garde l'app ouverte.",
     readyTitle: "mise à jour prête",
     readyBody: "redémarre l'app pour terminer l'installation.",
     restartNow: "redémarrer",
     failedTitle: "échec de la mise à jour",
     failedBody: "un problème est survenu pendant la mise à jour. réessaie.",
     retry: "réessayer",
+  },
+  badges: {
+    title: "badges",
+    entrySubtitle: "vos étapes clés",
+    empty: "pas encore de badges",
+    emptySubtitle: "vos étapes clés apparaîtront ici",
+    locked: "verrouillé",
+    currentTier: "niveau actuel",
+    nextTier: "niveau suivant",
+    maxTier: "niveau maximal atteint",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "nécessite {{value}} {{unit}}",
+    howToUnlock: "comment l'obtenir",
+    rarity: {
+      COMMON: "commun",
+      RARE: "rare",
+      EPIC: "épique",
+      LEGENDARY: "légendaire",
+    },
+    unit: {
+      days: "jours",
+      count: "fois",
+    },
+    celebration: {
+      title: "nouveau badge !",
+      cta: "continuer",
+    },
   },
 } as const;
 

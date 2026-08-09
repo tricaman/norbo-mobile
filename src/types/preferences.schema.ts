@@ -45,6 +45,7 @@ export const notificationPreferencesSchema = z
   .object({
     healthReminders: z.boolean().default(true),
     maintenanceReminders: z.boolean().default(true),
+    achievements: z.boolean().default(true),
     quietHours: quietHoursSchema.nullable().default(null),
   })
   .strict();
@@ -56,6 +57,7 @@ export type NotificationPreferences = z.infer<
 export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
   healthReminders: true,
   maintenanceReminders: true,
+  achievements: true,
   quietHours: null,
 };
 

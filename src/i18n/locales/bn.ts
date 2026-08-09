@@ -260,6 +260,8 @@ const bn = {
     disclaimer:
       "প্রকৃত বিজ্ঞপ্তি পরবর্তী আপডেটে আসবে। এখন আমরা শুধু আপনার পছন্দ সংরক্ষণ করছি।",
     saveError: "সংরক্ষণ ব্যর্থ, আবার চেষ্টা করুন",
+    achievements: "মাইলফলক",
+    achievementsSubtitle: "যখন আপনি একটি নতুন ব্যাজ স্তর আনলক করেন",
   },
   editInfo: {
     title: "অ্যাকাউন্ট",
@@ -1230,6 +1232,33 @@ const bn = {
     failedTitle: "আপডেট ব্যর্থ",
     failedBody: "আপডেটের সময় কিছু ভুল হয়েছে। আবার চেষ্টা করুন।",
     retry: "আবার চেষ্টা করুন",
+  },
+  badges: {
+    title: "ব্যাজ",
+    entrySubtitle: "আপনার মাইলফলক",
+    empty: "এখনও কোনও ব্যাজ নেই",
+    emptySubtitle: "আপনার মাইলফলক এখানে দেখানো হবে",
+    locked: "লক করা",
+    currentTier: "বর্তমান স্তর",
+    nextTier: "পরবর্তী স্তর",
+    maxTier: "সর্বোচ্চ স্তরে পৌঁছেছেন",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "প্রয়োজন {{value}} {{unit}}",
+    howToUnlock: "কীভাবে অর্জন করবেন",
+    rarity: {
+      COMMON: "সাধারণ",
+      RARE: "বিরল",
+      EPIC: "মহাকাব্যিক",
+      LEGENDARY: "কিংবদন্তি",
+    },
+    unit: {
+      days: "দিন",
+      count: "বার",
+    },
+    celebration: {
+      title: "নতুন ব্যাজ!",
+      cta: "চালিয়ে যান",
+    },
   },
 } as const;
 

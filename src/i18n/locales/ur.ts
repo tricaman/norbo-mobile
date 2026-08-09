@@ -260,6 +260,8 @@ const ur = {
     disclaimer:
       "اصل اطلاعات اگلی اپڈیٹس میں آئیں گی۔ ابھی ہم صرف آپ کی ترجیحات محفوظ کر رہے ہیں۔",
     saveError: "محفوظ نہ ہو سکا، دوبارہ کوشش کریں",
+    achievements: "سنگ میل",
+    achievementsSubtitle: "جب آپ نیا بیج درجہ کھولیں",
   },
   editInfo: {
     title: "اکاؤنٹ",
@@ -1227,6 +1229,33 @@ const ur = {
     failedTitle: "اپ ڈیٹ ناکام",
     failedBody: "اپ ڈیٹ کے دوران کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔",
     retry: "دوبارہ کوشش کریں",
+  },
+  badges: {
+    title: "بیجز",
+    entrySubtitle: "آپ کے سنگ میل",
+    empty: "ابھی کوئی بیج نہیں",
+    emptySubtitle: "آپ کے سنگ میل یہاں دکھائی دیں گے",
+    locked: "مقفل",
+    currentTier: "موجودہ درجہ",
+    nextTier: "اگلا درجہ",
+    maxTier: "اعلیٰ ترین درجے تک پہنچ گئے",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "{{value}} {{unit}} درکار ہے",
+    howToUnlock: "کیسے حاصل کریں",
+    rarity: {
+      COMMON: "عام",
+      RARE: "نایاب",
+      EPIC: "مہاکاوی",
+      LEGENDARY: "افسانوی",
+    },
+    unit: {
+      days: "دن",
+      count: "مرتبہ",
+    },
+    celebration: {
+      title: "نیا بیج!",
+      cta: "جاری رکھیں",
+    },
   },
 } as const;
 

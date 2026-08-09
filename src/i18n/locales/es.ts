@@ -261,6 +261,8 @@ const es = {
     disclaimer:
       "las notificaciones reales llegarán en próximas actualizaciones. por ahora solo guardamos tus preferencias.",
     saveError: "no se pudo guardar, intenta de nuevo",
+    achievements: "hitos",
+    achievementsSubtitle: "cuando desbloquees un nuevo nivel de insignia",
   },
   editInfo: {
     title: "cuenta",
@@ -1139,7 +1141,8 @@ const es = {
         sectionAddresses: "direcciones",
         cityCount: "{{count}} lugares",
         empty: "sin resultados — prueba con el nombre del municipio",
-        degraded: "búsqueda de direcciones no disponible — solo nuestros lugares",
+        degraded:
+          "búsqueda de direcciones no disponible — solo nuestros lugares",
       },
       addPlace: {
         title: "añadir un lugar",
@@ -1234,6 +1237,33 @@ const es = {
     failedTitle: "error de actualización",
     failedBody: "algo salió mal durante la actualización. inténtalo de nuevo.",
     retry: "reintentar",
+  },
+  badges: {
+    title: "insignias",
+    entrySubtitle: "tus hitos",
+    empty: "aún no tienes insignias",
+    emptySubtitle: "tus hitos aparecerán aquí",
+    locked: "bloqueada",
+    currentTier: "nivel actual",
+    nextTier: "siguiente nivel",
+    maxTier: "nivel máximo alcanzado",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "necesita {{value}} {{unit}}",
+    howToUnlock: "cómo ganarla",
+    rarity: {
+      COMMON: "común",
+      RARE: "rara",
+      EPIC: "épica",
+      LEGENDARY: "legendaria",
+    },
+    unit: {
+      days: "días",
+      count: "veces",
+    },
+    celebration: {
+      title: "¡nueva insignia!",
+      cta: "continuar",
+    },
   },
 } as const;
 

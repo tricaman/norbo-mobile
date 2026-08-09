@@ -260,6 +260,8 @@ const id = {
     disclaimer:
       "notifikasi nyata akan datang di pembaruan berikutnya. saat ini kami hanya menyimpan preferensimu.",
     saveError: "gagal menyimpan, coba lagi",
+    achievements: "pencapaian",
+    achievementsSubtitle: "saat kamu membuka tingkat lencana baru",
   },
   editInfo: {
     title: "akun",
@@ -1225,13 +1227,41 @@ const id = {
     updateNow: "perbarui sekarang",
     later: "nanti",
     downloadingTitle: "memperbarui...",
-    downloadingBody: "sedang mengunduh versi terbaru. biarkan aplikasi tetap terbuka.",
+    downloadingBody:
+      "sedang mengunduh versi terbaru. biarkan aplikasi tetap terbuka.",
     readyTitle: "pembaruan siap",
     readyBody: "mulai ulang aplikasi untuk menyelesaikan pemasangan.",
     restartNow: "mulai ulang sekarang",
     failedTitle: "pembaruan gagal",
     failedBody: "ada yang tidak beres saat pembaruan. silakan coba lagi.",
     retry: "coba lagi",
+  },
+  badges: {
+    title: "lencana",
+    entrySubtitle: "pencapaianmu",
+    empty: "belum ada lencana",
+    emptySubtitle: "pencapaianmu akan muncul di sini",
+    locked: "terkunci",
+    currentTier: "tingkat saat ini",
+    nextTier: "tingkat berikutnya",
+    maxTier: "tingkat tertinggi tercapai",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "butuh {{value}} {{unit}}",
+    howToUnlock: "cara mendapatkannya",
+    rarity: {
+      COMMON: "umum",
+      RARE: "langka",
+      EPIC: "epik",
+      LEGENDARY: "legendaris",
+    },
+    unit: {
+      days: "hari",
+      count: "kali",
+    },
+    celebration: {
+      title: "lencana baru!",
+      cta: "lanjut",
+    },
   },
 } as const;
 

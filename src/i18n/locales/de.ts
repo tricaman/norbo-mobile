@@ -260,6 +260,8 @@ const de = {
     disclaimer:
       "echte benachrichtigungen kommen in den nächsten updates. aktuell speichern wir nur deine einstellungen.",
     saveError: "speichern fehlgeschlagen, versuche es erneut",
+    achievements: "Meilensteine",
+    achievementsSubtitle: "wenn du eine neue Abzeichenstufe freischaltest",
   },
   editInfo: {
     title: "konto",
@@ -1230,13 +1232,41 @@ const de = {
     updateNow: "jetzt aktualisieren",
     later: "später",
     downloadingTitle: "wird aktualisiert...",
-    downloadingBody: "die neueste Version wird heruntergeladen. lass die App geöffnet.",
+    downloadingBody:
+      "die neueste Version wird heruntergeladen. lass die App geöffnet.",
     readyTitle: "Update bereit",
     readyBody: "starte die App neu, um die Installation abzuschließen.",
     restartNow: "jetzt neu starten",
     failedTitle: "Update fehlgeschlagen",
     failedBody: "beim Update ist etwas schiefgelaufen. bitte erneut versuchen.",
     retry: "erneut versuchen",
+  },
+  badges: {
+    title: "Abzeichen",
+    entrySubtitle: "deine Meilensteine",
+    empty: "noch keine Abzeichen",
+    emptySubtitle: "deine Meilensteine erscheinen hier",
+    locked: "gesperrt",
+    currentTier: "aktuelle Stufe",
+    nextTier: "nächste Stufe",
+    maxTier: "höchste Stufe erreicht",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "erfordert {{value}} {{unit}}",
+    howToUnlock: "wie man es verdient",
+    rarity: {
+      COMMON: "häufig",
+      RARE: "selten",
+      EPIC: "episch",
+      LEGENDARY: "legendär",
+    },
+    unit: {
+      days: "Tage",
+      count: "Mal",
+    },
+    celebration: {
+      title: "neues Abzeichen!",
+      cta: "weiter",
+    },
   },
 } as const;
 

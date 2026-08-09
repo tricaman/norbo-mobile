@@ -319,6 +319,10 @@ function AppInner() {
         options={{ animation: "slide_from_right" }}
       />
       <Stack.Screen
+        name="badges/index"
+        options={{ animation: "slide_from_right" }}
+      />
+      <Stack.Screen
         name="news/[id]/index"
         options={{ animation: "slide_from_right" }}
       />

@@ -260,6 +260,8 @@ const ro = {
     disclaimer:
       "notificările reale vor veni în actualizările următoare. momentan doar salvăm preferințele tale.",
     saveError: "salvarea a eșuat, încearcă din nou",
+    achievements: "puncte de reper",
+    achievementsSubtitle: "când deblochezi un nou nivel de insignă",
   },
   editInfo: {
     title: "cont",
@@ -1230,6 +1232,33 @@ const ro = {
     failedTitle: "actualizare eșuată",
     failedBody: "ceva n-a mers bine în timpul actualizării. încearcă din nou.",
     retry: "încearcă din nou",
+  },
+  badges: {
+    title: "insigne",
+    entrySubtitle: "punctele tale de reper",
+    empty: "nu ai încă insigne",
+    emptySubtitle: "punctele tale de reper vor apărea aici",
+    locked: "blocat",
+    currentTier: "nivelul actual",
+    nextTier: "nivelul următor",
+    maxTier: "nivel maxim atins",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "necesită {{value}} {{unit}}",
+    howToUnlock: "cum să o obții",
+    rarity: {
+      COMMON: "comun",
+      RARE: "rar",
+      EPIC: "epic",
+      LEGENDARY: "legendar",
+    },
+    unit: {
+      days: "zile",
+      count: "ori",
+    },
+    celebration: {
+      title: "insignă nouă!",
+      cta: "continuă",
+    },
   },
 } as const;
 

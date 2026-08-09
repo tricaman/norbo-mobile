@@ -260,6 +260,8 @@ const tr = {
     disclaimer:
       "gerçek bildirimler sonraki güncellemelerle gelecek. şimdilik sadece tercihlerini kaydediyoruz.",
     saveError: "kaydedilemedi, tekrar dene",
+    achievements: "hedefler",
+    achievementsSubtitle: "yeni bir rozet seviyesi açtığında",
   },
   editInfo: {
     title: "hesap",
@@ -1224,8 +1226,36 @@ const tr = {
     readyBody: "kurulumu tamamlamak için uygulamayı yeniden başlat.",
     restartNow: "şimdi yeniden başlat",
     failedTitle: "güncelleme başarısız",
-    failedBody: "güncelleme sırasında bir şeyler ters gitti. lütfen tekrar dene.",
+    failedBody:
+      "güncelleme sırasında bir şeyler ters gitti. lütfen tekrar dene.",
     retry: "tekrar dene",
+  },
+  badges: {
+    title: "rozetler",
+    entrySubtitle: "hedeflerin",
+    empty: "henüz rozet yok",
+    emptySubtitle: "hedeflerin burada görünecek",
+    locked: "kilitli",
+    currentTier: "mevcut seviye",
+    nextTier: "sonraki seviye",
+    maxTier: "en üst seviyeye ulaşıldı",
+    progress: "{{current}} / {{target}} {{unit}}",
+    requirement: "{{value}} {{unit}} gerekli",
+    howToUnlock: "nasıl kazanılır",
+    rarity: {
+      COMMON: "yaygın",
+      RARE: "nadir",
+      EPIC: "epik",
+      LEGENDARY: "efsanevi",
+    },
+    unit: {
+      days: "gün",
+      count: "kez",
+    },
+    celebration: {
+      title: "yeni rozet!",
+      cta: "devam et",
+    },
   },
 } as const;
 
