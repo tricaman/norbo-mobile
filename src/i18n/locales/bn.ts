@@ -1274,6 +1274,27 @@ const bn = {
     unlockedOn: "{{date}}-এ আনলক করা হয়েছে",
     notYet: "এখনো আনলক করা হয়নি",
   },
+  invites: {
+    title: "বন্ধুদের আমন্ত্রণ জানান",
+    entrySubtitle: "নরবোতে একজন বন্ধু নিয়ে আসুন",
+    intro:
+      "আপনার বন্ধুর ইমেইল লিখুন এবং তাদের সাথে লিঙ্কটি শেয়ার করুন। তারা সেই ঠিকানা দিয়ে সাইন আপ করলে, আমন্ত্রণটি গৃহীত হিসেবে গণনা হবে।",
+    formLabel: "বন্ধুর ইমেইল",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "আমন্ত্রণ ও শেয়ার করুন",
+    invalidEmail: "একটি বৈধ ইমেইল লিখুন",
+    shareMessage:
+      "আমার সাথে নরবো চেষ্টা করতে চান? এটি সেই অ্যাপ যেখানে আমি আমার পোষা প্রাণী সম্পর্কে সবকিছু সাজিয়ে রাখি: {{link}}",
+    sent_one: "{{count}}টি আমন্ত্রণ",
+    sent_other: "{{count}}টি আমন্ত্রণ",
+    statusPending: "অপেক্ষমাণ",
+    statusAccepted: "যোগ দিয়েছেন",
+    remainingToday_one: "আজ আপনি আরও {{count}}টি আমন্ত্রণ পাঠাতে পারেন",
+    remainingToday_other: "আজ আপনি আরও {{count}}টি আমন্ত্রণ পাঠাতে পারেন",
+    empty: "এখনো কোনো আমন্ত্রণ নেই",
+    emptySubtitle:
+      "আপনি প্রথম যে বন্ধুকে আমন্ত্রণ জানাবেন তিনি এখানে দেখা যাবে",
+  },
 } as const;
 
 export default bn;

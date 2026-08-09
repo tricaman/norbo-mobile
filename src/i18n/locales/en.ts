@@ -621,6 +621,26 @@ const en = {
       cta: "continue",
     },
   },
+  invites: {
+    title: "invite friends",
+    entrySubtitle: "bring a friend to norbo",
+    intro:
+      "Enter a friend's email and share the link with them. When they sign up with that address, the invitation counts as accepted.",
+    formLabel: "friend's email",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "invite and share",
+    invalidEmail: "enter a valid email",
+    shareMessage:
+      "Fancy trying Norbo with me? It's the app where I keep everything about my pet in order: {{link}}",
+    sent_one: "{{count}} invitation",
+    sent_other: "{{count}} invitations",
+    statusPending: "pending",
+    statusAccepted: "joined",
+    remainingToday_one: "you can send {{count}} more invitation today",
+    remainingToday_other: "you can send {{count}} more invitations today",
+    empty: "no invitations yet",
+    emptySubtitle: "the first friend you invite will show up here",
+  },
   news: {
     title: "news",
     entrySubtitle: "updates & announcements",

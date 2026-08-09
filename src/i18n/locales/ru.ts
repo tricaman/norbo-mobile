@@ -1268,6 +1268,26 @@ const ru = {
     unlockedOn: "открыто {{date}}",
     notYet: "ещё не открыто",
   },
+  invites: {
+    title: "пригласить друзей",
+    entrySubtitle: "приведи друга в norbo",
+    intro:
+      "Введите email друга и отправьте ему ссылку. Когда он зарегистрируется с этим адресом, приглашение будет считаться принятым.",
+    formLabel: "email друга",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "пригласить и поделиться",
+    invalidEmail: "введите корректный email",
+    shareMessage:
+      "Хочешь попробовать Norbo со мной? Это приложение, где я храню всё о питомце в порядке: {{link}}",
+    sent_one: "{{count}} приглашение",
+    sent_other: "{{count}} приглашений",
+    statusPending: "ожидает",
+    statusAccepted: "присоединился",
+    remainingToday_one: "сегодня можно отправить ещё {{count}} приглашение",
+    remainingToday_other: "сегодня можно отправить ещё {{count}} приглашений",
+    empty: "приглашений пока нет",
+    emptySubtitle: "первый приглашённый друг появится здесь",
+  },
 } as const;
 
 export default ru;

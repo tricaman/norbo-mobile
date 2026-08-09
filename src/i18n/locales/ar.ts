@@ -1256,6 +1256,26 @@ const ar = {
     unlockedOn: "تم فتحه في {{date}}",
     notYet: "لم يتم فتحه بعد",
   },
+  invites: {
+    title: "دعوة الأصدقاء",
+    entrySubtitle: "أحضر صديقًا إلى norbo",
+    intro:
+      "أدخل البريد الإلكتروني لصديق وشارك الرابط معه. عندما يسجل باستخدام هذا العنوان، تُعتبر الدعوة مقبولة.",
+    formLabel: "بريد الصديق الإلكتروني",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "دعوة ومشاركة",
+    invalidEmail: "أدخل بريدًا إلكترونيًا صحيحًا",
+    shareMessage:
+      "هل ترغب في تجربة Norbo معي؟ إنه التطبيق الذي أحفظ فيه كل ما يتعلق بحيواني الأليف: {{link}}",
+    sent_one: "{{count}} دعوة",
+    sent_other: "{{count}} دعوات",
+    statusPending: "قيد الانتظار",
+    statusAccepted: "انضم",
+    remainingToday_one: "يمكنك إرسال {{count}} دعوة إضافية اليوم",
+    remainingToday_other: "يمكنك إرسال {{count}} دعوات إضافية اليوم",
+    empty: "لا توجد دعوات بعد",
+    emptySubtitle: "سيظهر أول صديق تدعوه هنا",
+  },
 } as const;
 
 export default ar;

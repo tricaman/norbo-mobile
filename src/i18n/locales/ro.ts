@@ -1274,6 +1274,26 @@ const ro = {
     unlockedOn: "deblocat pe {{date}}",
     notYet: "nu este încă deblocat",
   },
+  invites: {
+    title: "invită prieteni",
+    entrySubtitle: "aduceți un prieten în norbo",
+    intro:
+      "Introdu adresa de e-mail a unui prieten și împărtășește linkul cu el. Când se înregistrează cu acea adresă, invitația este considerată acceptată.",
+    formLabel: "e-mailul prietenului",
+    emailPlaceholder: "nume@exemplu.com",
+    sendAndShare: "invită și distribuie",
+    invalidEmail: "introduceți un e-mail valid",
+    shareMessage:
+      "Îți place să încerci Norbo cu mine? Este aplicația în care păstrez totul despre animalul meu în ordine: {{link}}",
+    sent_one: "{{count}} invitație",
+    sent_other: "{{count}} invitații",
+    statusPending: "în așteptare",
+    statusAccepted: "alăturat",
+    remainingToday_one: "mai poți trimite {{count}} invitație astăzi",
+    remainingToday_other: "mai poți trimite {{count}} invitații astăzi",
+    empty: "nicio invitație încă",
+    emptySubtitle: "primul prieten pe care îl inviți va apărea aici",
+  },
 } as const;
 
 export default ro;

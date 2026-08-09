@@ -46,6 +46,7 @@ export const METRIC_UNITS = [
   'pets',
   'reminders',
   'expenses',
+  'friends',
 ] as const;
 export type MetricUnit = (typeof METRIC_UNITS)[number];
 export const metricUnitSchema = z.enum(METRIC_UNITS);

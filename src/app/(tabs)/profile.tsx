@@ -127,6 +127,15 @@ export default function ProfileScreen() {
 
         <SettingsCard>
           <SettingsRow
+            iconName="person.2"
+            label={t("invites.title")}
+            subtitle={t("invites.entrySubtitle")}
+            onPress={() => router.push("/invites" as never)}
+          />
+        </SettingsCard>
+
+        <SettingsCard>
+          <SettingsRow
             iconName="gearshape"
             label={t("profile.settings")}
             subtitle={t("profile.settingsSubtitle")}

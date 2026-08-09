@@ -1246,6 +1246,25 @@ const zh = {
     unlockedOn: "在{{date}}解锁",
     notYet: "尚未解锁",
   },
+  invites: {
+    title: "邀请好友",
+    entrySubtitle: "带一位朋友来 norbo",
+    intro: "输入好友的邮箱并分享链接。对方使用该邮箱注册后，邀请即视为成功。",
+    formLabel: "好友的邮箱",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "邀请并分享",
+    invalidEmail: "请输入有效的邮箱",
+    shareMessage:
+      "想和我一起用 Norbo 吗？这是我用来管理宠物所有事宜的应用：{{link}}",
+    sent_one: "{{count}} 份邀请",
+    sent_other: "{{count}} 份邀请",
+    statusPending: "待处理",
+    statusAccepted: "已加入",
+    remainingToday_one: "您今天还可以发送 {{count}} 份邀请",
+    remainingToday_other: "您今天还可以发送 {{count}} 份邀请",
+    empty: "暂无邀请",
+    emptySubtitle: "你邀请的第一位好友会显示在这里",
+  },
 } as const;
 
 export default zh;

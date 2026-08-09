@@ -628,6 +628,26 @@ const it = {
       cta: "continua",
     },
   },
+  invites: {
+    title: "invita gli amici",
+    entrySubtitle: "porta un amico su norbo",
+    intro:
+      "Scrivi l'email di un amico e condividigli il link. Quando si iscriverà con quell'indirizzo, l'invito risulterà accettato.",
+    formLabel: "email dell'amico",
+    emailPlaceholder: "nome@esempio.it",
+    sendAndShare: "invita e condividi",
+    invalidEmail: "inserisci un'email valida",
+    shareMessage:
+      "Ti va di provare Norbo con me? È l'app dove tengo in ordine tutto del mio animale: {{link}}",
+    sent_one: "{{count}} invito",
+    sent_other: "{{count}} inviti",
+    statusPending: "in attesa",
+    statusAccepted: "iscritto",
+    remainingToday_one: "puoi mandare ancora {{count}} invito oggi",
+    remainingToday_other: "puoi mandare ancora {{count}} inviti oggi",
+    empty: "ancora nessun invito",
+    emptySubtitle: "il primo amico che inviti comparirà qui",
+  },
   news: {
     title: "novità",
     entrySubtitle: "aggiornamenti e annunci",

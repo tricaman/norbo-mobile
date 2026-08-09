@@ -1263,6 +1263,26 @@ const ja = {
     unlockedOn: "{{date}}に解除",
     notYet: "未解除",
   },
+  invites: {
+    title: "友達を招待",
+    entrySubtitle: "norboに友達を招待",
+    intro:
+      "友達のメールアドレスを入力して、リンクを共有しましょう。相手がそのアドレスで登録すると、招待が受け入れられたことになります。",
+    formLabel: "友達のメールアドレス",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "招待して共有",
+    invalidEmail: "有効なメールアドレスを入力してください",
+    shareMessage:
+      "一緒にNorboを試してみませんか？私がペットのあれこれを管理しているアプリです: {{link}}",
+    sent_one: "{{count}}件の招待",
+    sent_other: "{{count}}件の招待",
+    statusPending: "保留中",
+    statusAccepted: "参加済み",
+    remainingToday_one: "今日あと{{count}}件招待できます",
+    remainingToday_other: "今日あと{{count}}件招待できます",
+    empty: "招待はまだありません",
+    emptySubtitle: "最初に招待した友達がここに表示されます",
+  },
 } as const;
 
 export default ja;

@@ -1277,6 +1277,26 @@ const id = {
     unlockedOn: "terbuka pada {{date}}",
     notYet: "belum terbuka",
   },
+  invites: {
+    title: "ajak teman",
+    entrySubtitle: "bawa teman ke norbo",
+    intro:
+      "Masukkan email teman dan bagikan tautannya dengan mereka. Saat mereka mendaftar dengan alamat tersebut, undangan dihitung sebagai diterima.",
+    formLabel: "email teman",
+    emailPlaceholder: "nama@contoh.com",
+    sendAndShare: "undang dan bagikan",
+    invalidEmail: "masukkan email yang valid",
+    shareMessage:
+      "Penasaran mencoba Norbo bersamaku? Ini aplikasi tempat aku menyimpan semua hal tentang hewan peliharaanku dengan rapi: {{link}}",
+    sent_one: "{{count}} undangan",
+    sent_other: "{{count}} undangan",
+    statusPending: "tertunda",
+    statusAccepted: "bergabung",
+    remainingToday_one: "kamu bisa mengirim {{count}} undangan lagi hari ini",
+    remainingToday_other: "kamu bisa mengirim {{count}} undangan lagi hari ini",
+    empty: "belum ada undangan",
+    emptySubtitle: "teman pertama yang kamu undang akan muncul di sini",
+  },
 } as const;
 
 export default id;

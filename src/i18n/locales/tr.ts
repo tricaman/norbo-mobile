@@ -1271,6 +1271,26 @@ const tr = {
     unlockedOn: "{{date}} tarihinde açıldı",
     notYet: "henüz açılmadı",
   },
+  invites: {
+    title: "arkadaşlarını davet et",
+    entrySubtitle: "norbo'ya bir arkadaş getir",
+    intro:
+      "Arkadaşının e-postasını gir ve bağlantıyı onunla paylaş. O adresle kaydolduğunda davet kabul edilmiş sayılır.",
+    formLabel: "arkadaşının e-postası",
+    emailPlaceholder: "isim@ornek.com",
+    sendAndShare: "davet et ve paylaş",
+    invalidEmail: "geçerli bir e-posta girin",
+    shareMessage:
+      "Norbo'yu benimle denemek ister misin? Evcil hayvanım hakkında her şeyi içinde sakladığım uygulama: {{link}}",
+    sent_one: "{{count}} davet",
+    sent_other: "{{count}} davetiye",
+    statusPending: "beklemede",
+    statusAccepted: "katıldı",
+    remainingToday_one: "bugün {{count}} davet daha gönderebilirsin",
+    remainingToday_other: "bugün {{count}} davetiye daha gönderebilirsin",
+    empty: "henüz davet yok",
+    emptySubtitle: "davet ettiğin ilk arkadaş burada görünecek",
+  },
 } as const;
 
 export default tr;

@@ -1277,6 +1277,26 @@ const hi = {
     unlockedOn: "{{date}} को अनलॉक हुआ",
     notYet: "अभी तक अनलॉक नहीं हुआ",
   },
+  invites: {
+    title: "मित्रों को आमंत्रित करें",
+    entrySubtitle: "norbo पर एक मित्र लाएं",
+    intro:
+      "अपने मित्र का ईमेल दर्ज करें और उनसे लिंक साझा करें। जब वे उस पते से साइन अप करेंगे, तो आमंत्रण स्वीकृत माना जाएगा।",
+    formLabel: "मित्र का ईमेल",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "आमंत्रित करें और साझा करें",
+    invalidEmail: "मान्य ईमेल दर्ज करें",
+    shareMessage:
+      "क्या आप मेरे साथ Norbo आज़माना चाहेंगे? यह वह ऐप है जहाँ मैं अपने पालतू जानवर की हर चीज़ व्यवस्थित रखता हूँ: {{link}}",
+    sent_one: "{{count}} आमंत्रण",
+    sent_other: "{{count}} आमंत्रण",
+    statusPending: "लंबित",
+    statusAccepted: "शामिल हो गए",
+    remainingToday_one: "आप आज {{count}} और आमंत्रण भेज सकते हैं",
+    remainingToday_other: "आप आज {{count}} और आमंत्रण भेज सकते हैं",
+    empty: "अभी तक कोई आमंत्रण नहीं",
+    emptySubtitle: "आपके द्वारा आमंत्रित पहला मित्र यहाँ दिखाई देगा",
+  },
 } as const;
 
 export default hi;

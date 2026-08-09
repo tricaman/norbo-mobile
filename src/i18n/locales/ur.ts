@@ -1271,6 +1271,26 @@ const ur = {
     unlockedOn: "تاریخ {{date}} کو کھلا",
     notYet: "ابھی نہیں کھلا",
   },
+  invites: {
+    title: "دوستوں کو مدعو کریں",
+    entrySubtitle: "نوربو پر ایک دوست لائیں",
+    intro:
+      "اپنے دوست کا ای میل درج کریں اور ان کے ساتھ لنک شیئر کریں۔ جب وہ اس پتے کے ساتھ سائن اپ کریں گے، تو دعوت قبول شمار ہوگی۔",
+    formLabel: "دوست کا ای میل",
+    emailPlaceholder: "name@example.com",
+    sendAndShare: "مدعو کریں اور شیئر کریں",
+    invalidEmail: "درست ای میل درج کریں",
+    shareMessage:
+      "کیا آپ میرے ساتھ نوربو آزمانا چاہیں گے؟ یہ ایپ ہے جہاں میں اپنے پالتو جانور کے بارے میں سب کچھ ترتیب سے رکھتا ہوں: {{link}}",
+    sent_one: "{{count}} دعوت",
+    sent_other: "{{count}} دعوتیں",
+    statusPending: "زیر التوا",
+    statusAccepted: "شامل ہوئے",
+    remainingToday_one: "آپ آج {{count}} مزید دعوت بھیج سکتے ہیں",
+    remainingToday_other: "آپ آج مزید {{count}} دعوتیں بھیج سکتے ہیں",
+    empty: "ابھی کوئی دعوت نہیں",
+    emptySubtitle: "آپ کا پہلا دعوت شدہ دوست یہاں نظر آئے گا",
+  },
 } as const;
 
 export default ur;

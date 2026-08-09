@@ -1279,6 +1279,26 @@ const es = {
     unlockedOn: "desbloqueado el {{date}}",
     notYet: "aún no desbloqueado",
   },
+  invites: {
+    title: "invitar a amigos",
+    entrySubtitle: "trae a un amigo a norbo",
+    intro:
+      "Introduce el correo de un amigo y comparte el enlace con él. Cuando se registre con esa dirección, la invitación se considerará aceptada.",
+    formLabel: "correo del amigo",
+    emailPlaceholder: "nombre@ejemplo.com",
+    sendAndShare: "invitar y compartir",
+    invalidEmail: "introduce un correo válido",
+    shareMessage:
+      "¿Te apetece probar Norbo conmigo? Es la aplicación donde guardo todo sobre mi mascota: {{link}}",
+    sent_one: "{{count}} invitación",
+    sent_other: "{{count}} invitaciones",
+    statusPending: "pendiente",
+    statusAccepted: "se unió",
+    remainingToday_one: "hoy puedes enviar {{count}} invitación más",
+    remainingToday_other: "hoy puedes enviar {{count}} invitaciones más",
+    empty: "aún no hay invitaciones",
+    emptySubtitle: "el primer amigo que invites aparecerá aquí",
+  },
 } as const;
 
 export default es;

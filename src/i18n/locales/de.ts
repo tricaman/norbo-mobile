@@ -1282,6 +1282,28 @@ const de = {
     unlockedOn: "freigeschaltet am {{date}}",
     notYet: "noch nicht freigeschaltet",
   },
+  invites: {
+    title: "freunde einladen",
+    entrySubtitle: "bring einen freund zu norbo",
+    intro:
+      "Gib die E-Mail-Adresse eines Freundes ein und teile den Link mit ihm. Wenn er sich mit dieser Adresse anmeldet, gilt die Einladung als angenommen.",
+    formLabel: "E-Mail des Freundes",
+    emailPlaceholder: "name@beispiel.de",
+    sendAndShare: "einladen und teilen",
+    invalidEmail: "gültige E-Mail eingeben",
+    shareMessage:
+      "Lust, Norbo mit mir auszuprobieren? Das ist die App, in der ich alles über mein Haustier organisiere: {{link}}",
+    sent_one: "{{count}} Einladung",
+    sent_other: "{{count}} Einladungen",
+    statusPending: "ausstehend",
+    statusAccepted: "beigetreten",
+    remainingToday_one:
+      "du kannst heute noch {{count}} weitere Einladung senden",
+    remainingToday_other:
+      "du kannst heute noch {{count}} weitere Einladungen senden",
+    empty: "noch keine Einladungen",
+    emptySubtitle: "Der erste Freund, den du einlädst, wird hier angezeigt",
+  },
 } as const;
 
 export default de;

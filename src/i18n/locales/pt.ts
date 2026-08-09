@@ -1276,6 +1276,26 @@ const pt = {
     unlockedOn: "desbloqueado em {{date}}",
     notYet: "ainda não desbloqueado",
   },
+  invites: {
+    title: "convidar amigos",
+    entrySubtitle: "traga um amigo para o norbo",
+    intro:
+      "Digite o e-mail de um amigo e compartilhe o link com ele. Quando ele se cadastrar com esse endereço, o convite será considerado aceito.",
+    formLabel: "e-mail do amigo",
+    emailPlaceholder: "nome@exemplo.com",
+    sendAndShare: "convidar e compartilhar",
+    invalidEmail: "digite um e-mail válido",
+    shareMessage:
+      "Quer tentar o Norbo comigo? É o app onde eu mantenho tudo sobre meu pet em ordem: {{link}}",
+    sent_one: "{{count}} convite",
+    sent_other: "{{count}} convites",
+    statusPending: "pendente",
+    statusAccepted: "aceito",
+    remainingToday_one: "você pode enviar mais {{count}} convite hoje",
+    remainingToday_other: "você pode enviar mais {{count}} convites hoje",
+    empty: "nenhum convite ainda",
+    emptySubtitle: "o primeiro amigo que você convidar aparecerá aqui",
+  },
 } as const;
 
 export default pt;
