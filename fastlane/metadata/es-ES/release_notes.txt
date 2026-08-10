@@ -1,6 +1,5 @@
 Novedades de esta versión:
 
-• Recordatorios periódicos: repite cada mes o cada año, también con intervalos de varios meses. Cuando marcas un recordatorio como hecho, el siguiente se crea automáticamente.
-• Detalles del antiparasitario: añade el nombre del producto y el tipo de tratamiento (interno, externo o ambos).
-• Detalles del medicamento: anota el nombre del medicamento en los eventos de la cartilla sanitaria.
+• Insignias: desbloquea logros mientras usas norbo, sigue tu progreso por niveles y disfruta de una pequeña celebración al subir de nivel.
+• Invitar a amigos: comparte tu enlace de invitación desde tu perfil y sigue el estado de cada invitación.
 • Correcciones de estabilidad y mejoras en la interfaz.

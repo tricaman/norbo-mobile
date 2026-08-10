@@ -1,6 +1,5 @@
 Novidades desta versão:
 
-• Lembretes recorrentes: repita todo mês ou todo ano, também a cada alguns meses. Quando você marca um lembrete como feito, o próximo é criado automaticamente.
-• Detalhes do antiparasitário: adicione o nome do produto e o tipo de tratamento (interno, externo ou ambos).
-• Detalhes do medicamento: registre o nome do medicamento nos eventos da carteira de saúde.
+• Emblemas: desbloqueie conquistas enquanto usa o norbo, acompanhe seu progresso pelos níveis e aproveite uma pequena comemoração ao subir de nível.
+• Convidar amigos: compartilhe seu link de convite a partir do seu perfil e acompanhe o status de cada convite.
 • Correções de estabilidade e melhorias na interface.

@@ -1,6 +1,5 @@
 Novità di questa versione:
 
-• Promemoria ricorrenti: imposta una ripetizione ogni mese o ogni anno, anche a intervalli di più mesi. Quando segni il promemoria come fatto, il successivo viene creato in automatico.
-• Dettagli antiparassitario: aggiungi il nome del prodotto e il tipo di trattamento (interno, esterno o entrambi).
-• Dettagli farmaco: annota il nome del farmaco negli eventi del libretto sanitario.
+• Badge: sblocca traguardi usando norbo, segui i tuoi progressi tra i livelli e goditi una piccola festa quando sali di livello.
+• Invita gli amici: condividi il tuo link di invito dal profilo e segui lo stato di ogni invito.
 • Correzioni di stabilità e miglioramenti all'interfaccia.

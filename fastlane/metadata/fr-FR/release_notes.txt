@@ -1,6 +1,5 @@
 Nouveautés de cette version :
 
-• Rappels récurrents : répétition chaque mois ou chaque année, également tous les quelques mois. Lorsque vous marquez un rappel comme fait, le suivant est créé automatiquement.
-• Détails de l'antiparasitaire : ajoutez le nom du produit et le type de traitement (interne, externe ou les deux).
-• Détails du médicament : notez le nom du médicament dans les événements du carnet de santé.
+• Badges : débloquez des succès en utilisant norbo, suivez votre progression à travers les paliers et profitez d'une petite célébration à chaque niveau franchi.
+• Inviter des amis : partagez votre lien d'invitation depuis votre profil et suivez le statut de chaque invitation.
 • Corrections de stabilité et améliorations de l'interface.

@@ -1,6 +1,5 @@
 Noutăți în această versiune:
 
-• Memento-uri recurente: repetare în fiecare lună sau în fiecare an, inclusiv la câteva luni. Când marchezi un memento ca finalizat, următorul este creat automat.
-• Detalii antiparazitar: adaugă numele produsului și tipul tratamentului (intern, extern sau ambele).
-• Detalii medicament: notează numele medicamentului în evenimentele din carnetul de sănătate.
+• Insigne: deblochează realizări pe măsură ce folosești norbo, urmărește-ți progresul pe niveluri și bucură-te de o mică sărbătoare când avansezi.
+• Invită prieteni: distribuie linkul tău de invitație din profil și urmărește starea fiecărei invitații.
 • Corecții de stabilitate și îmbunătățiri ale interfeței.

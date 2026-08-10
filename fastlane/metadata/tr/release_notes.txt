@@ -1,6 +1,5 @@
 Bu sürümdeki yenilikler:
 
-• Tekrarlayan hatırlatıcılar: her ay veya her yıl tekrarlayın, birkaç ayda bir de olabilir. Bir hatırlatıcıyı tamamlandı olarak işaretlediğinizde bir sonraki otomatik oluşturulur.
-• Parazit tedavisi detayları: ürün adını ve tedavi türünü (iç, dış veya her ikisi) ekleyin.
-• İlaç detayları: sağlık karnesi kayıtlarına ilacın adını not edin.
+• Rozetler: norbo'yu kullandıkça başarımların kilidini aç, seviyeler arasındaki ilerlemeni takip et ve seviye atladığında küçük bir kutlamanın tadını çıkar.
+• Arkadaşlarını davet et: profilinden davet linkini paylaş ve her davetin durumunu takip et.
 • Kararlılık düzeltmeleri ve arayüz iyileştirmeleri.

@@ -1,6 +1,5 @@
 What's new in this version:
 
-• Recurring reminders: repeat every month or every year, or at intervals of several months. When you mark a reminder as done, the next one is created automatically.
-• Parasite treatment details: add the product name and the treatment type (internal, external or both).
-• Medication details: record the medicine name in your pet's health record events.
+• Badges: unlock achievements as you use norbo, track your progress across tiers, and enjoy a small celebration when you level up.
+• Invite friends: share your invite link from your profile and follow the status of each invitation.
 • Stability fixes and interface improvements.

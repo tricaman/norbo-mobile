@@ -1,6 +1,5 @@
 Neu in dieser Version:
 
-• Wiederkehrende Erinnerungen: Wiederholung jeden Monat oder jedes Jahr, auch im Abstand mehrerer Monate. Wenn du eine Erinnerung als erledigt markierst, wird die nächste automatisch erstellt.
-• Details zur Parasitenbehandlung: Produktname und Art der Behandlung (innerlich, äußerlich oder beides) hinzufügen.
-• Medikamenten-Details: Name des Medikaments in den Einträgen des Gesundheitshefts festhalten.
+• Abzeichen: Schalte Erfolge frei, während du norbo nutzt, verfolge deinen Fortschritt über die Stufen hinweg und freu dich über eine kleine Feier beim Levelaufstieg.
+• Freunde einladen: Teile deinen Einladungslink aus deinem Profil und verfolge den Status jeder Einladung.
 • Stabilitätskorrekturen und Verbesserungen der Oberfläche.

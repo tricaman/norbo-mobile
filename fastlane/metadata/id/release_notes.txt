@@ -1,6 +1,5 @@
 Yang baru di versi ini:
 
-• Pengingat berulang: ulangi setiap bulan atau setiap tahun, juga setiap beberapa bulan. Saat pengingat ditandai selesai, pengingat berikutnya dibuat otomatis.
-• Detail antiparasit: tambahkan nama produk dan jenis perawatan (internal, eksternal, atau keduanya).
-• Detail obat: catat nama obat pada catatan buku kesehatan.
+• Lencana: buka pencapaian saat menggunakan norbo, pantau progresmu di setiap tingkatan, dan nikmati perayaan kecil saat naik level.
+• Ajak teman: bagikan link undanganmu dari profil dan pantau status setiap undangan.
 • Perbaikan stabilitas dan peningkatan antarmuka.
