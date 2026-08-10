@@ -59,13 +59,21 @@ platform :ios do
   end
 
   desc "Carica i metadati testuali (descrizioni, keyword, note di versione) su App Store Connect"
-  lane :metadata do
+  desc "Uso: fastlane ios metadata app_version:1.10.0"
+  lane :metadata do |options|
     # NB: si passa `api_key` esplicitamente. Il `deliver` da CLI userebbe
     # `api_key_path` del Deliverfile, che però pretende il PEM inline nel campo
     # `key` del JSON e fallisce con "missing field(s): key" (il nostro JSON usa
     # `key_filepath`). Autenticando qui come i lane beta/prod il segreto resta
     # solo nel .p8.
-    deliver(api_key: asc_api_key)
+    #
+    # `app_version` è OBBLIGATORIO: senza, `deliver` sceglie da solo la
+    # versione "editabile" più recente su ASC, che può essere quella già
+    # WAITING_FOR_REVIEW invece della prossima in preparazione — così facendo
+    # sovrascrive le note di rilascio di una build già in review con quelle
+    # sbagliate (successo il 2026-08-10 con 1.9.0/build 6).
+    UI.user_error!("Passa app_version, es: fastlane ios metadata app_version:1.10.0") unless options[:app_version]
+    deliver(api_key: asc_api_key, app_version: options[:app_version])
   end
 end
 
