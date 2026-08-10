@@ -323,8 +323,8 @@ compila metadati/release notes → **Add for Review** / **Submit for Review**.
 compila release notes → rollout.
 
 > I metadati testuali dello store (descrizioni, keyword, **note di versione**) stanno in
-> `fastlane/metadata/<locale>/` e si caricano con **`fastlane ios metadata`** (config in
-> `fastlane/Deliverfile`, `skip_binary_upload`).
+> `fastlane/metadata/<locale>/` e si caricano con **`fastlane ios metadata app_version:X.Y.Z`**
+> (config in `fastlane/Deliverfile`, `skip_binary_upload`).
 >
 > ⚠️ **Non** usare `fastlane deliver` da CLI: fallirebbe con *"API key JSON is missing
 > field(s): key"*. `Token.from_json_file` pretende il PEM **inline** nel campo `key` del
@@ -334,6 +334,20 @@ compila release notes → rollout.
 > ⚠️ `deliver` carica **tutti** i file presenti in `fastlane/metadata/`, non solo quelli
 > che hai cambiato: se i file locali sono stale, sovrascrive descrizioni e keyword già
 > pubblicate. Prima di lanciarlo verifica che locale e ASC coincidano.
+>
+> 🔴 **`app_version` è OBBLIGATORIO nel lane** (dal 2026-08-10). Senza, `deliver` sceglie
+> da solo la versione "editabile" più recente su ASC — che può essere quella già
+> **WAITING_FOR_REVIEW**, non la prossima in preparazione — e ne sovrascrive le note di
+> rilascio con quelle sbagliate. Peggio: se passi tu stesso un `app_version` che punta a
+> una versione **non ancora esistente** su ASC, `deliver` **non ne crea una nuova**: rinomina
+> silenziosamente `versionString` di quella stessa versione editabile (build **invariato**),
+> corrompendo sia il numero di versione che le note della submission in review. Capitato
+> davvero il 2026-08-10 con 1.9.0/build 6 → risolto ripristinando a mano `versionString` e
+> `whatsNew` via Spaceship (`ConnectAPI.patch_app_store_version` / localization `.update`).
+> Su questo account **non esiste un modo per creare una versione ASC "next" mentre una è
+> WAITING_FOR_REVIEW** tramite `deliver` — bisogna aspettare che la review precedente si
+> concluda (o crearla a mano su App Store Connect) prima di poter pubblicare le note della
+> build successiva.
 >
 > **Note di versione obbligatorie.** ASC rifiuta l'invio in review se `release_notes.txt`
 > manca anche in una sola delle localizzazioni attive (oggi 16). L'errore in console
