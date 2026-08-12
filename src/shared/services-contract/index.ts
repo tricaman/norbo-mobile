@@ -338,6 +338,142 @@ export const petPlacesInput = z.object({
     .max(5),
 });
 
+// ── Bird tools ────────────────────────────────────────────────────────────────
+
+/**
+ * `bird-cage-size` — indicative minimum cage dimensions and bar spacing for
+ * a species group + bird count. `species` is a care-knowledge species-group
+ * id (free string, `generic` fallback server-side) so adding groups never
+ * bumps `schemaVersion`. Sizing coefficients live in care-knowledge
+ * (`GET /care-knowledge/bird-housing`); the component only multiplies.
+ */
+export const birdCageSizeInput = z.object({
+  species: z.string().min(1).max(64),
+  count: z.number().int().min(1).max(20),
+});
+
+/**
+ * `bird-food-ration` — indicative daily dry-food ration and fresh-veg share
+ * for a species group + body weight in grams. Coefficients come from
+ * care-knowledge (`GET /care-knowledge/bird-feeding`). Husbandry guidance
+ * only, NOT clinical; the component shows the avian-vet disclaimer.
+ */
+export const birdFoodRationInput = z.object({
+  species: z.string().min(1).max(64),
+  weightG: z.number().positive().max(2000),
+});
+
+/**
+ * `bird-environment-guide` — structured care content (no calculation, no
+ * persistence): temperature, humidity, light/sleep and home hazards per
+ * species group, served by `GET /care-knowledge/bird-environment`.
+ * Deliberately named `species` (not `profileId` like the reptile guide) so
+ * all three bird tools share one species picker + freetext matcher.
+ */
+export const birdEnvironmentGuideInput = z.object({
+  species: z.string().min(1).max(64),
+});
+
+// ── Reptile & amphibian tools ─────────────────────────────────────────────────
+
+/**
+ * `snake-feeding-guide` — indicative prey sizing (girth rule + % of body
+ * weight band) and feeding-interval bands by snake species + age band.
+ * Species-level husbandry content from care-knowledge
+ * (`GET /care-knowledge/snake-feeding`); NOT clinical, never drug dosing.
+ * `weightG` is optional — it only refines the prey-mass band.
+ */
+export const snakeFeedingGuideInput = z.object({
+  species: z.string().min(1).max(64),
+  ageBand: z.enum(['HATCHLING', 'JUVENILE', 'ADULT']),
+  weightG: z.number().positive().max(50_000).optional(),
+});
+
+/**
+ * `turtle-tank-calculator` — AQUATIC turtle tank sizing from straight shell
+ * length + number of turtles. Coefficients (litres per shell-cm, temps, UVB
+ * note) are care-knowledge config by species
+ * (`GET /care-knowledge/turtle-tank`); only the multiplication happens in
+ * the component. Tortoises are covered by the reptile environment guide.
+ */
+export const turtleTankCalculatorInput = z.object({
+  species: z.string().min(1).max(64),
+  shellLengthCm: z.number().positive().max(80),
+  count: z.number().int().min(1).max(6),
+});
+
+/**
+ * `amphibian-environment-guide` — structured care content (no calculation,
+ * no persistence): water/air temperature, humidity and water-preparation
+ * notes per curated amphibian profile, served by
+ * `GET /care-knowledge/amphibian-environment`.
+ */
+export const amphibianEnvironmentGuideInput = z.object({
+  profileId: z.string().min(1).max(64),
+});
+
+// ── Farm & equine tools ───────────────────────────────────────────────────────
+
+/**
+ * `chicken-coop-calculator` — flock size + bird size class → indicative coop
+ * floor area, outdoor run area, nest boxes and roost length. Per-hen
+ * coefficients are care-knowledge config (`GET /care-knowledge/chicken-coop`);
+ * the component only multiplies. Backyard-flock guidance, non-clinical.
+ */
+export const chickenCoopCalculatorInput = z.object({
+  henCount: z.number().int().min(1).max(500),
+  sizeClass: z.enum(['BANTAM', 'STANDARD', 'HEAVY']),
+});
+
+/**
+ * `livestock-water-needs` — species + weight (grazers, PER_KG basis) or head
+ * count (flocks, PER_HEAD basis) → indicative litres/day range. Coefficients
+ * are care-knowledge config (`GET /care-knowledge/livestock-water`); the
+ * guideline's `basis` decides which of the two optional fields the component
+ * requires. Standard husbandry ranges (NRC/FAO-style), non-clinical.
+ */
+export const livestockWaterNeedsInput = z.object({
+  species: z.string().min(1).max(64),
+  weightKg: z.number().positive().max(1500).optional(),
+  headCount: z.number().int().min(1).max(1000).optional(),
+});
+
+/**
+ * `forage-ration` — herbivore species + body weight → indicative daily
+ * forage (dry-matter % of body weight band from care-knowledge,
+ * `GET /care-knowledge/forage-ration`) + optional current stock → days of
+ * autonomy and a consumable reminder (rabbit-hay-supply precedent).
+ */
+export const forageRationInput = z.object({
+  species: z.string().min(1).max(64),
+  weightKg: z.number().positive().max(1500),
+  currentStockKg: z.number().min(0).max(50_000).optional(),
+});
+
+/**
+ * `horse-weight-estimator` — heart girth + body length (point of shoulder to
+ * point of buttock) → estimated body weight via the Carroll & Huntington
+ * (1988) barymetric formula: kg = girth² × length / 11877. The formula lives
+ * in the frontend component (aquarium-volume precedent). Indicative — a
+ * weigh tape/scale is more accurate, and ponies/donkeys deviate.
+ */
+export const horseWeightEstimatorInput = z.object({
+  heartGirthCm: z.number().min(80).max(280),
+  bodyLengthCm: z.number().min(60).max(260),
+});
+
+/**
+ * `aquarium-heater-size` — tank volume + room vs target temperature →
+ * suggested heater wattage (hobbyist W/L bands by temperature rise, next
+ * commercial size up, split-into-two hint for large tanks). Pure client-side
+ * calculation in the component; no care-knowledge config.
+ */
+export const aquariumHeaterSizeInput = z.object({
+  tankLiters: z.number().positive().max(5000),
+  roomTempC: z.number().min(-10).max(40),
+  targetTempC: z.number().min(15).max(35),
+});
+
 // ── Contract registry ─────────────────────────────────────────────────────────
 
 /**
@@ -465,6 +601,61 @@ export const SERVICE_TOOL_CONTRACTS = {
     id: 'pet-places',
     schemaVersion: 1,
     inputSchema: petPlacesInput,
+  },
+  'bird-cage-size': {
+    id: 'bird-cage-size',
+    schemaVersion: 1,
+    inputSchema: birdCageSizeInput,
+  },
+  'bird-food-ration': {
+    id: 'bird-food-ration',
+    schemaVersion: 1,
+    inputSchema: birdFoodRationInput,
+  },
+  'bird-environment-guide': {
+    id: 'bird-environment-guide',
+    schemaVersion: 1,
+    inputSchema: birdEnvironmentGuideInput,
+  },
+  'snake-feeding-guide': {
+    id: 'snake-feeding-guide',
+    schemaVersion: 1,
+    inputSchema: snakeFeedingGuideInput,
+  },
+  'turtle-tank-calculator': {
+    id: 'turtle-tank-calculator',
+    schemaVersion: 1,
+    inputSchema: turtleTankCalculatorInput,
+  },
+  'amphibian-environment-guide': {
+    id: 'amphibian-environment-guide',
+    schemaVersion: 1,
+    inputSchema: amphibianEnvironmentGuideInput,
+  },
+  'chicken-coop-calculator': {
+    id: 'chicken-coop-calculator',
+    schemaVersion: 1,
+    inputSchema: chickenCoopCalculatorInput,
+  },
+  'livestock-water-needs': {
+    id: 'livestock-water-needs',
+    schemaVersion: 1,
+    inputSchema: livestockWaterNeedsInput,
+  },
+  'forage-ration': {
+    id: 'forage-ration',
+    schemaVersion: 1,
+    inputSchema: forageRationInput,
+  },
+  'horse-weight-estimator': {
+    id: 'horse-weight-estimator',
+    schemaVersion: 1,
+    inputSchema: horseWeightEstimatorInput,
+  },
+  'aquarium-heater-size': {
+    id: 'aquarium-heater-size',
+    schemaVersion: 1,
+    inputSchema: aquariumHeaterSizeInput,
   },
 } as const satisfies Record<string, ServiceToolContract>;
 

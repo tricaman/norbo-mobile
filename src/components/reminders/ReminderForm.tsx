@@ -174,7 +174,7 @@ export function ReminderForm({
             {/* Month-interval stepper — only for MONTHLY (antipulci ogni 2/3/4
                 mesi, filaria, ecc.). YEARLY has no interval control in v1. */}
             {repeat === "MONTHLY" ? (
-              <FormCard style={styles.card}>
+              <FormCard style={[styles.card, styles.stepperCard]}>
                 <View style={styles.stepperRow}>
                   <NorboPressable
                     haptic="light"
@@ -297,6 +297,10 @@ const styles = StyleSheet.create((theme) => ({
   submitLabel: {
     ...theme.typography.subhead,
     fontWeight: "700",
+  },
+  stepperCard: {
+    // Breathing room below the repeat chips — same rhythm as the chip gap.
+    marginTop: theme.spacing.sm,
   },
   stepperRow: {
     flexDirection: "row",

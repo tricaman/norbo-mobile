@@ -772,6 +772,8 @@ const tr = {
       cool: "serin bölge",
       humidity: "nem",
       disclaimer: "gösterge niteliğinde değerler, veterinerin yerine geçmez",
+      uvb: "UVB lamba",
+      notes: "notlar",
     },
     petAgeHumanYears: {
       title: "insan yaşı karşılığı",
@@ -853,6 +855,32 @@ const tr = {
         dieffenbachia: "Dieffenbachia şiddetli ağız tahrişine neden olur.",
         sagoPalm: "Sago palmiyesi ciddi derecede zehirlidir (karaciğer).",
         spiderPlant: "Kurdele çiçeği genellikle güvenlidir.",
+        avocadoBird:
+          "Avokado (persin) kuşlar için potansiyel olarak öldürücüdür.",
+        caffeine: "Kafein kuşların kalbi için toksiktir.",
+        saltBird: "Tuzlu yiyecekler: küçük miktarları bile tehlikelidir.",
+        fruitPits:
+          "Meyve eti güvenlidir; çekirdekler ve tohumlar siyanojenler içerir.",
+        alcohol: "Alkol küçük miktarlarda bile toksiktir.",
+        rawBeans: "Çiğ/kuru fasulye toksik hemaglutininler içerir.",
+        ptfe: "Aşırı ısınmış yapışmaz (PTFE) tavaların dumanı kuşlar için öldürücüdür.",
+        millet: "Darı güvenlidir: ikram olarak harikadır.",
+        buttercup: "Düğünçiçeği kaplumbağalar için toksiktir.",
+        foxglove: "Yüksük otu kardiyotoksik glikozitler içerir.",
+        daffodil: "Nergis toksiktir, özellikle soğanı.",
+        ivy: "Sarmaşık gastrointestinal rahatsızlığa neden olur.",
+        avocado: "Avokado (persin) birçok sürüngen için toksiktir.",
+        azalea: "Açelya ve orman gülü grayanotoksinler içerir.",
+        lilyValley: "Müge çiçeği kardiyotoksiktir.",
+        euphorbia: "Sütleğen lateksi tahriş edici ve toksiktir.",
+        rhubarb: "Ravent yaprakları oksalik asit bakımından zengindir.",
+        spinachOxalate:
+          "Ispanak oksalatları kalsiyumu bağlar: sadece ara sıra verin.",
+        icebergLettuce:
+          "Göbek salata besin açısından zayıftır: ana besin olmaktan kaçının.",
+        dandelion: "Karahindiba kaplumbağalar için mükemmel bir besindir.",
+        hibiscus: "Hibiskus çiçekleri ve yaprakları güvenlidir ve çok sevilir.",
+        plantain: "Sinirli ot kaplumbağalar için güvenli bir bitkidir.",
       },
     },
     bodyConditionScore: {
@@ -1147,6 +1175,256 @@ const tr = {
         moderationNote: "gönderimler haritada görünmeden önce incelenir.",
       },
     },
+    bird: {
+      species: {
+        "finch-canary": "ispinoz / kanarya",
+        "budgie-parakeet": "muhabbet kuşu / papağan",
+        "cockatiel-lovebird": "sultan papağanı / cennat papağanı",
+        "medium-parrot": "orta boy papağan",
+        "large-parrot": "büyük boy papağan",
+        generic: "diğer kuş",
+      },
+    },
+    birdCageSize: {
+      count: "kuş sayısı",
+      dimensions: "minimum boyutlar (G×D×Y)",
+      barSpacing: "tel aralığı",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, kuş veterinerinizin yerini tutmaz.",
+      notes: {
+        perches: "farklı çaplarda doğal tünekler.",
+        flight: "yükseklikten çok genişliği ve yatay uçuşu tercih edin.",
+        outOfCage: "kafes dışında günlük serbest uçuşa izin verin.",
+        zinc: "galvanizli kafeslerden veya kurşun esaslı boyalardan kaçının (toksik metaller).",
+        macawMore:
+          "büyük ara papağanları ve kakadular çok daha büyük alanlara veya kuşhanelere ihtiyaç duyar.",
+        speciesVary:
+          "İhtiyaçlar türe göre çok değişir: türünüz için kontrol edin.",
+      },
+    },
+    birdFoodRation: {
+      weight: "ağırlık",
+      dryFood: "pelet / tohum",
+      freshVeg: "taze sebzeler",
+      diet: "diyet temeli",
+      weightHint: "bu grup için tipik ağırlık: {{min}}–{{max}} g",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, kuş veterinerinizin yerini tutmaz.",
+      dietKind: {
+        seedBased: "kaliteli tohum karışımı + sebzeler",
+        seedOrPellet: "tohum ve/veya pelet + sebzeler",
+        pelletBased: "formüle edilmiş peletler + sebzeler",
+        checkSpecies: "türe göre kontrol edin",
+      },
+      notes: {
+        pelletShare:
+          "papağanlar için peletler diyetin %60-70'ini oluşturmalıdır.",
+        treatLimit:
+          "yağlı tohumlar ve meyveler ikram olarak %10'un altında olmalıdır.",
+        guardValues:
+          "lori, myna ve diğer bazı türlerin özel diyetleri vardır: kuş veterinerinize danışın.",
+        noAvocado: "asla avokado, çikolata veya tuzlu yiyecekler vermeyin.",
+      },
+    },
+    birdEnvironmentGuide: {
+      selectProfile: "tür grubu",
+      temperature: "sıcaklık",
+      humidity: "nem",
+      daylight: "gün ışığı saati",
+      sleep: "uyku saati",
+      hazards: "kaçınılması gereken tehlikeler",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, kuş veterinerinizin yerini tutmaz.",
+      hazard: {
+        ptfe: "aşırı ısınmış yapışmaz tavaların (PTFE/Teflon) dumanı: öldürücü.",
+        aerosols: "sprey, kokulu mum ve duman hava yollarını tahriş eder.",
+        drafts: "cereyan ve sıcaklık değişimleri (pencereler, klimalar).",
+        nightFrights:
+          "sultan papağanları gece korkusu yaşar: loş bir gece lambası kullanın.",
+        heavyMetals:
+          "çinko ve kurşun (kafesler, oyuncaklar): çiğnenirse toksiktir.",
+        mirrorsWindows:
+          "cam ve aynalar: serbest uçuş sırasında çarpışma riski.",
+      },
+    },
+    snakeFeedingGuide: {
+      species: {
+        "ball-python": "top piton",
+        "corn-snake": "mısır yılanı",
+        boa: "boa",
+        "king-milk": "kral / süt yılanı",
+        garter: "jartiyer yılanı",
+        hognose: "domuz burunlu yılan",
+        generic: "diğer yılan",
+      },
+      ageBand: {
+        HATCHLING: "yavru",
+        JUVENILE: "genç",
+        ADULT: "yetişkin",
+      },
+      age: "yaş",
+      weight: "ağırlık",
+      preyType: "av tipi",
+      preySize: "av boyutu",
+      preyWeight: "gösterge niteliğinde av ağırlığı",
+      interval: "besleme aralığı",
+      intervalUnit: "gün",
+      prey: {
+        pinkyMouse: "pembe fare",
+        fuzzyHopperMouse: "tüylü/atlayıcı fare",
+        adultMouse: "yetişkin fare",
+        hopperMouseRatPup: "atlayıcı fare veya yavru sıçan",
+        adultMouseSmallRat: "yetişkin fare veya küçük sıçan",
+        mediumRat: "orta sıçan",
+        mediumLargeRat: "orta-büyük sıçan",
+        wormsFishStrips: "solucan ve balık parçaları",
+        wormsFishPinky: "solucan, balık veya pembe fare",
+        wormsFishAdultPinky: "solucan, balık veya fare",
+        sizeAppropriate: "vücuda uygun boyutta av",
+      },
+      notes: {
+        girthRodent: "av ≈ vücudun en geniş noktasındaki kalınlığı (1-1,15×).",
+        garterDiet: "çeşitli beslenme: solucan, balık, ara sıra kemirgen.",
+        garterThiaminase:
+          "tiaminaz zengini balıklardan kaçının (ör. akvaryum balığı).",
+        thawed: "çözülmüş avı tercih edin, asla gözetimsiz canlı av vermeyin.",
+        noHandling48h: "yemekten sonra 48 saat elle temas etmeyin.",
+        ballPythonFasting:
+          "mevsimsel oruç yaygındır: kilo kaybı varsa veterinerinize görünün.",
+        slowMetabolism: "yavaş metabolizma: aşırı beslemeyin.",
+        hognoseScenting: "koklama gerektirebilir (avı kokulu hale getirme).",
+      },
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, veterinerinizin yerini tutmaz.",
+    },
+    turtleTankCalculator: {
+      species: {
+        "yellow-bellied-slider": "sarı karınlı su kaplumbağası",
+        "musk-turtle": "misk kaplumbağası",
+        "map-turtle": "harita kaplumbağası",
+        generic: "diğer su kaplumbağası",
+      },
+      shellLength: "kabuk uzunluğu",
+      count: "kaplumbağa sayısı",
+      tankVolume: "minimum tank hacmi",
+      waterDepth: "minimum su derinliği",
+      waterTemp: "su sıcaklığı",
+      baskingTemp: "güneşlenme alanı",
+      uvb: "UVB lamba",
+      tortoiseHint:
+        "karasal kaplumbağalar için sürüngen ortam rehberine bakın.",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, veterinerinizin yerini tutmaz.",
+      notes: {
+        uvbRequired: "UVB günde 10-12 saat gerekli.",
+        filtration: "hacmin 2-3 katı kapasiteli filtre kullanın.",
+        baskingDock: "her zaman erişilebilir kuru güneşlenme alanı bulunmalı.",
+        muskShallow: "zayıf yüzücüdür: daha sığ su ve yüzeye tutunma alanları.",
+        mapWaterQuality: "su kalitesine çok duyarlıdır.",
+      },
+    },
+    amphibianEnvironmentGuide: {
+      selectProfile: "tür",
+      habitat: {
+        AQUATIC: "sucul",
+        SEMI_AQUATIC: "yarı sucul",
+        TERRESTRIAL: "karasal",
+        ARBOREAL: "ağaçta yaşayan",
+      },
+      waterTemp: "su sıcaklığı",
+      airTemp: "hava sıcaklığı",
+      humidity: "nem",
+      water: "su",
+      tank: "tank / teraryum",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, egzotik hayvan veterinerinin yerini tutmaz.",
+    },
+    farm: {
+      species: {
+        "cow-lactating": "inek (sağmal)",
+        "cow-dry": "inek (kuru dönem)",
+        calf: "buzağı",
+        pig: "domuz",
+        goat: "keçi",
+        sheep: "koyun",
+        "chicken-flock": "kümes hayvanları",
+        horse: "at",
+        donkey: "eşek",
+        cow: "inek",
+        alpaca: "alpaka / lama",
+        generic: "diğer hayvan",
+      },
+    },
+    chickenCoopCalculator: {
+      henCount: "tavuk sayısı",
+      sizeClass: "boyut",
+      bantam: "bantam",
+      standard: "standart",
+      heavy: "ağır",
+      floor: "kümes taban alanı",
+      run: "dış gezinme alanı",
+      nestBoxes: "yumurtlama kutuları",
+      roost: "tünek uzunluğu",
+      disclaimer: "bahçede besleme için gösterge niteliğindeki değerlerdir.",
+      notes: {
+        minimums:
+          "bunlar minimum değerlerdir: daha fazla alan her zaman daha iyidir.",
+        ventilation: "cereyansız havalandırma ve avcı koruması sağlayın.",
+      },
+    },
+    livestockWaterNeeds: {
+      weight: "ağırlık",
+      headCount: "hayvan sayısı",
+      birdCount: "kuş sayısı",
+      result: "günlük ihtiyaç",
+      perDay: "L/gün",
+      disclaimer:
+        "gösterge aralığı, veteriner veya ziraat mühendisinin yerini tutmaz.",
+      notes: {
+        heat: "sıcak havalarda ihtiyaç çok artar.",
+        lactation: "emziren hayvanlar çok daha fazla içer.",
+        clean: "her zaman taze ve temiz su bulunsun.",
+      },
+    },
+    forageRation: {
+      weight: "ağırlık",
+      currentStock: "yem stoğu",
+      dailyRange: "günlük yem",
+      daysLeft: "karşılanacak gün sayısı",
+      days: "gün",
+      reorderDate: "sipariş tarihi",
+      reminderTitle: "{{name}} için yem siparişi verin",
+      disclaimer:
+        "gösterge niteliğindeki değerlerdir, veteriner veya ziraat mühendisinin yerini tutmaz.",
+      notes: {
+        dryMatter: "kuru madde temelidir: taze yem daha ağırdır.",
+        donkeyStraw:
+          "eşekler: yüksek lifli, düşük kalorili yem (saman karışımı).",
+        horseFibre:
+          "uzun lif, canlı ağırlığın %1,5'inin altına asla düşmemeli.",
+      },
+    },
+    horseWeightEstimator: {
+      heartGirth: "göğüs çevresi",
+      bodyLength: "vücut uzunluğu",
+      howToMeasure:
+        "Göğüs çevresi dirseğin hemen arkasından; vücut uzunluğu omuz ucundan kalça ucuna kadar ölçülür.",
+      result: "tahmini ağırlık",
+      tip: "Bu ağırlığı su ve yem araçlarında kullanın.",
+      disclaimer:
+        "Yetişkin atlar için tahmindir (Carroll & Huntington). Ağırlık bandı veya ölçü daha doğrudur.",
+    },
+    aquariumHeaterSize: {
+      tankLiters: "tank hacmi",
+      roomTemp: "oda sıcaklığı",
+      targetTemp: "hedef sıcaklık",
+      volumeHint: "Akvaryum hacmi aracıyla hacmi hesaplayın ve buraya girin.",
+      delta: "sıcaklık artışı",
+      result: "önerilen ısıtıcı",
+      split: "iki ısıtıcı ile daha iyi",
+      splitNote: "İki küçük ısıtıcı daha eşit ısıtır ve yedeklilik sağlar.",
+      disclaimer: "gösterge boyut; her zaman ayrı bir termometre kullanın.",
+    },
   },
   careKnowledge: {
     reptile: {
@@ -1154,6 +1432,61 @@ const tr = {
       leopardGecko: "leopar gekosu",
       ballPython: "top piton",
       cornSnake: "mısır yılanı",
+      hermannTortoise: "Hermann kaplumbağası",
+      greekTortoise: "Trakya tosbağası",
+      crestedGecko: "sorguçlu keler",
+      veiledChameleon: "tül arkalı bukalemun",
+      greenIguana: "yeşil iguana",
+      blueTongueSkink: "mavi dilli duvar keleri",
+      notes: {
+        uvbRequired: "UVB günde 10-12 saat gerekli.",
+        uvbLow: "düşük yoğunluklu UVB isteğe bağlıdır ancak önerilir.",
+        brumation:
+          "sağlıklı yetişkinlerde kış uykusu (brumation): önce iyi araştırın.",
+        brumationVet:
+          "bazı alttürler kış uykusuna yatmamalı: veterinerinize sorun.",
+        outdoorAccess: "yazın dış mekana erişim çok faydalıdır.",
+        heatSensitive:
+          "28 °C üstünde risk altındadır: asla ısı taşı kullanmayın.",
+        mistingCycle: "akşam sulama, gündüz kuru ortam.",
+        ventilation:
+          "havalandırmalı (screen) terraryum, asla kapalı akvaryum değil.",
+        nightDrop: "gece sıcaklık düşüşü gereklidir.",
+        dripWater:
+          "sadece damlayan su içer: damlatıcı veya püskürtme kullanın.",
+        adultSize: "yetişkin olduğunda çok geniş alanlara ihtiyaç duyar.",
+        subspeciesHumidity: "doğru nem oranı alttüre bağlıdır.",
+      },
+    },
+    amphibian: {
+      axolotl: "aksolotl",
+      pacmanFrog: "pacman kurbağası",
+      whitesTreeFrog: "Beyaz ağaç kurbağası",
+      redEyedTreeFrog: "kırmızı gözlü ağaç kurbağası",
+      fireBelliedNewt: "ateş karınlı semender",
+      tigerSalamander: "kaplan semenderi",
+      generic: "amfibi (genel)",
+      notes: {
+        dechlorinated:
+          "her zaman kloru giderilmiş su kullanın (su şartlandırıcı).",
+        noDistilled: "asla saf su veya polisaj edilmiş RO suyu kullanmayın.",
+        gentleFlow: "düşük akışlı filtre.",
+        coolWater: "20 °C üstünde risk: yazın serin tutun.",
+        shallowDish: "her zaman sığ bir su kabı bulunsun.",
+        mistDaily: "her gün püskürtme yapın.",
+        nightDrop: "gece hafif sıcaklık düşüşü önerilir.",
+        landArea: "dinlenmek için kuru bir alan.",
+        burrow: "kazarak yaşaması için derin alt tabaka.",
+      },
+      tank: {
+        axolotl: "Tek yetişkin için minimum 60 L (80 cm tank).",
+        pacmanFrog: "Tek yetişkin için minimum 45×45 cm taban alanı.",
+        whitesTreeFrog: "Dikey teraryum minimum 45×45×60 cm.",
+        redEyedTreeFrog: "Dikey teraryum minimum 45×45×60 cm.",
+        fireBelliedNewt: "minimum 40 L, yaklaşık %70 su ve %30 kara.",
+        tigerSalamander: "minimum 60×40 cm taban alanı, derin alt tabaka.",
+        generic: "türe bağlıdır: egzotik hastalıklar uzmanına danışın.",
+      },
     },
   },
   paywall: {

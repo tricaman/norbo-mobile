@@ -143,6 +143,50 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/PetPlacesTool"),
       true,
     ),
+    "bird-cage-size": defineLazyTool<"bird-cage-size">(
+      () => import("./impl/BirdCageSizeTool"),
+      true,
+    ),
+    "bird-food-ration": defineLazyTool<"bird-food-ration">(
+      () => import("./impl/BirdFoodRationTool"),
+      true,
+    ),
+    "bird-environment-guide": defineLazyTool<"bird-environment-guide">(
+      () => import("./impl/BirdEnvironmentGuideTool"),
+      false,
+    ),
+    "snake-feeding-guide": defineLazyTool<"snake-feeding-guide">(
+      () => import("./impl/SnakeFeedingGuideTool"),
+      true,
+    ),
+    "turtle-tank-calculator": defineLazyTool<"turtle-tank-calculator">(
+      () => import("./impl/TurtleTankCalculatorTool"),
+      true,
+    ),
+    "amphibian-environment-guide": defineLazyTool<"amphibian-environment-guide">(
+      () => import("./impl/AmphibianGuideTool"),
+      false,
+    ),
+    "chicken-coop-calculator": defineLazyTool<"chicken-coop-calculator">(
+      () => import("./impl/ChickenCoopCalculatorTool"),
+      true,
+    ),
+    "livestock-water-needs": defineLazyTool<"livestock-water-needs">(
+      () => import("./impl/LivestockWaterNeedsTool"),
+      true,
+    ),
+    "forage-ration": defineLazyTool<"forage-ration">(
+      () => import("./impl/ForageRationTool"),
+      true,
+    ),
+    "horse-weight-estimator": defineLazyTool<"horse-weight-estimator">(
+      () => import("./impl/HorseWeightEstimatorTool"),
+      true,
+    ),
+    "aquarium-heater-size": defineLazyTool<"aquarium-heater-size">(
+      () => import("./impl/AquariumHeaterSizeTool"),
+      true,
+    ),
   };
 
 /** The tool ids this app build can render — the local side of the intersection. */

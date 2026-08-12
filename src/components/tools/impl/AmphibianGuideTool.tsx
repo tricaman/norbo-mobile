@@ -3,8 +3,8 @@ import { ToolResultCard, ToolSection } from "@/components/tools/ui";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { careKnowledgeApi } from "@/services/care-knowledge.api";
 import type {
+  AmphibianEnvironmentProfile,
   EnvRange,
-  ReptileEnvironmentProfile,
 } from "@/types/care-knowledge.types";
 import { PetCategory, type Pet } from "@/types/pet.types";
 import { useQuery } from "@tanstack/react-query";
@@ -18,10 +18,10 @@ const range = (r: EnvRange): string => `${r.min}–${r.max}`;
 
 /** Best-effort: match the pet's species text against a profile's aliases. */
 function deriveProfileId(
-  profiles: ReptileEnvironmentProfile[],
+  profiles: AmphibianEnvironmentProfile[],
   pet: Pet | null,
 ): string | null {
-  if (!pet || pet.category !== PetCategory.REPTILE) return null;
+  if (!pet || pet.category !== PetCategory.AMPHIBIAN) return null;
   const hint = pet.speciesLabelFreetext?.toLowerCase().trim();
   if (!hint) return null;
   const match = profiles.find((p) =>
@@ -31,16 +31,17 @@ function deriveProfileId(
 }
 
 /**
- * Reptile environment guide — structured care CONTENT (no calculation, no
- * persistence). Reads curated target temps/humidity from the care-knowledge
- * module by selected profile, pre-selected from the pet's species when set.
+ * Amphibian environment guide — structured care CONTENT (no calculation, no
+ * persistence). Reads curated water/air temps, humidity and water-preparation
+ * notes from the care-knowledge module by selected profile, pre-selected from
+ * the pet's species when set.
  */
-const ReptileGuideTool: ToolComponent<"reptile-environment-guide"> = ({
+const AmphibianGuideTool: ToolComponent<"amphibian-environment-guide"> = ({
   pet,
 }) => {
   const query = useQuery({
-    queryKey: ["care-knowledge", "reptile-environment"],
-    queryFn: () => careKnowledgeApi.reptileEnvironment().then((r) => r.data),
+    queryKey: ["care-knowledge", "amphibian-environment"],
+    queryFn: () => careKnowledgeApi.amphibianEnvironment().then((r) => r.data),
   });
 
   return (
@@ -56,7 +57,7 @@ function Guide({
   profiles,
   pet,
 }: {
-  profiles: ReptileEnvironmentProfile[];
+  profiles: AmphibianEnvironmentProfile[];
   pet: Pet | null;
 }): React.JSX.Element {
   const { t } = useTranslation();
@@ -69,7 +70,7 @@ function Guide({
   return (
     <View style={styles.guide}>
       <Text style={styles.pickerLabel}>
-        {t("tools.reptileEnvironmentGuide.selectProfile")}
+        {t("tools.amphibianEnvironmentGuide.selectProfile")}
       </Text>
       <View style={styles.picker}>
         {profiles.map((p) => {
@@ -100,6 +101,9 @@ function Guide({
               >
                 {t(p.nameKey as never)}
               </Text>
+              <Text style={styles.profileHabitat}>
+                {t(`tools.amphibianEnvironmentGuide.habitat.${p.habitat}` as never)}
+              </Text>
             </NorboPressable>
           );
         })}
@@ -107,35 +111,33 @@ function Guide({
 
       {selected ? (
         <>
-          <ToolSection label={t("tools.reptileEnvironmentGuide.temperature")}>
-            <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.basking")}
-              value={range(selected.baskingTempC)}
-              unit="°C"
-            />
-            <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.cool")}
-              value={range(selected.coolTempC)}
-              unit="°C"
-            />
+          <ToolSection>
+            {selected.waterTempC ? (
+              <ToolResultCard
+                label={t("tools.amphibianEnvironmentGuide.waterTemp")}
+                value={range(selected.waterTempC)}
+                unit="°C"
+              />
+            ) : null}
+            {selected.airTempC ? (
+              <ToolResultCard
+                label={t("tools.amphibianEnvironmentGuide.airTemp")}
+                value={range(selected.airTempC)}
+                unit="°C"
+              />
+            ) : null}
+            {selected.humidityPct ? (
+              <ToolResultCard
+                label={t("tools.amphibianEnvironmentGuide.humidity")}
+                value={range(selected.humidityPct)}
+                unit="%"
+              />
+            ) : null}
           </ToolSection>
-          <ToolSection label={t("tools.reptileEnvironmentGuide.humidity")}>
-            <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.humidity")}
-              value={range(selected.humidityPct)}
-              unit="%"
-              caption={t("tools.reptileEnvironmentGuide.disclaimer")}
-            />
-          </ToolSection>
-          {selected.uvbKey ? (
-            <ToolSection label={t("tools.reptileEnvironmentGuide.uvb")}>
-              <Text style={styles.note}>{t(selected.uvbKey as never)}</Text>
-            </ToolSection>
-          ) : null}
-          {selected.noteKeys?.length ? (
-            <ToolSection label={t("tools.reptileEnvironmentGuide.notes")}>
+          {selected.waterNoteKeys.length > 0 ? (
+            <ToolSection label={t("tools.amphibianEnvironmentGuide.water")}>
               <View style={styles.notes}>
-                {selected.noteKeys.map((k) => (
+                {selected.waterNoteKeys.map((k) => (
                   <Text key={k} style={styles.note}>
                     • {t(k as never)}
                   </Text>
@@ -143,13 +145,19 @@ function Guide({
               </View>
             </ToolSection>
           ) : null}
+          <ToolSection label={t("tools.amphibianEnvironmentGuide.tank")}>
+            <Text style={styles.note}>{t(selected.tankNoteKey as never)}</Text>
+            <Text style={styles.disclaimer}>
+              {t("tools.amphibianEnvironmentGuide.disclaimer")}
+            </Text>
+          </ToolSection>
         </>
       ) : null}
     </View>
   );
 }
 
-export default ReptileGuideTool;
+export default AmphibianGuideTool;
 
 const styles = StyleSheet.create((theme) => ({
   content: {
@@ -173,11 +181,17 @@ const styles = StyleSheet.create((theme) => ({
     paddingVertical: theme.spacing.md,
     paddingHorizontal: theme.spacing.lg,
     backgroundColor: theme.colors.surface,
+    gap: theme.spacing.xs,
     ...theme.card,
   },
   profileName: {
     ...theme.typography.subhead,
   },
+  profileHabitat: {
+    ...theme.typography.caption,
+    color: theme.colors.textTertiary,
+  },
   notes: { gap: theme.spacing.xs },
   note: { ...theme.typography.footnote, color: theme.colors.textSecondary },
+  disclaimer: { ...theme.typography.caption, color: theme.colors.textTertiary },
 }));

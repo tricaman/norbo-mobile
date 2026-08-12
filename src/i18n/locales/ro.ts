@@ -775,6 +775,8 @@ const ro = {
       cool: "zonă rece",
       humidity: "umiditate",
       disclaimer: "valori orientative, nu înlocuiesc consultul veterinar",
+      uvb: "lampă UVB",
+      notes: "note",
     },
     petAgeHumanYears: {
       title: "vârsta în ani omenești",
@@ -856,6 +858,29 @@ const ro = {
         dieffenbachia: "Dieffenbachia provoacă iritație orală severă.",
         sagoPalm: "Palma sago este sever toxică (ficat).",
         spiderPlant: "Planta păianjen este în general sigură.",
+        avocadoBird: "Avocado (persin) este potențial letală pentru păsări.",
+        caffeine: "Cafeina este toxică pentru inimile păsărilor.",
+        saltBird: "Alimente sărate: chiar și cantități mici sunt periculoase.",
+        fruitPits: "Pulpa este sigură; semințele și sâmburii conțin cianogeni.",
+        alcohol: "Alcoolul este toxic chiar și în cantități mici.",
+        rawBeans: "Fasolea crudă/uscată conține hemaglutinine toxice.",
+        ptfe: "Vaporii de la vasele cu non-stick supraîncălzite (PTFE) sunt letali pentru păsări.",
+        millet: "Meiul este sigur: excelent ca gustare.",
+        buttercup: "Piciorul-cocoșului este toxic pentru țestoase.",
+        foxglove: "Degețelul conține glicozide cardiotoxice.",
+        daffodil: "Narcisa este toxică, mai ales bulbul.",
+        ivy: "Iedera cauzează probleme gastrointestinale.",
+        avocado: "Avocado (persin) este toxic pentru multe reptile.",
+        azalea: "Azaleea și rododendronul conțin grayanotoxine.",
+        lilyValley: "Lăcrămioara este cardiotoxică.",
+        euphorbia: "Laptele de euphorbia este iritant și toxic.",
+        rhubarb: "Frunzele de rubarbă sunt bogate în acid oxalic.",
+        spinachOxalate: "Oxalații din spanac leagă calciul: doar ocazional.",
+        icebergLettuce:
+          "Salata iceberg este săracă în nutrienți: evitați ca aliment de bază.",
+        dandelion: "Păpădia este un aliment excelent pentru țestoase.",
+        hibiscus: "Frunzele și florile de hibiscus sunt sigure și apreciate.",
+        plantain: "Pătlagina este o plantă sigură pentru țestoase.",
       },
     },
     bodyConditionScore: {
@@ -1151,6 +1176,264 @@ const ro = {
           "contribuțiile sunt verificate înainte de a apărea pe hartă.",
       },
     },
+    bird: {
+      species: {
+        "finch-canary": "cinteză / canar",
+        "budgie-parakeet": "peruș / papagal",
+        "cockatiel-lovebird": "cockatiel / peruș",
+        "medium-parrot": "papagal de talie medie",
+        "large-parrot": "papagal de talie mare",
+        generic: "altă pasăre",
+      },
+    },
+    birdCageSize: {
+      count: "număr de păsări",
+      dimensions: "dimensiuni minime (L×A×Î)",
+      barSpacing: "spațiu între bare",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul medicului veterinar aviar.",
+      notes: {
+        perches: "bibani naturali cu diametre variate.",
+        flight:
+          "preferați lățimea și zborul orizontal în detrimentul înălțimii.",
+        outOfCage: "permiteți zbor liber zilnic în afara cuștii.",
+        zinc: "evitați cuștile zincate sau vopseaua cu plumb (metale toxice).",
+        macawMore:
+          "ara mari și cacatui au nevoie de spații mult mai mari sau voliere.",
+        speciesVary:
+          "nevoile variază mult: verificați pentru specia dumneavoastră.",
+      },
+    },
+    birdFoodRation: {
+      weight: "greutate",
+      dryFood: "peleți / semințe",
+      freshVeg: "legume proaspete",
+      diet: "bază alimentară",
+      weightHint: "greutate tipică pentru acest grup: {{min}}–{{max}} g",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul medicului veterinar aviar.",
+      dietKind: {
+        seedBased: "amestec de semințe de calitate + legume",
+        seedOrPellet: "semințe și/sau peleți + legume",
+        pelletBased: "peleți formulați + legume",
+        checkSpecies: "verificați pentru specie",
+      },
+      notes: {
+        pelletShare:
+          "pentru papagali, peleții ar trebui să constituie 60-70% din dietă.",
+        treatLimit: "semințele oleaginoase și fructele ca gustări, sub 10%.",
+        guardValues:
+          "loriii, maina și alte specii au diete speciale: consultați medicul veterinar aviar.",
+        noAvocado: "niciodată avocado, ciocolată sau alimente sărate.",
+      },
+    },
+    birdEnvironmentGuide: {
+      selectProfile: "grup de specii",
+      temperature: "temperatură",
+      humidity: "umiditate",
+      daylight: "ore de lumină",
+      sleep: "ore de somn",
+      hazards: "pericole de evitat",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul medicului veterinar aviar.",
+      hazard: {
+        ptfe: "vaporii de la vasele cu non-stick supraîncălzite (PTFE/Teflon): letali.",
+        aerosols:
+          "spray-urile, lumânările parfumate și fumul irită căile respiratorii.",
+        drafts:
+          "curenții de aer și variațiile de temperatură (ferestre, aer condiționat).",
+        nightFrights:
+          "cockatielii suferă de spaime nocturne: folosiți o lumină de veghe slabă.",
+        heavyMetals:
+          "zinc și plumb (cuști, jucării): toxice dacă sunt mestecate.",
+        mirrorsWindows:
+          "sticlă și oglinzi: risc de coliziune în timpul zborului liber.",
+      },
+    },
+    snakeFeedingGuide: {
+      species: {
+        "ball-python": "piteon regal",
+        "corn-snake": "serpele de porumb",
+        boa: "boa",
+        "king-milk": "șarpe rege / de lapte",
+        garter: "șarpe jartieră",
+        hognose: "hognose",
+        generic: "alt șarpe",
+      },
+      ageBand: {
+        HATCHLING: "pui",
+        JUVENILE: "juvenil",
+        ADULT: "adult",
+      },
+      age: "vârstă",
+      weight: "greutate",
+      preyType: "tip de pradă",
+      preySize: "mărimea prăzii",
+      preyWeight: "greutatea indicativă a prăzii",
+      interval: "interval de hrănire",
+      intervalUnit: "zile",
+      prey: {
+        pinkyMouse: "șoarece roz",
+        fuzzyHopperMouse: "șoarece fuzzy/hopper",
+        adultMouse: "șoarece adult",
+        hopperMouseRatPup: "șoarece hopper sau pui de șobolan",
+        adultMouseSmallRat: "șoarece adult sau șobolan mic",
+        mediumRat: "șobolan mediu",
+        mediumLargeRat: "șobolan mediu-mare",
+        wormsFishStrips: "râme și bucăți de pește",
+        wormsFishPinky: "râme, pește sau pui",
+        wormsFishAdultPinky: "râme, pește sau șoareci",
+        sizeAppropriate: "pradă dimensionată după corp",
+      },
+      notes: {
+        girthRodent: "prada ≈ lățimea corpului în cel mai lat punct (1–1.15×).",
+        garterDiet: "dietă variată: râme, pește, ocazional rozătoare.",
+        garterThiaminase:
+          "evitați peștii bogați în tiaminază (ex. pește auriu).",
+        thawed: "preferați prada decongelată, niciodată vie fără supraveghere.",
+        noHandling48h: "nu manipulați timp de 48 de ore după masă.",
+        ballPythonFasting:
+          "posturile sezoniere sunt frecvente: consultați medicul veterinar dacă slăbește.",
+        slowMetabolism: "metabolism lent: nu supraalimentați.",
+        hognoseScenting: "poate avea nevoie de pradă parfumată.",
+      },
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul medicului veterinar.",
+    },
+    turtleTankCalculator: {
+      species: {
+        "yellow-bellied-slider": "testoasă cu burtă galbenă",
+        "musk-turtle": "țestoasă-mosc",
+        "map-turtle": "țestoasă de hartă",
+        generic: "altă țestoasă acvatică",
+      },
+      shellLength: "lungimea carapacei",
+      count: "număr de țestoase",
+      tankVolume: "volum minim al acvariului",
+      waterDepth: "adâncime minimă a apei",
+      waterTemp: "temperatura apei",
+      baskingTemp: "zonă de încălzire",
+      uvb: "lampă UVB",
+      tortoiseHint:
+        "pentru țestoase terestre consultați ghidul de mediu pentru reptile.",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul medicului veterinar.",
+      notes: {
+        uvbRequired: "UVB necesar 10-12 ore pe zi.",
+        filtration: "filtru calibrat pentru 2-3 ori volumul.",
+        baskingDock: "o zonă uscată de încălzire întotdeauna accesibilă.",
+        muskShallow:
+          "înotător slab: apă mai puțin adâncă și suprafețe de prindere.",
+        mapWaterQuality: "foarte sensibil la calitatea apei.",
+      },
+    },
+    amphibianEnvironmentGuide: {
+      selectProfile: "specie",
+      habitat: {
+        AQUATIC: "acvatic",
+        SEMI_AQUATIC: "semiacvatic",
+        TERRESTRIAL: "terestru",
+        ARBOREAL: "arboricol",
+      },
+      waterTemp: "temperatura apei",
+      airTemp: "temperatura aerului",
+      humidity: "umiditate",
+      water: "apă",
+      tank: "acvariu / terariu",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul unui veterinar exotic.",
+    },
+    farm: {
+      species: {
+        "cow-lactating": "vacă (lactație)",
+        "cow-dry": "vacă (uscată)",
+        calf: "vițel",
+        pig: "porc",
+        goat: "capră",
+        sheep: "oaie",
+        "chicken-flock": "păsări de curte",
+        horse: "cal",
+        donkey: "măgar",
+        cow: "vacă",
+        alpaca: "alpaca / lamă",
+        generic: "alt animal",
+      },
+    },
+    chickenCoopCalculator: {
+      henCount: "număr de găini",
+      sizeClass: "mărime",
+      bantam: "bantam",
+      standard: "standard",
+      heavy: "grea",
+      floor: "suprafață podea cocină",
+      run: "curte exterioară",
+      nestBoxes: "cuiburi",
+      roost: "lungime biban",
+      disclaimer: "valori orientative pentru creșterea în curte.",
+      notes: {
+        minimums:
+          "acestea sunt minimele: mai mult spațiu este întotdeauna mai bine.",
+        ventilation:
+          "asigurați ventilație fără curenți și protecție împotriva prădătorilor.",
+      },
+    },
+    livestockWaterNeeds: {
+      weight: "greutate",
+      headCount: "număr de animale",
+      birdCount: "număr de păsări",
+      result: "necesar zilnic",
+      perDay: "L/zi",
+      disclaimer:
+        "interval orientativ, care nu înlocuiește sfatul veterinarului sau agronomului.",
+      notes: {
+        heat: "pe vreme caldă necesarul crește mult.",
+        lactation: "animalele în lactație beau mult mai mult.",
+        clean: "apă proaspătă și curată întotdeauna disponibilă.",
+      },
+    },
+    forageRation: {
+      weight: "greutate",
+      currentStock: "stoc de furaj",
+      dailyRange: "furaj pe zi",
+      daysLeft: "zile de autonomie",
+      days: "zile",
+      reorderDate: "dată reaprovizionare",
+      reminderTitle: "Reaprovizionați furajul pentru {{name}}",
+      disclaimer:
+        "valori orientative, care nu înlocuiesc sfatul veterinarului sau agronomului.",
+      notes: {
+        dryMatter:
+          "bază de substanță uscată: furajul proaspăt cântărește mai mult.",
+        donkeyStraw:
+          "măgari: furaj bogat în fibre, sărac în calorii (amestec cu paie).",
+        horseFibre:
+          "nu coborâți sub 1,5% din greutatea corporală în fibre lungi.",
+      },
+    },
+    horseWeightEstimator: {
+      heartGirth: "circumferința pieptului",
+      bodyLength: "lungimea corpului",
+      howToMeasure:
+        "circumferința chiar în spatele cotului; lungimea de la punctul umărului până la cel al fesei.",
+      result: "greutate estimată",
+      tip: "utilizați această greutate în instrumentele pentru apă și furaje.",
+      disclaimer:
+        "estimare pentru cai adulți (Carroll & Huntington). o bandă de greutate sau o balanță sunt mai precise.",
+    },
+    aquariumHeaterSize: {
+      tankLiters: "volum acvariu",
+      roomTemp: "temperatura camerei",
+      targetTemp: "temperatura țintă",
+      volumeHint:
+        "calculați volumul cu instrumentul pentru volumul acvariului și introduceți-l aici.",
+      delta: "creștere de temperatură",
+      result: "încălzitor recomandat",
+      split: "mai bine cu două încălzitoare",
+      splitNote:
+        "două încălzitoare mai mici încălzesc mai uniform și adaugă redundanță.",
+      disclaimer:
+        "dimensionare orientativă; utilizați întotdeauna un termometru separat.",
+    },
   },
   careKnowledge: {
     reptile: {
@@ -1158,6 +1441,60 @@ const ro = {
       leopardGecko: "gecko leopard",
       ballPython: "python regal",
       cornSnake: "șarpe porumb",
+      hermannTortoise: "țestoasa lui Hermann",
+      greekTortoise: "țestoasă grecească",
+      crestedGecko: "gecko cu creastă",
+      veiledChameleon: "cameleon cu coif",
+      greenIguana: "iguana verde",
+      blueTongueSkink: "scinc cu limbă albastră",
+      notes: {
+        uvbRequired: "UVB necesar 10-12 ore pe zi.",
+        uvbLow: "UVB de intensitate scăzută opțional, dar recomandat.",
+        brumation:
+          "brumație de iarnă pentru adulții sănătoși: cercetați bine înainte.",
+        brumationVet:
+          "unele subspecii nu ar trebui să brumeze: consultați medicul veterinar.",
+        outdoorAccess: "accesul în aer liber vara este foarte benefic.",
+        heatSensitive:
+          "peste 28 °C este în pericol: nu folosiți niciodată pietre de încălzire.",
+        mistingCycle: "pulverizare seara, uscat în timpul zilei.",
+        ventilation:
+          "terariu ventilat (cu plasă), niciodată un acvariu închis.",
+        nightDrop: "o scădere a temperaturii pe timp de noapte este necesară.",
+        dripWater: "bea doar picături: picurător sau pulverizare.",
+        adultSize: "ca adult are nevoie de spații foarte mari.",
+        subspeciesHumidity: "umiditatea corectă depinde de subspecie.",
+      },
+    },
+    amphibian: {
+      axolotl: "axolotl",
+      pacmanFrog: "broasca Pacman",
+      whitesTreeFrog: "broasca de copac a lui White",
+      redEyedTreeFrog: "broasca de copac cu ochi roșii",
+      fireBelliedNewt: "triton cu burta roșie",
+      tigerSalamander: "salamandra tigru",
+      generic: "amfibian (generic)",
+      notes: {
+        dechlorinated:
+          "folosiți întotdeauna apă declorinată (condiționator de apă).",
+        noDistilled: "niciodată apă distilată sau RO pură.",
+        gentleFlow: "flux de filtrare blând.",
+        coolWater: "peste 20 °C este în pericol: răcoriți vara.",
+        shallowDish: "un vas mic cu apă întotdeauna prezent.",
+        mistDaily: "pulverizați în fiecare zi.",
+        nightDrop: "o ușoară scădere a temperaturii pe timp de noapte.",
+        landArea: "o zonă terestră pentru odihnă.",
+        burrow: "substrat adânc pentru săpat.",
+      },
+      tank: {
+        axolotl: "min 60 L pentru un adult (acvariu de 80 cm).",
+        pacmanFrog: "min 45×45 cm amprentă pentru un adult.",
+        whitesTreeFrog: "terariu vertical min 45×45×60 cm.",
+        redEyedTreeFrog: "terariu vertical min 45×45×60 cm.",
+        fireBelliedNewt: "min 40 L, aproximativ 70% apă și 30% uscat.",
+        tigerSalamander: "min 60×40 cm amprentă, substrat adânc.",
+        generic: "depinde de specie: consultați un veterinar exotic.",
+      },
     },
   },
   paywall: {

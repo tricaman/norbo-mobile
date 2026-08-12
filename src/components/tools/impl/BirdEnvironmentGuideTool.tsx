@@ -3,8 +3,8 @@ import { ToolResultCard, ToolSection } from "@/components/tools/ui";
 import { QueryBoundary } from "@/components/ui/QueryBoundary";
 import { careKnowledgeApi } from "@/services/care-knowledge.api";
 import type {
+  BirdEnvironmentProfile,
   EnvRange,
-  ReptileEnvironmentProfile,
 } from "@/types/care-knowledge.types";
 import { PetCategory, type Pet } from "@/types/pet.types";
 import { useQuery } from "@tanstack/react-query";
@@ -18,10 +18,10 @@ const range = (r: EnvRange): string => `${r.min}–${r.max}`;
 
 /** Best-effort: match the pet's species text against a profile's aliases. */
 function deriveProfileId(
-  profiles: ReptileEnvironmentProfile[],
+  profiles: BirdEnvironmentProfile[],
   pet: Pet | null,
 ): string | null {
-  if (!pet || pet.category !== PetCategory.REPTILE) return null;
+  if (!pet || pet.category !== PetCategory.BIRD) return null;
   const hint = pet.speciesLabelFreetext?.toLowerCase().trim();
   if (!hint) return null;
   const match = profiles.find((p) =>
@@ -31,16 +31,17 @@ function deriveProfileId(
 }
 
 /**
- * Reptile environment guide — structured care CONTENT (no calculation, no
- * persistence). Reads curated target temps/humidity from the care-knowledge
- * module by selected profile, pre-selected from the pet's species when set.
+ * Bird environment guide — structured care CONTENT (no calculation, no
+ * persistence). Reads curated temperature/humidity/light targets and home
+ * hazards from the care-knowledge module by selected species group,
+ * pre-selected from the pet's species when set.
  */
-const ReptileGuideTool: ToolComponent<"reptile-environment-guide"> = ({
+const BirdEnvironmentGuideTool: ToolComponent<"bird-environment-guide"> = ({
   pet,
 }) => {
   const query = useQuery({
-    queryKey: ["care-knowledge", "reptile-environment"],
-    queryFn: () => careKnowledgeApi.reptileEnvironment().then((r) => r.data),
+    queryKey: ["care-knowledge", "bird-environment"],
+    queryFn: () => careKnowledgeApi.birdEnvironment().then((r) => r.data),
   });
 
   return (
@@ -56,7 +57,7 @@ function Guide({
   profiles,
   pet,
 }: {
-  profiles: ReptileEnvironmentProfile[];
+  profiles: BirdEnvironmentProfile[];
   pet: Pet | null;
 }): React.JSX.Element {
   const { t } = useTranslation();
@@ -69,7 +70,7 @@ function Guide({
   return (
     <View style={styles.guide}>
       <Text style={styles.pickerLabel}>
-        {t("tools.reptileEnvironmentGuide.selectProfile")}
+        {t("tools.birdEnvironmentGuide.selectProfile")}
       </Text>
       <View style={styles.picker}>
         {profiles.map((p) => {
@@ -107,49 +108,51 @@ function Guide({
 
       {selected ? (
         <>
-          <ToolSection label={t("tools.reptileEnvironmentGuide.temperature")}>
+          <ToolSection label={t("tools.birdEnvironmentGuide.temperature")}>
             <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.basking")}
-              value={range(selected.baskingTempC)}
-              unit="°C"
-            />
-            <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.cool")}
-              value={range(selected.coolTempC)}
+              label={t("tools.birdEnvironmentGuide.temperature")}
+              value={range(selected.tempC)}
               unit="°C"
             />
           </ToolSection>
-          <ToolSection label={t("tools.reptileEnvironmentGuide.humidity")}>
+          <ToolSection label={t("tools.birdEnvironmentGuide.humidity")}>
             <ToolResultCard
-              label={t("tools.reptileEnvironmentGuide.humidity")}
+              label={t("tools.birdEnvironmentGuide.humidity")}
               value={range(selected.humidityPct)}
               unit="%"
-              caption={t("tools.reptileEnvironmentGuide.disclaimer")}
             />
           </ToolSection>
-          {selected.uvbKey ? (
-            <ToolSection label={t("tools.reptileEnvironmentGuide.uvb")}>
-              <Text style={styles.note}>{t(selected.uvbKey as never)}</Text>
-            </ToolSection>
-          ) : null}
-          {selected.noteKeys?.length ? (
-            <ToolSection label={t("tools.reptileEnvironmentGuide.notes")}>
-              <View style={styles.notes}>
-                {selected.noteKeys.map((k) => (
-                  <Text key={k} style={styles.note}>
-                    • {t(k as never)}
-                  </Text>
-                ))}
-              </View>
-            </ToolSection>
-          ) : null}
+          <ToolSection>
+            <ToolResultCard
+              label={t("tools.birdEnvironmentGuide.daylight")}
+              value={range(selected.daylightHours)}
+              unit="h"
+            />
+            <ToolResultCard
+              label={t("tools.birdEnvironmentGuide.sleep")}
+              value={range(selected.sleepHours)}
+              unit="h"
+            />
+          </ToolSection>
+          <ToolSection label={t("tools.birdEnvironmentGuide.hazards")}>
+            <View style={styles.hazards}>
+              {selected.hazardKeys.map((k) => (
+                <Text key={k} style={styles.hazard}>
+                  • {t(k as never)}
+                </Text>
+              ))}
+              <Text style={styles.disclaimer}>
+                {t("tools.birdEnvironmentGuide.disclaimer")}
+              </Text>
+            </View>
+          </ToolSection>
         </>
       ) : null}
     </View>
   );
 }
 
-export default ReptileGuideTool;
+export default BirdEnvironmentGuideTool;
 
 const styles = StyleSheet.create((theme) => ({
   content: {
@@ -178,6 +181,7 @@ const styles = StyleSheet.create((theme) => ({
   profileName: {
     ...theme.typography.subhead,
   },
-  notes: { gap: theme.spacing.xs },
-  note: { ...theme.typography.footnote, color: theme.colors.textSecondary },
+  hazards: { gap: theme.spacing.xs },
+  hazard: { ...theme.typography.footnote, color: theme.colors.error },
+  disclaimer: { ...theme.typography.caption, color: theme.colors.textTertiary },
 }));

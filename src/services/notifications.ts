@@ -12,12 +12,14 @@ import {
   setBackgroundMessageHandler,
 } from "@react-native-firebase/messaging";
 import { BADGE_DATA_TYPE } from "@/shared/gamification-contract";
+import { INBOX_NOTIFICATION_ID_KEY } from "@/shared/notifications-contract";
 import { addDays } from "date-fns";
 import { Linking, Platform } from "react-native";
 import {
   CAMPAIGN_DATA_TYPE,
   resolveCampaignTarget,
 } from "./campaign-targets";
+import { notificationsInboxApi } from "./notifications-inbox.api";
 import { registerPushToken } from "./push-registration";
 import { remindersApi } from "./reminders.api";
 
@@ -124,6 +126,27 @@ export function getNavTargetFromData(
   return null;
 }
 
+/**
+ * Mark the inbox mirror of a tapped push as read, if the payload carries the
+ * row id (`INBOX_NOTIFICATION_ID_KEY` — pushes sent before the API injected
+ * it simply lack the key). Never throws, so it is safe to fire-and-forget;
+ * resolves `true` only when a row was actually marked, letting callers
+ * refresh the inbox/badge caches only when something changed.
+ */
+async function markInboxRead(
+  data: Record<string, unknown> | undefined,
+): Promise<boolean> {
+  const id = data?.[INBOX_NOTIFICATION_ID_KEY];
+  if (typeof id !== "string" || !id) return false;
+  try {
+    await notificationsInboxApi.markRead(id);
+    return true;
+  } catch (e) {
+    console.warn("[notifications] mark inbox read failed:", e);
+    return false;
+  }
+}
+
 /** Open the `norbo://` deep link for a nav route, if the payload has one. */
 async function openDeepLink(
   data: Record<string, unknown> | undefined,
@@ -210,6 +233,12 @@ export interface MessageHandlerOptions {
    * it importable from `_layout` without an import cycle.
    */
   onForegroundMessage?: () => void;
+  /**
+   * Called after a tapped push's inbox row has been marked read server-side,
+   * so the caller can refresh the inbox list and the bell badge. Same
+   * ownership split as `onForegroundMessage`.
+   */
+  onInboxRead?: () => void;
 }
 
 /** Wire foreground FCM + Notifee handlers. Idempotent. */
@@ -250,6 +279,11 @@ export function setupMessageHandlers(opts: MessageHandlerOptions = {}): void {
         if (detail.notification?.id) {
           await notifee.cancelNotification(detail.notification.id);
         }
+        // Concurrent with navigation: marking read must not delay the deep
+        // link, and the cache refresh fires only once the server confirmed.
+        void markInboxRead(detail.notification?.data).then((marked) => {
+          if (marked) opts.onInboxRead?.();
+        });
         await openDeepLink(detail.notification?.data);
       }
     },
@@ -265,6 +299,9 @@ export function setupMessageHandlers(opts: MessageHandlerOptions = {}): void {
   const unsubOpened = onNotificationOpenedApp(
     getMessaging(),
     async (remoteMessage) => {
+      void markInboxRead(remoteMessage?.data).then((marked) => {
+        if (marked) opts.onInboxRead?.();
+      });
       await openDeepLink(remoteMessage?.data);
     },
   );
@@ -283,6 +320,10 @@ export async function handleInitialNotification(): Promise<string | null> {
     if (initial?.notification) {
       const { id, data } = initial.notification;
       if (id) await notifee.cancelNotification(id);
+      // Fire-and-forget: cold-start navigation must not wait on the network.
+      // The inbox list refetches on tab focus and the badge polls, so the
+      // read state converges even without an explicit cache refresh here.
+      void markInboxRead(data);
       const route = getNavTargetFromData(data);
       if (route) return route;
     }
@@ -292,6 +333,7 @@ export async function handleInitialNotification(): Promise<string | null> {
     // through RN Firebase instead. Android data-only pushes never reach here.
     const fcmInitial = await getInitialNotification(getMessaging());
     if (fcmInitial?.data) {
+      void markInboxRead(fcmInitial.data);
       return getNavTargetFromData(fcmInitial.data);
     }
 
@@ -331,7 +373,12 @@ export function registerBackgroundHandler(): void {
       if (detail.notification?.id) {
         await notifee.cancelNotification(detail.notification.id);
       }
+      // Started before the deep link so it doesn't delay opening the app;
+      // awaited after so the headless task stays alive until the PATCH lands
+      // — by the time `_layout`'s foreground refresh fires, the row is read.
+      const marking = markInboxRead(detail.notification?.data);
       await openDeepLink(detail.notification?.data);
+      await marking;
     }
   });
 }

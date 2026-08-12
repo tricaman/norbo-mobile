@@ -779,6 +779,8 @@ const de = {
       cool: "kühle zone",
       humidity: "luftfeuchtigkeit",
       disclaimer: "richtwerte, ersetzen nicht den tierarzt",
+      uvb: "UVB-Lampe",
+      notes: "Notizen",
     },
     petAgeHumanYears: {
       title: "alter in menschenjahren",
@@ -860,6 +862,33 @@ const de = {
         dieffenbachia: "Dieffenbachia verursacht starke Mundreizungen.",
         sagoPalm: "Sagopalme ist stark giftig (Leber).",
         spiderPlant: "Grünlilie ist im Allgemeinen unbedenklich.",
+        avocadoBird: "Avocado (Persin) ist für Vögel potenziell tödlich.",
+        caffeine: "Koffein ist giftig für das Herz von Vögeln.",
+        saltBird: "Salzige Lebensmittel: Schon kleine Mengen sind gefährlich.",
+        fruitPits:
+          "Das Fruchtfleisch ist unbedenklich; Samen und Kerne enthalten cyanogene Glykoside.",
+        alcohol: "Alkohol ist schon in winzigen Mengen giftig.",
+        rawBeans: "Rohe/getrocknete Bohnen enthalten giftige Hämagglutinine.",
+        ptfe: "Dämpfe von überhitzten Antihaft-Pfannen (PTFE) sind für Vögel tödlich.",
+        millet: "Hirse ist unbedenklich: als Leckerli hervorragend geeignet.",
+        buttercup: "Hahnenfuß ist giftig für Landschildkröten.",
+        foxglove: "Fingerhut enthält herzschädigende Glykoside.",
+        daffodil: "Narzisse ist giftig, besonders die Zwiebel.",
+        ivy: "Efeu verursacht Magen-Darm-Beschwerden.",
+        avocado: "Avocado (Persin) ist giftig für viele Reptilien.",
+        azalea: "Azalee und Rhododendron enthalten Grayanotoxine.",
+        lilyValley: "Maiglöckchen wirkt herzschädigend.",
+        euphorbia: "Wolfsmilch-Latex ist reizend und giftig.",
+        rhubarb: "Rhabarberblätter sind reich an Oxalsäure.",
+        spinachOxalate:
+          "Spinat-Oxalate binden Kalzium: nur gelegentlich füttern.",
+        icebergLettuce:
+          "Eisbergsalat ist nährstoffarm: nicht als Grundnahrung verwenden.",
+        dandelion:
+          "Löwenzahn ist ein ausgezeichnetes Futter für Landschildkröten.",
+        hibiscus:
+          "Hibiskus-Blüten und -Blätter sind unbedenklich und werden gerne gefressen.",
+        plantain: "Wegerich ist ein unbedenkliches Kraut für Landschildkröten.",
       },
     },
     bodyConditionScore: {
@@ -1157,6 +1186,257 @@ const de = {
           "einsendungen werden vor der anzeige auf der karte geprüft.",
       },
     },
+    bird: {
+      species: {
+        "finch-canary": "Fink / Kanarienvogel",
+        "budgie-parakeet": "Wellensittich / Sittich",
+        "cockatiel-lovebird": "Nymphensittich / Unzertrennlicher",
+        "medium-parrot": "mittlerer Papagei",
+        "large-parrot": "großer Papagei",
+        generic: "anderer Vogel",
+      },
+    },
+    birdCageSize: {
+      count: "Anzahl der Vögel",
+      dimensions: "Mindestmaße (B×T×H)",
+      barSpacing: "Abstand der Gitterstäbe",
+      disclaimer:
+        "Richtwerte, die Ihren vogelkundigen Tierarzt nicht ersetzen.",
+      notes: {
+        perches: "natürliche Sitzstangen mit unterschiedlichem Durchmesser.",
+        flight: "bevorzugen Sie Breite und horizontalen Flug vor Höhe.",
+        outOfCage: "täglichen Freiflug außerhalb des Käfigs ermöglichen.",
+        zinc: "verzinkte Käfige oder Bleifarbe vermeiden (giftige Metalle).",
+        macawMore:
+          "große Aras und Kakadus brauchen viel mehr Platz oder Volieren.",
+        speciesVary:
+          "die Bedürfnisse variieren stark: Informieren Sie sich über Ihre Art.",
+      },
+    },
+    birdFoodRation: {
+      weight: "Gewicht",
+      dryFood: "Pellets / Sämereien",
+      freshVeg: "frisches Gemüse",
+      diet: "Basis der Ernährung",
+      weightHint: "typisches Gewicht für diese Gruppe: {{min}}–{{max}} g",
+      disclaimer:
+        "Richtwerte, die Ihren vogelkundigen Tierarzt nicht ersetzen.",
+      dietKind: {
+        seedBased: "qualitativ hochwertige Körnermischung + Gemüse",
+        seedOrPellet: "Sämereien und/oder Pellets + Gemüse",
+        pelletBased: "fertige Pellets + Gemüse",
+        checkSpecies: "Artenspezifisch prüfen",
+      },
+      notes: {
+        pelletShare:
+          "Bei Papageien sollten Pellets 60–70 % der Nahrung ausmachen.",
+        treatLimit: "fettige Sämereien und Früchte als Leckerli, unter 10 %.",
+        guardValues:
+          "Loris, Mynas und andere Arten haben spezielle Ernährungsbedürfnisse: Fragen Sie Ihren vogelkundigen Tierarzt.",
+        noAvocado: "niemals Avocado, Schokolade oder salzige Lebensmittel.",
+      },
+    },
+    birdEnvironmentGuide: {
+      selectProfile: "Artengruppe",
+      temperature: "Temperatur",
+      humidity: "Luftfeuchtigkeit",
+      daylight: "Tageslichtstunden",
+      sleep: "Schlafstunden",
+      hazards: "zu vermeidende Gefahren",
+      disclaimer:
+        "Richtwerte, die Ihren vogelkundigen Tierarzt nicht ersetzen.",
+      hazard: {
+        ptfe: "Dämpfe von überhitzten Antihaft-Pfannen (PTFE/Teflon): tödlich.",
+        aerosols: "Sprays, Duftkerzen und Rauch reizen die Atemwege.",
+        drafts: "Zugluft und Temperaturschwankungen (Fenster, Klimaanlagen).",
+        nightFrights:
+          "Nymphensittiche leiden unter Nachtangst: Verwenden Sie ein schwaches Nachtlicht.",
+        heavyMetals:
+          "Zink und Blei (Käfige, Spielzeug): giftig, wenn daran gekaut wird.",
+        mirrorsWindows: "Glas und Spiegel: Kollisionsgefahr beim Freiflug.",
+      },
+    },
+    snakeFeedingGuide: {
+      species: {
+        "ball-python": "Königspython",
+        "corn-snake": "Kornnatter",
+        boa: "Boa",
+        "king-milk": "Königs- / Dreiecksnatter",
+        garter: "Strumpfbandnatter",
+        hognose: "Hakennasennatter",
+        generic: "andere Schlange",
+      },
+      ageBand: {
+        HATCHLING: "Schlüpfling",
+        JUVENILE: "Jungtier",
+        ADULT: "Erwachsenes Tier",
+      },
+      age: "Alter",
+      weight: "Gewicht",
+      preyType: "Beutetierart",
+      preySize: "Beutegröße",
+      preyWeight: "Richtwert Beutegewicht",
+      interval: "Fütterungsintervall",
+      intervalUnit: "Tage",
+      prey: {
+        pinkyMouse: "Pinky-Maus",
+        fuzzyHopperMouse: "Fuzzy-/Hopper-Maus",
+        adultMouse: "ausgewachsene Maus",
+        hopperMouseRatPup: "Hopper-Maus oder Rattenbaby",
+        adultMouseSmallRat: "ausgewachsene Maus oder kleine Ratte",
+        mediumRat: "mittelgroße Ratte",
+        mediumLargeRat: "mittelgroße bis große Ratte",
+        wormsFishStrips: "Regenwürmer und Fischstreifen",
+        wormsFishPinky: "Regenwürmer, Fisch oder Pinkies",
+        wormsFishAdultPinky: "Regenwürmer, Fisch oder Mäuse",
+        sizeAppropriate: "Beute passend zum Körper",
+      },
+      notes: {
+        girthRodent:
+          "Beute ≈ die Körperbreite an der breitesten Stelle (1–1,15×).",
+        garterDiet:
+          "abwechslungsreiche Ernährung: Regenwürmer, Fisch, gelegentlich Nagetiere.",
+        garterThiaminase:
+          "Fisch mit hohem Thiaminase-Gehalt vermeiden (z. B. Goldfische).",
+        thawed: "aufgetaute Beute bevorzugen, niemals lebend ohne Aufsicht.",
+        noHandling48h:
+          "nicht innerhalb von 48 Stunden nach einer Mahlzeit anfassen.",
+        ballPythonFasting:
+          "saisonales Fasten ist häufig: Konsultieren Sie Ihren Tierarzt, wenn es an Gewicht verliert.",
+        slowMetabolism: "langsamer Stoffwechsel: nicht überfüttern.",
+        hognoseScenting: "möglicherweise duftmarkierte Beute nötig.",
+      },
+      disclaimer: "Richtwerte, die Ihren Tierarzt nicht ersetzen.",
+    },
+    turtleTankCalculator: {
+      species: {
+        "yellow-bellied-slider": "Gelbwangen-Schmuckschildkröte",
+        "musk-turtle": "Moschusschildkröte",
+        "map-turtle": "Höckerschildkröte",
+        generic: "andere Wasserschildkröte",
+      },
+      shellLength: "Panzerlänge",
+      count: "Anzahl der Schildkröten",
+      tankVolume: "Mindestvolumen des Beckens",
+      waterDepth: "Mindestwassertiefe",
+      waterTemp: "Wassertemperatur",
+      baskingTemp: "Sonnenplatz",
+      uvb: "UVB-Lampe",
+      tortoiseHint:
+        "Für Landschildkröten siehe den Reptilien-Umgebungsleitfaden.",
+      disclaimer: "Richtwerte, die Ihren Tierarzt nicht ersetzen.",
+      notes: {
+        uvbRequired: "UVB ist 10–12 Stunden täglich erforderlich.",
+        filtration: "Filter für das 2- bis 3-fache des Volumens.",
+        baskingDock: "Ein trockener Sonnenplatz muss immer erreichbar sein.",
+        muskShallow:
+          "schlechter Schwimmer: flacheres Wasser und Klettermöglichkeiten an die Oberfläche.",
+        mapWaterQuality: "sehr empfindlich gegenüber Wasserqualität.",
+      },
+    },
+    amphibianEnvironmentGuide: {
+      selectProfile: "Art",
+      habitat: {
+        AQUATIC: "aquatisch",
+        SEMI_AQUATIC: "semi-aquatisch",
+        TERRESTRIAL: "terrestrisch",
+        ARBOREAL: "baumbewohnend",
+      },
+      waterTemp: "Wassertemperatur",
+      airTemp: "Lufttemperatur",
+      humidity: "Luftfeuchtigkeit",
+      water: "Wasser",
+      tank: "Becken / Terrarium",
+      disclaimer: "Richtwerte, die einen Exoten-Tierarzt nicht ersetzen.",
+    },
+    farm: {
+      species: {
+        "cow-lactating": "Kuh (laktierend)",
+        "cow-dry": "Kuh (trockenstehend)",
+        calf: "Kalb",
+        pig: "Schwein",
+        goat: "Ziege",
+        sheep: "Schaf",
+        "chicken-flock": "Geflügel",
+        horse: "Pferd",
+        donkey: "Esel",
+        cow: "Kuh",
+        alpaca: "Alpaka / Lama",
+        generic: "anderes Tier",
+      },
+    },
+    chickenCoopCalculator: {
+      henCount: "Anzahl der Hennen",
+      sizeClass: "Größe",
+      bantam: "Zwerghuhn",
+      standard: "Standard",
+      heavy: "schweres Huhn",
+      floor: "Stallgrundfläche",
+      run: "Auslauf",
+      nestBoxes: "Nistkästen",
+      roost: "Sitzstangenlänge",
+      disclaimer: "Richtwerte für die Haltung im Hinterhof.",
+      notes: {
+        minimums:
+          "Dies sind Mindestanforderungen: Mehr Platz ist immer besser.",
+        ventilation:
+          "zugfreie Belüftung und Schutz vor Raubtieren sicherstellen.",
+      },
+    },
+    livestockWaterNeeds: {
+      weight: "Gewicht",
+      headCount: "Anzahl der Tiere",
+      birdCount: "Anzahl der Vögel",
+      result: "Tagesbedarf",
+      perDay: "L/Tag",
+      disclaimer:
+        "Richtwertbereich, kein Ersatz für einen Tierarzt oder Agronomen.",
+      notes: {
+        heat: "Bei heißem Wetter steigt der Bedarf erheblich.",
+        lactation: "Laktierende Tiere trinken deutlich mehr.",
+        clean: "Immer frisches, sauberes Wasser bereitstellen.",
+      },
+    },
+    forageRation: {
+      weight: "Gewicht",
+      currentStock: "Futtervorrat",
+      dailyRange: "Futter pro Tag",
+      daysLeft: "Tage Autonomie",
+      days: "Tage",
+      reorderDate: "Nachbestelldatum",
+      reminderTitle: "Futter für {{name}} nachbestellen",
+      disclaimer:
+        "Richtwerte, die einen Tierarzt oder Agronomen nicht ersetzen.",
+      notes: {
+        dryMatter: "Auf Trockenmassebasis: Frischfutter wiegt mehr.",
+        donkeyStraw:
+          "Esel: energiefaserreiches, kalorienarmes Futter (Strohmischung).",
+        horseFibre: "niemals unter 1,5 % des Körpergewichts an Langfaser.",
+      },
+    },
+    horseWeightEstimator: {
+      heartGirth: "Brustumfang",
+      bodyLength: "Körperlänge",
+      howToMeasure:
+        "Brustumfang direkt hinter dem Ellenbogen; Länge von der Schulter bis zum Sitzbeinhöcker.",
+      result: "geschätztes Gewicht",
+      tip: "Verwenden Sie dieses Gewicht in den Wasser- und Futter-Tools.",
+      disclaimer:
+        "Schätzung für erwachsene Pferde (Carroll & Huntington). Ein Gewichtsband oder eine Waage ist genauer.",
+    },
+    aquariumHeaterSize: {
+      tankLiters: "Beckeninhalt",
+      roomTemp: "Zimmertemperatur",
+      targetTemp: "Zieltemperatur",
+      volumeHint:
+        "Berechnen Sie das Volumen mit dem Aquariumvolumen-Tool und geben Sie es hier ein.",
+      delta: "Temperaturanstieg",
+      result: "empfohlene Heizung",
+      split: "besser mit zwei Heizungen",
+      splitNote:
+        "Zwei kleinere Heizungen heizen gleichmäßiger und bieten Redundanz.",
+      disclaimer: "Richtwerte; verwenden Sie immer ein separates Thermometer.",
+    },
   },
   careKnowledge: {
     reptile: {
@@ -1164,6 +1444,61 @@ const de = {
       leopardGecko: "leopardgecko",
       ballPython: "königspython",
       cornSnake: "kornnatter",
+      hermannTortoise: "Griechische Landschildkröte",
+      greekTortoise: "Maurische Landschildkröte",
+      crestedGecko: "Kronengecko",
+      veiledChameleon: "Jemenchamäleon",
+      greenIguana: "Grüner Leguan",
+      blueTongueSkink: "Blauezungenskink",
+      notes: {
+        uvbRequired: "UVB ist 10–12 Stunden täglich erforderlich.",
+        uvbLow: "Schwaches UVB ist optional, aber empfehlenswert.",
+        brumation:
+          "Winterruhe für gesunde Erwachsene: Erforschen Sie dies vorher genau.",
+        brumationVet:
+          "Manche Unterarten sollten keine Winterruhe halten: Fragen Sie Ihren Tierarzt.",
+        outdoorAccess: "Freilandzugang im Sommer ist sehr vorteilhaft.",
+        heatSensitive:
+          "Über 28 °C ist es gefährdet: Verwenden Sie niemals Heizsteine.",
+        mistingCycle: "Abendliches Besprühen, tagsüber trocken.",
+        ventilation:
+          "Belüftetes (Gitter-)Terrarium, niemals ein geschlossenes Aquarium.",
+        nightDrop: "Ein nächtlicher Temperaturabfall ist notwendig.",
+        dripWater: "Trinkt nur Wassertropfen: Tropfer oder Besprühen.",
+        adultSize: "Als Erwachsenes benötigt es sehr große Räume.",
+        subspeciesHumidity:
+          "Die richtige Luftfeuchtigkeit hängt von der Unterart ab.",
+      },
+    },
+    amphibian: {
+      axolotl: "Axolotl",
+      pacmanFrog: "Schmuckhornfrosch",
+      whitesTreeFrog: "Korallenfinger-Laubfrosch",
+      redEyedTreeFrog: "Rotaugenlaubfrosch",
+      fireBelliedNewt: "Rotbauchunke",
+      tigerSalamander: "Tigersalamander",
+      generic: "Amphibie (allgemein)",
+      notes: {
+        dechlorinated:
+          "Immer entchlortes Wasser verwenden (Wasseraufbereiter).",
+        noDistilled: "Nie destilliertes oder reines Osmosewasser.",
+        gentleFlow: "Sanfter Filterdurchfluss.",
+        coolWater: "Über 20 °C ist es gefährdet: Im Sommer herunterkühlen.",
+        shallowDish: "Eine flache Wasserschale ist immer vorhanden.",
+        mistDaily: "Täglich besprühen.",
+        nightDrop: "Eine leichte Temperaturabsenkung in der Nacht.",
+        landArea: "Ein Landbereich zum Ausruhen.",
+        burrow: "Tiefes Substrat zum Graben.",
+      },
+      tank: {
+        axolotl: "min. 60 L für ein erwachsenes Tier (80 cm Becken).",
+        pacmanFrog: "min. 45×45 cm Grundfläche für ein erwachsenes Tier.",
+        whitesTreeFrog: "vertikales Terrarium min. 45×45×60 cm.",
+        redEyedTreeFrog: "vertikales Terrarium min. 45×45×60 cm.",
+        fireBelliedNewt: "min. 40 L, etwa 70 % Wasser und 30 % Land.",
+        tigerSalamander: "min. 60×40 cm Grundfläche, tiefes Substrat.",
+        generic: "Abhängig von der Art: Fragen Sie einen Exoten-Tierarzt.",
+      },
     },
   },
   paywall: {

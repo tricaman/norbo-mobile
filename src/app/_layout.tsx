@@ -169,8 +169,13 @@ export default function RootLayout() {
 
     // Full bootstrap (permission + channels + categories + token + onTokenRefresh).
     void initNotifications();
-    // Foreground FCM/Notifee event handlers (idempotent).
-    setupMessageHandlers({ onForegroundMessage: refreshNotifications });
+    // Foreground FCM/Notifee event handlers (idempotent). Both a push landing
+    // in foreground and a tapped push being marked read move the inbox, so
+    // they share the same cache refresh.
+    setupMessageHandlers({
+      onForegroundMessage: refreshNotifications,
+      onInboxRead: refreshNotifications,
+    });
 
     // Re-register the token whenever the app comes back to the foreground
     // so lastSeenAt stays fresh and server-side invalidation is recovered.

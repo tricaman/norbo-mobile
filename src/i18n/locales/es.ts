@@ -775,6 +775,8 @@ const es = {
       cool: "zona fresca",
       humidity: "humedad",
       disclaimer: "valores indicativos, no sustituyen al veterinario",
+      uvb: "lámpara UVB",
+      notes: "notas",
     },
     petAgeHumanYears: {
       title: "edad en años humanos",
@@ -858,6 +860,34 @@ const es = {
         dieffenbachia: "La diefenbaquia causa irritación oral severa.",
         sagoPalm: "La cica es gravemente tóxica (hígado).",
         spiderPlant: "La cinta es generalmente segura.",
+        avocadoBird:
+          "El aguacate (persina) es potencialmente letal para las aves.",
+        caffeine: "La cafeína es tóxica para el corazón de las aves.",
+        saltBird:
+          "Alimentos salados: incluso pequeñas cantidades son peligrosas.",
+        fruitPits:
+          "La pulpa es segura; las semillas y huesos contienen cianógenos.",
+        alcohol: "El alcohol es tóxico incluso en cantidades mínimas.",
+        rawBeans: "Las judías crudas o secas contienen hemaglutininas tóxicas.",
+        ptfe: "Los humos de sartenes antiadherentes (PTFE) sobrecalentadas son letales para las aves.",
+        millet: "El mijo es seguro: excelente como golosina.",
+        buttercup: "El botón de oro es tóxico para las tortugas.",
+        foxglove: "La digital contiene glucósidos cardiotóxicos.",
+        daffodil: "El narciso es tóxico, especialmente el bulbo.",
+        ivy: "La hiedra causa malestar gastrointestinal.",
+        avocado: "El aguacate (persina) es tóxico para muchos reptiles.",
+        azalea: "La azalea y el rododendro contienen grayanotoxinas.",
+        lilyValley: "El lirio de los valles es cardiotóxico.",
+        euphorbia: "El látex de las euforbias es irritante y tóxico.",
+        rhubarb: "Las hojas de ruibarbo son ricas en ácido oxálico.",
+        spinachOxalate:
+          "Los oxalatos de las espinacas fijan el calcio: solo ocasionalmente.",
+        icebergLettuce:
+          "La lechuga iceberg es pobre en nutrientes: evítala como alimento principal.",
+        dandelion:
+          "El diente de león es un alimento excelente para las tortugas.",
+        hibiscus: "Las flores y hojas de hibisco son seguras y bien aceptadas.",
+        plantain: "El llantén es una hierba segura para las tortugas.",
       },
     },
     bodyConditionScore: {
@@ -1155,6 +1185,259 @@ const es = {
         moderationNote: "los envíos se revisan antes de aparecer en el mapa.",
       },
     },
+    bird: {
+      species: {
+        "finch-canary": "pinzón / canario",
+        "budgie-parakeet": "periquito",
+        "cockatiel-lovebird": "ninfa / inseparable",
+        "medium-parrot": "loro mediano",
+        "large-parrot": "loro grande",
+        generic: "otro pájaro",
+      },
+    },
+    birdCageSize: {
+      count: "número de aves",
+      dimensions: "dimensiones mínimas (An×Pr×Al)",
+      barSpacing: "separación de barrotes",
+      disclaimer:
+        "valores orientativos, no sustituyen a tu veterinario de aves.",
+      notes: {
+        perches: "posaderos naturales de diferentes diámetros.",
+        flight:
+          "favorece la anchura y el vuelo horizontal por encima de la altura.",
+        outOfCage: "permite vuelo libre diario fuera de la jaula.",
+        zinc: "evita jaulas galvanizadas o pintura con plomo (metales tóxicos).",
+        macawMore:
+          "los guacamayos grandes y las cacatúas necesitan espacios mucho más grandes o aviarios.",
+        speciesVary: "las necesidades varían mucho: consulta para tu especie.",
+      },
+    },
+    birdFoodRation: {
+      weight: "peso",
+      dryFood: "pellets / semillas",
+      freshVeg: "verduras frescas",
+      diet: "base de la dieta",
+      weightHint: "peso típico para este grupo: {{min}}–{{max}} g",
+      disclaimer:
+        "valores orientativos, no sustituyen a tu veterinario de aves.",
+      dietKind: {
+        seedBased: "mezcla de semillas de calidad + verduras",
+        seedOrPellet: "semillas y/o pellets + verduras",
+        pelletBased: "pellets formulados + verduras",
+        checkSpecies: "consultar para la especie",
+      },
+      notes: {
+        pelletShare: "en loros, los pellets deben ser el 60-70% de la dieta.",
+        treatLimit:
+          "semillas oleaginosas y frutas como golosinas, menos del 10%.",
+        guardValues:
+          "los loris, minás y otras especies tienen dietas especiales: consulta a tu veterinario de aves.",
+        noAvocado: "nunca aguacate, chocolate o alimentos salados.",
+      },
+    },
+    birdEnvironmentGuide: {
+      selectProfile: "grupo de especies",
+      temperature: "temperatura",
+      humidity: "humedad",
+      daylight: "horas de luz diurna",
+      sleep: "horas de sueño",
+      hazards: "peligros a evitar",
+      disclaimer:
+        "valores orientativos, no sustituyen a tu veterinario de aves.",
+      hazard: {
+        ptfe: "humos de sartenes antiadherentes sobrecalentadas (PTFE/Teflón): letal.",
+        aerosols:
+          "sprays, velas aromáticas y humo irritan las vías respiratorias.",
+        drafts:
+          "corrientes de aire y cambios de temperatura (ventanas, aire acondicionado).",
+        nightFrights:
+          "las ninfas sufren sobresaltos nocturnos: usa una luz nocturna tenue.",
+        heavyMetals: "zinc y plomo (jaulas, juguetes): tóxicos si se mastican.",
+        mirrorsWindows:
+          "cristales y espejos: riesgo de colisión durante el vuelo libre.",
+      },
+    },
+    snakeFeedingGuide: {
+      species: {
+        "ball-python": "pitón real",
+        "corn-snake": "serpiente del maíz",
+        boa: "boa",
+        "king-milk": "serpiente real / lechera",
+        garter: "culebra listada",
+        hognose: "serpiente hocico de cerdo",
+        generic: "otra serpiente",
+      },
+      ageBand: {
+        HATCHLING: "cría",
+        JUVENILE: "juvenil",
+        ADULT: "adulto",
+      },
+      age: "edad",
+      weight: "peso",
+      preyType: "tipo de presa",
+      preySize: "tamaño de la presa",
+      preyWeight: "peso orientativo de la presa",
+      interval: "intervalo de alimentación",
+      intervalUnit: "días",
+      prey: {
+        pinkyMouse: "ratón pinky",
+        fuzzyHopperMouse: "ratón fuzzy/hopper",
+        adultMouse: "ratón adulto",
+        hopperMouseRatPup: "ratón hopper o cría de rata",
+        adultMouseSmallRat: "ratón adulto o rata pequeña",
+        mediumRat: "rata mediana",
+        mediumLargeRat: "rata mediana-grande",
+        wormsFishStrips: "lombrices y tiras de pescado",
+        wormsFishPinky: "lombrices, pescado o pinkies",
+        wormsFishAdultPinky: "lombrices, pescado o ratones",
+        sizeAppropriate: "presa proporcionada al cuerpo",
+      },
+      notes: {
+        girthRodent:
+          "presa ≈ ancho del cuerpo en su punto más ancho (1–1.15×).",
+        garterDiet:
+          "dieta variada: lombrices, pescado, roedores ocasionalmente.",
+        garterThiaminase:
+          "evita pescados ricos en tiaminasa (p. ej., pez dorado).",
+        thawed: "prefiere presas descongeladas, nunca vivas sin supervisión.",
+        noHandling48h: "no manipular durante 48 horas después de la comida.",
+        ballPythonFasting:
+          "los ayunos estacionales son comunes: consulta al veterinario si pierde peso.",
+        slowMetabolism: "metabolismo lento: no sobrealimentar.",
+        hognoseScenting: "puede necesitar presas impregnadas con aroma.",
+      },
+      disclaimer: "valores orientativos, no sustituyen a tu veterinario.",
+    },
+    turtleTankCalculator: {
+      species: {
+        "yellow-bellied-slider": "tortuga de vientre amarillo",
+        "musk-turtle": "tortuga almizclera",
+        "map-turtle": "tortuga mapa",
+        generic: "otra tortuga acuática",
+      },
+      shellLength: "longitud del caparazón",
+      count: "número de tortugas",
+      tankVolume: "volumen mínimo del acuario",
+      waterDepth: "profundidad mínima del agua",
+      waterTemp: "temperatura del agua",
+      baskingTemp: "zona de la plataforma de secado",
+      uvb: "lámpara UVB",
+      tortoiseHint:
+        "para tortugas terrestres, consulta la guía de entorno del reptil.",
+      disclaimer: "valores orientativos, no sustituyen a tu veterinario.",
+      notes: {
+        uvbRequired: "Se necesita UVB 10–12 horas al día.",
+        filtration: "filtro con capacidad para 2–3 veces el volumen.",
+        baskingDock: "una zona seca de secado siempre accesible.",
+        muskShallow:
+          "mala nadadora: agua más poco profunda y agarres para salir a la superficie.",
+        mapWaterQuality: "muy sensible a la calidad del agua.",
+      },
+    },
+    amphibianEnvironmentGuide: {
+      selectProfile: "especie",
+      habitat: {
+        AQUATIC: "acuático",
+        SEMI_AQUATIC: "semiacuático",
+        TERRESTRIAL: "terrestre",
+        ARBOREAL: "arborícola",
+      },
+      waterTemp: "temperatura del agua",
+      airTemp: "temperatura del aire",
+      humidity: "humedad",
+      water: "agua",
+      tank: "tanque / terrario",
+      disclaimer:
+        "valores orientativos, no sustituyen a un veterinario de exóticos.",
+    },
+    farm: {
+      species: {
+        "cow-lactating": "vaca (en lactancia)",
+        "cow-dry": "vaca (seca)",
+        calf: "ternero",
+        pig: "cerdo",
+        goat: "cabra",
+        sheep: "oveja",
+        "chicken-flock": "aves de corral",
+        horse: "caballo",
+        donkey: "burro",
+        cow: "vaca",
+        alpaca: "alpaca / llama",
+        generic: "otro animal",
+      },
+    },
+    chickenCoopCalculator: {
+      henCount: "número de gallinas",
+      sizeClass: "tamaño",
+      bantam: "bantam",
+      standard: "estándar",
+      heavy: "pesado",
+      floor: "superficie del gallinero",
+      run: "corral exterior",
+      nestBoxes: "nidos",
+      roost: "longitud de percha",
+      disclaimer: "valores orientativos para cría doméstica.",
+      notes: {
+        minimums: "son mínimos: más espacio siempre es mejor.",
+        ventilation:
+          "asegura ventilación sin corrientes y protección contra depredadores.",
+      },
+    },
+    livestockWaterNeeds: {
+      weight: "peso",
+      headCount: "número de animales",
+      birdCount: "número de aves",
+      result: "requisito diario",
+      perDay: "L/día",
+      disclaimer:
+        "rango orientativo, no sustituye a un veterinario o agrónomo.",
+      notes: {
+        heat: "en climas cálidos el requisito aumenta mucho.",
+        lactation: "los animales en lactancia beben mucho más.",
+        clean: "agua fresca y limpia siempre disponible.",
+      },
+    },
+    forageRation: {
+      weight: "peso",
+      currentStock: "stock de forraje",
+      dailyRange: "forraje por día",
+      daysLeft: "días de autonomía",
+      days: "días",
+      reorderDate: "fecha de pedido",
+      reminderTitle: "Pedir forraje para {{name}}",
+      disclaimer:
+        "valores orientativos, no sustituyen a un veterinario o agrónomo.",
+      notes: {
+        dryMatter: "base de materia seca: el forraje fresco pesa más.",
+        donkeyStraw:
+          "burros: forraje de alta fibra y baja energía (mezcla con paja).",
+        horseFibre: "nunca menos del 1.5% del peso corporal en fibra larga.",
+      },
+    },
+    horseWeightEstimator: {
+      heartGirth: "perímetro torácico",
+      bodyLength: "longitud corporal",
+      howToMeasure:
+        "El perímetro justo detrás del codo; la longitud desde la punta del hombro hasta la punta de la nalga.",
+      result: "peso estimado",
+      tip: "usa este peso en las herramientas de agua y forraje.",
+      disclaimer:
+        "estimación para caballos adultos (Carroll & Huntington). una cinta de peso o báscula es más precisa.",
+    },
+    aquariumHeaterSize: {
+      tankLiters: "volumen del tanque",
+      roomTemp: "temperatura ambiente",
+      targetTemp: "temperatura objetivo",
+      volumeHint:
+        "Calcula el volumen con la herramienta de volumen del acuario e introdúcelo aquí.",
+      delta: "incremento de temperatura",
+      result: "calentador recomendado",
+      split: "mejor con dos calentadores",
+      splitNote:
+        "dos calentadores más pequeños calientan más uniformemente y añaden redundancia.",
+      disclaimer:
+        "dimensionamiento orientativo; usa siempre un termómetro separado.",
+    },
   },
   careKnowledge: {
     reptile: {
@@ -1162,6 +1445,59 @@ const es = {
       leopardGecko: "gecko leopardo",
       ballPython: "pitón bola",
       cornSnake: "serpiente del maíz",
+      hermannTortoise: "tortuga de Hermann",
+      greekTortoise: "tortuga griega",
+      crestedGecko: "gecko crestado",
+      veiledChameleon: "camaleón velado",
+      greenIguana: "iguana verde",
+      blueTongueSkink: "eslizón de lengua azul",
+      notes: {
+        uvbRequired: "Se necesita UVB 10–12 horas al día.",
+        uvbLow: "UVB de baja intensidad opcional pero recomendado.",
+        brumation:
+          "brumación invernal para adultos sanos: investiga bien antes.",
+        brumationVet:
+          "algunas subespecies no deberían brumar: consulta a tu veterinario.",
+        outdoorAccess: "el acceso al exterior en verano es muy beneficioso.",
+        heatSensitive:
+          "por encima de 28 °C está en peligro: nunca uses piedras calientes.",
+        mistingCycle: "pulverización por la tarde, seco durante el día.",
+        ventilation: "terrario ventilado (malla), nunca un acuario cerrado.",
+        nightDrop: "es necesaria una caída de temperatura nocturna.",
+        dripWater: "bebe solo gotitas: goteo o pulverización.",
+        adultSize: "de adulto necesita espacios muy grandes.",
+        subspeciesHumidity: "la humedad correcta depende de la subespecie.",
+      },
+    },
+    amphibian: {
+      axolotl: "ajolote",
+      pacmanFrog: "rana pacman",
+      whitesTreeFrog: "rana arborícola de White",
+      redEyedTreeFrog: "rana arbórea de ojos rojos",
+      fireBelliedNewt: "tritón de vientre de fuego",
+      tigerSalamander: "salamandra tigre",
+      generic: "anfibio (genérico)",
+      notes: {
+        dechlorinated: "usa siempre agua sin cloro (acondicionador de agua).",
+        noDistilled: "nunca agua destilada o de ósmosis pura.",
+        gentleFlow: "flujo de filtro suave.",
+        coolWater: "por encima de 20 °C está en riesgo: enfría en verano.",
+        shallowDish: "tener siempre un plato de agua poco profundo.",
+        mistDaily: "pulveriza todos los días.",
+        nightDrop: "una ligera caída de temperatura nocturna.",
+        landArea: "una zona terrestre para descansar.",
+        burrow: "sustrato profundo para excavar.",
+      },
+      tank: {
+        axolotl: "mínimo 60 L para un adulto (tanque de 80 cm).",
+        pacmanFrog: "mínimo 45×45 cm de superficie para un adulto.",
+        whitesTreeFrog: "terrario vertical mínimo de 45×45×60 cm.",
+        redEyedTreeFrog: "terrario vertical mínimo de 45×45×60 cm.",
+        fireBelliedNewt: "mínimo 40 L, con un 70% de agua y un 30% de tierra.",
+        tigerSalamander: "mínimo 60×40 cm de superficie, sustrato profundo.",
+        generic:
+          "depende de la especie: consulta a un veterinario de exóticos.",
+      },
     },
   },
   paywall: {

@@ -1,18 +1,27 @@
 import type {
+  AmphibianEnvironmentProfile,
   BcsScale,
+  BirdEnvironmentProfile,
+  BirdFeedingGuideline,
+  BirdHousingGuideline,
   CatFoodEnergy,
   CatHydration,
   CatLitterGuidance,
+  ChickenCoopConfig,
   DogActivityGuideline,
   DogBreedStandard,
   DogSize,
   EnclosureGuideline,
+  ForageGuideline,
   HayConfig,
   PuppyMilestone,
   RationGuideline,
   ReptileEnvironmentProfile,
   SafeTemperature,
+  SnakeFeedingGuideline,
   ToxicityItem,
+  TurtleTankGuideline,
+  WaterGuideline,
 } from "@/types/care-knowledge.types";
 import type { PetCategory } from "@/types/pet.types";
 import { api } from "./api";
@@ -75,4 +84,54 @@ export const careKnowledgeApi = {
 
   /** Rabbit hay autonomy coefficient. */
   rabbitHay: () => api.get<HayConfig>("/care-knowledge/rabbit-hay"),
+
+  /** Minimum cage sizing for a bird species group (generic fallback). */
+  birdHousing: (species: string) =>
+    api.get<BirdHousingGuideline>("/care-knowledge/bird-housing", {
+      params: { species },
+    }),
+
+  /** Daily ration coefficients for a bird species group. */
+  birdFeeding: (species: string) =>
+    api.get<BirdFeedingGuideline>("/care-knowledge/bird-feeding", {
+      params: { species },
+    }),
+
+  /** Curated bird environment profiles (temps/humidity/light/hazards). */
+  birdEnvironment: () =>
+    api.get<BirdEnvironmentProfile[]>("/care-knowledge/bird-environment"),
+
+  /** Prey sizing + feeding-interval bands for a snake species. */
+  snakeFeeding: (species: string) =>
+    api.get<SnakeFeedingGuideline>("/care-knowledge/snake-feeding", {
+      params: { species },
+    }),
+
+  /** Aquatic-turtle tank sizing coefficients for a species. */
+  turtleTank: (species: string) =>
+    api.get<TurtleTankGuideline>("/care-knowledge/turtle-tank", {
+      params: { species },
+    }),
+
+  /** Curated amphibian environment profiles. */
+  amphibianEnvironment: () =>
+    api.get<AmphibianEnvironmentProfile[]>(
+      "/care-knowledge/amphibian-environment",
+    ),
+
+  /** Per-hen coop sizing coefficients. */
+  chickenCoop: () =>
+    api.get<ChickenCoopConfig>("/care-knowledge/chicken-coop"),
+
+  /** Daily water-need band for a livestock/equine species. */
+  livestockWater: (species: string) =>
+    api.get<WaterGuideline>("/care-knowledge/livestock-water", {
+      params: { species },
+    }),
+
+  /** Daily forage band (dry-matter % of body weight) for a herbivore. */
+  forageRation: (species: string) =>
+    api.get<ForageGuideline>("/care-knowledge/forage-ration", {
+      params: { species },
+    }),
 } as const;

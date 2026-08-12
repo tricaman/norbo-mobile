@@ -21,6 +21,17 @@
  */
 import { z } from 'zod';
 
+/**
+ * Push `data` key carrying the id of the inbox row mirrored for that push.
+ * Injected by `NotificationDeliveryService.deliver()` right after the row is
+ * recorded; the mobile push-tap handlers read it to mark the row read
+ * (`PATCH /me/notifications/:id/read`), so tapping the OS notification and
+ * tapping the same entry in the in-app inbox leave the same read state.
+ * Pushes sent before this key existed simply lack it — handlers must treat
+ * it as optional.
+ */
+export const INBOX_NOTIFICATION_ID_KEY = 'inboxNotificationId';
+
 export const inboxNotificationSchema = z.object({
   id: z.string(),
   title: z.string(),
