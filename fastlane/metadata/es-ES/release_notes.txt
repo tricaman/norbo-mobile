@@ -1,5 +1,8 @@
 Novedades de esta versión:
 
-• Insignias: desbloquea logros mientras usas norbo, sigue tu progreso por niveles y disfruta de una pequeña celebración al subir de nivel.
-• Invitar a amigos: comparte tu enlace de invitación desde tu perfil y sigue el estado de cada invitación.
-• Correcciones de estabilidad y mejoras en la interfaz.
+• 11 nuevas herramientas en la pestaña Servicios: aves, reptiles, anfibios, caballos y animales de granja ya tienen las suyas.
+• Aves: tamaño de la jaula, ración diaria y guía de ambiente con los peligros domésticos a evitar.
+• Reptiles: guía de alimentación de serpientes, calculadora de acuario para tortugas acuáticas y guía de ambiente ampliada con tortugas de tierra, geckos, camaleones e iguanas.
+• Granja y caballos: cálculo del gallinero, necesidades de agua, ración de forraje con recordatorio de reservas y estimación del peso del caballo.
+• Anfibios y acuario: guía de ambiente (ajolote incluido) y potencia del calentador.
+• El control de alimentos y plantas tóxicas ahora también cubre aves y tortugas.

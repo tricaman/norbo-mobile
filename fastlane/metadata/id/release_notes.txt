@@ -1,5 +1,8 @@
 Yang baru di versi ini:
 
-• Lencana: buka pencapaian saat menggunakan norbo, pantau progresmu di setiap tingkatan, dan nikmati perayaan kecil saat naik level.
-• Ajak teman: bagikan link undanganmu dari profil dan pantau status setiap undangan.
-• Perbaikan stabilitas dan peningkatan antarmuka.
+• 11 alat baru di tab Layanan: burung, reptil, amfibi, kuda, dan hewan ternak kini punya alatnya sendiri.
+• Burung: ukuran kandang, porsi makan harian, dan panduan lingkungan dengan bahaya rumah tangga yang harus dihindari.
+• Reptil: panduan pemberian makan ular, kalkulator akuarium untuk kura-kura air, dan panduan lingkungan yang diperluas dengan kura-kura darat, tokek, bunglon, serta iguana.
+• Ternak & kuda: kalkulator kandang ayam, kebutuhan air harian, ransum pakan dengan pengingat stok, dan estimasi berat kuda.
+• Amfibi & akuarium: panduan lingkungan (termasuk axolotl) dan pemilihan daya heater.
+• Pemeriksaan makanan & tanaman beracun kini juga mencakup burung dan kura-kura.

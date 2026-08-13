@@ -1,5 +1,8 @@
 What's new in this version:
 
-• Badges: unlock achievements as you use norbo, track your progress across tiers, and enjoy a small celebration when you level up.
-• Invite friends: share your invite link from your profile and follow the status of each invitation.
-• Stability fixes and interface improvements.
+• 11 new tools in the Services tab: birds, reptiles, amphibians, horses and farm animals now have their own tools.
+• Birds: cage sizing, daily food ration and an environment guide covering household hazards to avoid.
+• Reptiles: snake feeding guide, tank calculator for aquatic turtles, and an environment guide extended to tortoises, geckos, chameleons and iguanas.
+• Farm & horses: chicken coop calculator, daily water needs, forage ration with a stock reminder, and a horse weight estimator.
+• Amphibians & aquarium: environment guide (axolotls included) and heater sizing.
+• The food & plant toxicity check now also covers birds and tortoises.

@@ -1,5 +1,8 @@
 Novità di questa versione:
 
-• Badge: sblocca traguardi usando norbo, segui i tuoi progressi tra i livelli e goditi una piccola festa quando sali di livello.
-• Invita gli amici: condividi il tuo link di invito dal profilo e segui lo stato di ogni invito.
-• Correzioni di stabilità e miglioramenti all'interfaccia.
+• 11 nuovi servizi nella tab Servizi: ora anche uccelli, rettili, anfibi, cavalli e animali da fattoria hanno i loro strumenti.
+• Uccelli: dimensioni della gabbia, razione giornaliera e guida all'ambiente con i pericoli domestici da evitare.
+• Rettili: guida all'alimentazione dei serpenti, calcolatore della vasca per tartarughe acquatiche e guida ambiente estesa a testuggini, gechi, camaleonti e iguane.
+• Fattoria e cavalli: calcolo del pollaio, fabbisogno d'acqua, razione di foraggio con promemoria scorte e stima del peso del cavallo.
+• Anfibi e acquario: guida all'ambiente (axolotl incluso) e dimensionamento del riscaldatore.
+• Il controllo di cibi e piante tossiche ora copre anche uccelli e testuggini.

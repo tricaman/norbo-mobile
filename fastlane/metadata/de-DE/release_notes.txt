@@ -1,5 +1,8 @@
 Neu in dieser Version:
 
-• Abzeichen: Schalte Erfolge frei, während du norbo nutzt, verfolge deinen Fortschritt über die Stufen hinweg und freu dich über eine kleine Feier beim Levelaufstieg.
-• Freunde einladen: Teile deinen Einladungslink aus deinem Profil und verfolge den Status jeder Einladung.
-• Stabilitätskorrekturen und Verbesserungen der Oberfläche.
+• 11 neue Tools im Service-Tab: Vögel, Reptilien, Amphibien, Pferde und Hoftiere haben jetzt eigene Werkzeuge.
+• Vögel: Käfiggröße, tägliche Futterration und ein Umgebungs-Guide mit Gefahren im Haushalt.
+• Reptilien: Guide zur Schlangenfütterung, Becken-Rechner für Wasserschildkröten und ein Umgebungs-Guide, erweitert um Landschildkröten, Geckos, Chamäleons und Leguane.
+• Hof & Pferde: Hühnerstall-Rechner, täglicher Wasserbedarf, Futterration mit Vorrats-Erinnerung und Gewichtsschätzung fürs Pferd.
+• Amphibien & Aquarium: Umgebungs-Guide (inkl. Axolotl) und Heizer-Berechnung.
+• Der Gift-Check für Futter und Pflanzen deckt jetzt auch Vögel und Schildkröten ab.

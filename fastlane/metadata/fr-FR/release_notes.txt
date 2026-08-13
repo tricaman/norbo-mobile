@@ -1,5 +1,8 @@
 Nouveautés de cette version :
 
-• Badges : débloquez des succès en utilisant norbo, suivez votre progression à travers les paliers et profitez d'une petite célébration à chaque niveau franchi.
-• Inviter des amis : partagez votre lien d'invitation depuis votre profil et suivez le statut de chaque invitation.
-• Corrections de stabilité et améliorations de l'interface.
+• 11 nouveaux outils dans l'onglet Services : oiseaux, reptiles, amphibiens, chevaux et animaux de la ferme ont désormais les leurs.
+• Oiseaux : taille de la cage, ration quotidienne et guide d'environnement avec les dangers domestiques à éviter.
+• Reptiles : guide d'alimentation des serpents, calculateur de bac pour tortues aquatiques et guide d'environnement étendu aux tortues terrestres, geckos, caméléons et iguanes.
+• Ferme et chevaux : calcul du poulailler, besoins en eau, ration de fourrage avec rappel de stock et estimation du poids du cheval.
+• Amphibiens et aquarium : guide d'environnement (axolotl inclus) et puissance du chauffage.
+• Le contrôle des aliments et plantes toxiques couvre désormais aussi les oiseaux et les tortues.

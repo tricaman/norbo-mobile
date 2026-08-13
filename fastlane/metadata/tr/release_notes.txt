@@ -1,5 +1,8 @@
 Bu sürümdeki yenilikler:
 
-• Rozetler: norbo'yu kullandıkça başarımların kilidini aç, seviyeler arasındaki ilerlemeni takip et ve seviye atladığında küçük bir kutlamanın tadını çıkar.
-• Arkadaşlarını davet et: profilinden davet linkini paylaş ve her davetin durumunu takip et.
-• Kararlılık düzeltmeleri ve arayüz iyileştirmeleri.
+• Hizmetler sekmesinde 11 yeni araç: kuşlar, sürüngenler, amfibiler, atlar ve çiftlik hayvanlarının artık kendi araçları var.
+• Kuşlar: kafes boyutu, günlük yem miktarı ve evdeki tehlikeleri de kapsayan ortam rehberi.
+• Sürüngenler: yılan besleme rehberi, su kaplumbağaları için akvaryum hesaplayıcısı ve kara kaplumbağaları, gekolar, bukalemunlar ile iguanaları da kapsayan ortam rehberi.
+• Çiftlik ve atlar: kümes hesabı, günlük su ihtiyacı, stok hatırlatıcılı yem rasyonu ve at ağırlığı tahmini.
+• Amfibiler ve akvaryum: ortam rehberi (aksolotl dahil) ve ısıtıcı seçimi.
+• Zehirli yiyecek ve bitki kontrolü artık kuşları ve kaplumbağaları da kapsıyor.
