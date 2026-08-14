@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { mediaApi, uploadFileToR2 } from "@/services/media.api";
+import { prepareImageForUpload } from "@/utils/strip-exif";
 import type { MediaAsset, MediaContextType } from "@/types/media.types";
 
 export type MediaUploadState =
@@ -82,16 +83,19 @@ export function useMediaUpload(): UseMediaUploadReturn {
           return null;
         }
 
-        const mimeType = picked.mimeType ?? "image/jpeg";
-        const sizeBytes = picked.fileSize ?? 1;
+        // Re-encode before anything leaves the device: strips EXIF, GPS included.
+        const prepared = await prepareImageForUpload(
+          picked.uri,
+          picked.mimeType ?? "image/jpeg",
+        );
 
         setState("uploading");
 
         const { data: urlData } = await mediaApi.requestUploadUrl({
           context,
           contextRef,
-          mimeType,
-          sizeBytes,
+          mimeType: prepared.mimeType,
+          sizeBytes: prepared.sizeBytes,
         });
 
         if (aborted.current) {
@@ -99,9 +103,14 @@ export function useMediaUpload(): UseMediaUploadReturn {
           return null;
         }
 
-        await uploadFileToR2(urlData.uploadUrl, picked.uri, mimeType, (p) => {
-          if (!aborted.current) setProgress(p);
-        });
+        await uploadFileToR2(
+          urlData.uploadUrl,
+          prepared.uri,
+          prepared.mimeType,
+          (p) => {
+            if (!aborted.current) setProgress(p);
+          },
+        );
 
         if (aborted.current) {
           setState("idle");

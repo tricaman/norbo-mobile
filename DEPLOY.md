@@ -322,6 +322,19 @@ compila metadati/release notes → **Add for Review** / **Submit for Review**.
 **Android:** Play Console → track (Internal/Closed testing → Production) → carica/promuovi l'AAB →
 compila release notes → rollout.
 
+> 🔴 **Data safety (Play) e App Privacy (ASC): controllali a ogni release che tocca
+> dipendenze, endpoint o campi persistiti.** Le risposte esatte, con l'evidenza nel codice,
+> stanno in **[`docs/PLAY-DATA-SAFETY.md`](docs/PLAY-DATA-SAFETY.md)** — non ricompilare il
+> modulo a memoria.
+>
+> Il **versionCode 20 è stato rigettato** proprio per questo: il modulo non dichiarava
+> *Device or other IDs*, che l'app trasmette (Firebase Installation ID + token FCM +
+> `deviceId`). Il Data safety è metadata sotto **App content**: si corregge e si invia in
+> review da *Publishing overview* **senza caricare un nuovo AAB**.
+>
+> La privacy policy pubblica (`norbo-frontend`, chiave i18n `privacy`) deve restare coerente
+> col modulo: Google la rilegge durante la review, e un'incoerenza è un secondo rigetto.
+
 > I metadati testuali dello store (descrizioni, keyword, **note di versione**) stanno in
 > `fastlane/metadata/<locale>/` e si caricano con **`fastlane ios metadata app_version:X.Y.Z`**
 > (config in `fastlane/Deliverfile`, `skip_binary_upload`).

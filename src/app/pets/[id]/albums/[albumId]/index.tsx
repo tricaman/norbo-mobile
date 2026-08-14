@@ -13,6 +13,7 @@ import {
   useSetCover,
 } from "@/hooks/usePhotoAlbums";
 import { mediaApi, uploadFileToR2 } from "@/services/media.api";
+import { prepareImageForUpload } from "@/utils/strip-exif";
 import type { MediaAsset } from "@/types/media.types";
 import { useQuery } from "@tanstack/react-query";
 import { Image } from "expo-image";
@@ -122,17 +123,24 @@ export default function AlbumDetailScreen(): React.JSX.Element {
       pendingRef.current = [...pendingRef.current, localKey];
 
       try {
-        const mimeType = picked.mimeType ?? "image/jpeg";
-        const sizeBytes = picked.fileSize ?? 1;
+        // Re-encode before anything leaves the device: strips EXIF, GPS included.
+        const prepared = await prepareImageForUpload(
+          picked.uri,
+          picked.mimeType ?? "image/jpeg",
+        );
 
         const { data: urlData } = await mediaApi.requestUploadUrl({
           context: "PET_PHOTO_ALBUM",
           contextRef: albumId,
-          mimeType,
-          sizeBytes,
+          mimeType: prepared.mimeType,
+          sizeBytes: prepared.sizeBytes,
         });
 
-        await uploadFileToR2(urlData.uploadUrl, picked.uri, mimeType);
+        await uploadFileToR2(
+          urlData.uploadUrl,
+          prepared.uri,
+          prepared.mimeType,
+        );
         const { data: asset } = await mediaApi.confirmUpload(urlData.assetId);
 
         setAssetCache((prev) => ({ ...prev, [asset.id]: asset }));

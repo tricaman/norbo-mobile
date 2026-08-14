@@ -1,6 +1,7 @@
 import { NorboPressable } from "@/components/CustomPressable";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { mediaApi, uploadFileToR2 } from "@/services/media.api";
+import { prepareImageForUpload } from "@/utils/strip-exif";
 import type { MediaAsset } from "@/types/media.types";
 import * as DocumentPicker from "expo-document-picker";
 import { Image } from "expo-image";
@@ -104,12 +105,19 @@ export function AttachmentSection({
       const localKey = `${Date.now().toString()}-${Math.random().toString(36).slice(2, 8)}`;
       setPending((prev) => [...prev, { localKey, kind }]);
       try {
+        // Re-encode images before anything leaves the device: strips EXIF, GPS
+        // included. PDFs carry no location data and pass through untouched.
+        const source =
+          kind === "image"
+            ? await prepareImageForUpload(uri, mimeType)
+            : { uri, mimeType, sizeBytes };
+
         const { data: urlData } = await mediaApi.requestUploadUrl({
           context: "PET_EVENT_MEDIA",
-          mimeType,
-          sizeBytes,
+          mimeType: source.mimeType,
+          sizeBytes: source.sizeBytes,
         });
-        await uploadFileToR2(urlData.uploadUrl, uri, mimeType);
+        await uploadFileToR2(urlData.uploadUrl, source.uri, source.mimeType);
         const { data: asset } = await mediaApi.confirmUpload(urlData.assetId);
         setAssetCache((prev) => ({ ...prev, [asset.id]: asset }));
         // Sync-update the ref BEFORE calling onChange so any concurrent
