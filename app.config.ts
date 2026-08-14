@@ -114,7 +114,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 20,
+    versionCode: 21,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
     // Google Maps SDK key (tool "luoghi dog friendly") — SOLO Android: iOS usa
     // Apple Maps (PROVIDER_DEFAULT) e non richiede chiavi. ECCEZIONE alla

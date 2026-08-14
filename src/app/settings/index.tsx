@@ -98,6 +98,13 @@ export default function SettingsScreen() {
             }
           />
           <SettingsRow
+            iconName="trash"
+            label={t("settings.dataDeletion")}
+            onPress={() =>
+              void Linking.openURL(legalUrl("delete-account", i18n.language))
+            }
+          />
+          <SettingsRow
             iconName="exclamationmark.bubble"
             label={t("settings.report")}
             subtitle={t("settings.reportSubtitle")}

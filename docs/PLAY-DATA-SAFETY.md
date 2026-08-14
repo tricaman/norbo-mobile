@@ -169,6 +169,13 @@ dichiarazione smette di essere vera.
   a runtime perché mancano `ACCESS_WIFI_STATE` e `READ_PHONE_STATE` — ma **il codice è
   nell'APK** ed è rilevabile dall'analisi statica di Google. Rimuoverlo richiede di patchare
   o sostituire `sp-react-native-in-app-updates`.
+
+  È anche **l'origine residua** di `BIND_GET_INSTALL_REFERRER_SERVICE`: tira dentro
+  `com.android.installreferrer:installreferrer:1.1.2`. Nel versionCode 20 il permesso
+  arrivava da due fonti (device-info 1.1.2 + `expo-application` 2.2); dal **versionCode 21**
+  `expo-application` è stato rimosso, ma il permesso **resta** per via di device-info.
+  Verificato nel manifest-merger report della build 21 — non aspettarti che sparisca finché
+  `sp-react-native-in-app-updates` è in dipendenza.
 - **`withAndroidCleartext.js`** forza `android:usesCleartextTraffic="true"` anche in release.
 - **`expo-dev-client`** è in `dependencies` invece che `devDependencies`: finisce nella build
   di produzione e porta `NSLocalNetworkUsageDescription` + Bonjour `_expo._tcp` nel plist iOS.

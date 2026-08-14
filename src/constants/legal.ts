@@ -4,7 +4,11 @@
  * The site ships `it` and `en` only — anything else falls back to English.
  * Pages live at https://www.norbo.app/{locale}/{doc}.
  */
-export type LegalDoc = "privacy" | "terms" | "tools-disclaimer";
+export type LegalDoc =
+  | "privacy"
+  | "terms"
+  | "tools-disclaimer"
+  | "delete-account";
 
 export function legalUrl(doc: LegalDoc, language: string): string {
   const lang = language.toLowerCase().startsWith("it") ? "it" : "en";
