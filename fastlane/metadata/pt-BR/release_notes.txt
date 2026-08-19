@@ -1,8 +1,5 @@
 Novidades desta versão:
 
-• 11 novas ferramentas na aba Serviços: aves, répteis, anfíbios, cavalos e animais de fazenda agora têm as suas.
-• Aves: tamanho da gaiola, ração diária e guia de ambiente com os perigos domésticos a evitar.
-• Répteis: guia de alimentação de serpentes, calculadora de aquário para tartarugas aquáticas e guia de ambiente ampliado com jabutis, lagartixas, camaleões e iguanas.
-• Fazenda e cavalos: cálculo do galinheiro, necessidade de água, ração de forragem com lembrete de estoque e estimativa de peso do cavalo.
-• Anfíbios e aquário: guia de ambiente (axolote incluído) e potência do aquecedor.
-• A verificação de alimentos e plantas tóxicas agora também cobre aves e tartarugas.
+• Novo visual da aba Serviços: as ferramentas em destaque e premium ficam fáceis de identificar.
+• Rótulos e cores mais consistentes em toda a lista de serviços.
+• Pequenos ajustes visuais nas fichas de lugares.

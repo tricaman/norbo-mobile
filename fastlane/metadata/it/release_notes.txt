@@ -1,8 +1,5 @@
 Novità di questa versione:
 
-• 11 nuovi servizi nella tab Servizi: ora anche uccelli, rettili, anfibi, cavalli e animali da fattoria hanno i loro strumenti.
-• Uccelli: dimensioni della gabbia, razione giornaliera e guida all'ambiente con i pericoli domestici da evitare.
-• Rettili: guida all'alimentazione dei serpenti, calcolatore della vasca per tartarughe acquatiche e guida ambiente estesa a testuggini, gechi, camaleonti e iguane.
-• Fattoria e cavalli: calcolo del pollaio, fabbisogno d'acqua, razione di foraggio con promemoria scorte e stima del peso del cavallo.
-• Anfibi e acquario: guida all'ambiente (axolotl incluso) e dimensionamento del riscaldatore.
-• Il controllo di cibi e piante tossiche ora copre anche uccelli e testuggini.
+• Nuova grafica della tab Servizi: gli strumenti in evidenza e premium si riconoscono a colpo d'occhio.
+• Etichette e colori più coerenti in tutta la lista dei servizi.
+• Piccoli ritocchi visivi nelle schede dei luoghi.

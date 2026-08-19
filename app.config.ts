@@ -56,7 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: appName,
   slug: "norbo",
-  version: "1.11.0",
+  version: "1.11.1",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "norbo",
@@ -68,7 +68,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // Numerazione PER-APP e indipendente da UAT: la fonte di verità è lo store
     // dell'app prod, non questo file. Ultimo su TestFlight prod: 6 (1.9.0,
     // WAITING_FOR_REVIEW). Ultimo UAT: 1.
-    buildNumber: "8",
+    buildNumber: "9",
     googleServicesFile: `./${firebaseDir}/GoogleService-Info.plist`,
     // Adds the `com.apple.developer.applesignin` entitlement (["Default"]) at
     // prebuild for every variant — required by the native Sign in with Apple
@@ -114,7 +114,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 21,
+    versionCode: 22,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
     // Google Maps SDK key (tool "luoghi dog friendly") — SOLO Android: iOS usa
     // Apple Maps (PROVIDER_DEFAULT) e non richiede chiavi. ECCEZIONE alla

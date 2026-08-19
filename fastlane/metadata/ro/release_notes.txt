@@ -1,8 +1,5 @@
 Noutăți în această versiune:
 
-• 11 instrumente noi în tabul Servicii: păsările, reptilele, amfibienii, caii și animalele de fermă au acum instrumentele lor.
-• Păsări: dimensiunea coliviei, rația zilnică și ghid de mediu cu pericolele din casă de evitat.
-• Reptile: ghid de hrănire a șerpilor, calculator de acvariu pentru țestoase acvatice și ghid de mediu extins cu țestoase de uscat, gecko, cameleoni și iguane.
-• Fermă și cai: calculul cotețului, necesarul de apă, rația de furaje cu memento pentru stoc și estimarea greutății calului.
-• Amfibieni și acvariu: ghid de mediu (inclusiv axolotl) și puterea încălzitorului.
-• Verificarea alimentelor și plantelor toxice acoperă acum și păsările și țestoasele.
+• Aspect nou pentru tabul Servicii: instrumentele recomandate și premium se recunosc dintr-o privire.
+• Etichete și culori mai consecvente în toată lista de servicii.
+• Mici retușuri vizuale în fișele locurilor.

@@ -1,8 +1,5 @@
 Neu in dieser Version:
 
-• 11 neue Tools im Service-Tab: Vögel, Reptilien, Amphibien, Pferde und Hoftiere haben jetzt eigene Werkzeuge.
-• Vögel: Käfiggröße, tägliche Futterration und ein Umgebungs-Guide mit Gefahren im Haushalt.
-• Reptilien: Guide zur Schlangenfütterung, Becken-Rechner für Wasserschildkröten und ein Umgebungs-Guide, erweitert um Landschildkröten, Geckos, Chamäleons und Leguane.
-• Hof & Pferde: Hühnerstall-Rechner, täglicher Wasserbedarf, Futterration mit Vorrats-Erinnerung und Gewichtsschätzung fürs Pferd.
-• Amphibien & Aquarium: Umgebungs-Guide (inkl. Axolotl) und Heizer-Berechnung.
-• Der Gift-Check für Futter und Pflanzen deckt jetzt auch Vögel und Schildkröten ab.
+• Neues Design im Service-Tab: hervorgehobene und Premium-Tools erkennst du jetzt auf einen Blick.
+• Einheitlichere Bezeichnungen und Farben in der gesamten Liste.
+• Kleine optische Verbesserungen in den Orte-Karten.

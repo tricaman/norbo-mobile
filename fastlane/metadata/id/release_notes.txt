@@ -1,8 +1,5 @@
 Yang baru di versi ini:
 
-• 11 alat baru di tab Layanan: burung, reptil, amfibi, kuda, dan hewan ternak kini punya alatnya sendiri.
-• Burung: ukuran kandang, porsi makan harian, dan panduan lingkungan dengan bahaya rumah tangga yang harus dihindari.
-• Reptil: panduan pemberian makan ular, kalkulator akuarium untuk kura-kura air, dan panduan lingkungan yang diperluas dengan kura-kura darat, tokek, bunglon, serta iguana.
-• Ternak & kuda: kalkulator kandang ayam, kebutuhan air harian, ransum pakan dengan pengingat stok, dan estimasi berat kuda.
-• Amfibi & akuarium: panduan lingkungan (termasuk axolotl) dan pemilihan daya heater.
-• Pemeriksaan makanan & tanaman beracun kini juga mencakup burung dan kura-kura.
+• Tampilan baru tab Layanan: alat unggulan dan premium kini langsung terlihat.
+• Label dan warna lebih konsisten di seluruh daftar layanan.
+• Sentuhan visual kecil pada kartu tempat.

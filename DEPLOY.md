@@ -401,3 +401,21 @@ end
 ```
 
 App id: **UAT** `6794883790` · **PROD** `6794615057` · Team `XFS75S4BYM`.
+
+### Android — versionCode già sullo store (Play API)
+
+Il service account è in `fastlane/google-play-sa.json`. **Da lanciare sempre prima di
+buildare** (§2): il `versionCode` in `app.config.ts` può essere già pubblicato, e un AAB
+duplicato viene rifiutato all'upload — build da rifare.
+
+```bash
+cd norbo-mobile
+for t in production beta alpha internal; do
+  echo -n "$t: "
+  fastlane run google_play_track_version_codes \
+    package_name:app.mariustrica.norbo track:$t \
+    json_key:fastlane/google-play-sa.json 2>&1 | grep -o "Result: \[.*\]"
+done
+```
+
+Il prossimo `versionCode` è **il massimo su TUTTI i track + 1** (non solo production).

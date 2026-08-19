@@ -1,8 +1,5 @@
 Bu sürümdeki yenilikler:
 
-• Hizmetler sekmesinde 11 yeni araç: kuşlar, sürüngenler, amfibiler, atlar ve çiftlik hayvanlarının artık kendi araçları var.
-• Kuşlar: kafes boyutu, günlük yem miktarı ve evdeki tehlikeleri de kapsayan ortam rehberi.
-• Sürüngenler: yılan besleme rehberi, su kaplumbağaları için akvaryum hesaplayıcısı ve kara kaplumbağaları, gekolar, bukalemunlar ile iguanaları da kapsayan ortam rehberi.
-• Çiftlik ve atlar: kümes hesabı, günlük su ihtiyacı, stok hatırlatıcılı yem rasyonu ve at ağırlığı tahmini.
-• Amfibiler ve akvaryum: ortam rehberi (aksolotl dahil) ve ısıtıcı seçimi.
-• Zehirli yiyecek ve bitki kontrolü artık kuşları ve kaplumbağaları da kapsıyor.
+• Hizmetler sekmesi yenilendi: öne çıkan ve premium araçlar artık ilk bakışta belli oluyor.
+• Tüm hizmet listesinde daha tutarlı etiketler ve renkler.
+• Yer kartlarında küçük görsel iyileştirmeler.
