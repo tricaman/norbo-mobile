@@ -1592,6 +1592,8 @@ const id = {
       reminders_other: "pengingat",
       expenses_one: "pengeluaran",
       expenses_other: "pengeluaran",
+      friends_one: "teman",
+      friends_other: "teman",
     },
     celebration: {
       title: "lencana baru!",

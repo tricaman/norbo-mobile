@@ -10,25 +10,38 @@ import type { ToolBadge } from "@/types/tool.types";
  * - "accent"  → the flagship look (PREMIUM_FREE: premium-grade, free for all)
  * - "primary" → a positive, low-key highlight (NEW)
  * - "neutral" → informative, deliberately quiet (BETA)
+ *
+ * `highlight` decides whether the badge promotes its whole ROW (tinted row +
+ * solid tone tile + bold title) or only labels it. Reserved for the flagship
+ * badge: turning it on for NEW would tint every row of a list where every tool
+ * is new (e.g. the bird tools), which reads as noise instead of emphasis.
  */
 export const BADGE_META: Record<
   ToolBadge,
-  { icon: string; labelKey: string; tone: "accent" | "primary" | "neutral" }
+  {
+    icon: string;
+    labelKey: string;
+    tone: "accent" | "primary" | "neutral";
+    highlight: boolean;
+  }
 > = {
   PREMIUM_FREE: {
     icon: "star-four-points",
     labelKey: "servicesHub.badge.PREMIUM_FREE",
     tone: "accent",
+    highlight: true,
   },
   NEW: {
     icon: "creation",
     labelKey: "servicesHub.badge.NEW",
     tone: "primary",
+    highlight: false,
   },
   BETA: {
     icon: "flask-outline",
     labelKey: "servicesHub.badge.BETA",
     tone: "neutral",
+    highlight: false,
   },
 };
 

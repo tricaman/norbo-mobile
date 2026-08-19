@@ -1580,6 +1580,8 @@ const bn = {
       reminders_other: "মনে করিয়ে দেওয়া",
       expenses_one: "ব্যয়",
       expenses_other: "ব্যয়",
+      friends_one: "বন্ধু",
+      friends_other: "বন্ধু",
     },
     celebration: {
       title: "নতুন ব্যাজ!",

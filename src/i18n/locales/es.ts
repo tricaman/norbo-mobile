@@ -1606,6 +1606,8 @@ const es = {
       reminders_other: "recordatorios",
       expenses_one: "gasto",
       expenses_other: "gastos",
+      friends_one: "amigo",
+      friends_other: "amigos",
     },
     celebration: {
       title: "¡nueva insignia!",

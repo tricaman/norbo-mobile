@@ -54,6 +54,7 @@ export const darkTheme = {
     accent: "#E6B863",
     accentSoft: "#3A2F14",
     accentBorder: "#EFD08A",
+    accentInk: "#1C1A16",
 
     success: "#A8C088",
     successSoft: "#2C3622",
@@ -100,6 +101,7 @@ export const lightTheme = {
     accent,
     accentSoft: "#FBF1D9",
     accentBorder: "#E6C57A",
+    accentInk: "#3A2F14",
 
     success: "#6B8E4E",
     successSoft: "#EDF2E4",

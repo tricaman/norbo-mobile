@@ -1629,6 +1629,8 @@ const fr = {
       reminders_other: "rappels",
       expenses_one: "dépense",
       expenses_other: "dépenses",
+      friends_one: "ami",
+      friends_other: "amis",
     },
     celebration: {
       title: "nouveau badge !",

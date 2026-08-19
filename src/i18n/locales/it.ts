@@ -940,6 +940,8 @@ const it = {
       reminders_other: "promemoria",
       expenses_one: "spesa",
       expenses_other: "spese",
+      friends_one: "amico",
+      friends_other: "amici",
     },
     unlockedOn: "sbloccato il {{date}}",
     notYet: "ancora da sbloccare",

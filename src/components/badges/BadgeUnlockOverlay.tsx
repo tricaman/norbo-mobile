@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, Text, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { FadeIn, FadeInDown, ZoomIn } from "react-native-reanimated";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
@@ -43,7 +44,8 @@ export function BadgeUnlockOverlay({
 
   return (
     <Modal visible transparent animationType="fade" onRequestClose={onDismiss}>
-      <View style={styles.backdrop}>
+      {/* gesture-handler pressables need their own root inside a Modal */}
+      <GestureHandlerRootView style={styles.backdrop}>
         <Animated.View entering={FadeIn.duration(300)} style={styles.card}>
           <Animated.View
             entering={ZoomIn.springify().damping(14).stiffness(180)}
@@ -102,7 +104,7 @@ export function BadgeUnlockOverlay({
             </NorboPressable>
           </Animated.View>
         </Animated.View>
-      </View>
+      </GestureHandlerRootView>
     </Modal>
   );
 }

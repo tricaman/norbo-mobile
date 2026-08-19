@@ -1608,6 +1608,8 @@ const de = {
       reminders_other: "Erinnerungen",
       expenses_one: "Ausgabe",
       expenses_other: "Ausgaben",
+      friends_one: "Freund",
+      friends_other: "Freunde",
     },
     celebration: {
       title: "neues Abzeichen!",

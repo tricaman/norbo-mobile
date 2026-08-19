@@ -1594,6 +1594,8 @@ const ru = {
       reminders_other: "напоминания",
       expenses_one: "расход",
       expenses_other: "расходы",
+      friends_one: "друг",
+      friends_other: "друзья",
     },
     celebration: {
       title: "новый значок!",

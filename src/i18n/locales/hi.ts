@@ -1587,6 +1587,8 @@ const hi = {
       reminders_other: "अनुस्मारक",
       expenses_one: "खर्च",
       expenses_other: "खर्च",
+      friends_one: "दोस्त",
+      friends_other: "दोस्त",
     },
     celebration: {
       title: "नया बैज!",

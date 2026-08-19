@@ -916,6 +916,8 @@ const en = {
       reminders_other: "reminders",
       expenses_one: "expense",
       expenses_other: "expenses",
+      friends_one: "friend",
+      friends_other: "friends",
     },
     unlockedOn: "unlocked on {{date}}",
     notYet: "not unlocked yet",

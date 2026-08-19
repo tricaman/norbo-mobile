@@ -1579,6 +1579,8 @@ const ja = {
       reminders_other: "リマインダー",
       expenses_one: "支出",
       expenses_other: "支出",
+      friends_one: "友だち",
+      friends_other: "友だち",
     },
     celebration: {
       title: "新しいバッジ獲得！",

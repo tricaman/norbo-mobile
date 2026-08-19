@@ -1602,6 +1602,8 @@ const ro = {
       reminders_other: "mementouri",
       expenses_one: "cheltuială",
       expenses_other: "cheltuieli",
+      friends_one: "prieten",
+      friends_other: "prieteni",
     },
     celebration: {
       title: "insignă nouă!",

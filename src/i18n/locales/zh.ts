@@ -1537,6 +1537,8 @@ const zh = {
       reminders_other: "条提醒",
       expenses_one: "笔支出",
       expenses_other: "笔支出",
+      friends_one: "位好友",
+      friends_other: "位好友",
     },
     celebration: {
       title: "新徽章！",

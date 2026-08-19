@@ -19,6 +19,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 
 interface AddPlaceSheetProps {
@@ -123,7 +124,8 @@ export function AddPlaceSheet({
       animationType="slide"
       onRequestClose={onClose}
     >
-      <View style={styles.backdrop}>
+      {/* gesture-handler pressables need their own root inside a Modal */}
+      <GestureHandlerRootView style={styles.backdrop}>
         <Pressable style={styles.backdropTap} onPress={onClose} />
         <View style={styles.sheet}>
           <Text style={styles.title}>
@@ -251,7 +253,7 @@ export function AddPlaceSheet({
             {t("tools.places.addPlace.moderationNote")}
           </Text>
         </View>
-      </View>
+      </GestureHandlerRootView>
     </Modal>
   );
 }

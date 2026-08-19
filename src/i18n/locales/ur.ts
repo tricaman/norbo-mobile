@@ -1578,6 +1578,8 @@ const ur = {
       reminders_other: "یاد دہانیاں",
       expenses_one: "خرچہ",
       expenses_other: "خرچے",
+      friends_one: "دوست",
+      friends_other: "دوست",
     },
     celebration: {
       title: "نیا بیج!",

@@ -1597,6 +1597,8 @@ const pt = {
       reminders_other: "lembretes",
       expenses_one: "despesa",
       expenses_other: "despesas",
+      friends_one: "amigo",
+      friends_other: "amigos",
     },
     celebration: {
       title: "novo emblema!",

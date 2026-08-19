@@ -1559,6 +1559,8 @@ const ar = {
       reminders_other: "تذكير",
       expenses_one: "مصروف",
       expenses_other: "مصاريف",
+      friends_one: "صديق",
+      friends_other: "أصدقاء",
     },
     celebration: {
       title: "شارة جديدة!",

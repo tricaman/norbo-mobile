@@ -1595,6 +1595,8 @@ const tr = {
       reminders_other: "hatırlatma",
       expenses_one: "harcama",
       expenses_other: "harcama",
+      friends_one: "arkadaş",
+      friends_other: "arkadaş",
     },
     celebration: {
       title: "yeni rozet!",
