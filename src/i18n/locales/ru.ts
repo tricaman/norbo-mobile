@@ -1125,6 +1125,18 @@ const ru = {
         ANIMAL_SHELTER: "приют для животных",
         ANIMAL_BOARDING: "зоогостиница",
       },
+      group: {
+        services: "услуги",
+        dogs: "места для собак",
+      },
+      filters: {
+        title: "фильтры",
+        open: "открыть фильтры",
+        close: "закрыть фильтры",
+        selectAll: "все",
+        selectNone: "ничего",
+        minOne: "оставь хотя бы один слой активным",
+      },
       nearMe: "рядом со мной",
       zoomIn: "приблизьте карту, чтобы увидеть все места",
       locationRationale:

@@ -284,13 +284,16 @@ export const reptileEnvironmentGuideInput = z.object({
 });
 
 /**
- * `dog-friendly-places` — a map of dog parks and dog-friendly places.
+ * `dog-friendly-places` — RETIRED 2026-08-22, merged into `pet-places`.
  *
- * The input is the user's LAYER SELECTION only. Map coordinates are
- * deliberately NOT part of this schema: persisted tool inputs are synced to
- * the server, and we do not store users' locations. The kind enum mirrors
- * the Prisma `PlaceKind` (duplicated, not imported — the contract is
- * framework-free by design).
+ * @deprecated The catalog row is gone (`RETIRED_TOOL_IDS` in
+ * `prisma/seed-tools.ts`), so no build lists the tool any more. This schema
+ * and its `SERVICE_TOOL_CONTRACTS` entry stay for ONE release cycle only:
+ * an already-installed build can still mount the old screen from a
+ * `TOOL_DETAIL` push deeplink or a restored navigation stack, and without a
+ * contract entry every layer toggle would PUT into a 404 (T001) and surface
+ * an error toast. Delete both once the first build without
+ * `DogFriendlyPlacesTool` is broadly adopted.
  */
 export const dogFriendlyPlacesInput = z.object({
   kinds: z
@@ -311,17 +314,28 @@ export const dogFriendlyPlacesInput = z.object({
     .min(1)
     .max(10),
 });
-// NOTE: ANIMAL_SHELTER/ANIMAL_BOARDING were added by WIDENING the enum with
-// NO schemaVersion bump — deliberate: widening keeps every previously saved
-// selection valid (compat is a strict version-equality check + Zod parse at
-// save time only), while a bump would discard all users' saved layers.
 
 /**
- * `pet-places` — the species-neutral variant of the places map: the pet
- * SERVICES every owner needs (vets, shops, grooming, shelters, boarding),
- * with no species framing. Same engine and rules as `dog-friendly-places`
- * (layer selection only, NO coordinates); `dog-friendly-places` adds the
- * dog-only layers (parks, beaches, trails, dog-friendly venues) on top.
+ * `pet-places` — THE places map: one cross-species map of every place an
+ * owner needs, from the species-neutral services (vets, shops, grooming,
+ * shelters, boarding) to the dog-only layers (parks, beaches, trails,
+ * dog-friendly venues), picked apart by a grouped filter in the client.
+ * Absorbed `dog-friendly-places` on 2026-08-22 — two near-identical maps
+ * were one map with a filter all along.
+ *
+ * The input is the user's LAYER SELECTION only. Map coordinates are
+ * deliberately NOT part of this schema: persisted tool inputs are synced to
+ * the server, and we do not store users' locations. The kind enum mirrors
+ * the Prisma `PlaceKind` (duplicated, not imported — the contract is
+ * framework-free by design).
+ *
+ * NOTE: the enum went from the 5 service kinds to all 10 by WIDENING, with
+ * NO schemaVersion bump — deliberate, and the same call as when
+ * ANIMAL_SHELTER/ANIMAL_BOARDING were added: widening keeps every
+ * previously saved selection valid (compat is a strict version-equality
+ * check + a Zod parse at save time only), while a bump would discard every
+ * user's saved layers. It also keeps an old 5-kind build's saves valid,
+ * since those arrays are a subset of this enum.
  */
 export const petPlacesInput = z.object({
   kinds: z
@@ -332,10 +346,15 @@ export const petPlacesInput = z.object({
         'PET_GROOMING',
         'ANIMAL_SHELTER',
         'ANIMAL_BOARDING',
+        'DOG_PARK',
+        'DOG_BEACH',
+        'DOG_FRIENDLY_VENUE',
+        'DOG_GREEN_AREA',
+        'DOG_TRAIL',
       ]),
     )
     .min(1)
-    .max(5),
+    .max(10),
 });
 
 // ── Bird tools ────────────────────────────────────────────────────────────────
@@ -592,6 +611,8 @@ export const SERVICE_TOOL_CONTRACTS = {
     schemaVersion: 1,
     inputSchema: rabbitHaySupplyInput,
   },
+  // @deprecated retired 2026-08-22 (merged into `pet-places`); kept one
+  // release cycle so old builds' saves don't 404 — see the schema's comment.
   'dog-friendly-places': {
     id: 'dog-friendly-places',
     schemaVersion: 1,

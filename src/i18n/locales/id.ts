@@ -1136,6 +1136,18 @@ const id = {
         ANIMAL_SHELTER: "penampungan hewan",
         ANIMAL_BOARDING: "penitipan hewan",
       },
+      group: {
+        services: "layanan",
+        dogs: "tempat untuk anjing",
+      },
+      filters: {
+        title: "filter",
+        open: "buka filter",
+        close: "tutup filter",
+        selectAll: "semua",
+        selectNone: "tidak ada",
+        minOne: "biarkan setidaknya satu lapisan aktif",
+      },
       nearMe: "di dekat saya",
       zoomIn: "perbesar peta untuk melihat semua tempat",
       locationRationale:

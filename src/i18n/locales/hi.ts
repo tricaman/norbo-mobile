@@ -1134,6 +1134,18 @@ const hi = {
         ANIMAL_SHELTER: "पशु आश्रय",
         ANIMAL_BOARDING: "पालतू बोर्डिंग",
       },
+      group: {
+        services: "सेवाएँ",
+        dogs: "कुत्तों के लिए स्थान",
+      },
+      filters: {
+        title: "फ़िल्टर",
+        open: "फ़िल्टर खोलें",
+        close: "फ़िल्टर बंद करें",
+        selectAll: "सभी",
+        selectNone: "कोई नहीं",
+        minOne: "कम से कम एक लेयर चालू रखें",
+      },
       nearMe: "मेरे पास",
       zoomIn: "सभी स्थान देखने के लिए नक्शा ज़ूम करें",
       locationRationale:

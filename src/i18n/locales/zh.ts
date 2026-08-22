@@ -1106,6 +1106,18 @@ const zh = {
         ANIMAL_SHELTER: "动物收容所",
         ANIMAL_BOARDING: "宠物寄养",
       },
+      group: {
+        services: "服务",
+        dogs: "适合狗狗的地点",
+      },
+      filters: {
+        title: "筛选",
+        open: "打开筛选",
+        close: "关闭筛选",
+        selectAll: "全部",
+        selectNone: "全不选",
+        minOne: "至少保留一个图层",
+      },
       nearMe: "附近",
       zoomIn: "放大地图查看所有地点",
       locationRationale:

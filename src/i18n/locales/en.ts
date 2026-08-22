@@ -667,6 +667,18 @@ const en = {
         ANIMAL_SHELTER: "shelter / rescue",
         ANIMAL_BOARDING: "pet boarding",
       },
+      group: {
+        services: "services",
+        dogs: "dog places",
+      },
+      filters: {
+        title: "filters",
+        open: "open filters",
+        close: "close filters",
+        selectAll: "all",
+        selectNone: "none",
+        minOne: "keep at least one layer on",
+      },
       nearMe: "near me",
       zoomIn: "zoom in to see all places",
       // Android ONLY: on iOS no message may precede the system prompt (App

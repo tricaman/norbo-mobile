@@ -1131,6 +1131,18 @@ const bn = {
         ANIMAL_SHELTER: "প্রাণী আশ্রয়",
         ANIMAL_BOARDING: "পোষা প্রাণীর বোর্ডিং",
       },
+      group: {
+        services: "সেবা",
+        dogs: "কুকুরের জন্য স্থান",
+      },
+      filters: {
+        title: "ফিল্টার",
+        open: "ফিল্টার খুলুন",
+        close: "ফিল্টার বন্ধ করুন",
+        selectAll: "সব",
+        selectNone: "কোনোটি নয়",
+        minOne: "অন্তত একটি স্তর চালু রাখুন",
+      },
       nearMe: "আমার কাছে",
       zoomIn: "সব স্থান দেখতে মানচিত্র জুম করুন",
       locationRationale:

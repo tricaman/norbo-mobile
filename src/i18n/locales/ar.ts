@@ -1115,6 +1115,18 @@ const ar = {
         ANIMAL_SHELTER: "مأوى الحيوانات",
         ANIMAL_BOARDING: "فندق الحيوانات",
       },
+      group: {
+        services: "خدمات",
+        dogs: "أماكن للكلاب",
+      },
+      filters: {
+        title: "فلاتر",
+        open: "فتح الفلاتر",
+        close: "إغلاق الفلاتر",
+        selectAll: "الكل",
+        selectNone: "لا شيء",
+        minOne: "أبقِ طبقة واحدة على الأقل مفعّلة",
+      },
       nearMe: "بالقرب مني",
       zoomIn: "قرّب الخريطة لرؤية كل الأماكن",
       locationRationale:

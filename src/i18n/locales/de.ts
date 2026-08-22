@@ -1140,6 +1140,18 @@ const de = {
         ANIMAL_SHELTER: "tierheim",
         ANIMAL_BOARDING: "tierpension",
       },
+      group: {
+        services: "services",
+        dogs: "orte für hunde",
+      },
+      filters: {
+        title: "filter",
+        open: "filter öffnen",
+        close: "filter schließen",
+        selectAll: "alle",
+        selectNone: "keine",
+        minOne: "lass mindestens eine ebene aktiv",
+      },
       nearMe: "in meiner nähe",
       zoomIn: "heranzoomen, um alle orte zu sehen",
       locationRationale:

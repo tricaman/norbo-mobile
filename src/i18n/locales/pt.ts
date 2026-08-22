@@ -1136,6 +1136,18 @@ const pt = {
         ANIMAL_SHELTER: "abrigo de animais",
         ANIMAL_BOARDING: "hotel para pets",
       },
+      group: {
+        services: "serviços",
+        dogs: "lugares para cães",
+      },
+      filters: {
+        title: "filtros",
+        open: "abrir os filtros",
+        close: "fechar os filtros",
+        selectAll: "todos",
+        selectNone: "nenhum",
+        minOne: "mantenha ao menos uma camada ativa",
+      },
       nearMe: "perto de mim",
       zoomIn: "aproxime o mapa para ver todos os lugares",
       locationRationale:

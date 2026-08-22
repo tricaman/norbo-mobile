@@ -56,7 +56,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: appName,
   slug: "norbo",
-  version: "1.11.1",
+  version: "1.12.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
   scheme: "norbo",
@@ -114,7 +114,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     predictiveBackGestureEnabled: false,
     package: bundleIdentifier,
-    versionCode: 22,
+    // Fonte di verità = Play Console, non questo file. Il prossimo è il massimo
+    // su TUTTI i track + 1: production 22, alpha 9, beta 7, internal 2 → 23.
+    versionCode: 23,
     googleServicesFile: `./${firebaseDir}/google-services.json`,
     // Google Maps SDK key (tool "luoghi dog friendly") — SOLO Android: iOS usa
     // Apple Maps (PROVIDER_DEFAULT) e non richiede chiavi. ECCEZIONE alla

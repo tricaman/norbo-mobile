@@ -1131,6 +1131,18 @@ const ro = {
         ANIMAL_SHELTER: "adăpost de animale",
         ANIMAL_BOARDING: "pensiune pentru animale",
       },
+      group: {
+        services: "servicii",
+        dogs: "locuri pentru câini",
+      },
+      filters: {
+        title: "filtre",
+        open: "deschide filtrele",
+        close: "închide filtrele",
+        selectAll: "toate",
+        selectNone: "niciuna",
+        minOne: "păstrează cel puțin un strat activ",
+      },
       nearMe: "lângă mine",
       zoomIn: "mărește harta pentru a vedea toate locurile",
       locationRationale:

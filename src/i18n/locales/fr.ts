@@ -1150,6 +1150,18 @@ const fr = {
         ANIMAL_SHELTER: "refuge animalier",
         ANIMAL_BOARDING: "pension pour animaux",
       },
+      group: {
+        services: "services",
+        dogs: "lieux pour chiens",
+      },
+      filters: {
+        title: "filtres",
+        open: "ouvrir les filtres",
+        close: "fermer les filtres",
+        selectAll: "tous",
+        selectNone: "aucun",
+        minOne: "garde au moins un calque actif",
+      },
       nearMe: "près de moi",
       zoomIn: "zoomez pour voir tous les lieux",
       locationRationale:

@@ -1140,6 +1140,18 @@ const es = {
         ANIMAL_SHELTER: "refugio de animales",
         ANIMAL_BOARDING: "residencia de mascotas",
       },
+      group: {
+        services: "servicios",
+        dogs: "lugares para perros",
+      },
+      filters: {
+        title: "filtros",
+        open: "abrir los filtros",
+        close: "cerrar los filtros",
+        selectAll: "todos",
+        selectNone: "ninguno",
+        minOne: "mantén al menos una capa activa",
+      },
       nearMe: "cerca de mí",
       zoomIn: "acerca el mapa para ver todos los lugares",
       locationRationale:

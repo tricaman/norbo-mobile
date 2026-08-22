@@ -132,13 +132,9 @@ export const TOOL_REGISTRY: Partial<Record<ServiceToolId, ToolRegistryEntry>> =
       () => import("./impl/RabbitHaySupplyTool"),
       true,
     ),
-    // Persist the layer selection only — the input schemas deliberately
-    // contain no coordinates (persisted inputs sync to the server). Both
-    // tools are thin wrappers over the shared PlacesMapView.
-    "dog-friendly-places": defineLazyTool<"dog-friendly-places">(
-      () => import("./impl/DogFriendlyPlacesTool"),
-      true,
-    ),
+    // Persists the layer selection only — the input schema deliberately
+    // contains no coordinates (persisted inputs sync to the server).
+    // `dog-friendly-places` was merged into this one on 2026-08-22.
     "pet-places": defineLazyTool<"pet-places">(
       () => import("./impl/PetPlacesTool"),
       true,

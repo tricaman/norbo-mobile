@@ -1121,6 +1121,18 @@ const ja = {
         ANIMAL_SHELTER: "動物保護施設",
         ANIMAL_BOARDING: "ペットホテル",
       },
+      group: {
+        services: "サービス",
+        dogs: "犬と行ける場所",
+      },
+      filters: {
+        title: "絞り込み",
+        open: "絞り込みを開く",
+        close: "絞り込みを閉じる",
+        selectAll: "すべて",
+        selectNone: "なし",
+        minOne: "レイヤーは1つ以上残してください",
+      },
       nearMe: "近くを表示",
       zoomIn: "すべての場所を見るには拡大してください",
       locationRationale:

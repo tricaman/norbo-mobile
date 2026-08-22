@@ -1128,6 +1128,18 @@ const ur = {
         ANIMAL_SHELTER: "جانوروں کی پناہ گاہ",
         ANIMAL_BOARDING: "جانوروں کا بورڈنگ",
       },
+      group: {
+        services: "خدمات",
+        dogs: "کتوں کے مقامات",
+      },
+      filters: {
+        title: "فلٹرز",
+        open: "فلٹرز کھولیں",
+        close: "فلٹرز بند کریں",
+        selectAll: "سب",
+        selectNone: "کوئی نہیں",
+        minOne: "کم از کم ایک لیئر فعال رکھیں",
+      },
       nearMe: "میرے قریب",
       zoomIn: "تمام مقامات دیکھنے کے لیے نقشہ قریب کریں",
       locationRationale:

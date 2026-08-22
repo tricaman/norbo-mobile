@@ -3,8 +3,7 @@ import type { PlaceKind } from "@/types/place.types";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 /**
- * Viewport-driven places queries for the places map (pet-places /
- * dog-friendly-places).
+ * Viewport-driven places queries for the places map (`pet-places`).
  *
  * Three load-bearing choices:
  * - the bbox is SNAPPED to 2 decimals (~1.1 km) so a small pan reuses the

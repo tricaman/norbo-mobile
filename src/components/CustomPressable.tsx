@@ -1,6 +1,12 @@
 import { BlurMask, Canvas, Circle } from "@shopify/react-native-skia";
 import React, { useCallback, useState } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import {
+  StyleProp,
+  View,
+  ViewStyle,
+  type AccessibilityRole,
+  type AccessibilityState,
+} from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -29,6 +35,14 @@ interface NorboPressableProps {
   deep?: boolean;
   premium?: boolean;
   haloColor?: string;
+  /**
+   * Screen-reader identity. Needed because the tap is a gesture on a plain
+   * view, so nothing is announced unless it is spelled out here — an
+   * icon-only control is silent without a label.
+   */
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
+  accessibilityState?: AccessibilityState;
 }
 
 const HALO_INSET = 44;
@@ -44,6 +58,9 @@ export function NorboPressable({
   deep = false,
   premium = false,
   haloColor,
+  accessibilityLabel,
+  accessibilityRole,
+  accessibilityState,
 }: NorboPressableProps) {
   const { theme } = useUnistyles();
   const sv = useSharedValue(1);
@@ -129,6 +146,12 @@ export function NorboPressable({
   return (
     <GestureDetector gesture={composed}>
       <Animated.View
+        accessible={accessibilityLabel != null || accessibilityRole != null}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
+        accessibilityState={
+          accessibilityState ?? (disabled ? { disabled: true } : undefined)
+        }
         style={[
           animStyle,
           style,

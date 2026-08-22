@@ -2,7 +2,7 @@ import { NorboPressable } from "@/components/CustomPressable";
 import { AddPlaceSheet } from "@/components/tools/places/AddPlaceSheet";
 import { ClusterMarker } from "@/components/tools/places/ClusterMarker";
 import { PlaceDetailSheet } from "@/components/tools/places/PlaceDetailSheet";
-import { PlaceKindFilterBar } from "@/components/tools/places/PlaceKindFilterBar";
+import { PlaceFilterDrawer } from "@/components/tools/places/PlaceFilterDrawer";
 import { PlaceMarker } from "@/components/tools/places/PlaceMarker";
 import { PlaceSearchBar } from "@/components/tools/places/PlaceSearchBar";
 import {
@@ -43,25 +43,35 @@ const GEOMETRY_MAX_DELTA = 0.2;
 const ADD_PLACE_MAX_DELTA = 0.08;
 
 export interface PlacesMapViewProps {
-  /** The kinds this tool exposes (filter bar, add-place form, defaults). */
+  /** The kinds this tool exposes (filter drawer, add-place form). */
   allowedKinds: PlaceKind[];
+  /**
+   * Layers to switch on when there is no usable persisted selection — the
+   * caller's chance to personalize the first open (e.g. dog layers only for
+   * dog owners). Sanitized like `initialKinds`; empty or omitted means all
+   * of `allowedKinds`.
+   */
+  defaultKinds?: PlaceKind[];
   /** Persisted layer selection (already validated by the tool contract). */
   initialKinds: PlaceKind[] | null;
   /** Debounced + deduped layer-selection change — the tool persists it. */
   onKindsChange: (kinds: PlaceKind[]) => void;
 }
 
+const kindsKey = (kinds: PlaceKind[]) => [...kinds].sort().join(",");
+
 /**
- * PlacesMapView — the species-agnostic places map engine, shared by
- * `pet-places` (services only, every owner) and `dog-friendly-places` (the dog
- * superset) — the FoodPlantToxicityView / CatPlantToxicityTool precedent: same
- * view, different tool id + kind set.
+ * PlacesMapView — the places map engine behind `pet-places`, the one map of
+ * every place an owner needs. Which layers exist and which start on are the
+ * caller's call (`allowedKinds` / `defaultKinds`), so the engine stays free of
+ * species logic.
  *
- * Everything species-specific enters via props; persistence/premium/telemetry
- * stay in the loader + thin tool wrappers, keeping tools pure.
+ * Persistence/premium/telemetry stay in the loader + the thin tool wrapper,
+ * keeping the tool pure.
  */
 export function PlacesMapView({
   allowedKinds,
+  defaultKinds,
   initialKinds,
   onKindsChange,
 }: PlacesMapViewProps) {
@@ -71,26 +81,69 @@ export function PlacesMapView({
 
   // Sanitize the persisted selection against THIS tool's kind set — a stale
   // persisted value (or one saved by a newer build) must not leak layers.
+  // Persisted wins; then the caller's personalized defaults; then everything.
   const [kinds, setKinds] = React.useState<PlaceKind[]>(() => {
     const allowed = new Set(allowedKinds);
-    const sanitized = (initialKinds ?? []).filter((k) => allowed.has(k));
-    return sanitized.length > 0 ? sanitized : allowedKinds;
+    const keep = (list: PlaceKind[]) => list.filter((k) => allowed.has(k));
+    const persisted = keep(initialKinds ?? []);
+    if (persisted.length > 0) return persisted;
+    const defaults = keep(defaultKinds ?? []);
+    return defaults.length > 0 ? defaults : allowedKinds;
   });
   const [region, setRegion] = React.useState<MapRegion>(ITALY_REGION);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [adding, setAdding] = React.useState(false);
+  const [filtersOpen, setFiltersOpen] = React.useState(false);
 
-  // Persist the layer selection (debounced so chip-tapping doesn't PUT per tap).
+  // Persist the layer selection (debounced so toggling doesn't PUT per tap).
   const debouncedKinds = useDebounce(kinds, 800);
-  const lastNotified = React.useRef<string | null>(null);
-  React.useEffect(() => {
-    const key = [...debouncedKinds].sort().join(",");
-    if (debouncedKinds.length > 0 && lastNotified.current !== key) {
+  // Seeded with the initial selection, NOT null: `useDebounce` returns its
+  // value immediately, so a null seed made every mount fire a PUT the user
+  // never asked for — which also overwrote a server-side selection that had
+  // not arrived yet, and fired a bogus tool_completed. Defaults are now
+  // persisted only once the user actually touches a filter.
+  const lastNotified = React.useRef<string>(kindsKey(kinds));
+  const notify = React.useCallback(
+    (next: PlaceKind[]) => {
+      const key = kindsKey(next);
+      if (next.length === 0 || lastNotified.current === key) return;
       lastNotified.current = key;
-      onKindsChange(debouncedKinds);
-    }
+      onKindsChange(next);
+    },
+    [onKindsChange],
+  );
+  React.useEffect(() => {
+    notify(debouncedKinds);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedKinds]);
+
+  // `initialKinds` arrives null on a cold cache and only fills in once the
+  // server GET lands — after this component has already seeded itself. Adopt
+  // it then, or the saved selection is ignored for the whole session AND the
+  // first toggle persists the defaults over it. Only until the user touches
+  // the filters: after that their choice outranks anything still in flight.
+  const touched = React.useRef(false);
+  const initialKey = initialKinds ? kindsKey(initialKinds) : null;
+  React.useEffect(() => {
+    if (touched.current || initialKinds == null) return;
+    const allowed = new Set(allowedKinds);
+    const persisted = initialKinds.filter((k) => allowed.has(k));
+    if (persisted.length === 0) return;
+    const key = kindsKey(persisted);
+    if (key === lastNotified.current) return;
+    setKinds(persisted);
+    // It came FROM the store — adopting it must not write it straight back.
+    lastNotified.current = key;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialKey]);
+
+  const changeKinds = React.useCallback(
+    (update: (current: PlaceKind[]) => PlaceKind[]) => {
+      touched.current = true;
+      setKinds(update);
+    },
+    [],
+  );
 
   // Viewport-driven data: debounce the region, snap the bbox (in the hook).
   const debouncedRegion = useDebouncedRegion(region, 500);
@@ -249,20 +302,41 @@ export function PlacesMapView({
           `box-none` is load-bearing: without it this full-width container
           would swallow map pans in its empty gaps. */}
       <View style={styles.topOverlay} pointerEvents="box-none">
-        <View style={styles.inset}>
-          <PlaceSearchBar
-            value={search.query}
-            onChangeText={search.setQuery}
-            onSubmit={() => void search.submit()}
-            onClear={search.clear}
-            loading={search.status === "loading"}
-          />
+        <View style={[styles.inset, styles.searchRow]}>
+          <NorboPressable
+            haptic="light"
+            scale="row"
+            style={styles.filterButton}
+            onPress={() => setFiltersOpen(true)}
+            accessibilityLabel={t("tools.places.filters.open")}
+          >
+            <View style={styles.filterButtonCard}>
+              <MaterialCommunityIcons
+                name="menu"
+                size={20}
+                color={theme.colors.textSecondary}
+              />
+            </View>
+            {/* Outside the elevated card on purpose: Android clips a child
+                that overflows an elevated view. Only rendered while something
+                is hidden — otherwise the count is noise, and its absence is
+                what tells you nothing is filtered out. */}
+            {kinds.length < allowedKinds.length ? (
+              <View style={styles.filterBadge} pointerEvents="none">
+                <Text style={styles.filterBadgeText}>{kinds.length}</Text>
+              </View>
+            ) : null}
+          </NorboPressable>
+          <View style={styles.searchFill}>
+            <PlaceSearchBar
+              value={search.query}
+              onChangeText={search.setQuery}
+              onSubmit={() => void search.submit()}
+              onClear={search.clear}
+              loading={search.status === "loading"}
+            />
+          </View>
         </View>
-        <PlaceKindFilterBar
-          allowedKinds={allowedKinds}
-          value={kinds}
-          onChange={setKinds}
-        />
         {searchOpen ? (
           <View style={styles.inset}>
             <PlaceSearchResults
@@ -321,6 +395,18 @@ export function PlacesMapView({
         </NorboPressable>
       ) : null}
 
+      <PlaceFilterDrawer
+        visible={filtersOpen}
+        allowedKinds={allowedKinds}
+        value={kinds}
+        onChange={changeKinds}
+        onClose={() => {
+          setFiltersOpen(false);
+          // Don't wait out the debounce: leaving the screen right after a
+          // toggle would otherwise lose the change.
+          notify(kinds);
+        }}
+      />
       <PlaceDetailSheet
         placeId={selectedId}
         onClose={() => setSelectedId(null)}
@@ -338,8 +424,8 @@ export function PlacesMapView({
 
 const styles = StyleSheet.create((theme) => ({
   root: { flex: 1 },
-  // No horizontal padding here: the chip row scrolls edge-to-edge and would
-  // be clipped by it. The inset lives on the search bar and results panel.
+  // No horizontal padding here: the inset lives on the rows themselves, so a
+  // future edge-to-edge child isn't boxed in by the container.
   topOverlay: {
     position: "absolute",
     top: 0,
@@ -350,6 +436,51 @@ const styles = StyleSheet.create((theme) => ({
   },
   inset: {
     marginHorizontal: theme.spacing.lg,
+  },
+  searchRow: {
+    flexDirection: "row",
+    alignItems: "stretch",
+    gap: theme.spacing.sm,
+  },
+  searchFill: { flex: 1 },
+  filterButton: {
+    width: 44,
+  },
+  // Same card recipe as PlaceSearchBar (surface, hairline, radius, lift) so
+  // the two read as one control over the map tiles.
+  filterButtonCard: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.lg,
+    borderWidth: theme.hairline,
+    borderColor: theme.colors.border,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 4,
+  },
+  filterBadge: {
+    position: "absolute",
+    top: -5,
+    right: -4,
+    minWidth: 18,
+    height: 18,
+    paddingHorizontal: theme.spacing.xs,
+    borderRadius: theme.radius.pill,
+    backgroundColor: theme.colors.primary,
+    borderWidth: 1.5,
+    borderColor: theme.colors.background,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  filterBadgeText: {
+    fontSize: 10,
+    lineHeight: 12,
+    fontWeight: "600",
+    color: theme.colors.textOnPrimary,
   },
   attribution: {
     position: "absolute",

@@ -688,6 +688,18 @@ const it = {
         ANIMAL_SHELTER: "rifugio / gattile",
         ANIMAL_BOARDING: "pensione per animali",
       },
+      group: {
+        services: "servizi",
+        dogs: "luoghi per cani",
+      },
+      filters: {
+        title: "filtri",
+        open: "apri i filtri",
+        close: "chiudi i filtri",
+        selectAll: "tutti",
+        selectNone: "nessuno",
+        minOne: "tieni almeno un livello attivo",
+      },
       nearMe: "vicino a me",
       zoomIn: "avvicina la mappa per vedere tutti i luoghi",
       // SOLO Android: su iOS nessun messaggio può precedere il prompt di

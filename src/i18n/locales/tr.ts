@@ -1131,6 +1131,18 @@ const tr = {
         ANIMAL_SHELTER: "hayvan barınağı",
         ANIMAL_BOARDING: "hayvan pansiyonu",
       },
+      group: {
+        services: "hizmetler",
+        dogs: "köpekler için yerler",
+      },
+      filters: {
+        title: "filtreler",
+        open: "filtreleri aç",
+        close: "filtreleri kapat",
+        selectAll: "tümü",
+        selectNone: "hiçbiri",
+        minOne: "en az bir katmanı açık bırak",
+      },
       nearMe: "yakınımda",
       zoomIn: "tüm yerleri görmek için yakınlaştırın",
       locationRationale:

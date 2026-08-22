@@ -35,9 +35,9 @@ export const KIND_META: Record<
 };
 
 /**
- * Layers of the SPECIES-NEUTRAL tool (`pet-places`): the pet services every
- * owner needs, whatever animal they live with. Nothing here mentions a
- * species — that is what makes the tool public to all owners.
+ * The SPECIES-NEUTRAL layers: the pet services every owner needs, whatever
+ * animal they live with. Nothing here mentions a species, so these are the
+ * layers every user gets by default.
  */
 export const PET_SERVICE_KINDS: PlaceKind[] = [
   "VETERINARY",
@@ -56,15 +56,36 @@ export const DOG_ONLY_KINDS: PlaceKind[] = [
   "DOG_TRAIL",
 ];
 
+/** One filter section in the map's layer drawer. */
+export interface KindGroup {
+  /** Stable id — also the key for anything per-group we add later. */
+  id: string;
+  labelKey: string;
+  kinds: PlaceKind[];
+}
+
 /**
- * Layers of the DOG tool (`dog-friendly-places`, all on by default): the
- * superset — dog-only layers PLUS the shared services, so a dog owner still
- * gets one single map instead of hopping between two tools.
+ * The drawer's sections, in render order. This is the ONE place that decides
+ * how layers are grouped: `PlaceFilterDrawer` renders it blindly, so a new
+ * group (other species, amenity filters) is one entry here plus one i18n key —
+ * no UI change. Services come first: they are relevant to every owner, and
+ * `kinds[0]` doubles as the default kind of the add-place form, which must
+ * stay species-neutral.
  */
-export const DOG_KINDS: PlaceKind[] = [
-  ...DOG_ONLY_KINDS,
-  ...PET_SERVICE_KINDS,
+export const KIND_GROUPS: KindGroup[] = [
+  {
+    id: "services",
+    labelKey: "tools.places.group.services",
+    kinds: PET_SERVICE_KINDS,
+  },
+  { id: "dogs", labelKey: "tools.places.group.dogs", kinds: DOG_ONLY_KINDS },
 ];
+
+/**
+ * Every layer the places map exposes, in group order. Derived from
+ * `KIND_GROUPS` so the two can never disagree.
+ */
+export const ALL_PLACE_KINDS: PlaceKind[] = KIND_GROUPS.flatMap((g) => g.kinds);
 
 /**
  * Kinds for which the outdoor amenity flags (fenced / off-leash / water /
